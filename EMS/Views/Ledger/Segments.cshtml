@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Ledger>>Segments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+<section class="content-header">
+    <ol class="breadcrumb floatLeft">
+        <li><a href="#"> Ledger <i class="fa fa-caret-right"></i></a></li>
+        <li class="active">Segments</li>
+    </ol>
+    @*<a href="#" class="btn btn-default floatRight">Config</a>*@
+    <div class="clearfix"></div>
+</section>
+}
+
+@section Body{
+<section class="content">
+    <div class="fontAriel">
+        <div class="table-responsive xsborNone" style="margin-top:10px; margin-bottom:0px;">
+            <div class="table-responsive">
+                <table class="table table-hover" id="tblSegment">
+                   
+                        <tr>
+
+                            <th>Code</th>
+                            <th>Segment Name</th>
+                            <th>Masking</th>
+                            <th>Classification</th>
+                            <th>Segment Reporting Description</th>
+                        </tr>
+                    <tbody id="tblSegmentTBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+}
+@section Javascript{
+<script src="~/Scripts/Ledger/Segments.js"></script>
+}

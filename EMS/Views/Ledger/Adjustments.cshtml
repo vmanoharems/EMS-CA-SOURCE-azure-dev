@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "Ledger>>Adjustments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+<section class="content-header">
+    <ol class="breadcrumb floatLeft">
+        <li><a href="#"> Ledger <i class="fa fa-caret-right"></i></a></li>
+        <li class="active">Adjustments</li>
+    </ol>
+
+    @*<a href="#" class="btn btn-default pull-right  marginLeft4">Save</a>*@
+    <a href="#" class="btn btn-default pull-right" style="display:none;">Config</a>
+    <a href="#" class="pull-right margin-r-5"><i style="font-size: 24px;" class="fa fa-filter"></i>Filter</a>
+
+    <div class="clearfix"></div>
+</section>
+}
+
+@section Body{
+<section class="content">
+    <div class="fontAriel">
+        <div class="table-responsive xsborNone" style="margin-top:10px; margin-bottom:0px;">
+            <div class="col-lg-7 col-md-8 col-sm-12 col-xs-12 padl0" style="display:none;">
+                <div class="form-group mar0">
+                    <label for="inputEmail" class="control-label col-xs-3 col-sm-2 col-lg-2">Trans#</label>
+                    <div class="col-xs-9 col-sm-4 col-lg-2 pad0" id="">
+                        <input id="" class="form-control width100" type="text">
+                    </div>
+                    <label for="inputEmail" class="control-label col-xs-3 col-sm-2 col-lg-2">To</label>
+                    <div class="col-xs-9 col-sm-4 col-lg-2 pad0" id="">
+                        <input id="" class="form-control width100" type="text">
+                    </div>
+                    <div style="margin-bottom: 10px;" class="checkbox col-xs-9 col-sm-6 col-lg-4 padr0">
+                        <label style="padding: 0px;" class="col-lg-12 col-sm-12 col-xs-12">
+                            <input type="checkbox" value="" class="mart0">
+                            <span class="marl20">3rd party Vendor</span>
+                        </label>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <label for="inputEmail" class="control-label col-xs-3 col-sm-2 col-lg-2">Currency</label>
+                    <div class="col-xs-9 col-sm-4 col-lg-2 pad0">
+                        <select class="form-control width100" id="">
+                            <option>USD</option>
+                        </select>
+                    </div>
+                    <label for="inputEmail" class="control-label col-xs-3 col-sm-2 col-lg-2">Source</label>
+                    <div class="col-xs-9 col-sm-4 col-lg-2  pad0">
+                        <select class="form-control width100" id="">
+                            <option>AP</option>
+                        </select>
+                    </div>
+
+                    <div class="col-xs-11 col-sm-8 col-lg-4">
+                        <input id="" class="form-control width100" type="text" placeholder="Auto Complete Vendor or 3P Vendor">
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-5 col-md-4 col-sm-12 col-xs-12 table-responsive marb10 padr0" style="display:none;">
+                <table class="table table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th>CO</th>
+                            <th>G/L</th>
+                            <th>Detail</th>
+                            <th>Set</th>
+                            <th>EPI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input placeholder="01" class="width100" type="text"></td>
+                            <td><input placeholder="188" class="width100" type="text"></td>
+                            <td><input placeholder="" class="width100" type="text"></td>
+                            <td><input placeholder="" class="width100" type="text"></td>
+                            <td><input placeholder="" class="width100" type="text"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="clearfix"></div>
+            <div class="fixed-table-container">
+                <div class="header-background"> </div>
+                <div class="fixed-table-container-inner" style="height:100%;">
+                    <div id="dvFixed">
+                        <table cellspacing="0" id="tblAdjustment">
+                            <thead id="tblAdjustmentThead"></thead>
+                            <tbody id="tblAdjustmentTBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+</section>
+}
+@section Javascript{
+<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.1/js/dataTables.fixedHeader.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            fixedHeader: {
+                header: true,
+                footer: true
+            }
+        });
+    });
+</script>
+<link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.datatables.net/fixedheader/3.1.1/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+<script src="~/Scripts/Ledger/Adjustment.js"></script>
+    <style>
+        .width20 {
+            width: 20px;
+        }
+        </style>
+
+}

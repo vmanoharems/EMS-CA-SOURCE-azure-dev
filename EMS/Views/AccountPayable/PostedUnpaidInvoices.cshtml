@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "AccountsPayable>>Post Invoice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Posted Unpaid Invoices</li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+                <li id="LiPending"><a href="PendingInvoice">Unposted</a></li>
+                <li id="LiAPInvoicesOpenInvoicesTab" class="active"><a href="PostedUnpaidInvoices">Posted Unpaid</a></li>
+                <li id="LiPosted"><a href="PostInvoice">Paid</a></li>
+                <li class=""><a href="AtlasInvoice" id="hrefInvoices" onclick="javascript: localStorage.EditInvoiceId = 0;">Add Invoice</a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+
+@section Body{
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="tab-content">
+                <!-- Tab content -->
+                <div id="tabPendingInvoices" class="tab-pane active widget-body-regular">
+                    <div class="col-xs-12">
+                        <!--<table class="table table-hover table-responsive">-->
+                        <div class="table-responsive" id="DvTable">
+                            <table class="table table-hover table-responsive" id="TblPosted">
+                                <thead>
+                                    <tr>
+                                        @*<th><input type="checkbox"></th>*@
+                                        <th></th>
+                                        <th>Invoice Date</th>
+                                        <th>Invoice #</th>
+                                        <th>Transaction #</th>
+                                        <th>CO</th>
+                                        <th>Batch Number</th>
+                                        <th>Vendor Name</th>
+                                        <th>Lines</th>
+                                        <th>Amount</th>
+                                        <th>Currency</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="TblPostedListTbody"></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Tab content end -->
+            <!-- /.content -->
+        </div>
+    </section>
+}
+
+
+@section Javascript{
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+
+
+    <style type="text/css">
+        .black_overlay, #fade {
+            display: none !important;
+        }
+
+        #TblPosted_paginate {
+            position: fixed;
+            bottom: 4%;
+            float: right !important;
+            right: 2%;
+        }
+
+        #TblPosted_info {
+            position: fixed;
+            bottom: 6%;
+        }
+    </style>
+    <script src="~/Scripts/AccountsPayable/APInvoicesUnpaidInvoices.js"></script>
+
+
+}
+

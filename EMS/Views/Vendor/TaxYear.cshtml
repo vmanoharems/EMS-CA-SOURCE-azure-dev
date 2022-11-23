@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "AccountsPayable>>Vendors>>TaxYear";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li id="Vendors"><a class="" href="javascript:ShowtabVendors();">Vendors</a></li>
+            <li id="Module"><span class="fa fa-caret-right">1099 Module</span> </li>
+            <li class="active"><span id="breadcrumbVendorLi" class="fa fa-caret-right">Tax Year</span> </li>
+        </ol>
+        <div class="midMenu widget-head" id="DvTab">
+            <ul></ul>
+        </div>
+        <span id="btnProcess" class="btn btn-default floatRight btn-margin-bottom" >Start 1099 Process</span>
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+    <form>
+        <section class="content">
+            <div class="tab-content">
+                <div class="col-xs-12">
+                    <br /><br />
+                    <div id="tabTax" class="tab-pane widget-body-regular active col-xs-12">
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                            <label class="width70">Company </label>
+                            <input type="text" id="txtCompany" tabindex="0" class="detectTab SearchCompany form-control" /><input type="hidden" id="hdnCompany" />
+                            <label class="width70">Tax Year </label>
+                            <select type="text" id="txtTaxYear" class="form-control widht160" ></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <br />
+                <br />
+                <div class="col-xs-12"><span id="spnProcessMsg" class="content-bold msg-spn"></span></div>
+                <br />
+                <br />
+                <div class="col-xs-12"><span class="content-bold">Existing 1099's</span></div>
+                <br />
+                <br />
+                <div class="col-xs-12" id="taxyear">
+                    <!--<table class="table table-hover table-responsive">-->
+                    <div class="table-responsive">
+                        <table class="table table-hover table-responsive" id="tblTaxyear">
+                            <thead>
+                                <tr>                                    
+                                    <th>Tax Year</th>
+                                    <th>Company</th>
+                                    @*<th>Status</th>*@
+                                    <th>IRS Filing Status</th>
+                                    <th>1099 Vendors List</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblTaxyearBody">
+                                
+                            </tbody>                         
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+}
+@section Javascript{
+
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/AccountsPayable/1099TaxYear.js"></script>  
+
+}

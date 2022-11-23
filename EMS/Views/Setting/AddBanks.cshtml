@@ -1,0 +1,365 @@
+﻿@{
+    ViewBag.Title = "Setting>>Banks>>AddBanks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Users</h2>
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Settings <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#">Banks <i class="fa fa-caret-right"></i></a></li>
+            <li id="LiBankName" class="active"></li>
+        </ol>
+        <div class="pull-right paddingNone white_space col-lg-6 col-md-9 col-sm-12 col-xs-12">
+            <a id="HrefAddBank" href="~/Setting/AddBanks" class="btn btn-default pull-left marginRight11" style="background-color:#4CBF63;">+ Add Bank</a>
+
+            <div class="midMenu pull-left">
+
+                <ul id="UlBankAddTi">
+                    <li class="active"><a href="#">Banks</a></li>
+                    <li><a href="#">Petty Cash</a></li>
+                </ul>
+                <ul id="UlTabBank" style="display:none;">
+                    <li class="active"><a href="#tabBankInfo" data-toggle="tab" aria-expanded="true" onclick="javascript: funCheckCurrentTab('BankInfo');">Bank Info</a></li>
+                    <li style="display:none;" class="mobilehidden" id="btnBankCheck"><a href="#tabCheckSettings" data-toggle="tab" aria-expanded="false" onclick="javascript: funCheckCurrentTab('CheckSettings');">Check Settings</a></li>
+                    @*<li  class="mobileHidden Cursor_notAllow"><a href="#" data-toggle="" class="Cursor_notAllow">Positive Pay Template</a></li>*@
+
+                </ul>
+            </div>
+
+            <a class="btn btn-primary pull-right " href="~/Setting/Banks">Cancel</a>
+            <a class="btn btn-success pull-right marginRight10" id="btnSaveBank" href="#" onclick="javascript: funSaveBankDetails();">Save</a>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+    <form>
+        <section class="content">
+            <div class="row fontAriel">
+                <div class="widget-body">
+                    <div class="tab-content">
+                        <div id="tabBankInfo" class="tab-pane active widget-body-regular">
+                            <div class="col-md-6 col-lg-5 col-sm-6">
+                                <div class="col-md-12 col-sm-5 col-xs-4">
+                                    <div class="form-group">
+                                        <input type="checkbox" id="ChkBankActive">
+                                        Active
+                                    </div>
+                                </div>
+                                <div class="clear-fix"></div>
+                                <div class="form-group">
+                                    <label>Company</label>
+                                    <input type="text" id="txtBankCompnayCode" class="SearchCompanyCode form-control input-required" />
+                                    <input type="hidden" id="hdnBankCompanyCode" />
+                                </div>
+                                <div class="form-group" id="divCurrency">
+                                    <label>Currency</label>
+                                    <select id="ddlCurrency"></select>
+                                    @*<input type="text" id="txtBankCurrencyName" class="form-control  input-required" value="USD" />*@
+                                    @*<input type="hidden" id="hdnBankCurrencyId" />*@
+                                </div>
+                                <div class="form-group">
+                                    <label>Bank Name</label>
+                                    <input type="text" id="txtBankName" class="form-control input-required">
+                                </div>
+                                <div class="form-group">
+                                    <label>Bank Code</label>
+                                    <input type="text" id="txtBranchName" class="form-control input-required" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <input type="text" id="txtBankCountry" class="form-control input-required" />
+                                    <input type="hidden" id="hdnBankCountry" />
+                                    @*<select class="form-control">
+                                            <option>United States of America</option>
+                                        </select>*@
+                                </div>
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input type="text" id="txtBankAddress1" class="form-control input-required">
+                                </div>
+                                <div class="form-group">
+                                    <label></label>
+                                    <input type="text" id="txtBankAddress2" placeholder="Address 2 " class="form-control ">
+                                </div>
+                                <div class="form-group">
+                                    <label></label>
+                                    <input type="text" id="txtBankAddress3" class="form-control" placeholder="Address 3">
+                                </div>
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <input type="text" placeholder="City" id="txtBankCity" class="form-control  inline input-required">
+                                </div>
+                                <div class="form-group">
+                                    <label>State</label>
+                                    <input type="text" id="txtBankState" placeholder="State" class="form-control  inline SearchState input-required"  onfocus="javascript: G_CountryStates($('#txtBankCountry'), $('#txtBankState'));"/>
+                                </div>
+                                @*<select class="form-control width95 floatLeft marginRight10">
+                                        <option>Select</option>
+                                    </select>*@
+                                <div class="form-group">
+                                    <label>Zip</label>
+                                    <input type="text" id="txtBankZip" placeholder="PinCode" class="form-control width50 marginRight5 pull-left input-required">
+                                    <input type="text" placeholder="PinCode" class="form-control width20 pull-left marginRight5" disabled value="-">
+                                    <input type="text" id="txtBankZip1" class="form-control width50 ">
+
+                                </div>
+                                <div class="clear-fix" style="clear:both;"></div>
+                                <div class="form-group">
+                                    <label>Routing Number</label>
+                                    <input type="text" id="txtRoutingNumber" maxlength="9" class="form-control input-required" onblur="javascript:phoneno();">
+                                </div>
+                                <div class="form-group">
+                                    <label>Account Number</label>
+                                    <input type="text" id="txtAccountNumber" class="form-control input-required">
+                                </div>
+                                @*<div class="form-group">
+                                        <label>Branch</label>
+                                        <input type="text" id="txtBranchName" class="form-control input-required" placeholder="Branch">
+                                    </div>*@
+                                <div class="form-group">
+                                    <label>Branch Number</label>
+                                    <input type="text" id="txtBranchNumber" class="form-control" placeholder="Branch Number">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-7 col-sm-6" style="display:block;">
+                                <div class="col-md-3 col-sm-5 col-xs-3">
+                                    Check Setting
+                                </div>
+                                <div class="col-md-9 col-sm-5 col-xs-9">
+                                    <div class="form-group">
+                                        <label> Starting Number</label>
+                                        <input type="text" id="txtStartingNumber" class="form-control input-required" onkeypress="return isNumber(event)" required>
+                                        <div class="clear-fix"></div>
+                                        <label> End Number</label>
+                                        <input type="text" id="txtEndNumber" class="form-control input-required" onkeypress="return isNumber(event)" required>
+                                        <div class="clear-fix"></div>
+                                    </div>
+                                </div>
+                                <table class="table table-hover table-responsive" style="display:none;">
+                                    <tbody>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Account</th>
+                                        </tr>
+                                        <tr>
+                                            <td>AP Clearing</td>
+                                            <td>
+                                                <input type="text" id="txtLabor" class="SearchLabor" onfocus="javascript: GetClearingAccount('Labor');">
+                                                <input type="hidden" id="hdntxtLabor">
+                                                <input type="hidden" id="hdntxtLaborACId">
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cash Account</td>
+                                            <td>
+                                                <input type="text" id="txtFringe" class="SearchFringe" onfocus="javascript: GetClearingAccount('Fringe');">
+                                                <input type="hidden" id="hdntxtFringe">
+                                                <input type="hidden" id="hdntxtFringeACId">
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <table class="table table-hover table-responsive">
+                                    <tbody id="tblAccountClearing">
+                                        @*<tr>
+                                                <th>Type</th>
+                                                <th>Account</th>
+                                            </tr>
+                                            <tr>
+                                                <td>AP Clearing</td>
+                                                <td>
+                                                    <input type="text" id="txtLabor" class="SearchLabor" onfocus="javascript: GetClearingAccount('Labor');">
+                                                    <input type="hidden" id="hdntxtLabor">
+                                                    <input type="hidden" id="hdntxtLaborACId">
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cash Account</td>
+                                                <td>
+                                                    <input type="text" id="txtFringe" class="SearchFringe" onfocus="javascript: GetClearingAccount('Fringe');">
+                                                    <input type="hidden" id="hdntxtFringe">
+                                                    <input type="hidden" id="hdntxtFringeACId">
+
+                                                </td>
+                                            </tr>*@
+
+                                    </tbody>
+                                </table>
+                                <div class="clearfix"> </div>
+                                <fieldset>
+                                    <legend>POS Pay File Format</legend>
+                                    <div class="col-md-12">
+                                        <a class="btn btn-success pull-right marginRight10" id="btnPOSSave" href="#" onclick="SavePOSSetting();">Save</a>
+                                        <div class="form-group">
+                                            <div class="col-md-6 paddingLeftNone">
+                                                <div class="floatLeft">
+                                                    <label>Banks: </label>
+                                                    <select id="ddlBankList" class="form-control"></select>
+                                                </div>
+                                                <div id="possettings">
+
+                                                </div>
+                                            </div>
+                                            @*<div class="col-md-6"><input type="checkbox" disabled="disabled" id="chkRealTime"> real-time Currency Conversion</div>*@
+                                        </div><!-- /.form-group -->
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <!-- /.form-group -->
+                            <div class="clearfix"> </div>
+
+
+                        </div>
+                        <div id="tabCheckSettings" class="tab-pane widget-body-regular ">
+                            <div class="col-md-6 col-lg-5 col-sm-6">
+                                <div class="col-md-3 col-sm-5 col-xs-4">
+                                    <div class="form-group" style="display:none;">
+                                        <input type="checkbox" id="chkCSActive">
+                                        Active
+                                    </div>
+                                </div>
+                                <div class="clearfix"> </div>
+
+                                <div class="form-group">
+                                    <label>Prefix</label>
+                                    <input type="text" id="txtPrefix" value="1" disabled="" class="form-control width90" max="5" min="1" name="quantity">
+                                </div>
+                                <div class="form-group">
+                                    <label>Number Length</label>
+                                    <input type="number" id="txtCSNumberLength" placeholder="" class="form-control select2 width90" max="5" min="1" name="quantity">
+                                </div>
+                                <div class="form-group">
+                                    <label>Chk # is Issued</label>
+                                    <input type="checkbox" id="chkChkIssued" checked="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Start #</label>
+                                    <input type="text" class="form-control " id="txtCSStart">
+                                </div>
+                                <div class="form-group">
+                                    <label>End #</label>
+                                    <input type="text" class="form-control" id="txtCSEnd" onkeypress="return isNumberKey(event);">
+                                </div>
+                                <div class="form-group">
+                                    <label>Collated #</label>
+
+                                    <select id="ddlReverseCollated"><option value="Reverse Collated">Reverse Collated</option><option value="Collated">Collated</option></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Print Zero</label>
+                                    <input type="checkbox" id="ChkCSPrintZero">
+                                </div>
+                                <div class="form-group">
+                                    <label># Copies</label>
+                                    <input type="number" id="txtCSCopies" placeholder="" class="form-control select2 width90" max="5" min="1" name="quantity">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-7 col-sm-6">
+
+                                <div class="clearfix"></div>
+                                <p class="text-center">All Measurements are in centimeters</p>
+                                <div class="form-group col-lg-4" style="margin:10px auto; float:none;">
+                                    <label>Top Margin</label>
+                                    <input type="number" id="txtCSTopMargin" value="2" class="form-control select2 width90 input-required" max="5" min="1" name="quantity">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group col-lg-3 marginTop10">
+                                    <label>Left margin</label>
+                                    <input type="number" value="2" id="txtCSLeftMargin" class="form-control select2 width90 input-required" max="5" min="1" name="quantity">
+                                </div>
+                                <div class="boxSquair col-lg-5">
+                                    <div class="link_cont" id="link_cont_id">
+                                        <ul class="cont" id="Section1">Record</ul>
+                                        <ul class="cont" id="Section2">Stub</ul>
+                                        <ul class="cont" id="Section3">Check</ul>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-4 marginTop10">
+                                    <label>Right Margin</label>
+                                    <input type="number" value="2" id="txtCSRightMargin" class="form-control select2 width90 input-required" max="5" min="1" name="quantity">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group col-lg-4" style="margin:10px auto; float:none;">
+                                    <label>Bottom Margin</label>
+                                    <input type="number" value="2" id="txtCSBottomMargin" class="form-control select2 width90 input-required" max="5" min="1" name="quantity">
+                                </div>
+
+
+
+
+                            </div>
+                            <!-- /.form-group -->
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div id="tabPositivePayTemplate" class="tab-pane widget-body-regular ">
+                            <div class="col-md-6 col-lg-5 col-sm-6">
+                                <div class="col-md-3 col-sm-5 col-xs-4">
+                                    <div class="form-group">
+                                        <input type="checkbox">
+                                        Active
+                                    </div>
+                                </div>
+                                <div class="col-md-9 col-sm-7 col-xs-8">
+                                    <div class="form-group">
+                                        Company 01: Wells Fargo Bank, N.A.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-7 col-sm-6">
+                                <a class="btn btn-success  floatRight" href="#">Save Bank</a>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+}
+@section Javascript{
+    @*<script src="~/Scripts/jquery-1.11.2.min.js"></script>*@
+    <script src="~/Scripts/kpdragsort.js"></script>
+    <script src="~/Scripts/CompanySettings/AddBank.js"></script>
+    <script type="text/javascript">
+        $("#link_cont_id").kpdragsort();
+    </script>
+    <style>
+        .width40 {
+            width: 45px;
+            border: 1px solid #ccc;
+        }
+
+            .width40 input {
+                width: 100% !important;
+            }
+
+        ul {
+            margin: 0;
+            padding-left: 15px;
+        }
+
+        .link_cont {
+            margin-bottom: 10px;
+        }
+
+        .cont {
+            height: 30px;
+            margin-bottom: 10px;
+            background-color: #f1f5f9;
+            overflow: hidden !important;
+        }
+    </style>
+}
+
+

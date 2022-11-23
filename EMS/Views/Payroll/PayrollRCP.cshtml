@@ -1,0 +1,210 @@
+﻿@{
+    ViewBag.Title = "Payroll>>Payroll RCP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Payroll <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Remote check printing</li>
+        </ol>
+        <div class="pull-right paddingNone white_space col-lg-7 col-md-9 col-sm-12 col-xs-12">
+            <select class="form-control width135 floatLeft marginRight10 marginLeft10 marginBottomNone" onchange="javascript: FillPayrollHistory();" id="ddlCompany"></select>
+          
+        </div>      
+        <div class="clearfix"></div>
+
+    </section>
+}
+@section Body{
+    <section class="content">
+        <div class="row fontAriel">          
+            <div class="col-xs-12">
+                <!--<table class="table table-hover table-responsive">-->
+                <div class="table-responsive">
+                    <table class="table table-hover table-responsive hidden" id="tblPayrollRCP">
+                        <thead>
+                            <tr>
+                                <th>Print</th>
+                                <th>Load #</th>
+                                <th>Invoice No.</th>
+                                <th>Load Date</th>
+                                <th>Period Ending</th>
+                                <th>Transaction Date</th>
+                                <th>#Checks</th>
+                                <th>Total Amount</th>
+                                <th>Labor Amount</th>
+                                <th>Fringe Amount</th>
+                                <th>Invoiced</th>
+                                <th>Company Code</th>
+                                <th>Posted</th>
+                            </tr>
+                            <tr id="tblPayrollRCP_filterhead">
+                                <th class="filterhead">Print</th>
+                                <th class="filterhead">Load #</th>
+                                <th class="filterhead">Invoice No.</th>
+                                <th class="filterhead">Load Date</th>
+                                <th class="filterhead">Period Ending</th>
+                                <th class="filterhead">Transaction Date</th>
+                                <th class="filterhead">#Checks</th>
+                                <th class="filterhead">Total Amount</th>
+                                <th class="filterhead">Labor Amount</th>
+                                <th class="filterhead">Fringe Amount</th>
+                                <th class="filterhead">Invoiced</th>
+                                <th class="filterhead">Company Code</th>
+                                <th class="filterhead">Posted</th>
+                            </tr>
+                            @*<tr>
+                                <td colspan="13" style="text-align:center;">No Record Found !!</td>
+
+                            </tr>*@
+                        </thead>
+                        <tbody id="bodyPayrollRCP"></tbody>
+                        <tfoot class="footer">
+                            <tr>
+                                @*<th></th>*@
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div id="dvConfirm" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Print Payroll Checks?</h5>
+                <p>
+                    Please prepare your Check Printer and ensure you have the proper toner and amount of toner in your printer to print <span class="checksCnt"></span> checks. You will need at least <span class="checksCnt"></span> sheets of check stock.
+                    <br /> <b>*Checks CANNOT be reprinted once you have printed them. *</b> Are you sure want to continue ?
+                </p>
+                <a href="javascript:Print();" class="dialog-confirm-button">YES</a>
+                <a href="javascript:hideDiv('dvConfirm');" class="dialog-reject-button">NO</a>
+            </div>
+        </div>
+    </div>
+    <div id="dialog" style="display: none">
+    </div>
+}
+@section Javascript{
+<script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+<link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+<link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+<script>
+        // Change the selector if needed
+        var $table = $('table.scroll'),
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
+
+        // Adjust the width of thead cells when window resizes
+        $(window).resize(function () {
+            // Get the tbody columns width array
+            colWidth = $bodyCells.map(function () {
+                return $(this).width();
+            }).get();
+
+            // Set the width of thead columns
+            $table.find('thead tr').children().each(function (i, v) {
+                $(v).width(colWidth[i]);
+            });
+        }).resize(); // Trigger resize handler
+</script>
+    <script src="~/Scripts/Payroll/PayrollSession.js"></script>
+    <script src="~/Scripts/Payroll/PayrollRCP.js"></script>
+
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+
+
+    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>*@
+    @*<script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>*@
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+
+    <script>
+
+        // This is an example jQuery snippet that makes the dialogs work
+        $(document).ready(function () {
+
+            // We have two control functions that show or hide dialogs
+            function showDialog(id) {
+
+                // Find the dialog and show it
+
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+
+                // Center it on screen
+
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+
+            }
+            function hideAllDialogs() {
+                // Hide all visible dialogs
+                $('.dialog-overlay').fadeOut();
+            }
+
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+
+                showDialog(toShow);
+            });
+        });
+
+    </script>
+
+    <style type="text/css">
+        .ui-button-icon-only .ui-icon {
+            margin: -8px 0 0 -9px !important;
+        }
+
+        .ui-dialog .ui-dialog-titlebar-close {
+            display: none !important;
+        }
+    </style>
+
+<style type="text/css">
+    .black_overlay, #fade {
+        display: none !important;
+        }
+
+    #tblPayrollRCP_paginate {
+        position: fixed;
+        bottom: 4%;
+        float: right !important;
+        right: 2%;
+    }
+
+    #tblPayrollRCP_info {
+        position: fixed;
+        bottom: 6%;
+    }
+    </style>
+}

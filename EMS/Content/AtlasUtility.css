@@ -1,0 +1,187 @@
+﻿.AtlasAccess {
+    display: none;
+}
+
+.AtlasNoAccess {
+    display: block;
+    border: medium;
+    border-color: red;
+    font-size: x-large;
+    color: white;
+    align-content: center;
+    padding: 100px;
+}
+
+.AtlasAccess_DENIED {
+    color: red;
+    display: block;
+    border: medium;
+    border-color: red;
+    font-size: x-large;
+    align-content: center;
+    padding: 100px;
+}
+
+.row-seq table tbody {
+    counter-reset: rowNumber;
+}
+
+    .row-seq table tbody tr {
+        counter-increment: rowNumber;
+    }
+
+        .row-seq table tbody tr td:first-child::after {
+            content: counter(rowNumber);
+            min-width: 1em;
+            margin-right: 0.5em;
+            font-weight: bold;
+        }
+
+.atlas-hide {
+    display: none;
+}
+
+.row-seq-hide {
+    display: none;
+}
+
+.btn-prenext {
+    color: red !important;
+}
+/*table tbody tr td:nth-child(2)::after {
+   content: counter(rowNumber);
+   min-width: 1em;
+   margin-right: 0.5em;
+   font-weight: bold;
+}*/
+.widht160 {
+    width: 160px;
+}
+
+.content-bold {
+    font-weight: bold;
+}
+
+.bordert-top-bot {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+
+.btn-margin {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.btn-marginleft {
+    margin-left: -15px;
+}
+
+.toggle-label-margin {
+    margin-left: -9px;
+}
+
+#divTool {
+    padding: 5px;
+    background-color: #eff1f3;
+    border: solid 1px #c3c3c3;
+    position: absolute;
+    margin-top: 40px;
+    margin-left: 13px;
+    width: 97%;
+    z-index: 1;
+}
+
+#divTool {
+    display: none;
+}
+
+.msg-spn {
+    color: red;
+}
+
+.btn-margin-bottom {
+    margin-bottom: 10px;
+}
+
+.no-taxid {
+    background: red !important;
+    color: white !important;
+}
+
+.col-amnt-width {
+    width: 10%;
+}
+
+.edit-link {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.vendorgroup {
+    background: #9dbfdc !important;
+}
+
+.width40 {
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+.margin-right {
+    margin-right: 10px;
+}
+
+.width-power-btn {
+    width: 100%;
+}
+
+.filter-applied, .filter-applied:hover {
+    background-color: red !important;
+    border-color: red;
+}
+
+.width160 {
+    width: 160px;
+}
+
+.toggle-button, .toggle-button:hover, .toggle-button::selection {
+    background: #5c8fbe;
+    border-color: #5c8fbe;
+    text-shadow: none;
+    color: white;
+}
+
+.toggle-button-item {
+    background: #5c8fbe !important;
+    height: 30px;
+    margin-top: -1px;
+}
+
+.field-Req {
+    border-color: red !important;
+}
+
+.merged-cell {
+    border: 0 !important;
+    color: white !important;
+}
+
+.toggle-button-item-dropdown {
+    top: -136% !important;
+}
+.checkgroup{
+    background: #4cbf63 !important;
+}
+
+.unpaidcheckgroup {
+    background: #eee !important;
+}
+
+.report-column-left{ float: left; width: 33%; }
+.report-column-right{ float: right; width: 33%; }
+.report-column-center{ display: inline-block; width: 33%; }
+
+.overlay {
+    overflow: overlay;
+.unpaidtext{
+    color: #4cbf63 !important;
+}

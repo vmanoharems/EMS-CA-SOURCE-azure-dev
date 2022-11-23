@@ -1,0 +1,382 @@
+﻿@{
+    ViewBag.Title = "AccountsPayable>>EnvelopesEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="PCEnvelopes"> Petty Cash <i class="fa fa-caret-right"></i></a></li>
+            <li class="active" id="breadcrumbVendorLi">EnvelopeAudit</li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+                <li><a href="PCEnvelopes">Envelope</a></li>
+                <li class="active"><a href="#">Envelope Audit</a></li>
+                <li><a href="EnvelopeAudit"> Posted</a></li>
+                <li><a href="Recipients">Recipients</a></li>
+                <li><a href="Custodians">Custodians</a></li>
+            </ul>
+        </div>
+        <div class="midMenu widget-head floatRight col-md-2" id="DvTab01">
+            <div id="DvViewIcon" style="display:inline; float: right;">
+                <ul style="/* float: left; */">
+
+                    @*<li id="PCView" class="active" style="float: left;width: 45%;" onclick="javascript: funShowDiv('View');">View</li>
+                    <li id="PCNew" class="float-right" style="width: 45%;" onclick="javascript: funShowDiv('New');">New</li>*@
+
+                    @*onclick="Javascript: funViewPosted();"*@
+
+                    @*<li id="VendorsADDPOTabLi" style=""><a class="" href="EnvelopeAudit">View Posted</a></li>*@
+                    <li id="VendorsADDPOTabLi" class="" style="float: right;"><a class="" onclick="GetPCEnvelopDetail('Pending');">View </a></li>
+                    <li id="VendorsADDPOTabLi" class="float-right" style="float:right;"><a href="#" onclick="javascript: UpdatePcEnvelope();">Post</a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+            <div id="DvPCSaveIcon" style="display:none;">
+                <select style=""  class="form-control marb0 VendorCode pull-left" id="ddlClosePeriod">                   
+                </select>
+                @*<a href="#" class="btn btn-default " style="margin-top: -4px;  margin-left:10px;" onclick="javascript: SavePCDetail();">Save</a>*@
+                <a href="#" class="btn btn-default " style="margin-top: -4px;  margin-left:10px;" onclick="javascript: funAction('Cancel');">Cancel</a>
+                <a class="btn btn-default" href="#" style="margin-top: -4px;  margin-left:10px;" onclick="javascript: SavePCDetail();">Post</a>
+                @*<a href="#" class="btn btn-default " style="margin-top: -4px; margin-left:10px;" onclick="javascript: funAction('Delete');">Delete</a>*@
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+
+@section Body{
+ <section class="content">
+    <div class="row fontAriel">
+        <div class="tab-content">
+            <!-- Tab content -->
+            @* one View  *@
+            <div class="col-xs-12" id="DvView"   >
+                <!--<table class="table table-hover table-responsive">-->
+                <div class="table-responsive">
+                    <table class="table table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="chkCheckAll" /></th>
+                                <th>Status</th>
+                                <th>Company</th>
+                                <th>Envelope #</th>
+                                <th>Date</th>
+                                @*<th>Custodion</th>*@
+                                <th>Transaction #</th>
+                                <th>Recipient</th>
+                                <th>Advance Amount</th>
+                                <th>Envelope Amount</th>
+
+                            </tr>
+                           
+                        </thead>
+                        <tbody id="TblPCTBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            @* Add *@
+            <div class="col-xs-12" id="DvAdd" style="display:none;">
+                <!--<table class="table table-hover table-responsive">-->
+                <div class="table-responsive">
+                    <table class="table table-hover table-responsive">
+                        <tbody>
+                            <tr>
+                              
+                                <th>Company</th>
+                                <th>Batch</th>
+                                <th>Custodion</th>
+                                <th>Recipient</th>
+                            </tr>
+                            <tr>
+                              
+                                <td><input type="text" id="txtCompany" class="detectTab SearchCompany form-control" onblur="javascript: funGetClosePeriodDetail();" onclick="javascript: FillCompany();">
+                                    <input type="hidden"id="hdnCompany"/>
+                                @* Standardized Company field *@
+                                    <input type="hidden"id="ddlCompany"/>
+                                </td>
+                                <td>
+                                    <input type="text" id="txtBatchNumberPC" disabled class="form-control" />
+                                    @*<span id="txtBatchNumber"></span>*@
+                                </td>
+                                <td><input type="text" id="txtCustodian" class="detectTab SearchCustodian form-control" onfocus="javascript: FillCustodian();"></td>
+                                <td><input type="text" id="txtRecipient" class="detectTab SearchRecipient form-control" onfocus="javascript: FillRecipient();">
+                                <input type="hidden" id="hdnRecipientId" /><input type="hidden" id="hdnRecipientCode" /><input type="hidden" id="hdnRecipientCAId" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-responsive">
+                        <tbody>
+                            <tr>
+                              
+                                <th>Envelope #</th>
+                                <th>Date</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="txtEnvelopeNumber" class="detectTab form-control" onblur="javascript: CheckPCEnvelopeNumber();"></td>
+                                <td><input type="text" id="txtEnvelopeDate" class="detectTab datepicker form-control"></td>
+                                <td style="width:100%;"><input type="text"  id="txtDescription" class="detectTab form-control " style="width:100%;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-responsive">
+                        <tbody>
+                            <tr>
+                                <th>Advance Amount</th>
+                                <th>Envelope Amount</th>
+                                <th>Line Item Amount</th>
+                                <th>Difference</th>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="txtAdvanceAmount" class="detectTab w2float form-control"></td>
+                                <td><input type="text" id="txtEnvelopeAmount" class="detectTab w2float form-control"></td>
+                                <td><input type="text" id="txtLineItemAmount" class="w2float form-control" disabled></td>
+                                <td><input type="text" id="txtDifference" class="w2float form-control" disabled></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive" id="DvTable">
+                    <table class="table table-hover table-responsive" id="TblPCLine">
+                        <thead id="TblPCLineThead"></thead>
+                        <tbody id="TblPCLineTBody"></tbody>
+                    </table>
+                    <span id="SpnAddNewRow" class="btn btn-sm btn-success" onclick="javascript: CreateCustodianRow(-1);" style="display:none;"><i class="fa fa-plus"></i></span>
+                    @*<button class="btn btn-sm btn-success" onclick="javascript: CreateCustodianRow();"></button>*@
+
+                </div>
+            </div>
+
+        </div>
+        <!-- Tab content end -->
+        <!-- /.content -->
+    </div>
+</section>
+
+<div id="DivDelete" class="newhidden" style="margin-top: 10%; display: none;">
+    <div class="col-md-3 col-lg-3 col-sm-11 col-xs-12 floatNone" style="margin:5% auto;">
+        <div class="popupred left10 col-md-12 col-lg-12 col-sm-12 col-xs-12 floatNone xs_top-80" style="border-radius:3%; padding:0px;">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('DivDelete');">X</a></div>
+            <div class="heading2">
+                <h4>
+                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                        <h4 align="center">Confirm Delete</h4>
+                    </div>
+                </h4>
+            </div>
+            <div class="clearfix"></div>
+            <div class="">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:0px !important;">
+                    <div class="WhtBg" style="margin:0px !important;">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:20px;">
+                            <p align="center">This will delete your petty cash transaction. Are you sure yot want to do this</p><h4 align="center">Continue ?</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:0px !important;">
+                    <a class="No floatLeft" href="javascript:hideDiv('DivID');">No</a>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:0px !important;">
+                    <a class="Yes floatRight" href="#" onclick="javascript: funDeletePCDetail('PCEnvelope',0)">Yes</a>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div id="DivIDcancel" class="newhidden" style="margin-top: 10%; display: none;">
+    <div class="col-md-3 col-lg-3 col-sm-11 col-xs-12 floatNone" style="margin:5% auto;">
+        <div class="popupred left10 col-md-12 col-lg-12 col-sm-12 col-xs-12 floatNone xs_top-80" style="border-radius:3%; padding:0px;">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('DivIDcancel');">X</a></div>
+            <div class="heading2">
+                <h4>
+                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                        <h4 align="center">Confirm Cancel</h4>
+                    </div>
+                </h4>
+            </div>
+            <div class="clearfix"></div>
+            <div class="">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:0px !important;">
+                    <div class="WhtBg" style="margin:0px !important;">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:20px;">
+                            <p align="center">This will Cancel your changes to this petty cash transaction. Are you sure yot want to do this</p><h4 align="center">Continue ?</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:0px !important;">
+                    <a class="No floatLeft" href="javascript:hideDiv('DivIDcancel');">No</a>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:0px !important;">
+                    <a class="Yes floatRight" href="#" onclick="funCancel();">Yes</a>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div id="CantSave" class="newhidden" style="margin-top: 10%; display: none;">
+    <div class="col-md-3 col-lg-3 col-sm-11 col-xs-12 floatNone" style="margin:5% auto;">
+        <div class="popupred left10 col-md-12 col-lg-12 col-sm-12 col-xs-12 floatNone xs_top-80" style="border-radius:3%; padding:0px;">
+           
+            <div class="heading2">
+                <h4>
+                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                        <h4 align="center">Cannot Save</h4>
+                    </div>
+                </h4>
+            </div>
+            <div class="clearfix"></div>
+            <div class="">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:0px !important;">
+                    <div class="WhtBg" style="margin:0px !important;">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:20px;">
+                            <p align="center">Your Line Item does not Match your Envelope Total. You can not save this transaction until they match</p>
+                            <h4 align="center">Continue ?</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="padding:0px !important;">
+                    <a class="Yes floatRight" href="javascript:hideDiv('CantSave')">OK</a>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<div id="DvSuccess" class="newhidden" style="margin-top: 10%; display: none;">
+    <div class="col-md-3 col-lg-3 col-sm-11 col-xs-12 floatNone" style="margin:5% auto;">
+        <div class="popupred left10 col-md-12 col-lg-12 col-sm-12 col-xs-12 floatNone xs_top-80" style="border-radius:3%; padding:0px;">
+
+            <div class="heading2">
+                <h4>
+                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                        <h4 align="center">Transaction Detail</h4>
+                    </div>
+                </h4>
+            </div>
+            <div class="clearfix"></div>
+            <div class="">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:0px !important;">
+                    <div class="WhtBg" style="margin:0px !important;">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:20px;">
+                            <p align="center">
+                                
+                                This Petty Cash transaction has been Saved with transaction #[
+                                <span id="spnTransactionNo"></span>]
+
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="padding:0px !important;">
+                    <input type="button" class="Yes floatRight" id="hrfSuccessOK" onclick="javascript: funSuccessOk();" value="OK" />
+                    @*<a class="Yes floatRight" id="hrfSuccessOK" onclick="javascript: funSuccessOk();">OK</a>*@
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<div id="SaveInvoiceSuccess" class="newhidden" style="display: none; margin-top:10%">
+    <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+        <div class="heading2" style="padding: 5px 10px;">
+            <h5>
+                This Envelope has been saved with the following:
+
+            </h5>
+        </div>
+        <div class="WhtBg">
+            <div class="col-md-12" style="text-align: center;">
+                <div style="height: 190px;overflow-y: auto;float: left;width: 100%;">
+                    <table style="width: 100%;">
+                        <tbody id="tblResult"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="darkGreyNew col-lg-12">
+
+            <input type="button" onclick="javascript: funSaveInvoiceSuccess();" id="btnSaveOK" class="btn btn-success floatLeft" style="display: inline;" value="OK">
+        </div>
+    </div>
+</div>
+<div id="fade" class="black_overlay"></div>
+}
+
+
+@section Javascript{
+
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+  
+<link href="~/Content/w2ui-fields-1.0.css" rel="stylesheet" />
+<script src="~/Content/w2ui-fields-1.0.js"></script>
+
+<link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui.js"></script>
+
+<script src="~/Scripts/AccountsPayable/EnvelopesEdit.js"></script>
+@*<script src="~/Scripts/AccountsPayable/PCEnvelope.js"></script>*@
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+
+
+</script>
+    <style>
+          .width40 {
+            width: 45px;
+            border: 1px solid #ccc;
+        }
+
+            .width40 input {
+                width: 100%;
+            }
+
+        .width100 {
+            width: 120px;
+            border: 1px solid #ccc;
+        }
+
+            .width100 input {
+                width: 100%;
+            }
+
+        .blueColor {
+        background-color: #72afd2 !important;
+        }
+
+    </style>
+}
+

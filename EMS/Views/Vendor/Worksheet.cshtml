@@ -1,0 +1,230 @@
+﻿
+@{
+    ViewBag.Title = "AccountsPayable>>Vendors>>Worksheet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li id="Vendors"><a class="" href="javascript:ShowtabVendors();">Vendors</a></li>
+            <li id="Module"><span class="fa fa-caret-right"><a href="/Vendor/TaxYear">1099 Module</a></span> </li>
+            <li class="active"><span id="breadcrumbsWorksheet" class="fa fa-caret-right">TY: <span id="lblYear"></span>; CO: <span id="lblComp"></span></span></li>
+        </ol>
+      
+        <div class="midMenu widget-head">
+            <ul>             
+                <li id="tabWorksheet" class="active"><a class="" href="javascript:void(0);">1099 Worksheet</a></li>
+            </ul>
+        </div>
+        <span id="tabToolbar" class="btn btn-default floatRight btn-margin-bottom">Filters</span>
+
+        <div class="btn-group  floatRight margin-right">
+            <button type="button" class="btn toggle-button"  id="btnOperation" onclick="oWorksheetConfig.SaveWorksheet();">Save Worksheet</button>
+            <button type="button" data-toggle="dropdown" id="ddlOption" class="btn btn-primary dropdown-toggle toggle-button-item"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="#" onclick="oWorksheetConfig.PrintWorkSheet();">Print Worksheet</a></li>
+                <li><a href="#" onclick="oWorksheetConfig.PrintWorkSheetSummary();">Print Summary Report</a></li>
+                <li><a href="#" onclick="oWorksheetConfig.PrintIRS();">Print 1099's</a></li>
+                <li><a href="#" onclick="oWorksheetConfig.VendorSetupReports();">Vendor Setup Report</a></li>
+                @*<li><a href="#">Print 1099's-Pdf</a></li>*@
+                @*<li class="divider"></li>
+                <li><a href="#">All Amounts</a></li>
+                <li><a href="#">$600 or More</a></li>
+                <li><a href="#">Pdf</a></li>
+                <li><a href="#">Excel</a></li>*@
+                <li class="divider"></li>
+@*                <li><a href="#">Lock Worksheet</a></li>*@
+                <li><a href="#" onclick="">Generate IRS FIRE File</a></li>
+                <li><a href="#" onclick="oWorksheetConfig.SaveWorksheet();">Save Worksheet</a></li>
+            </ul>
+        </div>
+
+
+    
+
+        <div class="col-md-12" id="divTool">
+            <div class="col-xs-12">
+                <br />
+                <div class="col-md-2">
+                   
+                        <label class="width160">Payment Date From</label>
+                        <input type="text" id="txtPayDtFrom" tabindex="1" class="datepicker form-control" />
+
+                </div>
+                <div class="col-md-2">
+                    <label class="width160">Account From</label>
+                    <input type="text" id="txtAccountFrom" tabindex="3" class="detectTab form-control" />
+
+                </div>
+                <div class="col-md-2">
+
+                        <label class="width160">Payment Number</label>
+                        <input type="text" id="txtPayNumber" tabindex="5" class="detectTab form-control"  />   
+                </div> 
+                <div class="col-md-2">
+                        <label class="width160">Amount</label>
+                        <input type="text" id="txtAmount" tabindex="6" class="detectTab form-control"  />                 
+                </div>
+                <div class="col-md-2">
+                    <label class="width70">Invoice</label>
+                    <input type="text" id="txtInvoice" tabindex="7" class="detectTab form-control"/>
+                </div>
+                <div class="col-md-2">
+                    <label class="width70">Source</label>
+                    <select id="ddlSource" multiple tabindex="8" >
+                        <option value="AP">AP</option>
+                        <option value="PC">PC</option>
+                        <option value="JE">JE</option>
+                    </select>
+                </div>
+
+                <div class="clearfix"></div><br />
+                <div class="col-md-2">
+                        <span>Payment Date To</span>
+                        <input type="text" id="txtPayDtTo" tabindex="2" class="datepicker form-control"/>
+                </div>
+                <div class="col-md-2">
+                        <label class="width160">Account To</label>
+                        <input type="text" id="txtAccountTo" tabindex="4" class="detectTab form-control" />
+                </div>
+                <div class="col-md-2">
+                    <label class="width70">Tax Year</label>
+                    <select id="ddlTaxYear" class="taxyear form-control width160" tabindex="9">
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="width70">Work State</label>
+                    <select id="ddlWorkState"  class="workstate form-control width160" tabindex="10" >
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="width70">Description</label>
+                    <input type="text" id="txtDescription" tabindex="11" class="detectTab form-control" />
+                </div>
+                <div class="col-md-2">
+                    <label class="width70">Tax Code</label>
+                    <select id="ddlTaxCode" multiple tabindex="12" >
+
+                    </select>
+                </div>    
+                <div class="clearfix"></div><br />            
+                <div class="col-md-2">
+                    <span>
+                        <input type="checkbox" id="chkTotal" tabindex="13" />Total $600 and Over
+                    </span>
+                </div>
+                <div class="col-md-3">
+                    <span>
+                        <input type="checkbox" id="chkwith1099" name="chkwith1099" tabindex="14"  onclick="oWorksheetConfig.OnTransactionChange(this, '#chkWithout1099', '#chkAll','with');"/>Vendors with 1099 transactions
+                    </span>
+                </div>
+                <div class="col-md-3">
+                    <span>
+                        <input type="checkbox" id="chkWithout1099" name="chkWithout1099" tabindex="15" onclick="oWorksheetConfig.OnTransactionChange(this, '#chkwith1099', '#chkAll','w/o');"/>Vendors w/o 1099 transactions
+                    </span>
+                </div>
+                <div class="col-md-2">
+                    <span>
+                        <input type="checkbox" id="chkAll" name="chkAll" tabindex="16" onclick="oWorksheetConfig.OnTransactionChange(this, '#chkWithout1099', '#chkwith1099','all');"/>All Vendors
+                    </span>
+                </div>
+                <div class="col-md-2">
+                    <span id="btnClear" class="btn btn-default floatRight btn-margin-bottom" onclick="oWorksheetConfig.ClearFilters()">Reset</span>
+                    <span id="btnApply" class="btn btn-default floatRight btn-margin-bottom margin-right" onclick="oWorksheetConfig.CreateFilters();">Apply</span>     
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <br />
+        
+        <div class="clearfix"></div>
+        <div id="dialog11" style="display:none;">
+        </div>
+    </section>
+}
+
+@section Body{
+<section class="content" id="dvMainDv">
+
+    <form>
+        <section class="content">
+            <div class="tab-content">
+
+                <div class="clearfix"></div>
+                <br />
+                <br />
+                <div class="col-xs-12" id="worksheet">
+                    <!--<table class="table table-hover table-responsive">-->
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="tblWorksheet">
+                            <thead>
+                                <tr>
+                                    @*<th></th>*@
+                                    <th>Payment Date</th>
+                                    <th>Payment #</th>
+                                    <th>Invoice #</th>
+                                    <th>Source</th>
+                                    <th>Tax Year</th>
+                                    <th>Work State</th>
+                                    <th>Account</th>
+                                    <th width="200">Description</th>
+                                    <th>Tax Code</th>
+                                    <th>Amount</th>
+                                    @*<th>Total</th>*@
+                                </tr>
+                            </thead>
+                            <tbody id="tblTransBody"></tbody>
+                        </table>
+                     
+                        <div id="worksheetcount" style="display:none;">
+                            <span><b>Vendor Count: </b></span><spna id="vendorcount" style="margin-right:10px;"></spna>
+                            <span><b>Form Count: </b></span><spna id="formcount" style="margin-right:10px;"></spna>
+                            <span><b>Dollar Total: </b></span><span class="floatLight">$</span><span id="dollartotal">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="SaveSuccess" class="newhidden" style="display: none; margin-top:10%">
+                <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+                    <div class="heading2" style="padding: 5px 10px;">
+                        <h5>
+                            <span id="tblResult"></span>
+                        </h5>
+                    </div>
+                    @*<div class="WhtBg">
+                            <div class="col-md-12" style="text-align: center;">
+                                <div style="height:100px;overflow-y: auto;float: left;width: 100%;">
+                                    <table style="width: 100%;">
+                                        <tbody id="tblResult"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="darkGreyNew col-lg-12">
+                        <input type="button" onclick="javascript: oWorksheetConfig.SucessOk();" id="btnSaveOK" class="btn btn-success floatLeft" style="display: inline;" value="OK">
+                    </div>
+                </div>
+            </div>
+            <div id="fade" class="black_overlay"></div>
+            <div id="DivCheckRun"></div>
+            <div id="dialog11"></div>
+            <div id="dvFilterDv"></div>
+        </section>
+    </form>
+</section>
+}
+@section Javascript{
+
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/Reports/ReportEngine.js"></script>
+    <script src="~/Scripts/AccountsPayable/1099Worksheet.js"></script>
+
+}
+

@@ -1,0 +1,440 @@
+﻿@{
+    ViewBag.Title = "Bank Reconciliation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#"> Banking <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Bank Reconciliation </li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+                <li class=""><a onclick="AtlasNavigation.toModule('Check Cycle'); return false;" href="javascript:void(0);">Print Checks</a></li>
+                <li class=""><a href="void">VOID</a></li>
+                <li class=""><a href="VoidUnissued">VOID Unissued</a></li>
+                <li class="active" id="liBRtab"><a href="Reconciliation">Bank Reconciliation</a></li>
+                <li class=""><a href="POSPay">POS Pay</a></li>
+            </ul>
+        </div>
+        <div style="float: right;" id="dvVoid" class="displayNone">
+            <p style="float: left; margin-right: 30px;">Bank :<b><span id="spanBank"></span></b></p>
+            <p style="float: left;">Bank Reconcilation: <b><span id="spanReconcilation"></span></b></p>
+        </div>
+        <div class="floatRight" id="DvSearch">
+            <table>
+                <tr>
+                    <td>Bank:</td>
+                    <td>
+                        <input type="text" id="txtBankName" tabindex="1" class="SearchBank form-control marb0" onblur="funBankCheck();" autofocus />
+                        <input type="hidden" id="hdnBank" />
+                    </td>
+                    <td>
+                        <button tabindex="2" style="position:relative;margin-left:10px;color: green;" onclick="javascript: GetReconcilationData();"><i class="fa fa-sign-out fa-2x"></i></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+}
+
+
+@section Body{
+
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="tab-content">
+                <!-- Tab content -->
+
+                <div class="col-xs-12">
+
+                    <div id="dvFilter" style="margin-top:10px; margin-bottom:0px;" class="displayNone">
+                        <div>
+                            <div style="width: 50%;float: left;">
+                                <table class="table table-hover table-responsive" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Statement Date</th>
+                                            <th>Statement Ending Amount</th>
+                                            <th>Prior Statement Balance</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div style="float: left; border: solid 1px gray; padding: 0px 4px 0 0;">
+                                                    <input id="txtStmtDate" tabindex="3" type="text" class="form-control floatLeft marb0 dtpkStmtDate " placeholder="MM/DD/YYYY" onchange="DateRangeCheck();" style="width: 100px; border: none; margin-bottom: 0px;" />
+                                                    <i class="fa fa-calendar floatLeft padding8" style="font-size:17px;padding-top:5px;"></i>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input type="text" id="txtStmtAmt" tabindex="4" class="form-control marb0">
+                                            </td>
+                                            <td><span id="spanPriorBalance"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div>
+                                    <span class="StyleCls"> Reconciled Balance :</span><span class="StyleCls" id="spanRecDifference">$0.00</span>
+
+                                    <span class="StyleCls"> Difference :</span><span class="StyleCls" id="spanDifference">$0.00</span>
+                                </div>
+                            </div>
+                            <div style="width: 49%;float: right;">
+                                <table class="table table-hover table-responsive" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:200px;"></th>
+                                            <th style="width:150px;">Cleared</th>
+                                            <th style="width:190px;">Outstanding</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>Deposits</td>
+                                            <td><span id="debitCleared">$0.00</span></td>
+                                            <td><span id="debitOutStanding">$0.00</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Payments & Fees</td>
+                                            <td><span id="creditCleared">$0.00</span></td>
+                                            <td><span id="creditOutStanding">$0.00</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Adjustment</td>
+                                            <td><span id="spanAdjustmentCleared">$0.00</span></td>
+                                            <td><span id="spanAdjustmentOutStanding">$0.00</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="midMenu marginTop10 widget-head" style="float: left;width: 100%;margin-top: 30px !important;">
+                            <ul style="float: left;margin-right: 25px;">
+                                <li id="liTrans" class="active"><a href="javascript: BankTransactionList();">Bank Transaction</a></li>
+
+                                <li id="liAdjust"><a href="javascript: Adjustment();">Adjustment</a></li>
+
+                            </ul>
+                            <input tabindex="6" type="checkbox" id="chkDisplayAll" onchange="javascript: UpdateCheckProperty(1);" /><b> Display All</b>
+                            <input tabindex="7" type="checkbox" id="chkMarkVoided" onchange="javascript: UpdateCheckProperty(2);" /><b> Mark voided/Canceled as Cleared</b>
+                            <div id="divBankRecCSVUpload" class="floatRight">
+                                <input type="file" id="fileCSV" accept=".csv" class="hidden"/>
+                                <span id="spanSetupRequired" hidden>Please configure your Bank's Statement CSV upload in the Bank Setup module.</span>
+                                <span id="spanCSVConfirm" hidden>Items highlighted below in blue will be marked as cleared.</span>
+                                <input type="button" id="CSVConfirm" onclick="G_BankReconciliation.CSVApply('CONFIRM')" value="Confirm" class="hidden" />
+                                <input type="button" id="CSVCancel" onclick="G_BankReconciliation.CSVApply('CANCEL')" value="Cancel" class="hidden" />
+                            </div>
+                        </div>
+
+
+
+                        <div id="dvTrans" style="margin-top:10px; margin-bottom:0px;">
+                            <div class="fixed-table-container">
+                                <div class="header-background"> </div>
+                                <div class="fixed-table-container-inner">
+                                    <div id="dvFixed">
+
+                                        <table class="table table-hover table-responsive" id="tblTrans" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th><div class="th-inner"><input tabindex="7" type="checkbox" id="chkInvoiceList" onclick="UpdateCheckProperty(3);"> Select</div></th>
+                                                    @*<th><div class="th-inner"># Transaction</div></th>*@
+                                                    <th style="width:133px;"><div class="th-inner">Check # /Document #</div></th>
+                                                    <th><div class="th-inner">Date</div></th>
+                                                    <th><div class="th-inner">Payee</div></th>
+                                                    <th><div class="th-inner">Description</div></th>
+                                                    <th><div class="th-inner">Check Type</div></th>
+                                                    <th><div class="th-inner">Debits</div></th>
+                                                    <th><div class="th-inner">Credits</div></th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody id="tblTransactionListTBody"></tbody>
+                                        </table>
+
+                                        <table class="table table-hover table-responsive displayNone" id="tblAdjust" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th><div class="th-inner">Select</div></th>
+                                                    <th><div class="th-inner">Description</div></th>
+                                                    @*<th><div class="th-inner">Mark as deleted</div></th>*@
+                                                    @*<th><div class="th-inner">Adjustment #</div></th>*@
+                                                    <th><div class="th-inner">Date</div></th>
+                                                    <th><div class="th-inner">Amount</div></th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody id="tblAdjustTBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- /.content -->
+        </div>
+        <div class="col-lg-12">
+            <div id="dvBtn" class="displayNone" style="padding: 0px; margin: 0px; list-style-type: none; position: fixed; bottom: 5px; width: 30%; right: 35px;">
+                <a class="btn btn-default floatRight margin-r-5" id="btnComplete" style="background-color:green !important;" href="javascript:Complete();">Complete</a>
+                <button class="btn btn-default floatRight margin-r-5" tabindex="5" id="btnStart" onclick="javascript:GenerateReconcilation();">Start</button>
+                <div class="btn-group  floatRight margin-right" id="btnSave">
+                    <button type="button" class="btn toggle-button" id="btnOperation" onclick="funSave();">Save</button>
+                    <button type="button" data-toggle="dropdown" id="ddlOption" class="btn btn-primary dropdown-toggle toggle-button-item "><span class="caret"></span></button>
+                    <ul class="dropdown-menu toggle-button-item-dropdown">
+                        <li><a href="javascript:SaveCancel()" onclick="">Save and Close</a></li>
+                    </ul>
+                </div>
+                <a class="btn btn-default floatRight margin-r-5" id="btnCancel" href="javascript:Cancel();">Cancel</a>
+                @*<a class="btn btn-default floatRight margin-r-5" id="btnDelete" style="background-color: red !important;" href="javascript:Delete();">Delete</a>*@
+
+                <a class="btn btn-default floatRight margin-r-5 hidden" id="btnProcess" href="javascript:ClearChecks();">Process</a>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+    <div id="dvComplete-nonzero" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Cannot Complete Bank Reconcilation</h5>
+                <p id="pComplete-nonzero">
+                    You cannot complete this Bank Reconcilation with an Unreconclied Difference other than $0.00.
+                </p>
+                <p>
+                    <br /><br />
+                    Would you like to save instead ?
+                    <br />
+                </p>
+                <a href="javascript: funSave();" class="dialog-confirm-button">YES</a>
+                <a href="javascript: void(0);" class="dialog-reject-button">NO</a>
+            </div>
+        </div>
+    </div>
+    <div id="dvComplete-delta" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Unsaved Changes</h5>
+                <p id="pComplete-unsaved">
+                    There are unsaved changes to your bank reconciliation. You must save these changes before you can complete your bank reconciliation. <b>Would you like to save these changes and complete the bank reconciliation</b>?
+                </p>
+                <a href="javascript: funSave(Complete);" class="dialog-confirm-button">YES</a>
+                <a href="javascript: void(0);" class="dialog-reject-button">NO</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="dvDelete" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Delete Bank Reconciliation</h5>
+                <p>
+                    This will delete this Bank Reconciliation and remove all records.
+                    <br /><br />
+
+                    Are you sure you'd like to do this ?
+                    <br />
+                </p>
+                <a href="javascript:ConfirmDelete();" class="dialog-confirm-button">YES</a>
+                <a href="javascript:hide(dvDelete);" class="dialog-reject-button">NO</a>
+            </div>
+        </div>
+    </div>
+    <div id="dvDateRange" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Bank Statement Reconciliation Date Range</h5>
+                <p>
+                    Date entered in the Statement Date field exceeds 35 days since your last Bank Statement Date. Is this date correct?
+                    <br /><br />
+                </p>
+                <a href="#" class="dialog-confirm-button" onclick="setFocus = 'txtStmtAmt'; $('#txtStmtAmt').select();">YES</a>
+                <a href="#" class="dialog-reject-button" onclick="setFocus = 'txtStmtDate'; $('txtStmtDate').focus()">NO</a>
+            </div>
+        </div>
+    </div>
+    <div id="dvNewComplete" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+
+            <div class="dialog-info" style="max-width: 455px !important;">
+                <h5>Print Bank Reconciliation Reports</h5>
+                <p>
+                    <div class="pull-left"><input type="checkbox" id="chkDetail" /> Print Detail Bank Reconciliation Report</div>
+
+                    <div class="pull-right" style="margin-left: 10px;"><input type="checkbox" id="chkDetailUnCleared" /> Include Uncleared </div>
+
+                    <div class="pull-left">
+                        <input type="checkbox" id="chkSummary" /> Print Summary Bank Reconciliation Report
+                    </div>
+                    <div class="pull-right">
+                        <input type="checkbox" id="chkSummaryUnCleared" style="margin-left: 10px;" /> Include Uncleared
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                </p>
+                <a href="javascript: PrintReports();" class="dialog-reject-button">Print</a>
+                <a href="javascript: CloseReport();" class="dialog-confirm-button">Close</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="dvCancel" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Cancel Bank Reconciliation?</h5>
+                <p>
+                    This will delete this bank reconcilation, and you will have to start a new bank reconciliation for this bank.
+                    <br />
+                    Are you sure you'd like to do this?
+                    <br />
+                </p>
+                <a href="javascript: ConfirmCancel();" class="dialog-confirm-button">YES</a>
+                <a href="javascript: hide(dvCancel);" class="dialog-reject-button">NO</a>
+            </div>
+        </div>
+    </div>
+    @*
+        <div class="newhidden" id="dvConfirm" style="display: none;">
+            <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone top15" style="background-color: #4cbf63;">
+                <div class="WhtBg" style="background:none;">
+                    <div class="col-md-12">
+                        <p style="color:#fff;font-family: comberia;font-size: 17px;">
+                            This Bank already has a reconcilation started.
+                            You are now editing bank reconcilation - <span id="spanReConPopup"></span>
+                        </p>
+                    </div>
+                    <!-- // Tabs END -->
+                </div>
+                <div class="darkGreyNew col-lg-12">
+
+                    <a class="btn btn-success floatLeft" style="background: #1d8131; width: 100%;" href="javascript:hideDiv('dvConfirm');">OK</a>
+                </div>
+            </div>
+        </div>
+    *@
+    <div id="fade" class="black_overlay"></div>
+    <div id="DivCheckRun"></div>
+
+    <div id="dvReportClose" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-check"></i></div>
+            <div class="dialog-info">
+                <span>Your Bank Reconciliation <b>[<span id="spnRecId"></span>]</b> for Bank <b>"<span id="spnBankName"></span>"</b> is now complete!</span>
+                <br />
+                <br />
+                <br />
+                <a href="/AccountPayable/Reconciliation" class="dialog-reject-button">Close</a>
+            </div>
+        </div>
+    </div>
+}
+
+@section Javascript{
+
+
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.1/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                fixedHeader: {
+                    header: true,
+                    footer: true
+                }
+            });
+        });
+    </script>
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/fixedheader/3.1.1/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+
+    <script src="~/Scripts/AccountsPayable/Reconcilation.js"></script>
+    <script src="~/Scripts/AccountsPayable/Banking/BankRec.js"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <script src="~/Scripts/Reports/ReportEngine.js"></script>
+    <script>
+        // This is an example jQuery snippet that makes the dialogs work
+        $(document).ready(function () {
+
+            // We have two control functions that show or hide dialogs
+            function showDialog(id) {
+
+                // Find the dialog and show it
+
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+
+                // Center it on screen
+
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+
+            }
+            function hideAllDialogs() {
+                // Hide all visible dialogs
+                $('.dialog-overlay').fadeOut();
+            }
+
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+                if (typeof setFocus !== 'undefined') {
+                    $(`#${setFocus}`).focus();
+                }
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+
+                showDialog(toShow);
+            });
+        });
+
+    </script>
+    <style type="text/css">
+        .dialog-card {
+            top: 15%;
+        }
+
+        #tblTransactionListTBody tr td {
+            font-family: comberia;
+        }
+
+        .table-hover th {
+            padding: 0px 4px !important;
+        }
+
+        .borderRed {
+            border: solid 2px Red;
+        }
+    </style>
+}

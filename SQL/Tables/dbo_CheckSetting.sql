@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[CheckSetting] (
+  [CheckSettingID] [int] IDENTITY,
+  [CompanyID] [int] NOT NULL,
+  [Style] [nvarchar](50) NOT NULL,
+  [Prefix] [nvarchar](10) NULL,
+  [Length] [nvarchar](10) NOT NULL,
+  [StartNumber] [nvarchar](20) NULL,
+  [EndNumber] [nvarchar](20) NULL,
+  [Collated] [nvarchar](50) NOT NULL,
+  [PrintZero] [bit] NOT NULL,
+  [Copies] [int] NOT NULL,
+  [TopMargin] [decimal](18, 2) NOT NULL,
+  [BottomMargin] [decimal](18, 2) NOT NULL,
+  [LeftMargin] [decimal](18, 2) NOT NULL,
+  [RightMargin] [decimal](18, 2) NOT NULL,
+  [Status] [nvarchar](20) NOT NULL,
+  [BankID] [int] NOT NULL,
+  [SectionOne] [nvarchar](50) NULL,
+  [SectionTwo] [nvarchar](50) NULL,
+  [SectionThree] [nvarchar](50) NULL,
+  [Prodid] [int] NOT NULL,
+  [CreatedDate] [datetime] NOT NULL,
+  [ModifiedDate] [datetime] NULL,
+  [CreatedBy] [int] NOT NULL,
+  [ModifiedBy] [int] NULL,
+  CONSTRAINT [PK_checksetting] PRIMARY KEY CLUSTERED ([CheckSettingID])
+)
+GO

@@ -1,0 +1,211 @@
+﻿@{
+    ViewBag.Title = "Setting>>Groups";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Groups</h2>
+@section BreadCrumb{
+    <form>
+        <section class="content-header">
+            <ol class="breadcrumb floatLeft">
+                <li><a href="#"> Setting <i class="fa fa-caret-right"></i></a></li>
+                <li class="active">Users <i class="fa fa-caret-right"></i></li>
+                <li id="LiNewGroup" class="active">Groups </li>
+            </ol>
+
+
+
+            <div class="pull-right paddingNone white_space col-lg-6 col-md-9 col-sm-12 col-xs-12">
+                <a class="btn btn-default pull-left marginRight11" href="javascript:funAddGroup();" id="AbtnAddGroup">+ Add Group</a>
+                <select class="form-control width135 floatLeft marginRight10 marginLeft10 marginBottomNone" id="ddlGroupList"></select>
+                <div class="midMenu pull-left">
+                    <ul>
+                        <li class="active"><a href="#">Groups</a></li>
+                        <li><a href="~/Setting/ManageUsers">Users</a></li>
+
+                    </ul>
+                </div>
+                <a id="btnCancelGroup" class="btn btn-primary pull-right " style="display:inline;" href="~/Setting/Groups">Cancel</a>
+                <a class="btn btn-success pull-right marginRight10" style="display:inline;" id="btnSaveGroup" >Save</a>
+                @* onclick="javascript: funSaveGroups();" *@
+            </div>
+
+
+
+            <div class="clearfix"></div>
+        </section>
+    </form>
+}
+
+@section Body{
+    <form>
+        <section class="content">
+            <div class="row fontAriel">
+                <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 pad0">Company </div>
+                    <div class="col-lg-9 col-md-8 col-sm-6 col-xs-12 pad0">
+
+                        <div id="DvMultipleDDL">
+                            <input type="text" class="form-control width100" disabled id="txtGroupDropDown" style=" width: 100% !important;" placeholder="Select Company" />
+                            <div id="DvGroup" style="display: none; width:100%!important;" class="GroupUl">
+                                <ul id="UlGroup" style="list-style: none; width:100%!important;" class=""></ul>
+
+                            </div>
+                            <span class="GroupPosition" onclick="javascript: DvOpenClose();"><i class="fa fa-caret-down"></i></span>
+                        </div>
+
+
+
+
+                    </div>
+                    @*<option value="0" selected> Select</option>*@
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 col-lg-offset-1">
+                    <div class=" col-lg-3 col-md-4 col-sm-6 col-xs-12 floatLeft marginRight10">
+
+                        <input type="checkbox" id="ChkActive"> Active
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 pad0">
+                        <input type="text" id="txtGroupName" class="form-control input-required floatLeft marginRight10 width119" onblur="javascript: CheckGroupNameDuplicacy();">
+                    </div>
+                    @*<a href="#" class="btn btn-success  floatLeft" id="btnSaveGroup">Save Group</a>*@
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 pull-right">
+                    @*<a href="~/Setting/ManageUsers" class="btn btn-default floatRight"> <i class="fa fa-reply"></i> Back To Users</a>*@
+                </div>
+                <div class="col-xs-12">
+                    <div class="" style="margin-top:10px; margin-bottom:0px;">
+                        <!--<table class="table table-hover table-responsive">-->
+                        <div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="dataTables_length" id="example_length">
+                                        <label>Show <select name="example_length" aria-controls="example" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label>
+                                    </div>
+                                </div><div class="col-sm-6"><div id="example_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="example"></label></div></div>
+                            </div>
+                            @*<div class="row">*@
+                            <div style="height:30px;">
+                                <div id="DvSuccess" style="display:none;"><span style="color: green;margin: 41%;">Record Updated Sucessfully.</span></div>
+                            </div>
+                            <div class="col-sm-12">
+                                <table id="TblModule" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" cellspacing="0" width="100%" role="grid" aria-describedby="example_info" style="width: 100%;">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Module: activate to sort column descending" style="width: 376px;">Module</th>
+                                            <th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Module: activate to sort column descending" style="width: 376px;">Function</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Access Rights: activate to sort column ascending" style="width: 337px;">Access Rights</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+
+                            </div>
+                            @*</div><div class="row"><div class="col-sm-5"><div class="dataTables_info" id="example_info" role="status" aria-live="polite">Showing 1 to 6 of 6 entries</div></div><div class="col-sm-7"><div class="dataTables_paginate paging_simple_numbers" id="example_paginate"><ul class="pagination"><li class="paginate_button previous disabled" id="example_previous"><a href="#" aria-controls="example" data-dt-idx="0" tabindex="0">Previous</a></li><li class="paginate_button active"><a href="#" aria-controls="example" data-dt-idx="1" tabindex="0">1</a></li><li class="paginate_button next disabled" id="example_next"><a href="#" aria-controls="example" data-dt-idx="2" tabindex="0">Next</a></li></ul></div></div></div>*@
+                            @*</div>*@
+                        </div>
+                        <div class="">
+                            <div class="col-md-12 col-lg-12 colsm-12 col-xs-12 tabGroup pad0 positionFixed" id="dvwhlist" style="display:none;">
+                                <a id="prv-testimonial" class="fa fa-arrow-circle-left pull-left botprearrow fontSize20" href="#"><i></i></a>
+                                <div class="botMenu">
+                                    <ul id="UlGroupName">
+                                        <li><a href="#">+ Add Grouop</a></li>
+                                    </ul>
+                                </div>
+                                <a id="nxt-testimonial" class="fa fa-arrow-circle-right  botnextarrow fontSize20" href=" #"><i></i></a>
+                            </div>
+                            <!-- /.box -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+}
+
+@section Javascript{
+
+<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.1/js/dataTables.fixedHeader.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.datatables.net/fixedheader/3.1.1/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/Content/DataTable/dataTables.colVis.css" rel="stylesheet" />
+
+    <script src="~/Scripts/CompanySettings/Groups.js"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <style>
+        .GroupPosition {
+            display: inline;
+            position: absolute;
+            right: 6px;
+            z-index: 9;
+            top: 5px;
+            font-size: 18px;
+        }
+
+        .GroupUl {
+            color: #474747;
+            display: block;
+            left: 0px;
+            padding: 10px;
+            position: absolute;
+            top: 30px;
+            z-index: 9;
+            background-clip: padding-box;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
+            width: 100% !important;
+        }
+
+        .col-sm-12 {
+            overflow: auto !important;
+        }
+
+
+        .RightIcon:before {
+            content: "\f138";
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: inherit;
+            font-size: 16px;
+            padding-right: 0.5em;
+        }
+
+        .DownIcon:before {
+            content: "\f13a";
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: inherit;
+            font-size: 16px;
+            padding-right: 0.5em;
+        }
+        tr:hover {
+    background: #f4f4f4 !important;
+    }
+    </style>
+<script>
+        // Change the selector if needed
+        var $table = $('table.scroll'),
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
+
+        // Adjust the width of thead cells when window resizes
+        $(window).resize(function () {
+            // Get the tbody columns width array
+            colWidth = $bodyCells.map(function () {
+                return $(this).width();
+            }).get();
+
+            // Set the width of thead columns
+            $table.find('thead tr').children().each(function (i, v) {
+                $(v).width(colWidth[i]);
+            });
+        }).resize(); // Trigger resize handler
+</script>
+}

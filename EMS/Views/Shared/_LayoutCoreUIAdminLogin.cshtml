@@ -1,0 +1,49 @@
+@{
+    ViewBag.Title = "EMS Atlas Accounting Admin Login";
+}
+
+<!--
+ * CoreUI - Open Source Bootstrap Admin Template
+ * version v1.0.0-alpha.5
+ * link http://coreui.io
+ * Copyright (c) 2017 creativeLabs ?ukasz Holeczek
+ * license MIT
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
+    <title>@ViewBag.Title</title>
+    <!-- Icons -->
+    <link href="~/Content/AdminPanel/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/AdminPanel/css/simple-line-icons.css" rel="stylesheet">
+    <!-- Main styles for this application -->
+    <link href="~/Content/AdminPanel/css/style.css" rel="stylesheet">
+    <link href="~/Content/AdminPanel/css/Atlas-Admin.css" rel="stylesheet">
+    <link href="~/Scripts/MultiSelectDropDown/jquery.multiselect.css" rel="stylesheet" />
+
+</head>
+<body class="app flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card-group mb-0">
+                    <div class="card p-4">
+                        <div class="card-block">
+                            @RenderSection("body", required: false)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/notify.js"></script>
+
+    @RenderSection("Javascript", required: false)
+
+</body>
+</html>

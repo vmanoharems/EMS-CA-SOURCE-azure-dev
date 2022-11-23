@@ -1,0 +1,400 @@
+﻿@{
+    ViewBag.Title = "Ledger>>JournalEntries";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header">
+        <div style="width: 45% !important;float: left;">
+            <ol class="breadcrumb floatLeft">
+                <li><a href="#">Ledger <i class="fa fa-caret-right"></i></a></li>
+                <li><a href="#"> Journal Entries <i class="fa fa-caret-right"></i></a></li>
+                <li id="LiBreadCrumb"><a href="#"> JE History <i class="fa fa-caret-right"></i></a></li>
+                <li class="active" style="display:none;" id="JhistoryTransactionBreadCrumb">
+                    <a href="#" id="prev" class="btn-prenext">&laquo; Prev</a>
+                    Trasaction # (<span id="SpnDCTranNumber"></span>)
+                    <a href="#" id="next" class="btn-prenext">Next &raquo;</a>
+                </li>
+            </ol>
+        </div>
+        <div class="midMenu">
+            <ul>
+                <li><a href="JEDistributionChange">Distribution Change</a></li>
+                <li > <a href="JEManualEntry">Add JE</a></li>
+                <li><a href="JEAudit">Audit</a></li>
+                <li class="active"><a href="JEPostingHistory">JE History</a></li>
+            </ul>
+        </div>
+        <div class="form-group col-xs-6 col-sm-4 col-lg-1 pad0" id="DvPostDate" style="display:none;">
+
+            <div class="input-group" style="float: left; margin-left: 9px; width: 100%;display:none;">
+                <input type="text" class="form-control pull-right datepicker width90" id="txtPostDate" placeholder="MM/DD/YYYY">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </div>
+            </div>
+        </div>
+        @*<span onclick ="javascript: ShowhideFilter();">7894561230</span>*@
+        <a href="#" style="display:none;" id="btnFilter" onclick="javascript: ShowhideFilter();"><i style="font-size: 24px;" class="fa fa-filter"></i>Filter</a>
+
+        <a href="#" class="btn btn-default floatRight" id="btnSaveAuditPost" style="display:none;">Post</a>
+
+       
+        <a href="#" class="btn btn-default floatRight" onclick="javascript: ShowhideFilter();" style="display:none;"  id="btnApply">Apply</a>
+
+        <a href="#" class="btn btn-default floatRight" onclick="javascript:funBack();" id="btnBack" style="display:none;"><< Back</a>
+        <a href="#" class="btn btn-default floatRight atlas-hide" id="btnSaveJE" >Save</a>
+        <a href="#" class="btn btn-default floatRight" onclick="" id="btnReverse" style="margin: 0 9px; display:none;">Reverse</a>
+       
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+    <form>
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
+                <div class="col-xs-12">
+                    <div class="widget-body overflowNone">
+                        <div id="DvCriteria" style="display:none;">
+                            <table cellspacing="0" width="100%" class="table table-hover table-responsive" id="TblEditCriteria" style="position: absolute; width:96%;">
+                                <tbody id="TblEditCriteriaTBody">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-content" id="DvTab">
+                            <div id="tabPostingHistory" class="tab-pane widget-body-regular active">
+                                <div class="table-responsive xsborNone" style="margin-top:10px; margin-bottom:0px;">
+                                    <div class="col-lg-7 col-md-8 col-sm-12 col-xs-12 padl0" style="display:inline;">
+                                        <form class="form-horizontal">
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-5 col-md-4 col-sm-12 col-xs-12 table-responsive pad0 marb10" style="display:none;">
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <table class="table table-hover table-responsive" id="tblJEListPsoting">
+                                        <thead id="TheadJEListPsoting">
+                                            <tr>
+                                                <th style="width: 5%;">Transaction #</th>
+                                                <th style="width: 5%;">CO</th>
+                                                <th style="width: 8%;">Document #</th>
+                                                <th style="width: 10%;">Document Date</th>
+                                                <th style="width: 10%;">Posted Date</th>
+                                                <th style="width: 8%;">Period</th>
+                                                <th style="width: 5%;">Type</th>
+                                                <th style="width: 5%;"># Lines</th>
+                                                <th style="width: 15%;">Debit</th>
+                                                <th style="width: 8%;">Credit</th>
+                                                <th style="width: 3%;">Currency</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblJEListPostingTBody"></tbody>
+                                        <tfoot id="tblTfoot">
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <div class="table-responsive" style="height:450px;display:none;" id="tblJEPostingHistory">
+                                        <div class="col-xs-12" id="JHistoryAuditListByJEDetail" style="display:none;">
+                                            <select id="ddlClosePeriod" tabindex="1" style="width:146px;" class="form-control atlas-hide floatRight" onchange="javascript: funGetClosePeriodDetail();" disabled></select>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>CO</label>
+                                                    <select id="ddlCompany" tabindex="1" style="width:146px;" class="form-control" onchange="javascript: funGetClosePeriodDetail();" disabled></select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Currency</label>
+                                                    <select id="ddlCurrency" tabindex="2" class="form-control select2 width70"></select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Document #</label>
+                                                    <input type="text" id="txtReferenceNo" tabindex="3" style="width:146px;" class="form-control" disabled />
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Description</label>
+                                                    <input type="text" tabindex="6" id="txtDescription" class="form-control" />
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Posted Date</label>
+                                                    <input type="text" class="form-control datepicker" id="txtTransactionDate" tabindex="4" style="width:146px;" placeholder="MM/DD/YYYY" disabled>
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Type</label>
+                                                    <select id="ddlType" class="form-control " tabindex="5" style="width:146px;" disabled>
+
+                                                        <option value="JE">JE</option>
+                                                        <option value="PR">PR</option>
+                                                        <option value="WT">WT</option>
+                                                    </select>
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="clearfix"></div>
+
+
+
+                                            <table class="table table-hover table-responsive" id="tblJEPostingHistoryDetail">
+                                                <thead id="tblJEPostingHistoryThead"></thead>
+                                                <tbody id="tblJEPostingHistoryTBody"></tbody>
+                                            </table>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <!-- /.box -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+    <div id="DeletePopup" class="newhidden" style="display: none; margin-top:10%">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('DeletePopup');">X</a></div>
+            <div class="heading2"><h4>Are you sure want to delete this record </h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+
+
+
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <input type="hidden" id="hdnDeleteRowAudit" />
+                <a href="#" onclick="javascript: funDeleteRecordAuditTab();" class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+
+
+                <a href="javascript:hideDiv('DeletePopup');" id="btnCloseStartingValue" class="btn btn-primary floatRight">No</a>
+            </div>
+        </div>
+    </div>
+    <div id="DeleteAuditPopup" class="newhidden" style="display: none; margin-top:10%">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('DeleteAuditPopup');">X</a></div>
+            <div class="heading2"><h4>Delete Journal Entry </h4></div>
+
+            <div class="WhtBg">
+                <div class="col-md-12">
+
+                    <p>This will delete this unposted Journal Entry. Are you sure ?</p>
+
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <input type="hidden" id="hdnDeleteRowAudit" />
+                <a href="#" onclick="javascript: funDeleteJEAudit();" class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+
+
+                <a href="javascript:hideDiv('DeleteAuditPopup');" id="btnCloseStartingValue" class="btn btn-primary floatRight">No</a>
+            </div>
+        </div>
+    </div>
+    <div id="CancelAuditPopup" class="newhidden" style="display: none; margin-top:10%">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+
+            <div class="heading2"><h4>Cancel Journal Entry Edit</h4></div>
+
+            <div class="WhtBg">
+                <div class="col-md-12">
+
+                    <p>This will Cancel your changes to this unposted Journal Entry.</br> Are you Sure ?</p>
+
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <input type="hidden" id="hdnDeleteRowAudit" />
+                <a href="#" onclick="javascript: funCancelJEAudit();" class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+
+
+                <a href="javascript:hideDiv('CancelAuditPopup');" id="btnCloseStartingValue" class="btn btn-primary float-right">No</a>
+            </div>
+        </div>
+    </div>
+<div id="SaveSuccess" class="newhidden" style="display: none; margin-top:10%">
+    <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+
+
+        <div class="WhtBg">
+            <div class="col-md-12">
+                <h4 style="color:black;">
+                    Your Journal Entry has been saved with the following Transaction #[<span id="spnTransId"></span>]
+                </h4>
+            </div>
+            <!-- // Tabs END -->
+        </div>
+        <div class="darkGreyNew col-lg-12">
+            <input type="hidden" id="hdnDeleteRowAudit" />
+            <input type="button" id="spnSaveOk" onclick="javascript: funSaveOkResponse();" class="btn btn-success floatLeft" style="display: inline;" value="OK" />
+        </div>
+    </div>
+</div>
+<div id="RereverseJE" class="newhidden" style="display: none; margin-top:10%">
+    <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+        <div class="heading2"><h4>Reverse Journal Entry</h4></div>
+        <div class="WhtBg">
+            <div class="col-md-12">
+                <p><span id="spnMsgReversal"></span></p>
+                <input type="hidden" id="hdnReverseValue" />
+                <input type="hidden" id="hdnReverseSource" />
+                <input type="hidden" id="hdnReverseCurrentStatus" />
+            </div>
+        </div>
+        <div class="darkGreyNew col-lg-12">
+            <input type="hidden" id="hdnDeleteRowAudit" />
+            <a href="#"  onclick="javascript: funReverse();" class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+            <a href="javascript:hideDiv('RereverseJE');" class="btn btn-primary floatRight">No</a>
+        </div>
+    </div>
+</div>
+}
+@section Javascript{
+
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.1/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            fixedHeader: {
+                header: true,
+                footer: true
+            }
+        });
+    });
+    </script>
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/fixedheader/3.1.1/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script>
+    // Change the selector if needed
+    var $table = $('table.scroll'),
+        $bodyCells = $table.find('tbody tr:first').children(),
+        colWidth;
+
+    // Adjust the width of thead cells when window resizes
+    $(window).resize(function () {
+        // Get the tbody columns width array
+        colWidth = $bodyCells.map(function () {
+            return $(this).width();
+        }).get();
+
+        // Set the width of thead columns
+        $table.find('thead tr').children().each(function (i, v) {
+            $(v).width(colWidth[i]);
+        });
+    }).resize(); // Trigger resize handler
+    </script>
+
+
+
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+
+<link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui.js"></script>
+    @*<script src="~/Scripts/Ledger/JournalEntry.js"></script>*@
+    <script src="~/Scripts/Ledger/PostingHistory.js"></script>
+    
+    <script type="text/javascript">
+
+        function myFunction() {
+            $('#filterDiv').show();
+        }
+
+    </script>
+    <style>
+        .table-hover td {
+            padding: 3px 0px 3px 10px !important;
+        }
+
+
+
+        .green-color span, .green-color label {
+            color: green;
+        }
+
+        .red-color span, .red-color label {
+            color: red;
+        }
+
+        .width40 {
+            width: 45px;
+            border: 1px solid #ccc;
+        }
+
+            .width40 input {
+                width: 100%;
+            }
+
+        .width100 {
+            width: 120px;
+            border: 1px solid #ccc;
+        }
+
+            .width100 input {
+                width: 100%;
+            }
+
+        .width75 {
+            width: 75px;
+            border: 1px solid #ccc;
+        }
+
+            .width75 input {
+                width: 100%;
+            }
+
+        .width95 {
+            width: 95px;
+            border: 1px solid #ccc;
+        }
+
+            .width95 input {
+                width: 100%;
+            }
+
+        .width35 {
+            width: 100px;
+            border: 1px solid #ccc;
+        }
+
+            .width35 input {
+                width: 35%;
+            }
+
+        .table-hover td {
+            padding: 0px !important;
+        }
+    </style>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+}

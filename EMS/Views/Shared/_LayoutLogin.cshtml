@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>EMS - @ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/css/AdminLTE.min.css" rel="stylesheet" />
+</head>
+<body class="login" id="app-body">
+    @RenderSection("body", required: false)
+    <script src="~/Content/js/jQuery-2.1.4.min.js"></script>
+    <script src="~/Scripts/AtlasUtilities/aes-js.js"></script>
+    @RenderSection("Javascript", required: false)
+</body>
+</html>

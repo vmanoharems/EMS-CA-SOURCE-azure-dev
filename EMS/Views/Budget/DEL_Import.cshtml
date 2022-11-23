@@ -1,0 +1,428 @@
+﻿@{
+    ViewBag.Title = "Budget>>Import";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header ">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Budget <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#">Import <i class="fa fa-caret-right"></i></a></li>
+            <li class="active"><span id="spanBreadCumImport"></span> </li>
+        </ol>
+        <div class=" floatRight paddingnone white_space col-lg-6 col-md-9 col-sm-12 col-xs-12">
+            <a id="UploadBudget" href="javascript:CheckBudgetCOA();" class="blueText underLine floatLeft marginRight11"><i class="fa fa-upload"></i> Budget File</a>
+            <ul class="midMenu floatLeft marginRight10 marginBot5">
+                <li id="liNewBudget" class="liComDet" style="border-bottom: 30px solid #337ab7;"><a href="javascript:AddNewBudget();" style="color:#fff !important;">+New Budget</a></li>
+            </ul>
+            <select class="form-control width135 floatLeft marginRight10" id="ddlBudgetList" onchange="javascript: getBudgetDetailByID();"></select>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="col-xs-12">
+                <div class="table-responsive" style="margin-top:10px; margin-bottom:0px;">
+                    <table class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline">
+                        <tbody id="tblBudget"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+
+    <div id="PopNewBudget" class="newhidden" style="display: none;">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('PopNewBudget');">X</a></div>
+            <div class="heading2"><h4>New Budget </h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label> Budget Name </label>
+                        <input id="txtBudget" placeholder="Budget Name" type="text" class="form-control input-required">
+                        <label> Description </label>
+                        @*<input id="txtDescription" placeholder="Description" type="text" class="form-control input-required">*@
+                        <textarea id="txtDescription" class="form-control input-required"></textarea>
+                    </div>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a href="javascript:SaveNewBudget();" class="btn btn-success floatLeft">Save</a>
+                <a href="javascript:hideDiv('PopNewBudget');" class="btn btn-primary floatRight">Cancel</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="uploadBudget" class="newhidden" style="display: none;">
+        <div class="popup col-md-7 col-lg-8 col-sm-9 col-xs-12 floatNone">
+
+            <img id="dvLoader" src="~/Images/loader.gif" />
+            <div class="deleteNewIcon"><a href="javascript:CancelBudget();">X</a></div>
+            <div class="heading2"><h4>Loading Budget file - <span id="spanBudgetPopup"></span></h4></div>
+            <div class="relativeWrap">
+                <div style="width:23%;padding:3%;float:left;">
+                    <p style="background: rgba(255, 92, 92, 0.53) !important; padding:7px;">Red = Account in your XML file doesn't match your COA or is a duplicate account code in your XML file</p>
+                    <p style="background: rgba(83, 142, 20, 0.56) !important; padding: 7px;">
+                        Green* = Account is in your COA but there is no matching account in your XML file
+                    </p>
+                    <p style="padding: 7px;">
+                        White* = Account is in both your COA and your XML file
+                    </p>
+                    <p class="trMasking" style="padding:7px;">
+                        Red* = Account Code doesn't match Code masking.
+                    </p>
+                    <p style="padding: 7px; color:red;"> *You cannot edit the Description of these records in Budget Load</p>
+                </div>
+                <div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive" style="width: 75%; float: left;">
+                    <!-- Tabs Heading -->
+
+                    <div class="midMenu marginTop10 widget-head paddingAll">
+                        <ul id="ulFirst">
+                            <li id="liSetting" style="border-bottom: 30px solid #4cbf63;" class="BudgetUpload"><a href="#" style="color: #fff !important;">Settings</a></li>
+                            <li class="BudgetUpload"><a class="" href="#">Categories</a></li>
+                            <li class="BudgetUpload"><a class="" href="#">Accounts</a></li>
+                            @*<li class="BudgetUpload"><a class="" href="#">Details</a></li>*@
+                        </ul>
+                        <ul id="ulSecond" style="display:none;">
+                            @*<li class="BudgetUpload"><a href="#">Settings</a></li>*@
+                            <li id="liCategory" class="BudgetUpload"><a class="" href="javascript:TabCategory();">Categories</a></li>
+                            <li id="liAcccounts" class="BudgetUpload"><a class="" href="javascript:TabAccount();">Accounts</a></li>
+                            @*<li id="liDetail" class="BudgetUpload"><a class="" href="javascript:BudgetDetail();">Details</a></li>*@
+
+                        </ul>
+                        <span style="font-size: 14px;font-weight: bold; margin: 5px 0 0 10px;float: right;" id="spanMasking"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- // Tabs Heading END -->
+
+                    <div class="widget-body">
+                        <div class="tab-content">
+
+                            <!-- Tab content -->
+                            <div id="tabSettings" class="tab-pane widget-body-regular active" style="display:block;">
+                                <div class="WhtBg">
+                                    <input type="file" id="fileXML" accept="text/xml" class="paddingAll" />
+                                    @*<div class=" paddingAll"><input type="checkbox" id="chkLeave"> Leave Existing COA Description</div>*@
+                                    <div class="table-responsive marginTop10">
+                                        <table class="myTable" id="tblBudgetSetting">
+                                            <thead>
+                                                <tr>
+                                                    @*<th>CO</th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="Alternate">
+                                                    <td>
+                                                        <input id="txtCO" type="text" class="form-control width90 CompnayCode input-required">
+                                                        <input type="hidden" id="hdnCO" />
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <!-- // Tabs END -->
+                                </div>
+                                <div class="darkGreyNew col-lg-12">
+                                    <a href="javascript:CancelBudget();" class="btn btn-primary floatLeft">Cancel</a>
+                                    <a href="javascript:UploadXML();" id="btn1" class="btn btn-success floatRight">Next</a>
+
+                                </div>
+                                <br />
+                                <hr />
+                                <p style="text-align:center;font-weight:bold;">OR</p>  
+                                <p style="text-align:center;">
+                                    <a href="javascript:EmptyBudget();" id="btn2" class="btn btn-success">Load Empty Budget</a>
+                                </p>
+                            </div>
+                            <!-- // Tab content END -->
+                            <!-- Tab content -->
+                            <div id="tabCategories" class="tab-pane widget-body-regular" style="display:none;">
+
+                                <div class="xsborNoneNew">
+                                    <div id="tblResponse">
+                                        <div class="fixed-table-container">
+                                            <div class="header-background"> </div>
+                                            <div class="fixed-table-container-inner">
+                                                <div id="dvFixed">
+                                                    <table cellspacing="0" id="tblCRW11">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="first">
+                                                                    <div class="th-inner"></div>
+                                                                </th>
+                                                                <th class="five">
+                                                                    <div class="th-inner">Category No.</div>
+                                                                </th>
+                                                                <th class="four">
+                                                                    <div class="th-inner">Description</div>
+                                                                </th>
+                                                                @*<th class="five">
+                                                                    <div class="th-inner">Fringe</div>
+                                                                </th>*@
+                                                                <th class="five">
+                                                                    <div class="th-inner">Total</div>
+                                                                </th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tblBudgetCate"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div class="table-responsive height300 overflowAuto">
+                                    <table class="myTable" id="tblBudgetCate"></table>
+                                    </div>*@
+
+
+                                <div class="darkGreyNew col-lg-12">
+                                    <a href="javascript:CancelBudget();" class="btn btn-primary floatLeft">Cancel</a>
+                                    <div id="dvMsgCategory"></div>
+
+                                    <a href="javascript:BudgetAccount();" id="btn2" class="btn btn-success floatRight">Next</a>
+                                    <a href="javascript:CreateCategoryCOA();" style="margin-right:10px;" id="btnCOACategory" class="btn btn-success floatRight">Generate COA</a>
+                                </div>
+                            </div>
+                            <!-- // Tab content END -->
+                            <!-- Tab content -->
+                            <div id="tabAccounts" class="tab-pane widget-body-regular paddingBottom3 lightGrey" style="display:none;">
+                                @*<div class="height300">
+                                        <div class="table-responsive height300 overflowAuto">
+                                            <table class="myTable" id="tblBudgetAccount"></table>
+                                        </div>
+                                    </div>*@
+
+                                <div class="xsborNoneNew">
+                                    <div id="tblResponse">
+                                        <div class="fixed-table-container">
+                                            <div class="header-background"> </div>
+                                            <div class="fixed-table-container-inner">
+                                                <div id="dvFixed">
+                                                    <table cellspacing="0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="first">
+                                                                    <div class="th-inner"></div>
+                                                                </th>
+                                                                <th class="five">
+                                                                    <div class="th-inner">Category No.</div>
+                                                                </th>
+                                                                <th class="five">
+                                                                    <div class="th-inner">A/C No.</div>
+                                                                </th>
+                                                                <th class="four">
+                                                                    <div class="th-inner">Description</div>
+                                                                </th>
+                                                                @*<th class="five">
+                                                                    <div class="th-inner">Fringe</div>
+                                                                </th>*@
+                                                                <th class="five">
+                                                                    <div class="th-inner">Total</div>
+                                                                </th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tblBudgetAccount"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="darkGreyNew col-lg-12">
+                                    <a href="javascript:CancelBudget();" class="btn btn-primary floatLeft marginRight10">Cancel</a>
+                                    @*<a href="javascript:CreateAccountCOA();" id="btn3" class="btn btn-success floatLeft">Create COA</a>*@
+
+
+                                    @*<a href="javascript:BudgetDetail();" id="btn2" class="btn btn-success floatRight">Next</a>*@
+                                    <a id="btnBudgetProceed" href="javascript:ProceedBudgetNew();" class="btn btn-success floatRight">Process Budget</a>
+                                    <a href="javascript:CreateAccountCOA();" style="margin-right:10px;" id="btnCOAAccount" class="btn btn-success floatRight">Generate COA</a>
+                                    <div id="dvMsgAccount"></div>
+
+                                </div>
+                            </div>
+                            <!-- // Tab content END -->
+                            <!-- Tab content -->
+                            <div id="tabDetails" class="tab-pane widget-body-regular" style="display: none;">
+                                <div class="">
+
+                                    @*<div class="table-responsive height300 overflowAuto">
+                                            <table class="myTable" id="tblBudgetDetail"></table>
+                                        </div>*@
+
+                                    <div class="xsborNoneNew">
+                                        <div id="tblResponse">
+                                            <div class="fixed-table-container">
+                                                <div class="header-background"></div>
+                                                <div class="fixed-table-container-inner">
+                                                    <div id="dvFixed">
+                                                        <table cellspacing="0">
+                                                            <thead>
+                                                                <tr>
+
+                                                                    <th class="five">
+                                                                        <div class="th-inner">Category No.</div>
+                                                                    </th>
+                                                                    <th class="five">
+                                                                        <div class="th-inner">A/c Number</div>
+                                                                    </th>
+                                                                    <th class="five">
+                                                                        <div class="th-inner">Detail No.</div>
+                                                                    </th>
+                                                                    @*<th class="five">
+                                                                            <div class="th-inner">AggPercent</div>
+                                                                        </th>
+                                                                        <th class="five">
+                                                                            <div class="th-inner">DLocation</div>
+                                                                        </th>
+                                                                        <th class="five">
+                                                                            <div class="th-inner">DetailSet</div>
+                                                                        </th>*@
+                                                                    <th class="four">
+                                                                        <div class="th-inner">Description</div>
+                                                                    </th>
+                                                                    @*<th class="five">
+                                                                            <div class="th-inner">Amount</div>
+                                                                        </th>
+                                                                        <th class="five">
+                                                                            <div class="th-inner">Unit</div>
+                                                                        </th>
+                                                                        <th class="five">
+                                                                            <div class="th-inner">X</div>
+                                                                        </th>
+                                                                        <th class="five">
+                                                                            <div class="th-inner">Unit2</div>
+                                                                        </th>
+                                                                        <th class="five">
+                                                                            <div class="th-inner">Currency</div>
+                                                                        </th>
+                                                                        <th class="five">
+                                                                            <div class="th-inner">Rate</div>
+                                                                        </th>
+                                                                        <th class="five">
+                                                                            <div class="th-inner">Unit3</div>
+                                                                        </th>
+                                                                        <th class="five">
+                                                                            <div class="th-inner">Unit4</div>
+                                                                        </th>*@
+                                                                    <th class="five">
+                                                                        <div class="th-inner">Budget</div>
+                                                                    </th>
+                                                                    @*<th class="five">
+                                                                            <div class="th-inner">HiddenDfourthMlt</div>
+                                                                        </th>*@
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tblBudgetDetail"></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="darkGreyNew col-lg-9" style="position:absolute; bottom:30px;">
+                                    <a href="javascript:CancelBudget();" class="btn btn-primary floatLeft">Cancel</a>
+                                    @*<a id="btnBudgetProceed" href="javascript:ProceedBudgetNew();" class="btn btn-success floatRight">Process Budget</a>*@
+                                    @*<a id="btnBudgetProceed" href="javascript:ProceedBudget();" class="btn btn-success floatRight">Process Budget</a>*@
+                                </div>
+                            </div>
+                            <!-- // Tab content END -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dvConfirm" class="newhidden" style="display: none;">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('PopNewBudget');">X</a></div>
+
+            <div class="WhtBg">
+                <h3 class="fontSize15">A Budget File has already been loaded for Company. Would you like to overwrite the existing Budget ?</h3>
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a href="javascript:overWriteBudget();" class="btn btn-success floatLeft width100">YES</a>
+                <a href="javascript:hideDiv('dvConfirm');" class="btn btn-primary floatRight width100">NO</a>
+            </div>
+        </div>
+    </div>
+    <div></div>
+
+}
+
+@section Javascript{
+
+    <style type="text/css">
+        .fixed-table-container-inner {
+            height: 300px !important;
+            border: solid 1px;
+        }
+
+        .fixed-table-container {
+            height: 330px;
+        }
+    </style>
+
+    <script src="~/Scripts/Budget/BudgetImport.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.1/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                fixedHeader: {
+                    header: true,
+                    footer: true
+                }
+            });
+        });
+    </script>
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/fixedheader/3.1.1/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+
+    <script>
+        // Change the selector if needed
+        var $table = $('table.scroll'),
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
+
+        // Adjust the width of thead cells when window resizes
+        $(window).resize(function () {
+            // Get the tbody columns width array
+            colWidth = $bodyCells.map(function () {
+                return $(this).width();
+            }).get();
+
+            // Set the width of thead columns
+            $table.find('thead tr').children().each(function (i, v) {
+                $(v).width(colWidth[i]);
+            });
+        }).resize(); // Trigger resize handler
+    </script>
+}

@@ -1,0 +1,257 @@
+﻿@{
+    ViewBag.Title = "AccountsPayable>>Payments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#"> Banking <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">POS Pay</li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+                <li class=""><a href="CheckCycle">Print Checks</a></li>
+                <li class=""><a href="void">VOID</a></li>
+                <li class=""><a href="VoidUnissued">VOID Unissued</a></li>
+                <li id="liBRtab"><a href="Reconciliation">Bank Reconciliation</a></li>
+                <li class="active"><a href="POSPay">POS Pay</a></li>
+            </ul>
+        </div>
+        <div style="float: right;" id="dvPos" class="displayNone">
+            <p style="float: left; margin-right: 30px;">Bank :<b><span id="spanBank"></span></b></p>
+            <div class="btn-group  floatRight margin-right">
+                <button type="button" class="btn toggle-button" id="btnOperation" onclick="oPOSPay.GeneratePOSPayFile()">Generate POS Pay File</button>
+                <button type="button" data-toggle="dropdown" id="ddlOption" class="btn btn-primary dropdown-toggle toggle-button-item"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li id="linkAndvanceView"><a href="#" onclick="oPOSPay.GetPOSView('advanced');">Advanced View</a></li>
+                    <li id="linkBasicView"><a href="#" onclick="oPOSPay.GetPOSView('basic');">Basic View</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="floatRight" id="DvSearch">
+            <table>
+                <tr>
+                    <td>Bank:</td>
+                    <td>
+                        <input type="text" id="txtBankName" tabindex="1" class="SearchBank form-control marb0" autofocus />
+                        <input type="hidden" id="hdnBank" />
+                    </td>
+                    <td>
+                        <button tabindex="2" style="position:relative;margin-left:10px;color: green;" onclick="oPOSPay.POSPayGet();"><i class="fa fa-sign-out fa-2x"></i></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br />
+        <div class="clearfix"></div>
+        <div id="dvPOSPayBasic" style="margin-top:10px; margin-bottom:0px;" class="displayNone">
+            <div class="fixed-table-container">
+                <div class="fixed-table-container-inner">
+                    <div id="dvFixed">
+                        <table class="table table-hover table-responsive" id="tblPOSPay" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th style="color: #5c8fbe;" class="no-sort"><div class="th-inner header-position "><input tabindex="7" checked type="checkbox" id="chkAllBasic" onclick="oPOSPay.CheckAll(this, '.poschecks');"> Select</div></th>
+                                    <th style="color: #5c8fbe;width:133px;"><div class="th-inner header-position ">Check Number</div></th>
+                                    <th style="color: #5c8fbe;" class="no-sort"><div class="th-inner header-position ">Issue Date</div></th>
+                                    <th style="color: #5c8fbe;" class="no-sort"><div class="th-inner header-position ">Payee</div></th>
+                                    <th style="color: #5c8fbe;" class="no-sort"><div class="th-inner header-position ">Check Amount</div></th>
+                                    <th style="color: #5c8fbe;" class="no-sort"><div class="th-inner header-position ">Void Status</div></th>
+                                    <th style="color: #5c8fbe;" class="no-sort"><div class="th-inner header-position ">Void Date</div></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblPOSPayTBody"></tbody>
+                        </table>
+                        <div style="margin-top: 5px;">
+                            <table>
+                                <tr>
+                                    <td colspan="7">
+                                        <b>Check Count:</b><span class="margin-right" id="lblCheckCount">0</span>
+
+                                        <b>Total Amount:</b> $<span class="margin-right" id="lblTotalAmount">0</span>
+
+                                        <b>Void Count:</b> <span class="margin-right" id="lblVoidCount">0</span>
+
+                                        <b>Total Void Amount:</b> $<span id="lblVoidAmount">0</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div id="dvPOSPayHistory" style="margin-bottom:0px;" class="displayNone">
+            <div class="fixed-table-container">
+                <div class="fixed-table-container-inner">
+                    <div id="dvFixed">
+                        <table class="table table-hover table-responsive" id="tblPOSPayHistory" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th style="color: #5c8fbe;"><div class="th-inner header-position "><input tabindex="7" type="checkbox" id="chkAllAdv" onclick="oPOSPay.CheckAll(this, '.poschecksadv');"> Select</div></th>
+                                    <th style="width:133px;color: #5c8fbe;"><div class="th-inner header-position ">Check Number</div></th>
+                                    <th style="color: #5c8fbe;"><div class="th-inner header-position ">Issue Date</div></th>
+                                    <th style="color: #5c8fbe;"><div class="th-inner header-position ">Payee</div></th>
+                                    <th style="color: #5c8fbe;"><div class="th-inner header-position ">Check Amount</div></th>
+                                    <th style="color: #5c8fbe;"><div class="th-inner header-position ">Void Status</div></th>
+                                    <th style="color: #5c8fbe;"><div class="th-inner header-position ">Void Date</div></th>
+                                    <th style="color: #5c8fbe;"><div class="th-inner header-position ">POS Pay Run ID</div></th>
+                                    <th style="color: #5c8fbe;width: 120px;"><div class="th-inner header-position ">POS Pay Date/Time</div></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblPOSPayHistoryTBody"></tbody>
+                        </table>
+                        <div style="margin-top: 5px;">
+                            <table>
+                                <tr>
+                                    <td colspan="7">
+                                        <b>Check Count:</b><span class="margin-right" id="lblCheckCountAdvance">10</span>
+
+                                        <b>Total Amount:</b> $<span class="margin-right" id="lblTotalAmountAdvance">10,000.00</span>
+
+                                        <b>Void Count:</b> <span class="margin-right" id="lblVoidCountAdvance">10</span>
+
+                                        <b>Total Void Amount:</b> $<span id="lblVoidAmountAdvance">10,000.00</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+}
+
+
+@section Body{
+
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="tab-content">
+                <!-- Tab content -->
+
+                <div class="col-xs-12">
+
+                </div>
+
+            </div>
+
+            <!-- /.content -->
+        </div>
+
+    </section>
+    <!-- /.content -->
+
+
+    <div id="fade" class="black_overlay"></div>
+    <div id="DivCheckRun"></div>
+
+
+}
+
+@section Javascript{
+
+
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.1/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                fixedHeader: {
+                    header: true,
+                    footer: true
+                }
+            });
+        });
+    </script>
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/fixedheader/3.1.1/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+    <script src="~/Scripts/AccountsPayable/Banking/POSPay-lib.js"></script>
+    <script src="~/Scripts/AccountsPayable/Banking/POSPay.js"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+
+    <link href="~/Content/w2ui-fields-1.0.css" rel="stylesheet" />
+    <script src="~/Content/w2ui-fields-1.0.js"></script>
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <script src="~/Scripts/Reports/ReportEngine.js"></script>
+    <script>
+        // This is an example jQuery snippet that makes the dialogs work
+        $(document).ready(function () {
+
+            // We have two control functions that show or hide dialogs
+            function showDialog(id) {
+
+                // Find the dialog and show it
+
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+
+                // Center it on screen
+
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+
+            }
+            function hideAllDialogs() {
+                // Hide all visible dialogs
+                $('.dialog-overlay').fadeOut();
+            }
+
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+
+                showDialog(toShow);
+            });
+        });
+
+    </script>
+    <style type="text/css">
+        .dialog-card {
+            top: 15%;
+        }
+
+        #tblTransactionListTBody tr td {
+            font-family: comberia;
+        }
+
+        .table-hover th {
+            padding: 0px 4px !important;
+        }
+
+        .borderRed {
+            border: solid 2px Red;
+        }
+
+        .header-position {
+            position: sticky !important;
+        }
+
+        .header-color {
+            background-color: #337ab7 !important;
+        }
+    </style>
+}

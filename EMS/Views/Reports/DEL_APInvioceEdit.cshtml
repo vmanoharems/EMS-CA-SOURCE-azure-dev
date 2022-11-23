@@ -1,0 +1,122 @@
+﻿@{
+    //ViewBag.Title = "AccountsPayable>>Post Invoice";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        @*<ol class="breadcrumb floatLeft">
+                <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+                <li class="active">Invoices</li>
+            </ol>*@
+        <div class="midMenu widget-head">
+            <ul>
+                @*<li><a href="PendingInvoice">Pending Invoices</a></li>
+                    <li class="active"><a href="PostInvoice">Posted Invoices  </a></li>
+                    <li><a href="AddInvoice">Add Invoices</a></li>*@
+
+            </ul>
+        </div>
+        <div class="floatRight" id="DvTab01">
+            <a href="#" id="btnReverse" class="btn btn-primary floatRight marginRight10" onclick="InvoiceReversed();" style="display:none;">Print Report</a>
+        @*</div>
+            <a href="#" onclick="javascript:GetInvoicePDF();" class="btn btn-default floatRight" style="margin-top: -4px;">Print Report</a>
+            <div class="clearfix"></div>*@
+
+</section>
+}
+
+@section Body{
+<section class="content">
+    <div class="row fontAriel">
+        <div class="tab-content">
+            <!-- Tab content -->
+            <div id="tabPendingInvoices" class="tab-pane active widget-body-regular">
+                <div class="col-xs-12">
+                    <!--<table class="table table-hover table-responsive">-->
+                    <div class="table-responsive">
+                        <table class="table table-hover table-responsive" id="TblPosted">
+                            <thead>
+                                <tr>
+                                    @*<th><input type="checkbox"></th>*@
+                                    <th>Invoice Date</th>
+                                    <th>Invoice #</th>
+                                    <th>CO</th>
+                                    <th>Batch Number</th>
+                                    <th>Vendor Name</th>
+                                    <th>3rd Party Vendor</th>
+                                    <th>Lines</th>
+                                    <th>Amount</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="TblPostedListTbody"></tbody>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    @*<th></th>*@
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--tabVendors end-->
+            <div id="tabPostInvoices" class="tab-pane widget-body-regular">
+                <div class="col-xs-12">
+                    <div class="table-responsive" id="DvTable">
+
+                    </div>
+
+                    <!-- /.content -->
+                </div>
+            </div>
+            <!--tabAddVendors end-->
+            <!--tabPurchaseOrders end-->
+            <!--tabAddPO end-->
+        </div>
+        <!-- Tab content end -->
+        <!-- /.content -->
+    </div>
+</section>
+}
+
+
+@section Javascript{
+<script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+<link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+<link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+
+
+<style type="text/css">
+    .black_overlay, #fade {
+        display: none !important;
+    }
+
+    #TblPosted_paginate {
+        position: fixed;
+        bottom: 4%;
+        float: right !important;
+        right: 2%;
+    }
+
+    #TblPosted_info {
+        position: fixed;
+        bottom: 6%;
+    }
+</style>
+
+<script src="~/Scripts/Reports/APEditInvoiceReport.js"></script>
+}
+
+

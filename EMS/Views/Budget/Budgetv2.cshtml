@@ -1,0 +1,310 @@
+﻿@{
+    ViewBag.Title = "Budget";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section BreadCrumb{
+    <section class="content-header ">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Budget <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#">Load <i class="fa fa-caret-right"></i></a></li>
+            <li class="active"><span id="spanBCSelectedBudget"></span> </li>
+        </ol>
+        <div class=" floatRight paddingnone white_space col-lg-6 col-md-9 col-sm-12 col-xs-12">
+            <ul class="midMenu floatLeft marginRight10 marginBot5">
+                <li id="liBudgetClone" class="liComDet" style="border-bottom: 30px solid #337ab7;"><a href="javascript:AtlasBudgetv2.BudgetOperations('Clone');" style="color:#fff !important;">Clone</a></li>
+                <li id="liBudgetView" class="liComDet" style="border-bottom: 30px solid #337ab7;"><a href="javascript:AtlasBudgetv2.BudgetOperations('View');" style="color:#fff !important;">View</a></li>
+                <li id="liBudgetMarkInactive" class="liComDet" style="border-bottom: 30px solid #337ab7;"><a href="javascript:AtlasBudgetv2.BudgetOperations('MarkInactive');" style="color:#fff !important;">Mark Inactive</a></li>
+                <li id="liBudgetUnlock" class="liComDet" style="border-bottom: 30px solid #337ab7;"><a href="javascript:AtlasBudgetv2.BudgetOperations('Unlock');" style="color:#fff !important;">Unlock</a></li>
+                <li id="liBudgetCreate" class="liComDet" style="border-bottom: 30px solid #337ab7;"><a href="javascript:AtlasBudgetv2.BudgetOperations('Create');" style="color:#fff !important;">Create</a></li>
+            </ul>
+            <select class="form-control width135 floatLeft marginRight10" id="ddlBudgetList" onchange="javascript: AtlasBudgetv2.BudgetHistory(this);"></select>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+}
+@section Body{
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="col-xs-12">
+                <div class="table-responsive" style="margin-top:10px; margin-bottom:0px;">
+                    <table id="tblBudget" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Save Date</th>
+                                <th>EFC Total</th>
+                                <th>Total Budget</th>
+                            </tr>
+                        </thead>
+                        @*<tfoot>
+                            <tr>
+                                <th>BudgetName</th>
+                                <th>BudgetOrigin</th>
+                                <th>BudgetTypeDescription</th>
+                                <th>EFCTotal</th>
+                            </tr>
+                        </tfoot>*@
+                    </table>
+                    @*<table class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline">
+                        <tbody id="tblBudget"></tbody>
+                    </table>*@
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div id="PopNewBudget" class="newhidden" style="display: none;">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('PopNewBudget');">X</a></div>
+            <div class="heading2"><h4>New Budget </h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label> Budget Name </label>
+                        <input id="txtBudget" placeholder="Budget Name" type="text" class="form-control input-required">
+                        <label> Description </label>
+                        @*<input id="txtDescription" placeholder="Description" type="text" class="form-control input-required">*@
+                        <textarea id="txtDescription" class="form-control input-required"></textarea>
+                    </div>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a href="javascript:SaveNewBudget();" class="btn btn-success floatLeft">Save</a>
+                <a href="javascript:hideDiv('PopNewBudget');" class="btn btn-primary floatRight">Cancel</a>
+            </div>
+        </div>
+    </div>
+    <div id="dvBudgetPopup" class="newhidden" style="display: none;">
+        <div class="popup col-md-7 col-lg-8 col-sm-9 col-xs-12 floatNone" style="width:40%;">
+            <div class="deleteNewIcon"><a href="javascript:AtlasBudgetv2.BudgetCancel();">X</a></div>
+            <div class="heading2" style="text-align:center;"><h4 id="hdrBudgetPopup"></h4></div>
+            <div class="relativeWrap">
+                <div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive" style="width: 98%;float: left;padding-left: 2%;">
+                    <!-- Tabs Heading -->
+                    <div class="clearfix"></div>
+                    <!-- // Tabs Heading END -->
+                    <div class="widget-body">
+                        <div class="tab-content">
+                            <!-- Tab content -->
+                            <div id="tabSettings" class="tab-pane widget-body-regular active" style="display:block;">
+                                <div class="WhtBg">
+                                    <div class="table-responsive marginTop10">
+                                        <table class="myTable" id="tblBudgetSetting">
+                                            <tbody>
+                                                <tr class="Alternate">
+                                                    <td>
+                                                        <input id="txtCO" type="text" class="form-control width90 CompanyCode BudgetSegment input-required" placeholder="CO">
+                                                        <input type="hidden" id="hdnCO" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <br />
+                                    <textarea style="width:100%;" placeholder="Description" rows="3" id="txtBudgetDescription"></textarea>
+                                    <div style="min-height: 40px;"><input type="file" id="fileCSV" accept=".csv" class="paddingAll" /></div>
+                                    <div class="darkGreyNew col-lg-12">
+
+                                        <a href="javascript:AtlasBudgetv2.BudgetCancel();" class="btn btn-primary floatLeft">Cancel</a>
+                                        <a id="btnSaveCSV" class="btn btn-success floatRight">Create</a>
+                                        <div id="dvMsgCategory"></div>
+                                    </div>
+                                 </div>
+                            </div>
+                            <!-- // Tab content END -->
+                            <!-- Tab content -->
+                            <div id="tabCategories" class="tab-pane widget-body-regular" style="display:none;">
+                                <div class="xsborNoneNew">
+                                    <div id="tblResponse">
+                                        <div class="fixed-table-container">
+                                            <div class="header-background"> </div>
+                                            <div class="fixed-table-container-inner">
+                                                <div id="dvFixed">
+
+                                                    <table cellspacing="0" id="tblCRW"></table>
+                                                    <table cellspacing="0" id="tblCRW11">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="first">
+                                                                    <div class="th-inner"></div>
+                                                                </th>
+                                                                <th class="five">
+                                                                    <div class="th-inner">Account code</div>
+                                                                </th>
+                                                                <th class="four">
+                                                                    <div class="th-inner">Description</div>
+                                                                </th>
+                                                                <th class="five">
+                                                                    <div class="th-inner">Budget</div>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tblBudgetCate"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <!-- // Tab content END -->
+                            <!-- Tab content -->
+                            <div id="tabAccounts" class="tab-pane widget-body-regular paddingBottom3 lightGrey" style="display:none;">
+                                <div class="xsborNoneNew">
+                                    <div id="tblResponse">
+                                        <div class="fixed-table-container">
+                                            <div class="header-background"> </div>
+                                            <div class="fixed-table-container-inner">
+                                                <div id="dvFixed">
+                                                    <table cellspacing="0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="first">
+                                                                    <div class="th-inner"></div>
+                                                                </th>
+                                                                <th class="five">
+                                                                    <div class="th-inner">Category No.</div>
+                                                                </th>
+                                                                <th class="five">
+                                                                    <div class="th-inner">A/C No.</div>
+                                                                </th>
+                                                                <th class="four">
+                                                                    <div class="th-inner">Description</div>
+                                                                </th>
+                                                                @*<th class="five">
+                                                                        <div class="th-inner">Fringe</div>
+                                                                    </th>*@
+                                                                <th class="five">
+                                                                    <div class="th-inner">Total</div>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tblBudgetAccount"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="darkGreyNew col-lg-12">
+                                    <a href="javascript:AtlasBudgetv2.BudgetCancel();" class="btn btn-primary floatLeft marginRight10">Cancel</a>
+                                    @*<a href="javascript:CreateAccountCOA();" id="btn3" class="btn btn-success floatLeft">Create COA</a>*@
+
+                                    @*<a href="javascript:BudgetDetail();" id="btn2" class="btn btn-success floatRight">Next</a>*@
+                                    <a id="btnBudgetProceed" href="javascript:ProceedBudgetNew();" class="btn btn-success floatRight">Process Budget</a>
+                                    <a href="javascript:CreateAccountCOA();" style="margin-right:10px;" id="btnCOAAccount" class="btn btn-success floatRight">Generate COA</a>
+                                    <div id="dvMsgAccount"></div>
+                                </div>
+                            </div>
+                            <!-- // Tab content END -->
+                            <!-- Tab content -->
+                            <div id="tabDetails" class="tab-pane widget-body-regular" style="display: none;">
+                                <div class="">
+                                    @*<div class="table-responsive height300 overflowAuto">
+                                            <table class="myTable" id="tblBudgetDetail"></table>
+                                        </div>*@
+                                    <div class="xsborNoneNew">
+                                        <div id="tblResponse">
+                                            <div class="fixed-table-container">
+                                                <div class="header-background"></div>
+                                                <div class="fixed-table-container-inner">
+                                                    <div id="dvFixed">
+                                                        <table cellspacing="0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="five">
+                                                                        <div class="th-inner">Category No.</div>
+                                                                    </th>
+                                                                    <th class="five">
+                                                                        <div class="th-inner">A/c Number</div>
+                                                                    </th>
+                                                                    <th class="five">
+                                                                        <div class="th-inner">Detail No.</div>
+                                                                    </th>
+                                                                    <th class="four">
+                                                                        <div class="th-inner">Description</div>
+                                                                    </th>
+                                                                    <th class="five">
+                                                                        <div class="th-inner">Budget</div>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tblBudgetDetail"></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="darkGreyNew col-lg-9" style="position:absolute; bottom:30px;">
+                                    <a href="javascript:AtlasBudgetv2.BudgetCancel();" class="btn btn-primary floatLeft">Cancel</a>
+                                </div>
+                            </div>
+                            <!-- // Tab content END -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="dvConfirm" class="newhidden" style="display: none;">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('PopNewBudget');">X</a></div>
+            <div class="WhtBg">
+                <h3 class="fontSize15">A Budget File has already been loaded for Company. Would you like to overwrite the existing Budget ?</h3>
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a href="javascript:overWriteBudget();" class="btn btn-success floatLeft width100">YES</a>
+                <a href="javascript:hideDiv('dvConfirm');" class="btn btn-primary floatRight width100">NO</a>
+            </div>
+        </div>
+    </div>
+}
+@section Javascript{
+    <style type="text/css">
+        .fixed-table-container-inner {
+            height: 300px !important;
+            border: solid 1px;
+        }
+
+        .fixed-table-container {
+            height: 330px;
+        }
+    </style>
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.1/js/dataTables.fixedHeader.min.js"></script>
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/fixedheader/3.1.1/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/papaparse.min.js"></script>
+    @*<script src="~/Scripts/Budget/Budgetv2.js"></script>*@
+    <script src="~/Scripts/Budget/v2/Budgetv2.js"></script>
+    <script>
+        // Change the selector if needed
+        var $table = $('table.scroll'),
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
+
+        // Adjust the width of thead cells when window resizes
+        $(window).resize(function () {
+            // Get the tbody columns width array
+            colWidth = $bodyCells.map(function () {
+                return $(this).width();
+            }).get();
+
+            // Set the width of thead columns
+            $table.find('thead tr').children().each(function (i, v) {
+                $(v).width(colWidth[i]);
+            });
+        }).resize(); // Trigger resize handler
+    </script>
+}

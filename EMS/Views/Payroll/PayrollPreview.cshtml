@@ -1,0 +1,161 @@
+﻿@{
+    ViewBag.Title = "Payroll>>PayrollPreview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Payroll <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#">Load <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="PayrollHistory">History <i class="fa fa-caret-right"></i></a></li>
+            <li class="active"><span id="SapnInvoice"></span></li>
+        </ol>
+        <div class="col-lg-7 col-sm-5 col-md-3 col-xs-12 pull-right">
+            <a href="#" id="SaveClearingAccount" class="btn btn-default pull-right" onclick="GoToPreviousPage();">Back</a>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+
+    <section class="content">
+        <div class="row fontAriel">
+
+            <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6">Expected payroll: <span id="spanExpected"></span> </div>
+            <div class="col-lg-2 col-sm-3 col-md-3 col-xs-6">Actual Payroll: <span id="spanActual"></span> </div>
+            <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6">Period Ending: <span id="spanPeriodEnding"></span></div>
+            <div class="clearfix"></div>
+            <div class="col-xs-12">
+                <div class="greyBg">
+                    <div class="col-lg-4 col-sm-5 col-md-4 col-xs-6">Labor Clearing:  <span id="spanPR"></span></div>
+                    <div class="col-lg-4 col-sm-5 col-md-4 col-xs-6">Fringe Clearing: <span id="spanFringe"></span></div>
+                    <div class="col-lg-4 col-sm-2 col-md-4 col-xs-6">Suspense: <span id="spanSuspense"></span></div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="table-responsive overflowAuto borderTop borderBot" id="dvPayrollContainer">
+                    <table id="tblPayrollLoad" class="table table-hover table-responsive"></table>
+
+                </div>
+
+                <!-- /.box -->
+            </div>
+        </div>
+    </section>
+    }
+    @section Javascript{
+       <script src="~/Scripts/Payroll/PayrollSession.js"></script>
+<script src="~/Scripts/Payroll/PayrollPreview.js"></script>
+<link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+</script>
+<style>
+    .table-hover td {
+        padding: 3px 0px 3px 10px !important;
+    }
+
+
+
+    .green-color span, .green-color label {
+        color: green;
+    }
+
+    .red-color span, .red-color label {
+        color: red;
+    }
+
+    .width40 {
+        width: 45px;
+        border: 1px solid #ccc;
+    }
+
+        .width40 input {
+            width: 100%;
+        }
+
+    .width100 {
+        width: 150px !important;
+        border: 1px solid #ccc;
+    }
+
+        .width100 input {
+            width: 100%;
+        }
+
+    .width75 {
+        width: 75px;
+        border: 1px solid #ccc;
+    }
+
+        .width75 input {
+            width: 100%;
+        }
+
+    .width95 {
+        width: 95px;
+        border: 1px solid #ccc;
+    }
+
+        .width95 input {
+            width: 100%;
+        }
+
+    .table-hover td {
+        padding: 0px !important;
+    }
+
+    .RedBGG {
+        background: #EAA5A5;
+    }
+</style>
+<link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+
+<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+      rel="stylesheet" type="text/css" />
+
+<script>
+    // This is an example jQuery snippet that makes the dialogs work
+    $(document).ready(function () {
+
+        // We have two control functions that show or hide dialogs
+        function showDialog(id) {
+
+            // Find the dialog and show it
+
+            var dialog = $('#' + id),
+                    card = dialog.find('.dialog-card');
+
+            dialog.fadeIn();
+
+            // Center it on screen
+
+            card.css({
+                'margin-top': -card.outerHeight() / 2
+            });
+
+        }
+        function hideAllDialogs() {
+            // Hide all visible dialogs
+            $('.dialog-overlay').fadeOut();
+        }
+
+        // Here is how to use these functions
+
+        $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+            hideAllDialogs();
+        });
+
+        $('.dialog-show-button').on('click', function () {
+            var toShow = $(this).data('show-dialog');
+
+            showDialog(toShow);
+        });
+    });
+</script>
+
+    }

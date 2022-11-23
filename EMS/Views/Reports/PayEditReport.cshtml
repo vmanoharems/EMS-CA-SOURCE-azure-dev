@@ -1,0 +1,238 @@
+﻿@{
+    ViewBag.Title = "Report>>Payroll Edit Report";
+    Layout = "~/Views/Shared/_LayoutReports.cshtml";
+}
+
+
+@section BreadCrumb{
+
+    <section class="content-header">
+        <div class="form-group">
+            <label>Select a Report</label>
+            <div class="midMenu pull-left">
+                <ul>
+                    <li class="active"><a href="PayEditReport">Payroll Edit </a></li>
+                    <li><a href="PayPostReport">Payroll Posting</a></li>
+
+                </ul>
+            </div>
+        </div>
+
+        <a href="#" tabindex="6" class="btn btn-default floatRight  pull-right marginLeft10" onclick="javascript: PrintCheckPDF();" id="btnPrint">Preview Report</a>
+
+
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+@section Body{
+
+    <section class="content" id="dvMainDv">
+        <div class="row fontAriel" id="dvFilterDv">
+            <div class="tab-content">
+
+                <div id="tabPendingInvoices" class="tab-pane active widget-body-regular">
+                    <div class="col-xs-12">
+
+                        <div id="tabEditAudit" class="tab-pane active widget-body-regular">
+                            <div id="DivPayrollEdit">
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:213px!important;">Company</label>
+                                    <div style="width: 160px !important; float: left;  margin-bottom:2px;">
+                                        <input type="hidden" id="hdnCO" />
+                                        <select tabindex="1" style="width: 160px !important;margin-left: 12px;display:none;" id="PayrollFilterCompany" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group" id="PayrollFilterLocationGroup" style="display:none;">
+                                    <label id="PayrollFilterLocationLabel" style="width:200px!important;">Locaton(s)</label>
+                                    <div tabindex="2" style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="PayrollFilterLocation" multiple="multiple" style="display:none;"></select>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <div class="form-group" id="PayrollFilterEpisodeGroup" style="display:none;">
+                                    <label id="PayrollFilterEpisodeLabel" style="width:200px!important;">Episode(s)</label>
+                                    <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="PayrollFilterEpisode" multiple="multiple" style="display:none;"></select>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <div class="form-group" id="PayrollFilterSetGroup" style="display:none;">
+                                    <label id="PayrollFilterSetLabel" style="width:200px!important;">Set(s)</label>
+                                    <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="PayrollFilterSet" multiple="multiple" style="display:none;"></select>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Invoice # :</label>
+                                    <input tabindex="3" type="text" id="txtInvoiceNo" class="form-control InvoiceNo pull-left" style="margin-left:13px !important;">
+                                    <input type="hidden" id="hdnInvoice" />
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Payroll Date From</label>
+                                    <input tabindex="4" type="text" id="txtFrom" class="form-control  pull-left datepicker" style="margin-left:13px !important;" placeholder="MM/DD/YYYY">
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Payroll Date To:</label>
+                                    <input tabindex="5" type="text" id="txtTo" class="form-control  pull-left datepicker" style="margin-left:13px !important;" placeholder="MM/DD/YYYY">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="dialog11" style="display:none;">
+            @*<object data="~/PayrollPDF/PayrollEdit25_09_PM.pdf" type="application/pdf" style="width:100%;height:100%;">
+                <a href="~/PayrollPDF/PayrollEdit25_09_PM.pdf">~/PayrollPDF/PayrollEdit25_04_PM.pdf</a>
+
+            </object>*@
+           
+        </div>
+
+        <div id="fade" class="black_overlay"></div>
+    </section>
+
+    <div class="newhidden" id="dvWait" style="display: none;width: 100%;margin: auto 0px;text-align: center;top: 30%;">
+        <img src="~/Images/InternetSlowdown_Day.gif" />
+    </div>
+
+
+
+}
+
+
+@section Javascript{
+<script src="~/Content/libs/bootstrap-multiselect.js"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+<script src="~/Scripts/Reports/ReportEngine.js"></script>
+    <script>
+        //$(function () {
+        //    $(".datepicker").datepicker();
+        //});
+        $(function () {
+            $(".datepicker").datepicker(
+                {
+                    onClose: function () {
+                        $(this).focus();
+                    }
+                });
+        });
+
+    </script>
+
+    <style type="text/css">
+        #txtCO {
+            margin-left: 13px !important;
+        }
+
+        .black_overlay, #fade {
+            display: none !important;
+        }
+
+        #TblPosted_paginate {
+            position: fixed;
+            bottom: 4%;
+            float: right !important;
+            right: 2%;
+        }
+
+        #TblPosted_info {
+            position: fixed;
+            bottom: 6%;
+        }
+    </style>
+
+    <script src="~/Scripts/Reports/PayrollEditReport.js"></script>
+
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+
+    <script>
+
+        // This is an example jQuery snippet that makes the dialogs work
+        $(document).ready(function () {
+
+            // We have two control functions that show or hide dialogs
+            function showDialog(id) {
+
+                // Find the dialog and show it
+
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+
+                // Center it on screen
+
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+
+            }
+            function hideAllDialogs() {
+                // Hide all visible dialogs
+                $('.dialog-overlay').fadeOut();
+            }
+
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+
+                showDialog(toShow);
+            });
+        });
+
+    </script>
+    <style type="text/css">
+        .dialog-card {
+            top: 15%;
+        }
+
+        .w30N {
+            width: 30px !important;
+        }
+
+        .ui-button-icon-only .ui-icon {
+            margin: -8px 0 0 -9px !important;
+        }
+
+        .table-hover th {
+            padding: 0px 4px !important;
+        }
+
+        .blueClas {
+            background: #337ab7;
+            color: #fff;
+            padding: 5px !important;
+        }
+
+        .ui-dialog {
+            width: 80% !important;
+            z-index: 999999999;
+        }
+    </style>
+}
+
+

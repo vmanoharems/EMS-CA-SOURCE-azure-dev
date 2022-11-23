@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "EMS Atlas Admin Login";
+    Layout = "~/Views/Shared/_LayoutCoreUIAdminBlank.cshtml";
+}
+<h2>Login</h2>
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Holy guacamole!</strong> You could not be logged in! You should get that checked out...
+</div>
+
+@section body{
+<h1 id="lblLogin">Login</h1>
+<p class="text-muted">Sign In to your account</p>
+
+<div id="login" class="AdminLogin">
+    <div class="input-group mb-3">
+        <span class="input-group-addon">
+            <i class="icon-user"></i>
+        </span>
+        <input type="text" name="Email" class="hidden" id="fake_txtAdminUser" autocomplete="off" style="display: none;">
+        <input type="email" name="Email" class="inputLogin valid-email-req" id="txtAdminUser" placeholder="Email">
+    </div>
+    <div class="input-group mb-4">
+        <span class="input-group-addon">
+            <i class="icon-lock"></i>
+        </span>
+        <input type="password" name="password" class="hidden" id="fake_txtAdminPassword" autocomplete="off" style="display: none;">
+        <input type="password" name="password" class="inputLogin input-required" id="txtAdminPassword" placeholder="Password">
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <button type="button" class="btn btn-primary px-4" id="hrfAdminLogin">Login</button>
+        </div>
+        <div class="col-6 text-right">
+            <button type="button" class="btn btn-link px-0">Forgot password?</button>
+        </div>
+    </div>
+
+    <div id="DvLoginSuccess" class="col-sm-12" style="display:none; text-align:center;">
+        <label id="lblUserLogin" style="width:100% !important;">Login Successful. Please check your Email For authentication code</label>
+        <input type="text" id="txtAuthenticationCode" placeholder=" Authentication Code" style="height:35px;" />
+        <span style="position:relative; top:5px;margin-left:10px;" onclick="javascript: CheckAuthenticationCode();"><i class="fa fa-sign-out icon icon-arrow-right fa-2x"></i></span>
+        <div id="DvInvaildCode" style="display:none;">
+
+            <label style="width: 100%;height: 32px;color: red;">Invalid authentication Code.. Remaining Attempts : <span id="spnAdminEmailInvaildCounter"></span></label>
+        </div>
+    </div>
+
+</div>
+}
+
+@section Javascript{
+    <script src="~/Scripts/AdminLogin/AdminLogin.js"></script>
+}

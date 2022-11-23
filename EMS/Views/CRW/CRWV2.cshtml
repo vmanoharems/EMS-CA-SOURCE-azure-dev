@@ -1,0 +1,162 @@
+@{
+    ViewBag.Title = "CRWv2 >> Cost Report Worksheet";
+    Layout = "~/views/Shared/_LayoutBlank.cshtml";
+}
+
+@section BreadCrumb{
+    <style>
+
+    </style>
+
+    <section class="content-header">
+        <ol class="breadcrumb ">
+            <li><a href="#"> CRW <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">CRW </li>
+        </ol>
+        <select class="form-control width135 marginRight10 inline" id="ddlBudgetList" onchange="javascript: AtlasCRWv2.BudgetSelect(this);"></select>
+        <button id="CRWv2Buttons_ExpandAll" onclick="javascript: AtlasCRWv2.ToggleChildren_All(true);" class="btn btn-default bgGreenBtn">Expand All</button>
+        <button id="CRWv2Buttons_CollapseAll" onclick="javascript: AtlasCRWv2.ToggleChildren_All(false)" class="btn btn-default bgGreenBtn">Collapse All</button>
+        <div class="floatLeft" style="display:none;">
+            <label class="width50 textRight paddingRight5">CO</label>
+            <select onchange="javascript: CO();" id="ddlCompany" style="display:none;" class="form-control width110"></select>
+            <label id="lblLO" class="width50 textRight paddingRight5" style="display:none;">LO</label>
+            <select onchange="javascript: LO();" id="ddlLocation" style="display:none;" class="form-control width110"></select>
+            <label id="lblEP" class="width50 textRight paddingRight5" style="display:none;">EP</label>
+            <select onchange="javascript: EP();" id="ddlEpisode" style="display:none;" class="form-control width110"></select>
+        </div>
+        <span id="spanBudget" style="margin-left:10px;"></span>
+        <div class="pull-right"><button id="CRWv2Save" onclick="javascript: AtlasBudgetv2.BudgetSave_CRWEdit(AtlasCRWv2.editor);" class="btn btn-default bgGreenBtn">Save</button></div>
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+
+    <section class="content" id="app-body">
+        <div id="" class="fixed-table-container-crw">
+            <table cellspacing="0" id="tblCRWv2" class="display hover">
+                <thead>
+                    <tr>
+                        @*                                                    <th>Parent Account</th>*@
+                        @*                                                  <th>Parent Description</th>*@
+                        <th>Account</th>
+                        <th>Description</th>
+                        <th>Period</th>
+                        <th>Actuals</th>
+                        <th>POs</th>
+                        <th>Total Cost</th>
+                        <th>ETC</th>
+                        <th>EFC</th>
+                        <th>Budget</th>
+                        <th>Variance</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>TOTALS</th>
+                        <th></th>
+                        <th>...</th>
+                        <th>...</th>
+                        <th>...</th>
+                        <th>...</th>
+                        <th>...</th>
+                        <th>...</th>
+                        <th>...</th>
+                        <th>...</th>
+                    </tr>
+                    @*<tr id="trSummary">
+                        <th>SELECTED</th>
+                        <th></th>
+                        <th>...</th>
+                        <th>...</th>
+                        <th>...</th>
+                        <th>...</th>
+                        <th>...</th>
+                        <th>...</th>
+                        <th>...</th>
+                        <th>...</th>
+                    </tr>*@
+                </tfoot>
+            </table>
+            <table cellspacing="0" id="tblCRWv2_FOOTER" style="display:none">
+                <thead>
+                    <tr class="tblCRWv2_FOOTER">
+                        <td>TOTALS</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="header-background-f" id="tblCrwFooterDiv" style="display:none;"></div>
+
+        <div id="dialog-notes" title="Change Notes" style="display:none; background-color:whitesmoke">
+            <input type="text" id="dialog-notes-new-note" maxlength="160" placeholder="This account must be edited before you can add a note." style="width:80%" tabindex="99" disabled/>
+            <button id="dialog-notes-button-save" tabindex="100" disabled>Add Note</button>
+        </div>
+    </section>
+
+
+}
+@section Javascript{
+    <script src="~/Content/libs/jqueryui/jquery-ui.min.js"></script>
+
+    <script src="~/Content/libs/DataTables/DataTables-1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/libs/DataTables/Buttons-1.4.0/js/dataTables.buttons.min.js"></script>
+    <script src="~/Content/libs/DataTables/Select-1.2.2/js/dataTables.select.min.js"></script>
+    <script src="~/Content/libs/DataTables/KeyTable-2.3.0/js/dataTables.keyTable.min.js"></script>
+    <script src="~/Content/libs/DataTables/AutoFill-2.2.0/js/dataTables.autoFill.min.js"></script>
+
+    <script src="~/Content/libs/DataTables/datatables.min.js"></script>
+    <script src="~/Content/libs/DataTables/AutoFill-2.2.0/js/autoFill.jqueryui.min.js"></script>
+    <script src="~/Content/libs/DataTables/ColReorder-1.3.3/js/dataTables.colReorder.min.js"></script>
+    <script src="~/Content/libs/DataTables/DataTables-1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/libs/DataTables/DataTables-1.10.15/js/dataTables.jqueryui.min.js"></script>
+    <script src="~/Content/libs/DataTables/FixedColumns-3.2.2/js/dataTables.fixedColumns.min.js"></script>
+    <script src="~/Content/libs/DataTables/FixedHeader-3.1.2/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/Content/libs/DataTables/RowGroup-1.0.0/js/dataTables.rowGroup.min.js"></script>
+    <script src="~/Content/libs/DataTables/Scroller-1.4.2/js/dataTables.scroller.min.js"></script>
+
+    <script src="~/Content/libs/numeral.min.js"></script>
+    <script src="~/Content/libs/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/Scripts/notify.js"></script>
+    <script src="~/Scripts/AtlasUtilities.js"></script>
+
+    <script src="~/Scripts/Budget/v2/Budgetv2.js"></script>
+    <script src="~/Scripts/CRW/CRWv2.js"></script>
+    <script src="~/Content/libs/jqueryui/dialogextend/dialogextend.js"></script>
+    <script src="~/Scripts/AtlasUtilities/AtlasDocument.js"></script>
+    <script src="~/Scripts/AtlasUtilities/AtlasPaste.js"></script>
+
+    <link href="~/Content/libs/jqueryui/jquery-ui.structure.css" rel="stylesheet" />
+    <link href="~/Content/css/CRWv2.css" rel="stylesheet" />
+    @*<link href="~/Content/css/jquery-ui.css" rel="stylesheet"/>*@
+    <script>
+        $('.logout').click(function () {
+            localStorage.removeItem("UserId");
+            localStorage.removeItem("ProdId");
+            localStorage.removeItem("Email");
+            localStorage.removeItem("Password");
+            localStorage.removeItem("pubUserId");
+            localStorage.removeItem("strBankId");
+            localStorage.removeItem("DBName");
+            localStorage.removeItem("PayrollSession");
+            localStorage.removeItem("EMSKeyToken");
+            localStorage.removeItem("BatchNumber");
+            localStorage.removeItem("ProductionName");
+            localStorage.CheakDataToggle = '';
+            localStorage.CheckToggleCount = 0;
+            location.replace("/Home/Login");
+        });
+
+    </script>
+    <style>
+    </style>
+}

@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "Admin Segment Setup";
+    Layout = "~/Views/Shared/_LayoutCoreUIAdmin.cshtml";
+}
+
+<h2>Users</h2>
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            @*<li><a href="#"> Settings <i class="fa fa-caret-right"></i></a></li>
+                <li><a href="#">Banks <i class="fa fa-caret-right"></i></a></li>
+                <li class="active">Banks</li>*@
+        </ol>
+
+
+        <div class="pull-right paddingNone white_space col-lg-6 col-md-9 col-sm-12 col-xs-12">
+@*            <a href="#" class="btn btn-default pull-left marginRight11" id="btnNewSegmentButton">+ New Segment</a>*@
+@*            <select class="form-control width135 floatLeft marginRight10 marginLeft10 marginBottomNone" id="ddlName"></select>*@
+            <div class="midMenu pull-left">
+                <ul id="UlRightTab" style="display:none;">
+                    <li class="active"><a href="#">Banks</a></li>
+                    <li><a href="#">Banks</a></li>
+
+
+
+                </ul>
+            </div>
+            <a class="btn btn-primary pull-right " href="#" id="btnCancel">Cancel</a>
+            <a class="btn btn-success pull-right marginRight10" id="btnSaveSegment" href="#" onclick="funSaveSegment();">Save</a>
+        </div>
+        <div class="clearfix"></div>
+
+    </section>
+
+    <div id="DvInvaildSegment" class="newhidden" style="display: none;">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone marginTopNew20">
+            <div class="heading2"><h4 class="text-center">Invaild Segment Setup</h4></div>
+            <div class="WhtBg">
+                <p class="paddingLeft10">At least one Segment must be set as Detail. Please specify a Detail Segment.</p>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-md-12 col-lg-12 col-sm-12 col-xs-12">
+
+                <a href="javascript:hideDiv('DvInvaildSegment');" class="btn btn-success floatLeft" style=" width:100%;">Ok</a>
+
+
+
+            </div>
+        </div>
+    </div>
+    <div id="DvSaveSegment" class="newhidden" style="display:none;">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone marginTopNew20">
+            <div class="heading2"><h4 class="text-center">Save Segments ?</h4></div>
+            <div class="WhtBg">
+                <p class="paddingLeft10">Sagments Cannot be changed once you have saved  them. Are you sure you want to save this segment configuration ?</p>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <a href="#" class="btn btn-success pull-left marginRight10" onclick="javascript: funSaveSegment();">Yes</a>
+                <a href="javascript:hideDiv('DvSaveSegment');" class="btn btn-primary pull-right">No</a>
+
+
+            </div>
+        </div>
+    </div>
+}
+
+@section Body{
+
+    <section class="content">
+        <div class="fontAriel">
+            @*<a class="btn btn-success pull-right marginLeft10" href="#">Save Segments</a>
+                <a class="btn btn-default pull-right marginBottom5" href="#">+ New Segment</a>*@
+            <!--display dataTable fixedHeader-floating-->
+            <div id="example_wrapper" class="dataTables_wrapper no-footer">
+                <div id="example_filter" class="dataTables_filter">
+                    <label>
+                        Search:<input type="search" class="" placeholder="" aria-controls="example">
+                    </label>
+                </div>
+                <p style="font-size: 18px;background-color: #5C8FBE;color: white;padding:5px;"> Segment Setting</p>
+                <div style="height:370px;  overflow-y:auto; width:100%;">
+                  
+                  
+                    <table id="tblSegment" class="display nowrap table-striped dataTable no-footer dtr-inline" cellspacing="0" width="100%" role="grid" aria-describedby="example_info" style="width: 100%;border: 1px solid #ccc !important; ">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label=": activate to sort column ascending" style="width: 16px;"></th>
+                                <th class="sorting_desc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Code: activate to sort column ascending" style="width: 199px;" aria-sort="descending">Code</th>
+                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Code Length: activate to sort column ascending" style="width: 200px;">Code Length</th>
+                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Segment Name: activate to sort column ascending" style="width: 200px;">Segment Name</th>
+                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Segment Reporting Description: activate to sort column ascending" style="width: 283px;">
+                                    Segment Reporting Description
+
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Segment Reporting Description: activate to sort column ascending" style="width: 283px;">Segment Type</th>
+
+                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Detail: activate to sort column ascending" style="width: 58px;display:none;">Detail</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="tblSegmentTBody"></tbody>
+                    </table>
+                </div>
+                <div>
+                    <p style="font-size: 18px;background-color: #5C8FBE;color: white;padding:5px;"> Detail Account Masking </p>
+                    <table class="display nowrap table-striped dataTable no-footer dtr-inline" style="width:100%;">
+                        <tr>
+                            <td><label>Level 1 Mask</label><input type="text" id="txtLevelMask1" onkeypress="return isNumberKey(event)" /></td>
+                            <td><label>Level 2 Mask</label><input type="text" id="txtLevelMask2" onkeypress="return isNumberKey(event)" /></td>
+                            <td><label>Level 3 Mask</label><input type="text" id="txtLevelMask3" onkeypress="return isNumberKey(event)" /></td>
+
+                        </tr>
+                        <tr>
+                            <td><label>Level 4 Mask</label><input type="text" id="txtLevelMask4" onkeypress="return isNumberKey(event)" /></td>
+                            <td><label>Level 5 Mask</label><input type="text" id="txtLevelMask5" onkeypress="return isNumberKey(event)" /></td>
+                            <td><label>Level 6 Mask</label><input type="text" id="txtLevelMask6" onkeypress="return isNumberKey(event)" /></td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+}
+
+@section Javascript{
+    <script src="~/Scripts/AdminLogin/SegmentSetup.js"></script>
+}
+
+@section breadcrumbtrail {
+<li class="breadcrumb-item">Admin</li>
+<li class="breadcrumb-item active"><a href="#">Segments</a></li>
+}

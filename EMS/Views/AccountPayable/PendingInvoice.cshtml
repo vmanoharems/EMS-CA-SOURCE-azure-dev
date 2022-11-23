@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "AccountsPayable>>Pending Invoice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Invoices</li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+                <li id="LiPending" class="active"><a href="PendingInvoice">Unposted</a></li>
+                <li id="LiAPInvoicesOpenInvoicesTab"><a href="PostedUnpaidInvoices">Posted Unpaid</a></li>
+                <li id="LiPosted"><a href="PostInvoice">Paid</a></li>
+                <li class=""><a href="AtlasInvoice" id="hrefInvoices" onclick="javascript: localStorage.EditInvoiceId = 0;">Add Invoice</a></li>
+            </ul>
+        </div>
+        <a href="#" class="btn dropdown-toggle btn-default floatRight" id="" onclick="funPostInvoice();">POST Invoice(s)</a>
+        @*<a href="#" class="btn btn-default floatRight" style="margin-top: -4px;">Post Invoice(s)</a>*@
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+
+@section Body{
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="tab-content">
+                <!-- Tab content -->
+                <div id="tabPendingInvoices" class="tab-pane active widget-body-regular">
+                    <div class="col-xs-12">
+                        <!--<table class="table table-hover table-responsive">-->
+                        <div class="table-responsive" id="DvTable">
+                            <table class="table table-hover table-responsive" id="TblPendingInvoice">
+                                <thead>
+                                    <tr>
+                                        @*<th></th>*@
+                                        <th><input type="checkbox" id="chkAllForPosing">Select</th>
+                                        <th>Invoice Date</th>
+                                        <th>Invoice #</th>
+                                        <th>Transaction #</th>
+                                        <th>CO</th>
+                                        <th>Batch Number</th>
+                                        <th>Vendor Name</th>
+                                        <th>Lines</th>
+                                        <th>Amount</th>
+                                        <th>Currency</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblPendingInvoiceTbody"></tbody>
+                                <tfoot>
+                                    <tr>
+                                        @*<th></th>*@
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--tabVendors end-->
+
+
+            </div>
+
+        </div>
+    </section>
+
+<div id="SaveInvoiceSuccess" class="newhidden" style="display: none; margin-top:10%">
+    <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+        <div class="heading2" style="padding: 5px 10px;">
+            <h5>
+                The following has been updated:
+            </h5>
+        </div>
+        <div class="WhtBg">
+            <div class="col-md-12" style="text-align: center;">
+                <div style="height: 190px;overflow-y: auto;float: left;width: 100%;">
+                    <table style="width: 100%;">
+                        <tbody id="tblResult">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="darkGreyNew col-lg-12">
+            <input type="button" onclick="javascript: G_LedgerCollection.CloseDIVorRunReport();" id="btnSaveOK" class="btn btn-success floatLeft" style="display: inline;" value="OK">
+            <input type="button" onclick="javascript: G_LedgerCollection.CloseDIVorRunReport(true);" id="btnRunPostingReport" class="btn btn-success floatRight" style="display: inline;" value="Run Posting Report">
+            @*<input type="button" onclick="javascript: funSaveInvoiceSuccess();" id="btnSaveOK" class="btn btn-success floatLeft" style="display: inline;" value="OK">
+            <input type="button" onclick="javascript: funCloseDiv(true);" id="btnRunPostingReport" class="btn btn-success floatRight" style="display: inline;" value="Run Posting Report">*@
+        </div>
+    </div>
+</div>
+}
+
+
+@section Javascript{
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+    <style type="text/css">
+        .black_overlay, #fade {
+            display: none !important;
+        }
+        #TblPendingInvoice_info {
+            position: fixed;
+            bottom: 3%;
+        }
+    </style>
+
+    <script src="~/Scripts/AccountsPayable/PendingInvoice.js"></script>
+    <script src="~/Scripts/Reports/ReportEngine.js"></script>
+}
+

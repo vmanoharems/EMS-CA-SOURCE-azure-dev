@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Admin Production Setup";
+    Layout = "~/Views/Shared/_LayoutCoreUIAdminBlank.cshtml";
+}
+
+<h2>Users</h2>
+
+
+@section Body{
+
+    <section class="content">
+
+        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-4">
+            <div class="form-group">
+                <label class="width119">Choose Existing Account </label>
+                <div class="input-group">
+                    <div class="input-group-addon" style="padding:2px;">
+                        <button class="transprent" name=" search" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                    @*<input id="txtSearchProduction" type="text" placeholder="Search..." class="form-control width145 SearchProductionList" name="q">
+                    <input type="hidden" id="hdnProductionId" />*@
+                    <select id="ddlDBName" class="width145 SearchProductionList"><option selected value="0">Select</option></select>
+                    <span onclick="javascript: funGetProdcutionListByUserId();">
+                        <i class="fa fa-sign-in fa-2x pull-left marginLeft4"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-4">
+            <div class="form-group">
+                <!--<label class="width119">Setup New Account</label>-->
+                <div class="input-group">
+                   
+                    <label class="width119">Setup New Account</label>
+                    <a href="#" id="HrfSetupNewDataBase" onclick="javascript: $('#Modal_ATDB_NEWDB').modal('show');"><i class="fa fa-database fa-2x"></i></a>
+
+                </div>
+                <span id="SpnSetupAlert" style="color: red;"></span>
+               
+            </div>
+            @*<a href="#" class="btn btn-default pull-left marginRight11" style="background-color: #4CBF63; display:none;margin-top:5px;" id="btnCleanup"> CleanUp</a>*@
+        
+        </div>
+        <img id="dvLoader" style="display:none;" src="~/Images/loader.gif" />
+        <!-- begin modal -->
+        <div class="modal fade" id="Modal_ATDB_NEWDB" tabindex="-1" role="dialog" aria-labelledby="ATLJTransactionModal" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="Modal_ATDB_NEWDB-title">Setup New DB</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="ATLJTransactionModal-form" class="">
+                            <div class="row">
+                                <div class="form-group col-lg-6 col-sm-6 has-danger">
+                                    <label>DB label</label>
+                                    <input type="text" placeholder="New DB Name" class="form-control pull-right hasDatepicker" id="txtDBName">
+                                    <label>Production Code</label>
+                                    <input type="text" placeholder="" class="form-control pull-right" id="txtProductionCode" maxlength="20">
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btnProduction" type="button" class="btn btn-primary">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal -->
+
+    </section>
+}
+
+@section Javascript{
+
+    <script src="~/Scripts/AdminLogin/SetupProduction.js"></script>
+    <style>
+        .DotPosition {
+            display: inline;
+            position: absolute;
+            right: 5px;
+            z-index: 9;
+            top: 44px;
+        }
+    </style>
+}
+
+

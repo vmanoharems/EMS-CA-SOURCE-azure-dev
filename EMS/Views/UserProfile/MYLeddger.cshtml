@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Ledger";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Ledger</h2>
+@section BreadCrumb{
+    <section class="content-header setting">
+    <div>
+        <ol class="breadcrumb floatLeft padding10">
+            <li><a href="#">Config <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">My Ledger Defaults</li>
+        </ol>
+    </div>
+    <div>
+        <!--<div class="midMenu">
+                    <ul>
+                    <li  class="active mobileHidden"><a href="#">Default (01)</a></li>
+                    <li class="mobileHidden"><a href="#">location XYZ (02)</a></li>
+                   <li class="addNew marginRight10"><a href="#">+ Add New</a></li>
+                    </ul>
+                    </div>-->
+    </div>
+    <div>
+        <!--<select class="form-control width90 width63  floatLeft">
+                     <option>01</option>
+                     </select>-->
+        <a class="btn btn-default floatRight" href="#">Config</a>
+        <!--<a class="btn btn-primary floatRight marginRight10" href="#">Cancel</a>-->
+    </div>
+    <!--<a  href="#" class="btn btn-default floatRight">Config</a>-->
+    <div class="clearfix"></div>
+
+</section>
+}
+
+@section Body{
+<section class="content">
+    <div class="row fontAriel">
+        <div class="col-md-12">
+            <b>Default Filters For <a href="#" class="blueText underLine">Trial Balance</a></b>
+            <div style="margin-top:10px; margin-bottom:0px;" class="table-responsive">
+                <table class="table table-hover table-responsive">
+                    <tbody>
+                        <tr>
+                            <td>Company</td>
+                            <td><input type="text" id="txtLedgerCompany" class="form-control marb0 SearchCompnayCodeLedger"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        
+                        </tr>
+                        <tr>
+                            <td>Consolidated</td>
+                            <td><input type="checkbox"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            
+                        </tr>
+                        <tr>
+                            <td>Summarize To</td>
+                            <td><select class="form-control marb0"><option>Header</option></select></td>
+                            <td></td>
+                            <td></td>
+                           
+                        </tr>
+                        <tr>
+                            <td>Period</td>
+                            <td><select class="form-control marb0"><option>Year Period</option></select></td>
+                            <td><select class="form-control marb0"><option>Current Year</option></select></td>
+                            <td><label class="floatLeft width60">From</label> <input type="text" id="txtFromdate" placeholder="MM/DD/YYYY" class="form-control floatLeft width101 datepicker"> <i class="fa fa-calendar floatLeft padding8 "></i></td>
+                            <td><label class="floatLeft  width60">To </label> <input type="text" id="txtTodate" placeholder="MM/DD/YYYY" class="form-control floatLeft width101 datepicker"> <i class="fa fa-calendar floatLeft padding8"></i></td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+}
+
+@section Javascript{
+<script src="~/Scripts/UserProfile/Ledger.js"></script>
+<link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+</script>
+  
+}
+
+

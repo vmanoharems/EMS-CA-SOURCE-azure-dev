@@ -1,0 +1,368 @@
+﻿@{
+    ViewBag.Title = "Ledger>>JournalEntries";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header">
+        <div style="width: 50% !important;float: left;">
+            <ol class="breadcrumb floatLeft">
+                <li><a href="#"> Ledger <i class="fa fa-caret-right"></i></a></li>
+                <li><a href="#"> Journal Entries <i class="fa fa-caret-right"></i></a></li>
+                <li class="active" id="LiBreadCrumb">Distribution Change</li>
+                <li class="active" style="display:none;" id="JEDistBreadCrumb">
+                    <a href="#" id="prev" class="btn-prenext">&laquo; Prev</a>
+                    Trasaction # (<span id="spnTrasactionDis"></span>)
+                    <a href="#" id="next" class="btn-prenext">Next &raquo;</a>
+                </li>   
+            </ol>
+        </div>
+        <div class="midMenu">
+            <ul>
+                <li class="active"><a href="JEDistributionChange"  onclick="javascript: funDistributionChange();">Distribution Change</a></li>
+                <li> <a href="JEManualEntry">Add JE</a></li>
+                <li><a href="JEAudit">Audit</a></li>
+                <li><a href="JEPostingHistory">JE History</a></li>
+            </ul>
+        </div>
+        <div class="form-group col-xs-6 col-sm-4 col-lg-1 pad0" id="DvPostDate" style="display:none;">
+
+            <div class="input-group" style="float: left; margin-left: 9px; width: 100%;display:none;">
+                <input type="text" class="form-control pull-right datepicker width90" id="txtPostDate" placeholder="MM/DD/YYYY">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </div>
+            </div>
+        </div>
+     
+        <a href="#" style="display:inline;" id="btnFilter" onclick="javascript: ShowhideFilter();"><i style="font-size: 24px;" class="fa fa-filter"></i>Filter</a>
+        <a href="#" class="btn dropdown-toggle btn-default floatRight" onclick="javascrip:funCancelDC();" id="btnCancelDCSave" style="display:none;float: right;margin-right: 10px;">Cancel</a>
+        <a href="#" class="btn dropdown-toggle btn-default floatRight" id="btnSaveDCSave" style="display:none;float: right;margin-right: 10px;">Save</a>
+        
+
+
+        <a href="#" class="btn btn-default floatRight" onclick="javascript: ShowhideFilter();" id="btnApply">Apply</a>
+
+        
+
+      
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+    <form>
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
+
+                <div class="col-xs-12">
+                    <div class="widget-body overflowNone">
+                        <div id="DvCriteria" style="display:inline;">
+                            <table cellspacing="0" width="100%" class="table table-hover table-responsive" id="TblEditCriteria" style="position: absolute; width:96%;">
+
+                                <tbody id="TblEditCriteriaTBody">
+                                 
+
+                                 
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-content" id="DvTab" style="display:none;">
+
+
+                            @* not Working *@
+                            <div id="tabDistribution" class="tab-pane  widget-body-regular active">
+                                <div class="table-responsive xsborNone">
+                                    <div id="filterDiv" style="display:inline;">
+                                        <div class="col-lg-7 col-md-8 col-sm-12 col-xs-12 padl0">
+                                           
+                                        </div>
+                                        <div class="col-lg-5 col-md-4 col-sm-12 col-xs-12 table-responsive pad0 marb10" style="display:none;">
+                                            <table class="table table-hover table-responsive">
+                                                <thead>
+                                                    <tr>
+                                                        <th>CO</th>
+                                                        <th>G/L</th>
+                                                        <th>Detail</th>
+                                                        <th>Set</th>
+                                                        <th>Epi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input placeholder="01" class="width100" type="text"></td>
+                                                        <td><input placeholder="188" class="width100" type="text"></td>
+                                                        <td><input placeholder="" class="width100" type="text"></td>
+                                                        <td><input placeholder="" class="width100" type="text"></td>
+                                                        <td><input placeholder="" class="width100" type="text"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-responsive" id="tblJEListDC">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 2%;"></th>
+                                                    <th style="width: 5%;">Transaction #</th>
+                                                    <th style="width: 8%;">CO</th>
+                                                    <th style="width: 10%;">Document #</th>
+                                                    <th style="width: 10%;">Document Date</th>
+                                                    <th style="width: 8%;">Debit</th>
+                                                    <th style="width: 10%;">Credit</th>
+                                                    <th style="width: 8%;">Period</th>
+                                                    <th style="width: 8%;">Type</th>
+                                                    <th style="width: 10%;">Currency</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tblJEListDCTBody"></tbody>
+                                            <tfoot id="tblTfoot">
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+
+                                            </tfoot>
+                                        </table>
+
+                                        @*  Div Amount *@
+                                        <div class="form-group mar0" id="DvDCAmount" style="display:none;">
+                                            <label for="" class="col-xs-3 col-sm-2 col-lg-2">
+                                                Transaction
+                                                #
+                                                <span for="" class="" id="spnTrasactionNoDC">1009</span>
+                                            </label>
+                                            <input type="hidden" id="hdnJEIdAudit">
+                                            <label class="col-xs-3 col-sm-2 col-lg-2">
+                                                <b>Debit</b>
+                                                $
+                                                <span for="" class="" id="spnDebitDC">600</span>
+                                            </label>
+
+                                            <label class="col-xs-3 col-sm-2 col-lg-2">
+                                                <b>Credit</b>
+                                                $
+                                                <span class="" id="spnCreditDC">100</span>
+                                            </label>
+                                            <label for="" class="col-xs-3 col-sm-2 col-lg-2">
+                                                Document
+                                                #
+                                                <span for="" class="" id="spnDocumentDC">1009</span>
+                                            </label>
+                                            <div class="red-color" id="DvBalImBalAudit">
+
+                                                <b><span class="col-lg-1 col-sm-4 col-xs-6" id="spnBalancImBalanceAudit">Balance </span></b>
+                                                <span>$</span>
+                                                <span class="text_red" id="txtImBalanceDC">500</span>
+
+                                            </div>
+
+                                            <select id="ddlCurrency" tabindex="2" class="form-control select2 width70"></select>
+
+                                            <div class="clearfix"></div>
+                                        </div>
+
+
+
+                                        <table class="table table-hover table-responsive" id="tblJEDForDC">
+                                            <thead id="tblJEDForDCTHead">
+
+                                            </thead>
+                                            <tbody id="tblJEDForDCTBody"></tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                            @* Manul Entry *@
+                         
+                            <!-- /.box -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        <div id="CancelDistributionPopup" class="newhidden" style="display: none; margin-top:10%">
+            <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+
+                <div class="heading2"><h4>Cancel Distribution Changes Edit</h4></div>
+
+                <div class="WhtBg">
+                    <div class="col-md-12">
+
+                        <p>This will Cancel your changes to this Cancel Distribution.</br> Are you Sure ?</p>
+
+                    </div>
+                    <!-- // Tabs END -->
+                </div>
+                <div class="darkGreyNew col-lg-12">
+                    <input type="hidden" id="hdnDeleteRowAudit" />
+                    <a href="#" id="hrfDCCancleYes"  class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+                    @*<span id="btnAuditCancleYes" onclick="javascript: funCancelJEAudit();" class="btn btn-success floatLeft" style="display: inline;">Yes</span>*@
+
+                    <a href="javascript:hideDiv('CancelAuditPopup');" id="btnCloseStartingValue" class="btn btn-primary floatRight">No</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="SaveSuccess" class="newhidden" style="display: none; margin-top:10%">
+            <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+
+
+                <div class="WhtBg">
+                    <div class="col-md-12">
+                        <h4 style="color:black;">
+                            Your Journal Entry has been saved with the following Transaction #[<span id="spnTransId"></span>]
+                        </h4>
+                    </div>
+                    <!-- // Tabs END -->
+                </div>
+                <div class="darkGreyNew col-lg-12">
+                    <input type="hidden" id="hdnDeleteRowAudit" />
+                    <input type="button" id="spnSaveOk" onclick="javascript: funSaveOkResponse();" class="btn btn-success floatLeft" style="display: inline;" value="OK" />
+                    @*<a href="#" id="spnSaveOk" onclick="javascript: funSaveOkResponse();" class="btn btn-success floatLeft" style="display: inline;">OK</a>*@
+                    @*<span id="spnSaveOk" onclick="javascript: funSaveOkResponse();" class="btn btn-success floatLeft" style="display: inline;">OK</span>*@
+               </div>
+            </div>
+        </div>
+</form>
+   
+}
+@section Javascript{
+
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.1/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            fixedHeader: {
+                header: true,
+                footer: true
+            }
+        });
+    });
+    </script>
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/fixedheader/3.1.1/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script>
+    // Change the selector if needed
+    var $table = $('table.scroll'),
+        $bodyCells = $table.find('tbody tr:first').children(),
+        colWidth;
+
+    // Adjust the width of thead cells when window resizes
+    $(window).resize(function () {
+        // Get the tbody columns width array
+        colWidth = $bodyCells.map(function () {
+            return $(this).width();
+        }).get();
+
+        // Set the width of thead columns
+        $table.find('thead tr').children().each(function (i, v) {
+            $(v).width(colWidth[i]);
+        });
+    }).resize(); // Trigger resize handler
+    </script>
+
+
+
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+
+    @*<script src="~/Scripts/Ledger/JournalEntry.js"></script>*@
+<link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui.js"></script>
+<script src="~/Scripts/Ledger/DistributionChange.js"></script>
+    <script type="text/javascript">
+
+        function myFunction() {
+            $('#filterDiv').show();
+        }
+
+    </script>
+    <style>
+        .table-hover td {
+            padding: 3px 0px 3px 10px !important;
+        }
+
+
+
+        .green-color span, .green-color label {
+            color: green;
+        }
+
+        .red-color span, .red-color label {
+            color: red;
+        }
+
+        .width40 {
+            width: 45px;
+            border: 1px solid #ccc;
+        }
+
+            .width40 input {
+                width: 100%;
+            }
+
+        .width100 {
+            width: 120px;
+            border: 1px solid #ccc;
+        }
+
+            .width100 input {
+                width: 100%;
+            }
+
+        .width75 {
+            width: 75px;
+            border: 1px solid #ccc;
+        }
+
+            .width75 input {
+                width: 100%;
+            }
+
+        .width95 {
+            width: 95px;
+            border: 1px solid #ccc;
+        }
+
+            .width95 input {
+                width: 100%;
+            }
+
+        .width35 {
+            width: 100px;
+            border: 1px solid #ccc;
+        }
+
+            .width35 input {
+                width: 35%;
+            }
+
+        .table-hover td {
+            padding: 0px !important;
+        }
+    </style>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+}

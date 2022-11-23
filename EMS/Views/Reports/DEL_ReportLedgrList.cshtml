@@ -1,0 +1,325 @@
+﻿@{
+    //ViewBag.Title = "AccountsPayable>>LedgerListing";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        @*<ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li class="active" id="breadcrumbVendorLi">Purchase Orders</li>
+        </ol>
+        <div class="midMenu widget-head floatRight" id="DvTab01" style="width:11%;">
+            <ul>
+                <li id="POPrintPDF" class="" style="float: left;"><a class="" href="#">+ Print PDF</a></li>
+                <li id="VendorsADDPOTabLi" class="" style="float: left;display:none;"><a class="" href="AddPurchaseOrder">+ Add PO</a></li>
+                <li id="VendorsADDPOTabLi" class="float-right" style="width: 27%; display: none;"><span onclick="javascript: funFilter();" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-filter" aria-hidden="true"></i></span></li>
+            </ul>
+        </div>*@
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+
+@section Body{
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="tab-content">
+
+                <div id="tabPurchaseOrders">
+                    <div class="col-xs-12">
+                        <!--<table class="table table-hover table-responsive">-->
+                        <table></table>
+                        <div class="table-responsive" id="DvTable">
+
+                            <table class="table table-hover table-responsive" id="TblPO">
+
+                                <thead>
+                                    <tr>
+
+                                        @*<th><span><i class="fa fa-filter" aria-hidden="true"></i></span></th>*@
+                                        <th></th>
+                                        <th>PO Date</th>
+                                        <th>PO #</th>
+                                        <th>CO</th>
+                                        <th>Status</th>
+
+                                        @*<th>Pay by</th>*@
+                                        <th>Vendor Name</th>
+                                        <th>3rd PartyVendor</th>
+                                        <th>Close</th>
+                                        <th>BatchNumber</th>
+                                        <th>Balance</th>
+                                        @*<th>Transaction</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyPO"></tbody>
+                                <tfoot>
+                                    <tr>
+
+
+                                        <th></th>
+
+                                        <th></th>
+
+                                        <th></th>
+
+                                        <th></th>
+
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        @*<th></th>*@
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+
+                        <div id="transactionsPopup" style="display:none;">
+                            <div class="table-responsive marginTop10 visibleOverFlow">
+                                <span class="floatRight"><a href="javascript:hideDiv('transactionsPopup');" class="crossBtn">X</a></span>
+
+                                <table class="table table-hover table-responsive" id="tblManualEntry">
+                                    <thead id="tblManualEntryThead">
+
+                                    </thead>
+                                    <tbody id="tblManualEntryTBody"></tbody>
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            </div>
+    </section>
+    <div id="ClosePopupPO" class="newhidden" style="display: none; margin-top:10%">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+
+            <div class="heading2"><h4>You are about to Close this PO. Are you sure you want to do this? </h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+
+
+
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <input type="hidden" id="hdnOpenClose" />
+                <a href="#" onclick="javascript: funClosePO('Yes');" class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+
+
+                <a href="#" id="btnCloseStartingValue" class="btn btn-primary floatRight" onclick="javascript: funClosePO('No');">No</a>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h3 class="modal-title" id="myLargeModalLabel" style="color: black;">Purchase Order Filter</h3>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover table-responsive">
+                        <tbody>
+                            <tr>
+                                <td><label id="lblCO">CO</label> </td>
+                                <td>
+                                    <div id="tblSegment"><input type="text" class="SearchCode form-control marb0 detectTab" onblur="javascript: funCompanyblur();" onfocus="javascript: FillCompany();" id="txtCompany" name="Company"></div>
+                                    <input type="hidden" id="hdnCompany" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label id="lblCO">Period</label> </td>
+                                <td>
+                                    <div style="width:34%">
+                                        <select id="ddlPeriod">
+                                            <option value="">Select</option>
+                                            <option value="Current">Current</option>
+                                            <option value="Future">Future</option>
+                                            <option value="Both">Both</option>
+
+                                        </select>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label id="lblCO">PO Status </label> </td>
+                                <td>
+                                    <div style="width:34%">
+                                        <select id="ddlPOStatus" multiple>
+                                            <option value="">Select</option>
+                                            <option value="Current">Current</option>
+                                            <option value="Future">Future</option>
+                                            <option value="Both">Both</option>
+
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label id="lblCO">Batch #  </label> </td>
+                                <td>
+                                    <div style="width:34%">
+                                        <select id="ddlPOBatchNumber" multiple></select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PO Transaction </td>
+
+                                <td>
+                                    <label class="floatLeft width60">From</label>
+                                    <div style="float: left; border: solid 1px gray; padding: 0px 4px 0 0;">
+                                        <input id="txtPOTranStart" type="text" class="form-control floatLeft marb0" style="width: 100px; border: none; margin-bottom: 0px;">
+
+                                    </div>
+                                    <label class="floatLeft width60">
+                                        To
+                                    </label>
+                                    <div style="float: left; border: solid 1px gray; padding: 0px 4px 0 0;">
+                                        <input id="txtPOTranEnd" type="text" class="form-control floatLeft marb0" style="width: 100px; border: none; margin-bottom: 0px;">
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PO # </td>
+
+                                <td>
+                                    <label class="floatLeft width60">From</label>
+                                    <div style="float: left; border: solid 1px gray; padding: 0px 4px 0 0;">
+                                        <input id="txtPONumber" type="text" class="form-control floatLeft marb0" style="width: 100px; border: none; margin-bottom: 0px;">
+
+                                    </div>
+                                    <label class="floatLeft width60">
+                                        To
+                                    </label>
+                                    <div style="float: left; border: solid 1px gray; padding: 0px 4px 0 0;">
+                                        <input id="txtPOTranEnd" type="text" class="form-control floatLeft marb0" style="width: 100px; border: none; margin-bottom: 0px;">
+
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Vendor</td>
+                                <td>
+                                    <div style="width:34%;">
+                                        <select id="ddlVendor" multiple></select>
+                                        <input type="hidden" id="hdnVendorID">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Invoice #</td>
+
+                                <td>
+                                    <label class="floatLeft width60">From</label>
+                                    <div style="float: left; border: solid 1px gray; padding: 0px 4px 0 0;">
+                                        <input id="txtInv1" type="text" class="form-control floatLeft marb0 datepicker hasDatepicker" placeholder="MM/DD/YYYY" style="width: 100px; border: none; margin-bottom: 0px;">
+                                        <i class="fa fa-calendar floatLeft padding8" style="font-size:17px;padding-top:5px;"></i>
+                                    </div>
+                                    <label class="floatLeft width60">
+                                        To
+                                    </label>
+                                    <div style="float: left; border: solid 1px gray; padding: 0px 4px 0 0;">
+                                        <input id="txtInv2" type="text" class="form-control floatLeft marb0 datepicker hasDatepicker" placeholder="MM/DD/YYYY" style="width: 100px; border: none; margin-bottom: 0px;">
+                                        <i class="fa fa-calendar floatLeft padding8" style="font-size:17px;padding-top:5px;"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Period</td>
+                                <td>
+
+                                    <select class="form-control marb0 VendorCode" id="ddlPeriod">
+                                        <option value="Current">Current Period</option>
+                                        <option value="Future">Future Period</option>
+                                        <option value="Both">Current &amp; Future</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+
+@section Javascript{
+
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+    <script>
+        // Change the selector if needed
+        var $table = $('table.scroll'),
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
+
+        // Adjust the width of thead cells when window resizes
+        $(window).resize(function () {
+            // Get the tbody columns width array
+            colWidth = $bodyCells.map(function () {
+                return $(this).width();
+            }).get();
+
+            // Set the width of thead columns
+            $table.find('thead tr').children().each(function (i, v) {
+                $(v).width(colWidth[i]);
+            });
+        }).resize(); // Trigger resize handler
+    </script>
+
+    <style type="text/css">
+        .black_overlay, #fade {
+            display: none !important;
+        }
+
+        .TrShow {
+            display: table-row;
+        }
+
+        .TrHide {
+            display: none;
+        }
+
+        .Filter {
+            width: 68%;
+            margin-bottom: 12px;
+        }
+
+        tfoot input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+    </style>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+    <script src="~/Scripts/Reports/LedgerListReport.js"></script>
+}
+

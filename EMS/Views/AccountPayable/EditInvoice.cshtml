@@ -1,0 +1,381 @@
+﻿﻿@{
+    ViewBag.Title = "AccountsPayable>>Edit Invoice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*Vivek*@
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="/AccountPayable/PendingInvoice"> Invoice <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">
+                <a href="#" id="prev" class="btn-prenext">&laquo; Prev</a>
+                <span id="breadcrumbEditInvoice"></span>
+                <a href="#" id="next" class="btn-prenext">Next &raquo;</a>
+            </li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+                <li id="LiPending"><a href="PendingInvoice">Unposted</a></li>
+                <li id="LiAPInvoicesOpenInvoicesTab"><a href="PostedUnpaidInvoices">Posted Unpaid</a></li>
+                <li id="LiPosted"><a href="PostInvoice">Paid</a></li>
+                <li class=""><a href="addInvoice" id="hrefInvoices">Add Invoice</a></li>
+            </ul>
+        </div>
+        <div class="floatRight btn-group" id="DvTab01">
+            <select id="ddlClosePeriod" class="form-control floatLeft" onchange="javascript:GetStartEndPeriod();" style="margin-left: -2%;"></select>
+            @*<a href="javascript: funSaveInvoice('Posted');" id="btnSavePostedInvoice" class="btn btn-default floatRight" style="display:none;margin-right: -10px;">Save</a>
+                <a href="javascript:funSave('Posted');" id="btnSavePostInvoice" class="btn btn-default floatRight" style="display:none;">Save & Post </a>*@
+            @*Old buttons prior to #968
+                <a href="javascript:IscheckedfunSaveInvoice();" id="btnSaveInvoice" class="btn btn-default floatRight" style="margin-right: -10px;">Save </a>
+                <button class="btn btn-primary floatRight marginRight10" type="submit" id="btnsavevendor"  onclick="funCancelInvoice();" style="background-color:#fb3640">Cancel</button>
+                <a href="#" id="btnInvoiceDelete" class="btn btn-primary floatRight marginRight10" onclick="ShowDeletePopup();">Delete</a>
+                <a href="#" id="btnReverse" class="btn btn-primary floatRight marginRight10" onclick="InvoiceReversedFinal();" style="display:none;">Reverse</a>*@
+            <button type="button" class="btn toggle-button" id="btnSavePostedInvoice" onclick="IscheckedfunSaveInvoice();">Save</button>
+            <button type="button" data-toggle="dropdown" id="ddlOption" class="btn btn-primary dropdown-toggle toggle-button-item"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="#" id="btnInvoiceClone" onclick="IscheckedfunSaveInvoice({ isClone: true });">Clone</a></li>
+                <li class="divider"></li>
+                <li><a href="#" id="btnInvoiceDelete" onclick="ShowDeletePopup();">Delete</a></li>
+                <li class="divider"></li>
+                <li><a href="#" id="btnReverse" onclick="InvoiceReversedFinal();">Reverse</a></li>
+                <li class="divider"></li>
+                <li><a href="#" id="btncancelinvoice" onclick="funCancelInvoice();">Cancel</a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div><br />
+
+        <div class="clearfix"></div>
+    </section>
+}
+@section Body{
+    <form>
+        <section class="content">
+            <div class="row fontAriel">
+                <div class="tab-content">
+                    <div class="col-xs-12" style="background-color:#4cbf63 !important; color:white; visibility:hidden;" id="divInvoicePaymentDetails">
+                        <span id="spnPaymentNumber">Payment #:</span> <b><span id="spnPaymentNumberValue"></span></b> •
+                        <span id="spnPaymentDate">Payment Date:</span> <b><span id="spnPaymentDateValue"></span></b> •
+                        <span id="spnPaymentStatus">Payment Status:</span> <b><span id="spnPaymentStatusValue"></span></b> •
+                        <span id="spnPayBy">Paid By:</span> <b><span id="spnPayByValue"></span></b>
+                    </div>
+                    <div id="tabAddPO" class="tab-pane widget-body-regular active">
+                        <div class="col-xs-12">
+                            <div class="col-xs-12">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                                    <label class="width70">Company </label>
+                                    <select onchange="javascript: GetInvoiceNo();" id="ddlCompany" class="form-control width130 floatLeft input-required atlas-edit-0" style="margin-right:3px;" disabled></select>
+                                    <a href="#" class="blueText underLine">USD</a>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 paddingLeftNone">
+                                    <label class="width70">Invoice # :</label><input type="text" class="input-required form-control width90" id="txtInvoiceNumber" onblur="funCheckInNumber();" tabindex="1" />
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 paddingLeftNone">
+                                    <label class="width50">Bank :</label>
+                                    @*<input type="text" class="input-required form-control width90" id="txtBank" />*@
+                                    <input type="text" id="txtBank" class="input-required form-control width90 SearchBank" tabindex="3" />
+                                    <input type="hidden" id="hdnBank" />
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6" style="visibility:hidden;">
+                                    <span class="width50 floatLeft">Pay by:</span>
+                                    <select id="ddlPayBy" class="form-control width90">
+                                        <option value="Check">Check</option>
+                                        @*<option value="Billing">Billing</option>*@
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                                    <span class="width60 floatLeft" style="width: 90px !important;">Invoice Date:</span>
+                                    <input type="text" id="txtPODate" class="form-control width75 datepicker floatLeft input-required" placeholder="MM/DD/YYYY" tabindex="4">
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6" style="display:none;">
+                                    <span class="width60 floatLeft" style="width: 58px !important;">Due Date:</span>
+                                    <input type="text" id="txtDueDate" class="form-control width90 datepicker floatLeft" placeholder="MM/DD/YYYY">
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" style="display:none;">
+                                    <span class="width90"><input type="checkbox" checked="checked" id="chkClosePO"> Separate Check</span>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Vendor Name</label>
+                                        <input type="text" id="txtVendor" class="form-control width180 VendorCode atlas-edit-0" onfocus="javascript:FillVendor();" disabled>
+                                        <input type="hidden" id="hdnVendorID" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label><input type="checkbox" id="chkThirdParty" onchange="javascript:ThirdParty();" class="atlas-edit-0"> Ref Vendor</label>
+                                        <input type="text" id="txtThirdParty" onfocus="javascript:FillRefVendor();" class="RefVendor form-control width180 atlas-edit-0">
+                                        <input type="hidden" id="hdnRefVendorID" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <input type="text" id="txtDescription" class="form-control width180 input-required" tabindex="5">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label><b>Remit Address</b></label>
+                                    <p>
+                                        <label id="lblBillingAddress1" style="width:100%;"></label> <br>
+                                        <label id="lblBillingAddress2" style="width:100%;"></label>
+                                    </p>
+                                    <div id="DvVendorTax" style="display:none;">
+                                        <label id="lblOverrideTax" style="width:100%"> Override Tax Form Code  <input type="checkbox" id="ChkOverride" /> </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <p class="marginBottom5" style="display: inline-block; margin-right: 5px;"><b>Amount</b> $</p>
+                                    <input type="text" class="input-required w2ui-field w2field amount" id="txtAmount" style="width: 65%;">
+                                    <p>
+                                        <input type="hidden" id="hdnNewItem" class="w2ui-field" />
+                                        Line Total: $ <span id="lblNewBalance">0</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <a href="#" id="hrfAddJE" class="btn btn-default  pull-right marginBottom5" accesskey="N" tabindex="6" onclick="javascript: funTrCreate();">Add Invoice Line </a>
+                            <div class="clearfix"></div>
+                            <div class="table-responsive row-seq" id="divtblManualEntry">
+                                <table class="table table-hover table-responsive" id="tblManualEntry">
+                                    <thead id="tblManualEntryThead">
+                                    </thead>
+                                    <tbody id="tblManualEntryTBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div id="dvPOLines" class="newhidden" style="display: none;">
+            <div class="popup popupCRW col-xs-10 floatNone">
+                <div class="heading2 bgBlue"><h4 class="whiteText">Purchase Order Lines <span class="pull-right"><a href="javascript:hideDiv('dvPOLines','hrfAddJE'); ReturnFocus(this);" class="whiteText">X</a></span></h4></div>
+                <div class="darkGreyNew col-lg-12">
+                    <table class="table table-hover table-responsive" id="tblManualEntry">
+                        <thead id="tblPOLineThead">
+                        </thead>
+                        <tbody id="tblPOLineTBody"></tbody>
+                    </table>
+                    <a href="javascript: funAddPOLine();" style="margin-top:10px;" id="btnsavevendor" class="btn btn-default floatLeft btnVendor">Apply</a>
+                </div>
+            </div>
+        </div>
+        <div id="DeletePopup" class="newhidden" style="display: none; margin-top:10%">
+            <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+                <div class="deleteNewIcon"><a href="javascript:hideDiv('DeletePopup','hrfAddJE');">X</a></div>
+                <div class="heading2"><h4>Are you sure want to delete this record </h4></div>
+                <div class="WhtBg">
+                    <div class="col-md-12">
+                    </div>
+                    <!-- // Tabs END -->
+                </div>
+                <div class="darkGreyNew col-lg-12">
+                    <input type="hidden" id="hdnDeleteRowAudit" />
+                    <a href="#" id="DeletePopup_YES" onclick="javascript: funDeleteRecordAuditTab();" class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+                    <a href="javascript:hideDiv('DeletePopup');" id="btnCloseStartingValue" class="btn btn-primary floatRight">No</a>
+                </div>
+            </div>
+        </div>
+        <div id="DeletePopupInvoice" class="newhidden" style="display: none; margin-top:10%">
+            <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+                <div class="deleteNewIcon"><a href="javascript:hideDiv('DeletePopupInvoice');">X</a></div>
+                <div class="heading2"></div>
+                <div class="WhtBg">
+                    <div class="col-md-12">
+                        <h4 style="color: black;">This will delete Invoice <span id="SpnInvoiceNumber"></span>  and cannot be undone. Are you sure you want to delete this invoice?  </h4>
+                    </div>
+                    <!-- // Tabs END -->
+                </div>
+                <div class="darkGreyNew col-lg-12">
+                    <input type="hidden" id="hdnInvoiceId" />
+                    <a href="#" id="DeletePopupInvoice_YES" onclick="javascript: funDeleteInvoice('Yes');" class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+                    <a href="#" onclick="javascript: funDeleteInvoice('No');" id="btnCloseStartingValue" class="btn btn-primary floatRight">No</a>
+                </div>
+            </div>
+        </div>
+        <div id="ConfirmPopupPO" class="newhidden" style="display: none; margin-top:10%">
+            <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+                <div class="deleteNewIcon"><a href="javascript:hideDiv('ConfirmPopupPO');">X</a></div>
+                <div class="heading2"><h4> This Invoice  was already used for this Vendor. Are you Sure you'd like to use this Invoice ? </h4></div>
+                <div class="WhtBg">
+                    <div class="col-md-12">
+                    </div>
+                    <!-- // Tabs END -->
+                </div>
+                <div class="darkGreyNew col-lg-12">
+                    <input type="hidden" id="hdnDeleteRowAudit" />
+                    <a href="#" id="hrefConfirmYes" onclick="javascript: funDuplicate('Yes');" class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+                    <a href="#" id="btnCloseStartingValue" class="btn btn-primary floatRight" onclick="javascript: funDuplicate('No');">No</a>
+                </div>
+            </div>
+        </div>
+        <div id="SaveInvoiceSuccess" class="newhidden" style="display: none; margin-top:10%">
+            <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+                <div class="heading2">
+                    <h5>
+                        This Invoice has been <span id="spanInvoiceAction"></span> with the following Transaction #[<span id="spanTRNumber"></span>]
+                    </h5>
+                </div>
+                <div class="WhtBg">
+                    <div class="col-md-12" id="InvoiceSaveMessageAdditional"></div>
+                </div>
+                <div class="darkGreyNew col-lg-12">
+                    @*<a href="#" onclick="javascript: funSaveInvoiceSuccess();" class="btn btn-success floatLeft" style="display: inline;">OK</a>*@
+                    <input type="button" onclick="javascript: funSaveInvoiceSuccess();" id="btnSaveOK" class="btn btn-success floatLeft" style="display: inline;" value="OK" />
+                </div>
+            </div>
+        </div>
+        <div id="DivDelete" class="newhidden" style="margin-top: 5%; display: none;">
+            <div class="col-md-4 col-lg-5 col-sm-12 col-xs-12 floatNone" style="margin:5% auto;">
+                <div class="popupred left10 col-md-12 col-lg-12 col-sm-12 col-xs-12 floatNone xs_top-80" style="border-radius:3%; padding:0px;">
+                    <div class="deleteNewIcon"><a href="javascript:funhideDiv('DivDelete');">X</a></div>
+                    <div class="heading2">
+                        <h4>
+                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                <h4 align="center">Reverse</h4>
+                            </div>
+                        </h4>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:0px !important;">
+                            <div class="WhtBg" style="margin:0px !important;">
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:20px;">
+                                    <p align="left">
+                                        This will create & post an offsetting Invoice immediately. Are you sure you want to do this?
+                                        <br><br>
+                                        <b>
+                                            If you would like to also create a copy of this invoice as a Pending Invoice, please check this checkbox before clicking Yes.
+                                        </b>
+                                        <input type="checkbox" id="ChkReIssue" style="width: 18px;height: 17px;" />
+                                        <br><br>
+                                        If you'd like to cancel reversing this Invoice, please click No.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:0px !important;">
+                            <a class="No floatLeft" href="javascript:funhideDiv('DivDelete');">No</a>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:0px !important;">
+                            <a class="Yes floatRight" href="#" onclick="javascript: InvoiceReversed();">Yes</a>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div id="DivAlert" class="newhidden" style="margin-top: 10%; display: none;">
+            <div class="col-md-3 col-lg-3 col-sm-11 col-xs-12 floatNone" style="margin:5% auto;">
+                <div class="popupred left10 col-md-12 col-lg-12 col-sm-12 col-xs-12 floatNone xs_top-80" style="border-radius:3%; padding:0px;">
+                    <div class="">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:0px !important;">
+                            <div style="margin:0px !important;">
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:20px;">
+                                    <p align="center">
+                                        Payment has been made against this invoice. It can only be reversed using a Check Void.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-12" style="padding:0px !important;">
+                            <a class="Yes floatRight" style="color:white;" href="#" onclick="javascript: funhideAlert();">OK</a>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div id="ConfirmPopupZero" class="newhidden" style="display: none; margin-top:10%">
+            <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+                <div class="heading2"><h4> Your distribution has a zero line amount. Do you wish to keep zero line amounts?  </h4></div>
+                <div class="WhtBg">
+                    <div class="col-md-12">
+                    </div>
+                    <!-- // Tabs END -->
+                </div>
+                <div class="darkGreyNew col-lg-12">
+                    <input type="hidden" id="hdnDeleteRowAudit" />
+                    <a href="#" id="PopupYesPress" onclick="javascript:funSave('Pending');" tabindex="1" class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+                    <a href="#" id="btncancel" class="btn btn-primary floatRight" onclick="javascript: RemoveLastLine();">No</a>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+@section Javascript{
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/AtlasUtility.css" rel="stylesheet" />
+    <script src="~/Scripts/Validation/Validation.js"></script>
+    <script src="~/Scripts/AccountsPayable/EditInvoice.js"></script>
+    <script src="~/Scripts/Validation/APValidation.js"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+
+
+    </script>
+    <style>
+        .width40 {
+            width: 45px;
+            border: 1px solid #ccc;
+        }
+
+            .width40 input {
+                width: 100%;
+            }
+
+        .width100 {
+            width: 120px;
+            border: 1px solid #ccc;
+        }
+
+            .width100 input {
+                width: 100%;
+            }
+
+        .width75 {
+            width: 75px;
+            border: 1px solid #ccc;
+        }
+
+            .width75 input {
+                width: 100%;
+            }
+
+        .width95 {
+            width: 95px;
+            border: 1px solid #ccc;
+        }
+
+            .width95 input {
+                width: 100%;
+            }
+
+        .table-hover td {
+            padding: 0px !important;
+        }
+
+        .PoNumber {
+            width: 90%;
+            margin-right: 3px;
+        }
+
+        .width200 {
+            width: 200px;
+            border: 1px solid #ccc;
+        }
+
+        .width75 {
+            width: 75px !important;
+        }
+
+        .width200 input {
+            width: 100%;
+        }
+    </style>
+}

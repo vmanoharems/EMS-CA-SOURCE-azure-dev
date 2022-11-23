@@ -1,0 +1,360 @@
+﻿@{
+    ViewBag.Title = "Reports>>CRW";
+    Layout = "~/Views/Shared/_LayoutReports.cshtml";
+
+}
+
+@section BreadCrumb{
+    <section class="content-header">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> CRW <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">CRW </li>
+        </ol>
+        <div class="floatLeft">
+            <label class="width50 textRight paddingRight5">CO</label>
+            <select onchange="javascript: CO();" id="ddlCompany" class="form-control width110"></select>
+            <label class="width50 textRight paddingRight5">LO</label>
+            <select onchange="javascript: LO();" id="ddlLocation" class="form-control width110"></select>
+            <label class="width50 textRight paddingRight5">EP</label>
+            <select onchange="javascript: EP();" id="ddlEpisode" class="form-control width110"></select>
+        </div>
+        <span id="spanBudget" style="margin-left:30px;"></span>
+        <div class="pull-right"><button id="toggle" class="btn btn-default bgGreenBtn">Full Screen1</button></div>
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+    <section class="content">
+        <div class="fontAriel">
+            <div class="col-xs-12">
+                <div class="row">
+                    @*<div class="col-md-5"><label class="width90">CO</label> <select onchange="javascript: FillBudgetForCompany();" id="ddlCompany" class="form-control width110"></select></div>*@
+                </div>
+            </div>
+            @*<section>
+
+                    <button id="toggle">Full Screen1</button>
+
+                </section>*@
+            <div class="col-xs-12">
+                <div class="row">
+                    <div style="margin-top:10px; margin-bottom:0px;" class="xsborNoneNew">
+                        <div id="tblResponse">
+
+                            <div class="fixed-table-container">
+                                <div class="header-background"> </div>
+                                <div class="fixed-table-container-inner">
+                                    <div id="dvFixed">
+                                        <table cellspacing="0" id="tblCRW">
+                                            <thead>
+                                                <tr>
+                                                    <th class="first">
+                                                        <div class="th-inner"></div>
+                                                    </th>
+                                                    <th class="second">
+                                                        <div class="th-inner">Detail</div>
+                                                    </th>
+                                                    <th class="third">
+                                                        <div class="th-inner">Set</div>
+                                                    </th>
+                                                    <th class="third">
+                                                        <div class="th-inner">Series</div>
+                                                    </th>
+                                                    <th class="four">
+                                                        <div class="th-inner">Description</div>
+                                                    </th>
+                                                    <th class="five">
+                                                        <div class="th-inner">Actual this Period</div>
+                                                    </th>
+                                                    <th class="six">
+                                                        <div class="th-inner">Actual to date</div>
+                                                    </th>
+                                                    <th class="seven">
+                                                        <div class="th-inner">PO Amt</div>
+                                                    </th>
+                                                    <th class="eight">
+                                                        <div class="th-inner">Total Cost</div>
+                                                    </th>
+                                                    <th class="nine">
+                                                        <div class="th-inner">ETC</div>
+                                                    </th>
+                                                    <th class="ten">
+                                                        <div class="th-inner">EFC</div>
+                                                    </th>
+                                                    <th class="eleven">
+                                                        <div class="th-inner">Budget</div>
+                                                    </th>
+                                                    <th class="towel">
+                                                        <div class="th-inner">Variance</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbodyCrw"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="dvMsgCategory"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="botMenu">
+                <ul class="floatLeft" id="ulBudgetList"></ul>
+
+            </div>
+
+
+        </div>
+    </section>
+
+    <div id="dvNotes" class="newhidden" style="display: none;">
+        <div class="popup popupCRW col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+            <div class="heading2 bgBlue"><h4 class="whiteText">Save Notes <span class="pull-right"><a href="javascript:hideDiv('dvNotes');" class="whiteText">X</a></span></h4></div>
+
+
+            <div class="WhtBg paddingAll">
+                <label class="width60">Notes</label><input class="form-control pull-left margin-r-5" type="text" id="txtNotes" /><a href="javascript:SaveNotes();" class="btn btn-success">Save</a>
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <table class="myTable">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Note Date</th>
+                            <th>Note</th>
+                            <th>Make Private</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyCRWNote"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="newhidden" id="poPopup" style="display: none;">
+        <div class="popup col-md-8 col-lg-8 col-sm-8 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('poPopup');">X</a></div>
+            <div class="WhtBg minHeight300">
+                <div class="col-md-12">
+                    <div class="" id="tabAccounts">
+                        <div class="tab-content">
+                            <div class="midMenuNew marginTop10">
+                                <ul id="ulTransac">
+                                    <li id="liTransaction" class="col-lg-3 active"><a href="#tabPurchaseOrders" data-toggle="tab" aria-expanded="true">Purchase Orders</a></li>
+                                    <li class="col-lg-3"><a href="#tabInvoices" data-toggle="tab" aria-expanded="false">Invoices</a></li>
+                                    <li class="col-lg-3"><a href="#tabChecks" data-toggle="tab" aria-expanded="false">Checks</a></li>
+                                    <li class="col-lg-3"><a href="#tabJournalEntries" data-toggle="tab" aria-expanded="false">Journal Entries</a></li>
+                                </ul>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div id="tabPurchaseOrders" class="tab-pane widget-body-regular overFlowAuto active">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Date
+                                            </th>
+                                            <th>
+                                                Vendor
+                                            </th>
+                                            <th>Description</th>
+                                            <th>Actual This Period</th>
+                                            <th>Actual To Date</th>
+                                            <th>PO Amount</th>
+                                            <th>Source</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyPODetail"></tbody>
+                                </table>
+                            </div>
+                            <!--end here-->
+                            <div id="tabInvoices" class="tab-pane widget-body-regular">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Date
+                                            </th>
+                                            <th>
+                                                Vendor
+                                            </th>
+                                            <th>Description</th>
+                                            <th>Actual This Period</th>
+                                            <th>Actual To Date</th>
+                                            <th>Invoice Amount</th>
+                                            <th>Source</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyInvoiceDetail"></tbody>
+                                </table>
+
+                            </div>
+                            <div id="tabChecks" class="tab-pane widget-body-regular">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Date
+                                            </th>
+                                            <th>
+                                                Vendor
+                                            </th>
+                                            <th>Description</th>
+                                            <th>Actual This Period</th>
+                                            <th>Actual To Date</th>
+                                            <th>Check Amount</th>
+                                            <th>Source</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyCheckDetail">
+                                        <tr><td colspan="7" style="text-align:center;">There are no transactions for this account</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="tabJournalEntries" class="tab-pane widget-body-regular">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Date
+                                            </th>
+                                            <th>
+                                                Vendor
+                                            </th>
+                                            <th>Description</th>
+                                            <th>Actual This Period</th>
+                                            <th>Actual To Date</th>
+                                            <th> Amount</th>
+                                            <th>Source</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyJDetail">
+                                        <tr><td colspan="7" style="text-align:center;">There are no transactions for this account</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+
+        </div>
+    </div>
+}
+@section Javascript{
+
+    @*<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>*@
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.1/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                fixedHeader: {
+                    header: true,
+                    footer: true
+                }
+            });
+        });
+    </script>
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/fixedheader/3.1.1/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+
+    <script>
+        // Change the selector if needed
+        var $table = $('table.scroll'),
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
+
+        // Adjust the width of thead cells when window resizes
+        $(window).resize(function () {
+            // Get the tbody columns width array
+            colWidth = $bodyCells.map(function () {
+                return $(this).width();
+            }).get();
+
+            // Set the width of thead columns
+            $table.find('thead tr').children().each(function (i, v) {
+                $(v).width(colWidth[i]);
+            });
+        }).resize(); // Trigger resize handler
+    </script>
+
+
+
+    <script src="~/Scripts/CRW/CRWList.js"></script>
+    <script src="~/Scripts/CRW/screenfull.js"></script>
+
+
+
+    <script>
+        $("#wrapper").hide();
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggle();
+        });
+
+        $(function () {
+            $('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
+
+            if (!screenfull.enabled) {
+                return false;
+            }
+
+            $('#toggle').click(function () {
+
+                screenfull.toggle($('#container')[0]);
+            });
+
+            function fullscreenchange() {
+                var heightt = $(window).height();
+                heightt = heightt - 200;
+                $('#dvFixed').attr('style', 'height:' + heightt + 'px;');
+
+                var btnText = $("#toggle").html();
+                if (btnText == 'Full Screen') {
+                    $("#toggle").html('Exit Full Screen');
+                }
+                else {
+                    $("#toggle").html('Full Screen')
+                }
+
+                var elem = screenfull.element;
+
+                $('#status').text('Is fullscreen: ' + screenfull.isFullscreen);
+
+                if (elem) {
+                    $('#element').text('Element: ' + elem.localName + (elem.id ? '#' + elem.id : ''));
+                }
+
+                if (!screenfull.isFullscreen) {
+                    $('#external-iframe').remove();
+                    document.body.style.overflow = 'auto';
+                }
+            }
+
+            document.addEventListener(screenfull.raw.fullscreenchange, fullscreenchange);
+
+            fullscreenchange();
+        });
+    </script>
+    <style type="text/css">
+        .ArrowCls {
+            width: 10px !important;
+        }
+
+        .popup {
+            border: 1px solid #3c3c3c;
+        }
+
+        .wrapper {
+            background: none !important;
+        }
+    </style>
+}

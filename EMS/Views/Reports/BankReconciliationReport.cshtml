@@ -1,0 +1,196 @@
+﻿
+@{
+    ViewBag.Title = "Report>>BankReconciliationReport";
+    Layout = "~/Views/Shared/_LayoutReports.cshtml";
+}
+
+@section BreadCrumb{
+
+    <section class="content-header">
+        <div class="form-group">
+            <label>Select a Report</label>
+            <div class="midMenu pull-left">
+                <ul>
+                    <li><a href="CheckPrint">Check Run Register</a></li>
+                    <li><a href="CheckRegister">Check Register Detail</a></li>
+                    <li ><a href="CheckRegisterSummary">Check Register Summary</a></li>
+                    <li class="active"><a href="BankReconciliationReport">Bank Reconciliation Report</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="#" class="btn btn-default floatRight  pull-right marginLeft10" onclick="javascript: BankRecReport.PrintReports();" id="btnPrint" style="margin-top: -20px;">Preview Report</a>
+
+
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+@section Body{
+
+    <section class="content" id="dvMainDv">
+        <div class="row fontAriel" id="dvFilterDv">
+            <div class="tab-content">
+
+                <div id="tabPendingInvoices" class="tab-pane active widget-body-regular">
+                    <div class="col-xs-12">
+
+                        <div id="tabEditAudit" class="tab-pane active widget-body-regular">
+                            <div id="divCRSummary"> 
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Report Date</label>
+                                    <input type="text" id="txtReportDate" tabindex="6" class="form-control  pull-left datepicker" style="margin-left:13px !important;" placeholder="MM/DD/YYYY">
+                                </div>
+                                <div class="clearfix"></div>                            
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Bank </label>
+                                    <div style="width: 160px !important; float: left;">
+                                        <input type="text" tabindex="5" id="txtBankName" style="margin-left:13px !important;" class="SearchBank form-control marb0 pull-left"  />
+                                        <input type="hidden" id="hdnBank" />
+                                    </div>
+                                    <input type="hidden" id="hdnBank" />
+                                </div>
+                                <div class="clearfix"></div>                            
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Statement Ending Date</label>
+                                    <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select tabindex="4" id="ddlStatmentEndingDate" class="form-control" style="width: 160px"></select>
+                                    </div>
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>  
+                                <div class="form-group col-md-5" style="margin-left:-14px;">
+                                    <label style="width:200px!important;">Detail Report</label>
+                                    <input type="checkbox" id="chkDetail" tabindex="7" class="pull-left" style="margin-left: 14px;margin-top: 7px;">
+                                </div><!-- /.form-group -->    
+                                <div class="form-group col-md-5" style="margin-left:-147px;">
+                                    <label style="width:200px!important;">Include Uncleared</label>
+                                    <input type="checkbox" id="chkDetailUncleared" tabindex="7" class="pull-left" style="margin-left: 14px;margin-top: 7px;">
+                                </div> 
+                                <div class="clearfix"></div>
+                                <div class="form-group col-md-5" style="margin-left:-14px;">
+                                    <label style="width:200px!important;">Summary Report</label>
+                                    <input type="checkbox" id="chkSummary" tabindex="7" class="pull-left" style="margin-left: 14px;margin-top: 7px;">
+                                </div><!-- /.form-group -->
+                                <div class="form-group col-md-5" style="margin-left:-147px;">
+                                    <label style="width:200px!important;">Include Uncleared</label>
+                                    <input type="checkbox" id="chkSummaryUncleared" tabindex="7" class="pull-left" style="margin-left: 14px;margin-top: 7px;">
+                                </div>                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+        <div id="dialog11" style="display: none">
+        </div>
+
+        <div id="fade" class="black_overlay"></div>
+
+    </section>
+}
+
+
+@section Javascript{
+    <script src="~/Content/libs/bootstrap-multiselect.js"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <script src="~/Scripts/Reports/ReportEngine.js"></script>
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/libs/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+    <script>
+        $(function () {
+            $(".datepicker").datepicker(
+                {
+                    onClose: function () {
+                        $(this).focus();
+                    }
+                });
+        });
+    </script>
+
+    <style type="text/css">
+        .black_overlay, #fade {
+            display: none !important;
+        }
+    </style>
+
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+   <script src="~/Scripts/Reports/BankRecReport.js"></script>
+    <script>
+
+        // This is an example jQuery snippet that makes the dialogs work
+        $(document).ready(function () {
+
+            // We have two control functions that show or hide dialogs
+            function showDialog(id) {
+
+                // Find the dialog and show it
+
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+
+                // Center it on screen
+
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+
+            }
+            function hideAllDialogs() {
+                // Hide all visible dialogs
+                $('.dialog-overlay').fadeOut();
+            }
+
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+
+                showDialog(toShow);
+            });
+        });
+
+    </script>
+    <style type="text/css">
+        .dialog-card {
+            top: 15%;
+        }
+
+        .w30N {
+            width: 30px !important;
+        }
+
+        .ui-button-icon-only .ui-icon {
+            margin: -8px 0 0 -9px !important;
+        }
+
+        .table-hover th {
+            padding: 0px 4px !important;
+        }
+
+        .blueClas {
+            background: #337ab7;
+            color: #fff;
+            padding: 5px !important;
+        }
+    </style>
+}
+
+
+
+

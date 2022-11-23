@@ -1,0 +1,441 @@
+﻿@{
+    ViewBag.Title = "AccountsPayable>>Check Cycle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@section BreadCrumb{
+    <section class="content-header">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#"> Check Cycle <i class="fa fa-caret-right"></i></a></li>
+            @*<li class="active"> </li>*@
+            <li class="active"><a href="#">Print Checks</a></li>
+        </ol>
+        <div class="midMenu widget-head floatRight">
+            <ul>
+                <li class="active"><a data-toggle="tab" href="#tabPrintChecks">Preview</a></li>
+                <li class=""><a data-toggle="tab" href="#tabCheckRegistor">Print Checks</a></li>
+                <li class=""><a data-toggle="tab" href="#tabBankRecanciliation">Print Copies</a></li>
+            </ul>
+        </div>
+      
+        <div class="clearfix"></div>
+    </section>
+}
+
+
+@section Body{
+
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+  <section class="content">
+    <div class="row fontAriel">
+
+        <div class="tab-content">
+            <!-- Tab content -->
+            <div id="tabPayInvoices" class="tab-pane widget-body-regular active">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                    Bank <input type="text" id="txtBankName" class="SearchBank" onblur="funBankCheck();"/>
+                    <input type="hidden" id="hdnBank" />
+                    <br>
+                    <!--<select><option>Preview</option></select>-->
+                    <div class="input-group-btn" style="margin-top:10px; display:none;">
+                        <button data-toggle="dropdown" class="btn dropdown-toggle previewBtn">
+                            Preview
+                            <span class="caret" style="position: absolute;right: 6px;top: 10px;"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#">Preview</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" style="display:none;">
+                    <span class="width50">Current Balance:</span> <span class="width119"><a href="#" class="blueText">$54,03949 USD</a></span>
+                    <span class="width50">Paying:</span>
+                    <span class="width119"><a href="#" class="greenText paddingLeft30">$54,03949 USD</a></span>
+                    <span class="width50">Ending Balance:</span>
+                    <span class="width119"><a href="#" class="blueText">$54,03949 USD</a></span>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-3 paddingNone" style="display:none;">Type: <a href="#" class="blueText">Check</a></div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 paddingNone">Date: @*<a href="#" class="blueText">12/12/2015</a>*@
+                        @*<input type="text" id="txtPaymentDate" class="form-control width90 datepicker floatRight input-required" placeholder="MM/DD/YYYY">*@
+                        <div style="float: left; border: solid 1px gray; padding: 0px 4px 0 0;">
+                            <input id="txtPaymentDate" type="text" class="form-control floatLeft marb0 datepicker" placeholder="MM/DD/YYYY" style="width: 100px; border: none; margin-bottom: 0px;" />
+                            <i class="fa fa-calendar floatLeft padding8" style="font-size:17px;padding-top:5px;"></i>
+                        </div>
+                     </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 paddingNone"><label>Check #:</label> <span id="SpnCheckNumberStart"> <span id="SpnTo" style="display:none;">To</span></span><span id="SpnCheckNumberEnd"></span></div>
+                </div>
+
+                <div class="col-xs-12">
+
+                    <div class="" style="margin-top:10px; margin-bottom:0px;">
+                        <table class="table table-hover table-responsive" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="chkInvoiceList" onclick="funCheckAll();"></th>
+                                    <th>Vendor</th>
+                                    <th class="third">Invoice #</th>
+                                    <th>Group</th>
+                                    <th>Invoice Date</th>
+                                    <th class="third">Check Date</th>
+                                    <th>Invoice Amount</th>
+                                    <th>Close</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tblInvoiceListTBody">
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div  style="margin-top:4%;">
+                        <a class="btn btn-primary floatRight" href="#">Cancel</a>
+                    <a class="btn btn-success floatRight margin-r-5" href="#" onclick="funPostChecks();">Post Checks</a>
+                        </div>
+                    <!-- /.box -->
+                </div>
+
+            </div>
+            <div id="tabQuickCheck" class="tab-pane widget-body-regular">
+                <div id="tabQuickCheck" class="tab-pane widget-body-regular active">
+                    <div class="col-xs-12">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+                            <label class="">Company </label>
+                            <select id="" class="form-control width150">
+                                <option>01</option>
+                                <option>02</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+                            <label class="displayBlockNew width100">Currency </label>
+                            <input type="text" class="form-control width150">
+                            <!--<a class="blueText underLine" href="#">USD</a>-->
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+                            <label class="displayBlockNew width100">Bank </label>
+                            <input type="text" class="form-control width150">
+                            <!--<a class="blueText underLine" href="#">Well Forgo Bank, NA</a>-->
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+                            <label class="displayBlockNew width100">Date</label>
+                            <input type="text" class="form-control width150">
+                            <!--<a class="blueText underLine" href="#">12/12/2015</a>-->
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 marb20">
+                            <label class="displayBlockNew width100">Check #</label>
+                            <input type="text" class="form-control width150">
+                            <!--<a class="blueText underLine" href="#">15454</a>-->
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="col-lg-3">
+                            <h5><b>Pay to the Order of</b></h5>
+                            <div class="form-group">
+                                <label>Vendor Name</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label><input type="checkbox"> 3rd Party</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h5><b>Open Transactions</b></h5>
+                            <div style="margin-top:10px; margin-bottom:0px;" class="">
+                                <table cellspacing="0" width="100%" class="table table-hover table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Pay
+                                            </th>
+                                            <th class="third">
+                                                Invoice/PO
+                                            </th>
+                                            <th>
+                                                Balance
+                                            </th>
+                                            <th>
+                                                Pay Amount
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td>Invoice: 10292</td>
+                                            <td>$5,000.00</td>
+                                            <td>855.46</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td>Invoice: 10292</td>
+                                            <td>$5,000.00</td>
+                                            <td>855.46</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td>Invoice: 10292</td>
+                                            <td>$5,000.00</td>
+                                            <td>855.46</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td>Invoice: 10292</td>
+                                            <td>$5,000.00</td>
+                                            <td>855.46</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td>Invoice: 10292</td>
+                                            <td>$5,000.00</td>
+                                            <td>855.46</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Amount</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <h5><b>Eight Hundred Fifty Five and 46/100 Dollars</b></h5>
+                        <div class="col-lg-8 borderRed">Memo</div>
+                        <div class="clearfix"></div>
+                        <a class="btn btn-success floatRight" href="#">Post Check</a>
+                        <a class="btn btn-success floatRight margin-r-5" href="#">Save Check</a>
+
+                    </div>
+                </div>
+            </div>
+            <div id="tabPaymentHistory" class="tab-pane widget-body-regular">
+                <div class="col-lg-12">
+                    <a class="btn btn-default floatRight" href="javascript:showDiv02('voidChecks');">Void Checks</a>
+                    <a class="btn btn-default floatRight margin-r-5" href="javascript:showDiv02('reissueChecks');">Reissue Checks</a>
+                    <a class="btn btn-default floatRight margin-r-5" href="javascript:showDiv02('cancelChecks');">Cancel Checks</a>
+                    <div class="clearfix"></div>
+                    <div style="margin-top:10px; margin-bottom:0px;" class="">
+                        <table cellspacing="0" width="100%" class="table table-hover table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox">
+                                    </th>
+                                    <th>
+                                        Check #
+                                    </th>
+                                    <th>
+                                        Transaction #
+                                    </th>
+                                    <th>
+                                        Check Date
+                                    </th>
+                                    <th>
+                                        Vendor
+                                    </th>
+                                    <th>
+                                        Invoice/Line Items
+                                    </th>
+                                    <th>
+                                        Line Item Balance
+                                    </th>
+                                    <th>
+                                        Amount paid
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>15454</td>
+                                    <td>1005</td>
+                                    <td>12/31/2015</td>
+                                    <td>Gary's Furnishings</td>
+                                    <td>2</td>
+                                    <td>$641.48</td>
+                                    <td>$641.48</td>
+                                    <td>Issued</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>15454</td>
+                                    <td>1005</td>
+                                    <td>12/31/2015</td>
+                                    <td>Gary's Furnishings</td>
+                                    <td>2</td>
+                                    <td>$641.48</td>
+                                    <td>$641.48</td>
+                                    <td>Issued</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>15454</td>
+                                    <td>1005</td>
+                                    <td>12/31/2015</td>
+                                    <td>Gary's Furnishings</td>
+                                    <td>2</td>
+                                    <td>$641.48</td>
+                                    <td>$641.48</td>
+                                    <td>Issued</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--<div style="margin-top:10px; margin-bottom:0px;" class="">
+                                <table cellspacing="0" width="100%" class="table table-hover table-responsive">
+
+                                <tr class="greyTdBG">
+                                       <td>CO</td>
+                                  <td><input type="text"></td>
+                                </tr>
+
+                                        <tbody>
+                                        <tr>
+                                          <td>LO</td>
+                                          <td><input type="text"></td>
+                                        </tr>
+                                         <tr>
+                                          <td>Epi</td>
+                                          <td><input type="text"></td>
+                                        </tr>
+                                         <tr>
+                                          <td>Vendor</td>
+                                          <td><input type="text"></td>
+                                        </tr>
+                                         <tr>
+                                          <td>3rd Party Vendor</td>
+                                          <td><input type="checkbox"></td>
+                                        </tr>
+                                         <tr>
+                                          <td>Invoice #</td>
+                                          <td>From <input type="text"> To <input type="text"></td>
+                                        </tr>
+                                        <tr>
+                                          <td>Invoice Date</td>
+                                          <td><input type="text"></td>
+                                        </tr>
+                                        <tr>
+                                          <td>Due Date</td>
+                                          <td><input type="text"></td>
+                                        </tr>
+                                        <tr>
+                                          <td>Bank</td>
+                                          <td><input type="text"></td>
+                                        </tr>
+                                      </tbody></table>
+                                      </div>-->
+                </div>
+            </div>
+
+            <!-- /.content -->
+        </div>
+        <div class="col-lg-12">
+            <div class="botMenu widget-head">
+                <ul>
+                    <li class="active"><a data-toggle="tab" href="#tabPayInvoices" aria-expanded="true">Pay invoices</a></li>
+                   
+                    <li class=""><a  href="PaymentHistory" aria-expanded="false">Payment History</a></li>
+                    <!--<li><a data-toggle="tab" href="#tabCancelChecks">Cancel Checks</a></li>
+                    <li><a data-toggle="tab" href="#tabReissueChecks">Reissue Checks</a></li>
+                    <li><a data-toggle="tab" href="#tabVoidChecks">Void Checks</a></li>
+                    <li><a href="#">Reprint Check</a></li>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- /.content -->
+<div class="newhidden" id="cancelChecks" style="display: none;">
+    <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone top15">
+        <div class="deleteNewIcon"><a href="javascript:hideDiv02('cancelChecks');">X</a></div>
+        <div class="heading2"><h4>Cancel Checks?</h4></div>
+        <div class="WhtBg">
+            <div class="col-md-12">
+                <p>Are you sure you want to cancel these checks?</p>
+            </div>
+            <!-- // Tabs END -->
+        </div>
+        <div class="darkGreyNew col-lg-12">
+            <a class="btn btn-primary floatRight" href="javascript:hideDiv02('cancelChecks');">No</a>
+            <a class="btn btn-success floatLeft" href="javascript:hideDiv02('cancelChecks');">Yes</a>
+        </div>
+    </div>
+</div>
+<div class="newhidden" id="reissueChecks" style="display: none;">
+    <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone top15">
+        <div class="deleteNewIcon"><a href="javascript:hideDiv02('reissueChecks');">X</a></div>
+        <div class="heading2"><h4>Reissue Checks?</h4></div>
+        <div class="WhtBg">
+            <div class="col-md-12">
+                <p>Are you sure you want to reissue these checks?</p>
+            </div>
+            <!-- // Tabs END -->
+        </div>
+        <div class="darkGreyNew col-lg-12">
+            <a class="btn btn-primary floatRight" href="javascript:hideDiv02('reissueChecks');">No</a>
+            <a class="btn btn-success floatLeft" href="javascript:hideDiv02('reissueChecks');">Yes</a>
+        </div>
+    </div>
+</div>
+<div class="newhidden" id="voidChecks" style="display: none;">
+    <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone top15">
+        <div class="deleteNewIcon"><a href="javascript:hideDiv02('voidChecks');">X</a></div>
+        <div class="heading2"><h4>Void Checks?</h4></div>
+        <div class="WhtBg">
+            <div class="col-md-12">
+                <p>Are you sure you want to Void these checks?</p>
+            </div>
+            <!-- // Tabs END -->
+        </div>
+        <div class="darkGreyNew col-lg-12">
+            <a class="btn btn-primary floatRight" href="javascript:hideDiv02('voidChecks');">No</a>
+            <a class="btn btn-success floatLeft" href="javascript:hideDiv02('voidChecks');">Yes</a>
+        </div>
+    </div>
+</div>
+<div class="newhidden" id="cancelCheckError" style="display: none;">
+    <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone top15">
+        <div class="deleteNewIcon"><a href="javascript:hideDiv02('cancelCheckError');">X</a></div>
+        <div class="heading2"><h4>Cancel Check Error</h4></div>
+        <div class="WhtBg">
+            <div class="col-md-12">
+                <p>You canot Cancel a cleared check</p>
+            </div>
+            <!-- // Tabs END -->
+        </div>
+        <div class="darkGreyNew col-lg-12">
+            <a class="btn btn-success floatLeft" href="javascript:hideDiv02('cancelCheckError');">Ok</a>
+        </div>
+    </div>
+</div>
+<div id="fade" class="black_overlay"></div>
+}
+
+@section Javascript{
+
+<script src="~/Scripts/AccountsPayable/Payment.js"></script>
+
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+</script>
+}

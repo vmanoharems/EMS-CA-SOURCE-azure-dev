@@ -1,0 +1,151 @@
+﻿@{
+    //ViewBag.Title = "AccountsPayable>>Post Invoice";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        @*<ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Invoices</li>
+        </ol>*@
+        <div class="midMenu widget-head">
+            <ul>
+                @*<li><a href="PendingInvoice">Pending Invoices</a></li>
+                <li class="active"><a href="PostInvoice">Posted Invoices  </a></li>
+                <li><a href="AddInvoice">Add Invoices</a></li>*@
+
+            </ul>
+        </div>
+        <a href="#" onclick="javascript:GetInvoicePDF();" class="btn btn-default floatRight" style="margin-top: -4px;">Print Report</a>
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+@section Body{
+    <section class="content">
+
+        <head>
+            <title>Trial Balance List PDF</title>
+        </head>
+        <body>
+            <div>
+                <table style='width: 100%;'>
+                    <tr>
+                        <td style='margin-left: 190PX;float: left;'>
+                            <table style='float: left;'>
+                                <thead>
+                                    <tr>
+                                        <td style='padding: 5px 10px; font-size: 9px;'></td>
+                                        <td style='padding: 5px 10px; font-size: 9px;'></td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </td>
+                        <td style='vertical-align: top;'>
+                            <table style='float: left;'>
+                                <thead>
+                                    <tr>
+                                        <th style='padding: 5px 10px; font-size: 14px; text-align: center;'>ACS Production</th>
+                                    </tr>
+                                    <tr>
+                                        <th style='padding:left 100%; font-size: 11px; text-align: center;'>Detail Posting Report</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </td>
+                        <td>
+                            <table style='float: right; width: 61%;'>
+                                <thead>
+                                    <tr>
+                                        <td style='padding-left: 100px; font-size: 9px;'></td>
+                                        <td style='padding: 5px 10px; font-size: 9px; float: right;'></td>
+                                    </tr>
+                                    <tr>
+                                        <td style='padding-left: 100px; font-size: 9px;'>Printed On</td>
+                                        <td style='padding: 5px 10px; font-size: 9px; float: right;'>07/15/2016</td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <table style='width: 100%; border-collapse: collapse; border: 1px solid #ccc;'>
+                    <thead>
+                        <tr style='background: #CCC;'>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>Loc.</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>Epi.</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>GLProd.</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>Account</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>Set</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>F1</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>F2</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>F3</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>F4</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>IN</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>1099</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>PO*</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>Line Item Description</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>Period</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>Trans #</th>
+                            <th style='padding: 5px 10px; font-size: 10px; text-align: left;'>Line Item Amount #</th>
+                    </thead>
+                    <tbody>
+                        <tr style="background:#FFC; border-top:1px solid #000; border-bottom:1px solid #000;">
+                            <td style="padding:5px 10px; font-size:14px; text-align:left; border-bottom:1px dotted #ccc;">VendorCode:</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left; border-bottom:1px dotted #ccc;">ATROMBAT</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left; border-bottom:1px dotted #ccc;">Vendor:</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left; border-bottom:1px dotted #ccc;">Vivek</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left; border-bottom:1px dotted #ccc;">Bank:</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left; border-bottom:1px dotted #ccc;">WFB</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left; border-bottom:1px dotted #ccc;">USD</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left; border-bottom:1px dotted #ccc;">Inv.</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left; border-bottom:1px dotted #ccc;">Date:</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left; border-bottom:1px dotted #ccc;">07/13/2016</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left; border-bottom:1px dotted #ccc;">Inv. #:</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left; border-bottom:1px dotted #ccc;">GL</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left; border-bottom:1px dotted #ccc;">Inv. Desc:</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left; border-bottom:1px dotted #ccc;">TEST Invoice</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left;"></td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left;"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="10"></td>
+                            <td colspan="2" style="padding:5px 10px; font-size:14px; text-align:left;">Total For Invoice#Gl: </td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left;">540 </td>
+                        </tr>
+                        <tr>
+                            <td colspan="10"></td>
+                            <td colspan="2" style="padding:5px 10px; font-size:14px; text-align:left;">Total Posted Invoices:</td>
+                            <td style="padding:5px 10px; font-size:14px; text-align:left;">500.00 </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </body>
+    </html>
+
+    </section>
+}
+
+
+@section Javascript{
+<script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+<link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+<link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+
+
+    <style type="text/css">
+        .black_overlay, #fade {
+            display: none !important;
+        }
+    </style>
+   
+<script src="~/Scripts/Reports/ReportPostInvoice.js"></script>
+
+}
+

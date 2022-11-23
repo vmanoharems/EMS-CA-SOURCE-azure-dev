@@ -1,0 +1,690 @@
+﻿@*@{
+        ViewBag.Title = "Ledger>>JournalEntries";
+      //  Layout = "~/Views/Shared/_Layout.cshtml";
+    }*@
+
+@section BreadCrumb{
+    <section class="content-header">
+        <div class="form-group">
+            <label>Select a Report</label>
+            <div class="midMenu pull-left">
+                <ul>
+                    @*<li class="active"><a href="#tabEditAudit" data-toggle="tab" aria-expanded="true" onclick="javascript: ShowHide('Bible');">Bible</a></li>*@
+                    @*<li class=""><a class="" style="display:none;" href="#tabPosting" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('LedgerListing');">Ledger Listing</a></li>*@
+                    @*<li class=""><a class="" href="#tabPosting" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('LedgerInquiry');">Ledger Inquiry</a></li>
+                    <li class=""><a class="" href="#tabPosting" id="TabTrialBal" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('TrialBalance');">Trial Balance</a></li>
+                    <li class="" id="LiJEPosted"><a class="" href="#tabPosting" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('JEPosting');">JE Posting</a></li>
+                    <li class="" id="LiJEAudit"><a class="" href="#tabPosting" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('JEAudit');">JE Audit</a></li>
+                    <li class=""><a href="#tabCOA" data-toggle="tab" aria-expanded="true" onclick="javascript: ShowHide('COA');">COA</a></li>*@
+                    <li class="active"><a href="#tabCOA" data-toggle="tab" aria-expanded="true" onclick="javascript: ShowHide('BibleWithoutPO');">Custom Bible</a></li>
+                </ul>
+            </div>
+        </div>    
+        <div id="DvBibleWithoutPO" class="clsFilter">
+         
+            <a href="#" class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" onclick="javascript: funBibleWithoutPO();" id="btn">Preview</a>
+        </div>
+       
+        <div class="clearfix"></div>
+    </section>
+
+}
+
+@section Body{
+    <form>
+
+        <section class="content" id="dvMainDv">
+            <div class="row fontAriel" id="dvFilterDv">
+                <section class="content">
+                    <div class="row fontAriel">
+                        <div class="col-md-12">
+
+                            @* Bible *@
+                            <div id="DvBible" class="form-group mar0 clsHide">
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Report Date</label>
+                                    <input type="text" id="txtBiblePeportDate" placeholder="MM/DD/YYYY" tabindex="1" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Company</label>
+                                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                                        <select style="width: 201px !important;margin-left: 12px;" onfocus="javascript: funBibleCompany();" class="form-control" id="txtBibleFilterCompany">
+                                            <option>Select</option>
+
+                                        </select>
+                                    </div>
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Locaton(s)</label>
+                                    <div style=" width: 18.3% !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="ddlBibleFilterLocation" tabindex="8" multiple class="form-control  pull-left" style="" onfocus="javascript: funSegment();"></select>
+                                    </div>
+                                    @*<input type="text" id="ddlBibleFilterLocation" onfocus="javascript:funSegment();" tabindex="9" class="form-control  pull-left SearchLocation" style="margin-left:13px !important;">*@
+                                </div>
+
+                                @*<div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Company</label>
+                                            <select style="width: 201px !important;margin-left: 12px;" onfocus="javascript: funBibleCompany();" class="form-control" id="txtBibleFilterCompany">
+                                                <option>Select</option>
+
+                                            </select>
+
+                                        </div>*@<!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group" style="display:none;">
+                                    <label style="width:200px!important;">Project</label>
+                                    <input type="text" id="txtBibleFilterProject" tabindex="3" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group" style="display:none;">
+                                    <label style="width:200px!important;"> Currency Code(s)</label>
+                                    <input type="text" id="txtBibleFilterCurrency" tabindex="4" value="USD" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Period No. From</label>
+                                    <input type="text" id="txtBibleFilterCreatedFrom" tabindex="5" class="form-control  pull-left SearchPeriod " style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Period No. To</label>
+                                    <input type="text" id="txtBibleFilterCreatedTo" tabindex="6" class="form-control  pull-left SearchPeriod" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                @*<div class="form-group">
+                                        <label style="width:200px!important;">Effective Date From</label>
+                                        <input type="text" id="txtBibleFilterTrnsFrom" placeholder="MM/DD/YYYY" tabindex="7" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                    </div>*@<!-- /.form-group -->
+                                @*<div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Effective Date To</label>
+                                        <input type="text" id="txtBibleFilterEffTo" placeholder="MM/DD/YYYY" tabindex="8" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                    </div>*@<!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group" style="display:none;">
+                                    <label style="width:200px!important;">Locaton(s)</label>
+                                    <input type="text" id="txtBibleFilterLocation" onfocus="javascript:funSegment();" tabindex="9" class="form-control  pull-left SearchLocation" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                @*<div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Export Additional Fields To SpreadSheet</label>
+                                        <input type="checkbox" id="txtBibleFilterExport" class="pull-left" style="margin-left:13px !important;">
+                                    </div>*@<!-- /.form-group -->
+                            </div>
+                            @*End of Bible*@
+                            @**@
+                            @*Start Ledger Inquiry*@
+
+                            <div id="DivLedgerInquiryF" class="form-group mar0 clsHide" style="display:none;">
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Report Date</label>
+                                    <input type="text" id="txtLedgerInquiryRD" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Company</label>
+                                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                                        <select style="width: 201px !important;margin-left: 12px;" onfocus="javascript:funLEnqCompany();" class="form-control pull-left" id="ddlCompanyLInquiry">
+                                            <option>Select</option>
+                                        </select>
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Currency Code(s)</label>
+                                        <input type="text" id="txtLedgerInquiryCC" class="form-control  pull-left" value="USD" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;"> Period Status</label>
+                                        <select id="txtLedgerInquiryPS" class="form-control  pull-left" tabindex="2" style="margin-left:13px !important;">
+                                            <option value="1">Current</option>
+                                            <option value="2">Future</option>
+                                        </select>
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Posted Date From:</label>
+                                        <input type="text" id="txtLedgerInquiryCDFrom" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Posted Date To:</label>
+                                        <input type="text" id="txtLedgerInquiryTo" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Transaction No. From:</label>
+                                        <input type="text" id="txtLedgInqTransFrom" class="form-control  pull-left " style="margin-left:13px !important;">
+
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Transaction No. To:</label>
+                                        <input type="text" id="txtLedgInqTransTo" class="form-control  pull-left " style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Batch</label>
+                                        <div style=" width: 18.3% !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                            <select id="ddlLedgInqBatch" tabindex="8" multiple class="form-control  pull-left" style="" onfocus="javascript: funLedgerInqBatch();"></select>
+                                        </div>
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">UserName</label>
+                                        <div style=" width: 18.3% !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                            <select id="ddlLedgInqUserName" tabindex="8" multiple class="form-control  pull-left" style="" onfocus="javascript: funLInqGetUserFilter();"></select>
+                                        </div>
+                                    </div><!-- /.form-group -->
+                                </div>
+
+
+                            </div>
+
+                            @*End of Ledger Inquiry *@
+                            @**@
+
+                            @*Start trial Balance*@
+                            <div id="DivTB" class="form-group mar0 clsHide" style="display:none;">
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Report Date</label>
+                                    <input type="text" id="txtTBFilterDate" tabindex="1" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Company</label>
+                                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                                        <select style="width: 201px !important;margin-left: 12px;" onfocus="javascript:funTBCompany();" class="form-control" id="ddlCompanyTB">
+                                            <option>Select</option>
+
+                                        </select>
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group" style="display:none;">
+                                        <label style="width:200px!important;">Project</label>
+                                        <input type="text" id="txtTBFilterProject" tabindex="3" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group" style="display:none;">
+                                        <label style="width:200px!important;"> Currency Code(s)</label>
+                                        <input type="text" id="txtTBFilterCurrency" tabindex="4" value="USD" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Ending Period No.</label>
+
+                                        <input type="text" tabindex="7" id="" onfocus="javascript:GetPeriodBible('TrialBalance');" class="SearchPeriod form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Posted Date From</label>
+                                        <input type="text" tabindex="7" id="txtFromTB" placeholder="MM/DD/YYYY" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Posted Date To</label>
+                                        <input type="text" id="txtToTB" placeholder="MM/DD/YYYY" tabindex="-1" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group" style="display:none;">
+                                        <label style="width:200px!important;">Locaton(s)</label>
+                                        <input type="text" id="txtTBFilterLocation" onfocus="javascript:funSegment();" tabindex="9" class="form-control  pull-left SearchLocation" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group" style="display:none;">
+                                        <label style="width:200px!important;">Set Code(s)</label>
+                                        <input type="text" id="txtTBFilterLocation" onfocus="javascript:funSegment();" tabindex="9" class="form-control  pull-left SearchLocation" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group" style="display:none;">
+                                        <label style="width:200px!important;">Exclude Net Zero Accounts</label>
+                                        <input type="checkbox" id="txtBibleFilterExport" class="pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group" style="display:none;">
+                                    <label style="width:200px!important;">Compress Expenses</label>
+                                    <input type="checkbox" id="txtBibleFilterExport" class="pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group" style="display:none;">
+                                    <label style="width:200px!important;">Include PO</label>
+                                    <input type="checkbox" id="txtBibleFilterExport" class="pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group" style="display:none;">
+                                    <label style="width:200px!important;">Summary Total</label>
+                                    <input type="checkbox" id="txtBibleFilterExport" class="pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                            </div>
+
+                            @*End of Trial Balance *@
+
+
+                            @*Start JE Audit *@
+                            <div id="JEAuditFilterdiv" class="clsHide" style="display:none;">
+                                <div style="width: 25% !important;float: left;">
+
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Report Date</label>
+                                    <input type="text" id="txtJEAudDate" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Company</label>
+                                    <input type="text" id="txtJEAudCompany" class="form-control  pull-left SearchCompanyCode" onfocus="javascript:GetCompanyCode();" style="margin-left:13px !important;">
+                                    <input type="hidden" id="hdnJEAudCompany" />
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Projects(s)</label>
+                                    <input type="text" id="txtJEAudProject" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Currency Code(s)</label>
+                                    <input type="text" id="txtJEAudCurrncy" class="form-control  pull-left" value="USD" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;"> Project Status</label>
+                                    <input type="text" id="txtJEAudProjStatus" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Created Date From:</label>
+                                    <input type="text" id="txtJEAudCreatedFrom" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Created Date To:</label>
+                                    <input type="text" id="txtJEAudCreatedTo" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Transaction No. From:</label>
+                                    <input type="text" id="txtJEAudTransFrom" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Transaction No. To:</label>
+                                    <input type="text" id="txtJEAudTransTo" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Batch</label>
+                                    <input type="text" id="txtJEAudInvoiceBatch" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">User Name</label>
+                                    <input type="text" id="txtJEAudUserName" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Include Location Sub-Total</label>
+                                    <input type="checkbox" id="ChkJEAudSubTotal" class="pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Include Episode Sub-Total</label>
+                                    <input type="checkbox" id="ChkJEAudSubSubTotal" class="pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                            </div>
+                            @*End JE Audit *@
+                            @*Start of Invoice*@
+                            <div id="APInvoiceEditdiv" class="clsHide" style=" display:none;">
+                                <div style="width: 25% !important;float: left;">
+                                    <ol class="breadcrumb floatLeft">
+                                        <li>Report Criteria</li>
+                                    </ol>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Report Date</label>
+                                    <input type="text" id="txtApInvsDate" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Projects(s)</label>
+                                    <input type="text" id="txtApInvsProject" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Currency Code(s)</label>
+                                    <input type="text" id="txtApInvsCurrncy" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;"> Project Status</label>
+                                    <input type="text" id="txtApInvsProjStatus" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Created Date From</label>
+                                    <input type="text" id="txtApInvsCreatedFrom" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Created Date To</label>
+                                    <input type="text" id="txtApInvsCreatedTo" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Transaction No. From</label>
+                                    <input type="text" id="txtInvoiceTransFrom" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Transaction No. To</label>
+                                    <input type="text" id="txtInvoiceTransTo" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Batch</label>
+                                    <input type="text" id="txtInvoiceBatch" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">User Name</label>
+                                    <input type="text" id="txtInvoiceUserName" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Start Screen</label>
+                                    <input type="text" id="txtModuleMyDefName" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Include Location Sub-Total</label>
+                                    <input type="checkbox" id="txtModuleMyDefName" class="pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Include Episode Sub-Total</label>
+                                    <input type="checkbox" id="txtModuleMyDefName" class="pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                            </div>
+
+
+                            @*End of Invoice*@
+
+                            @*Start  of JE Audit Report *@
+                            <div id="DvJE" class="form-group mar0 clsHide" style="display:none;">
+                                <div style="width: 25% !important;float: left;">
+
+
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Report Date</label>
+                                    <input type="text" id="txtReportDateJEFilter" tabindex="1" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Company</label>
+                                    <div style=" width: 18.3% !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="ddlCompanyJEAudit" tabindex="8" class="form-control  pull-left" style="" onfocus="javascript: funJEAuditCompany();"></select>
+                                    </div>
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;"> Period Status</label>
+                                    <select id="txtJEPeriodStatus" class="form-control  pull-left" tabindex="2" style="margin-left:13px !important;">
+                                        <option value="1">Current</option>
+                                        <option value="2">Future</option>
+                                    </select>
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Created Date From:</label>
+                                    <input type="text" id="txtCreatedDateJEFrom" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Created Date To:</label>
+                                    <input type="text" id="txtCreatedDateJETo" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Transaction No. From:</label>
+                                    <input type="text" id="txtJEAudTransFrom11" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Transaction No. To:</label>
+                                    <input type="text" id="txtJEAudTransTo11" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Batch</label>
+                                    <div style=" width: 18.3% !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="ddlBatchJEAudit" tabindex="8" multiple class="form-control  pull-left" style="" onfocus="javascript:funJEBatchNumberFilter();"></select>
+                                    </div>
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">UserName</label>
+                                    <div style=" width: 18.3% !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="ddlJEAudUserName" multiple class="form-control  pull-left" style="" onfocus="javascript: funJEGetUserFilter();"></select>
+                                    </div>
+                                </div><!-- /.form-group -->
+                            </div>
+                            @* ENd of JE Audit Report *@
+
+                            @*Start  of JE Posting Report *@
+                            <div id="PostingReportDiv" class="form-group mar0 clsHide" style="display:none;">
+                                <div style="width: 25% !important;float: left;">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Report Date</label>
+                                    <input type="text" id="txtReportDate" tabindex="1" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Company</label>
+                                    <div style=" width: 18.3% !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="ddlCompanyJEPosting" tabindex="8" class="form-control  pull-left" style="" onfocus="javascript: funJEAuditCompany();"></select>
+                                    </div>
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;"> Period Status</label>
+                                    <select id="txtJEPostingPeriodStatus" class="form-control  pull-left" tabindex="2" style="margin-left:13px !important;">
+                                        <option value="1">Current</option>
+                                        <option value="2">Future</option>
+                                    </select>
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Posted Date From:</label>
+                                    <input type="text" id="txtCreatedDateJEPostingFrom" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Posted Date To:</label>
+                                    <input type="text" id="txtPostedDateJEPostingTo" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Transaction No. From:</label>
+                                    <input type="text" id="txtJEPostingTransFrom" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Transaction No. To:</label>
+                                    <input type="text" id="txtJEPostingTransTo" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Batch</label>
+                                    <div style=" width: 18.3% !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="ddlBatchJEPosting" tabindex="8" multiple class="form-control  pull-left" style="" onfocus="javascript:funJEBatchNumberFilter();"></select>
+                                    </div>
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">UserName</label>
+                                    <div style=" width: 18.3% !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="ddlJEPostingUserName" multiple class="form-control  pull-left" style="" onfocus="javascript: funJEGetUserFilter();"></select>
+                                    </div>
+                                </div><!-- /.form-group -->
+                            </div>
+                            @* ENd of JE Posting Report *@
+                            @*Start of COA*@
+                            <div id="COADiv" class="clsHide" style="display:none;">
+                                <div class="clearfix"></div>
+                                <div class="form-group" style="display:none;">
+                                    <label style="width:200px!important;">Company</label>
+                                    @*<input type="text" id="txtJEAudCompany" class="form-control  pull-left SearchCompanyCode" onfocus="javascript:GetCompanyCode();" style="margin-left:13px !important;">*@
+                                    <select id="ddlCOA"></select>
+
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+
+                            </div>
+
+                            @*End of COA*@
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+            <div id="dialog11" style="display: none"></div>
+        </section>
+
+
+
+    </form>
+
+}
+@section Javascript{
+    <script src="~/Scripts/Reports/LedgerListReport.js"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+
+
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+
+    <script>
+
+        // This is an example jQuery snippet that makes the dialogs work
+        $(document).ready(function () {
+
+            // We have two control functions that show or hide dialogs
+            function showDialog(id) {
+
+                // Find the dialog and show it
+
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+
+                // Center it on screen
+
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+
+            }
+            function hideAllDialogs() {
+                // Hide all visible dialogs
+                $('.dialog-overlay').fadeOut();
+            }
+
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+
+                showDialog(toShow);
+            });
+        });
+
+    </script>
+    <style type="text/css">
+        .dialog-card {
+            top: 15%;
+        }
+
+        .w30N {
+            width: 30px !important;
+        }
+
+        .ui-button-icon-only .ui-icon {
+            margin: -8px 0 0 -9px !important;
+        }
+
+        .table-hover th {
+            padding: 0px 4px !important;
+        }
+
+        .blueClas {
+            background: #337ab7;
+            color: #fff;
+            padding: 5px !important;
+        }
+
+        .ui-dialog {
+            width: 80% !important;
+            z-index: 999999999;
+        }
+    </style>
+}

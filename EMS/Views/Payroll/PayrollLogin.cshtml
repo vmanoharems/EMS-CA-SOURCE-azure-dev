@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Payroll>>Payroll Login";
+    Layout = "~/Views/Shared/_PayrollLoginLayout .cshtml";
+}
+
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Payroll <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Confirmation</li>
+        </ol>
+
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+@section Body{
+
+<section class="content">
+    <p class="text-center fontSize18 paddingTop20">Your login is required after 30 minutes of inactivity in the Payroll module. You must re-enter both your user name &amp; your password to access any pages of the Payroll module</p>
+    <div class="wrap">
+        <div class="paddingAll20">
+            <!-- Form -->
+            @*<form action="#" method="post">*@
+              <input type="text" name="Email" id="fake_txtEmail" class="hidden" autocomplete="off" style="display: none;">
+               <input type="text" name="Email"  id="txtEmail" placeholder="User name" class="inputLogin">
+
+                <input type="password" name="password" id="password_fake" class="hidden" autocomplete="off" style="display: none;">
+            <input type="password" name="password" id="txtPassword" placeholder="Password" class="inputLogin">
+
+                <div style="padding:20px 0px;" class="">
+                    <div class="center">
+                        <a href="#" class="btn btn-success displayBlockNew" id="btnLogin"><b style="font-size:20px;">Confirm</b> <i class="fa fa-sign-out fa-2x"></i></a>
+                    </div>
+                </div>
+            @*</form>*@
+            <!-- // Form END -->
+
+        </div>
+    </div>
+</section>
+}
+
+@section Javascript{
+
+<script src="~/Scripts/Payroll/PayrollLogin.js"></script>
+
+}

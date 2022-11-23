@@ -1,0 +1,497 @@
+﻿@{
+    ViewBag.Title = "AccountsPayable>>PCEnvelopes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="PCEnvelopes"> Petty Cash <i class="fa fa-caret-right"></i></a></li>
+            <li class="active" id="breadcrumbVendorLi">PCEnvelopes</li>
+            <li><span id="SpnTransactionNobreadcrumb"></span> </li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+                <li id="PCEnvelopes" class="active"><a href="/AccountPayable/PCEnvelopes">Envelope</a></li>
+                @*<li><a href="EnvelopesEdit">Envelope Audit</a></li>*@
+                <li><a href="EnvelopeAudit"> Posted</a></li>
+                <li><a href="Recipients">Recipients</a></li>
+                <li><a href="Custodians">Custodians</a></li>
+                <!-- DO NOT TOUCH THIS LINE -->
+                <li id="PCNew"><a href="#" @*onclick="javascript: funShowDiv('New');"*@ id="APPCEnvelopeAddNew">Add Envelope</a></li>
+            </ul>
+        </div>
+        <div class="midMenu widget-head floatRight col-md-3" id="DvTab01">
+            <div id="DvViewIcon" style="display:inline; float: right; width:100%;">
+                <ul style="/* float: left; */">
+                    @*<li id="PCView" class="active" style="float: right;width: 35%;" onclick="javascript: funShowDiv('View');">View</li>*@
+                    <li id="VendorsADDPOTabLi" class="float-right" style="float:right;"><a href="#" onclick="javascript: UpdatePcEnvelope();">Post</a></li>
+                </ul>
+            </div>
+
+            <div class="clearfix"></div>
+            <div id="DvPCSaveIcon" style="display:none;">
+                <select style="" class="form-control marb0  pull-left" id="ddlClosePeriod"></select>
+                <a href="#" id="btnEnvelope_Actions_Delete" class="btn btn-primary " style="margin-top: -4px; margin-left:10px;" onclick="javascript: funAction('Delete');">Delete</a>
+                <a href="#" id="btnEnvelope_Actions_Cancel" class="btn btn-primary " style="margin-top: -4px;" onclick="javascript: funAction('Cancel');">Cancel</a>
+                <a href="#" id="btnEnvelope_Actions_Save" class="btn btn-default " style="margin-top: -4px;" onclick="javascript: SavePCDetail();">Save</a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+
+@section Body{
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="tab-content" id="DvTab" style="display:inline;">
+                <!-- data list -->
+                <div id="tabEnvelopes" class="tab-pane widget-body-regular active">
+                    <div id="DvView">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-responsive" id="tblPC">
+                                <thead>
+                                    <tr>
+                                        @*<th></th>*@
+                                        <th><input type="checkbox" id="chkCheckAll" /> Select</th>
+                                        <th>Status</th>
+                                        <th>Company</th>
+                                        <th>Envelope #</th>
+                                        <th>Date</th>
+                                        <th>Transaction #</th>
+                                        <th>Recipient</th>
+                                        <th>Advance Amount</th>
+                                        <th>Envelope Amount</th>
+                                        <th>Currency</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody id="TblPCTBody"></tbody>
+                                <tfoot class="footer">
+                                    <tr>
+                                        @*<th></th>*@
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                @* Add *@
+                <div id="DvAdd" class="divDocumentForm" style="display:none;">
+                    <div id="tabAddPO" class="tab-pane widget-body-regular active col-xs-12">
+                        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+                            <label class="width70">Company </label>
+                            <input type="text" id="txtCompany" tabindex="1" class="detectTab SearchCompany form-control width48" onblur="javascript: funGetClosePeriodDetail();" onclick="javascript: FillCompany();" />
+                            <input type="hidden" id="hdnCompany" />
+                            <input type="hidden" id="ddlCompany" />
+                            <label class="width70">Currency </label>
+                            @*<a href="#" class="blueText underLine">USD</a>*@
+                            <select id="ddlCurrency" class="form-control select2 width70"></select>
+                            <br />
+                            <label class="width70">Batch </label>
+                            <input type="text" id="txtBatchNumberPC" disabled class="form-control" style="width:48% !important;" />
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                            <div class="clear-fix"></div>
+                            <label class="width70">Custodian </label>
+                            <input type="text" id="txtCustodian" tabindex="2" class="detectTab SearchCustodian form-control width68" onblur="javascript: funGetCustodianCoa();" onfocus="javascript: FillCustodian();">
+                            <input type="hidden" id="hdnCustodianCoaId" />
+                            <input type="hidden" id="hdnCustodianCoaCode" />
+
+                            <label class="width70">Recipient </label>
+                            <input type="text" id="txtRecipient" tabindex="3" class="detectTab SearchRecipient form-control width68" onfocus="javascript: FillRecipient();" onblur="javascript:FillRecipientCoaStringInTr();" onfocusout="javascript: ShowSegmentNotify('Recipient value does not match with Custodian value', 'warn', this);">
+                            <input type="hidden" id="hdnRecipientId" /><input type="hidden" id="hdnRecipientCode" /><input type="hidden" id="hdnRecipientCAId" />
+                            <label class="" style="display:block;"><b>Address</b> </label>
+                            <p>
+                                <label id="lblBillingAddress1" style="width:100%; padding-top:0px;"></label> <br>
+                                <label id="lblBillingAddress2" style="width:100%; padding-top:0px;"></label>
+                            </p>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                            <div class="col-lg-5 col-md-4 col-sm-6 col-xs-6">
+                                <label class="">Envelope #</label>
+                            </div>
+                            <div class="col-lg-5 col-md-4 col-sm-6 col-xs-6">
+                                <input type="text" id="txtEnvelopeNumber" tabindex="4" maxlength="20" class="detectTab form-control" onblur="javascript: CheckPCEnvelopeNumber();">
+                            </div>
+
+                            <div class="clear-fix"></div>
+                            <div class="col-lg-5 col-md-4 col-sm-6 col-xs-6">
+                                <label class="">Envelope Date</label>
+                            </div>
+                            <div class="col-lg-5 col-md-4 col-sm-6 col-xs-6">
+                                <input type="text" id="txtEnvelopeDate" tabindex="6" class="detectTab datepicker form-control" />
+                            </div>
+                            <div class="clear-fix"></div>
+                            <div class="col-lg-5 col-md-4 col-sm-6 col-xs-6">
+                                <label class="">Advance Amount</label>
+                            </div>
+                            <div class="col-lg-5 col-md-4 col-sm-6 col-xs-6">
+                                <input type="text" id="txtAdvanceAmount" tabindex="7" class="detectTabA w2field amount form-control" />
+                            </div>
+                            <div class="clear-fix"></div>
+                            <div class="col-lg-5 col-md-4 col-sm-6 col-xs-6">
+                                <label class="">Envelope Amount</label>
+                            </div>
+                            <div class="col-lg-6 col-md-4 col-sm-6 col-xs-6">
+                                <input type="text" id="txtEnvelopeAmount" tabindex="8" class="detectTabE w2field amount form-control" />
+                            </div>
+
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                            <label style="width:75px">Description </label>
+                            <input type="text" id="txtDescription" tabindex="5" class="detectTab form-control " style="width:65%;">
+                            <div class="clear-fix"></div>
+                            <label style="width:75px;display:none;">Transition# </label>
+                            <input type="text" id="txtTransition" tabindex="8" class="detectTabA w2field amount form-control" style="width:68%;display:none;">
+                            <div class="clear-fix"></div>
+                            <div>
+                                <label style="width:75px">Line Total :</label>
+                                <span style="float :left;padding: 4px 0px;"></span>
+                            </div>
+                            <input type="text" id="txtLineItemAmount" class="detectTabA w2field amount form-control" style="width:62%;" disabled>
+                            <input type="text" id="txtDifference" class="w2field amount form-control w2field" disabled="" placeholder="" style="box-sizing: border-box; display:none;">
+                            <button class="btn btn-default" id="hrfAddPCLine" tabindex="9" onclick="javascript: CheckEnvelopeAmt();" style="float:right;margin-top: 13%;margin-right:0px;">Add Line</button>
+
+                        </div>
+                    </div>
+                    @*<div class="tab-content" style="display:inline">*@
+                    <div class="clearfix"></div>
+                    <div class="table-responsive row-seq" id="dvTableDetail">
+                        <table class="table table-hover table-responsive" id="TblPCLine">
+                            <thead id="TblPCLineThead"></thead>
+                            <tbody id="TblPCLineTBody"></tbody>
+                        </table>
+                    </div>
+                    @*</div>*@
+                </div>
+            </div>
+            <!-- Tab content end -->
+            <!-- /.content -->
+        </div>
+    </section>
+
+    <div id="DivDelete" class="newhidden" style="margin-top: 10%; display: none;">
+        <div class="col-md-3 col-lg-3 col-sm-11 col-xs-12 floatNone" style="margin:5% auto;">
+            <div class="popupred left10 col-md-12 col-lg-12 col-sm-12 col-xs-12 floatNone xs_top-80" style="border-radius:3%; padding:0px;">
+                <div class="deleteNewIcon"><a href="javascript:hideDiv('DivDelete');">X</a></div>
+                <div class="heading2">
+                    <h4>
+                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <h4 align="center">Confirm Delete</h4>
+                        </div>
+                    </h4>
+                </div>
+                <div class="clearfix"></div>
+                <div class="">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:0px !important;">
+                        <div class="WhtBg" style="margin:0px !important;">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:20px;">
+                                <p align="center">This will delete your petty cash transaction. Are you sure yot want to do this</p><h4 align="center">Continue ?</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:0px !important;">
+                        <a class="No floatLeft" href="javascript:hideDiv('DivDelete');">No</a>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:0px !important;">
+                        <a class="Yes floatRight" href="#" onclick="javascript: funDeletePCDetail('PCEnvelope',0)">Yes</a>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div id="DivDeleteRow" class="newhidden" style="margin-top: 10%; display: none;">
+        <div class="col-md-3 col-lg-3 col-sm-11 col-xs-12 floatNone" style="margin:5% auto;">
+            <div class="popupred left10 col-md-12 col-lg-12 col-sm-12 col-xs-12 floatNone xs_top-80" style="border-radius:3%; padding:0px;">
+                <div class="deleteNewIcon"><a href="javascript:hideDiv('DivDeleteRow');">X</a></div>
+                <div class="heading2">
+                    <h4>
+                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <h4 align="center">Confirm Delete Row</h4>
+                        </div>
+                    </h4>
+                </div>
+                <div class="clearfix"></div>
+                <div class="">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:0px !important;">
+                        <div class="WhtBg" style="margin:0px !important;">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:20px;">
+                                <p align="center">This will delete your petty cash transaction line. Are you sure yot want to do this</p><h4 align="center">Continue ?</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:0px !important;">
+                        <a id="aDeleteRowNo" class="No floatLeft" href="javascript:hideDiv('DivDeleteRow');">No</a>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:0px !important;">
+                        <a id="aDeleteRowYes" class="Yes floatRight" href="#">Yes</a>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div id="DivIDcancel" class="newhidden" style="margin-top: 10%; display: none;">
+        <div class="col-md-3 col-lg-3 col-sm-11 col-xs-12 floatNone" style="margin:5% auto;">
+            <div class="popupred left10 col-md-12 col-lg-12 col-sm-12 col-xs-12 floatNone xs_top-80" style="border-radius:3%; padding:0px;">
+                <div class="deleteNewIcon"><a href="javascript:hideDiv('DivIDcancel');">X</a></div>
+                <div class="heading2">
+                    <h4>
+                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <h4 align="center">Confirm Cancel</h4>
+                        </div>
+                    </h4>
+                </div>
+                <div class="clearfix"></div>
+                <div class="">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:0px !important;">
+                        <div class="WhtBg" style="margin:0px !important;">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:20px;">
+                                <p align="center">This will Cancel your changes to this petty cash transaction. Are you sure yot want to do this</p><h4 align="center">Continue ?</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:0px !important;">
+                        <a class="No floatLeft" href="javascript:hideDiv('DivIDcancel');">No</a>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:0px !important;">
+                        <a class="Yes floatRight" href="#" onclick="funCancel();">Yes</a>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div id="CantSave" class="newhidden" style="margin-top: 10%; display: none;">
+        <div class="col-md-3 col-lg-3 col-sm-11 col-xs-12 floatNone" style="margin:5% auto;">
+            <div class="popupred left10 col-md-12 col-lg-12 col-sm-12 col-xs-12 floatNone xs_top-80" style="border-radius:3%; padding:0px;">
+
+                <div class="heading2">
+                    <h4>
+                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <h4 align="center">Cannot Save</h4>
+                        </div>
+                    </h4>
+                </div>
+                <div class="clearfix"></div>
+                <div class="">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:0px !important;">
+                        <div class="WhtBg" style="margin:0px !important;">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:20px;">
+                                <p align="center">Your line item total does not match your Envelope total. You cannot save this transaction until they match.</p>
+                                <h4 align="center">Continue ?</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="padding:0px !important;">
+                        <a id="btnCantSaveOK" class="Yes floatRight" href="javascript:hideDiv('CantSave')">OK</a>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div id="PCEnvelope_MissingInformation" class="newhidden" style="margin-top: 10%; display: none;">
+        <div class="col-md-3 col-lg-3 col-sm-11 col-xs-12 floatNone" style="margin:5% auto;">
+            <div class="popupred left10 col-md-12 col-lg-12 col-sm-12 col-xs-12 floatNone xs_top-80" style="border-radius:3%; padding:0px;">
+
+                <div class="heading2">
+                    <h4>
+                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <h4 align="center">Cannot Save</h4>
+                        </div>
+                    </h4>
+                </div>
+                <div class="clearfix"></div>
+                <div class="">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:0px !important;">
+                        <div class="WhtBg" style="margin:0px !important;">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:20px;">
+                                <p align="center">Please fill all the required information.</p>
+                                <h4 align="center">Continue ?</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="padding:0px !important;">
+                        <a id="btnMissingInformationOK" class="Yes floatRight" href="javascript:hideDiv('PCEnvelope_MissingInformation')">OK</a>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div id="DvSuccess" class="newhidden" style="margin-top: 10%; display: none;">
+        <div class="col-md-3 col-lg-3 col-sm-11 col-xs-12 floatNone" style="margin:5% auto;">
+            <div class="popupred left10 col-md-12 col-lg-12 col-sm-12 col-xs-12 floatNone xs_top-80" style="border-radius:3%; padding:0px;">
+
+                <div class="heading2">
+                    <h4>
+                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <h4 align="center">Transaction Detail</h4>
+                        </div>
+                    </h4>
+                </div>
+                <div class="clearfix"></div>
+                <div class="">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:0px !important;">
+                        <div class="WhtBg" style="margin:0px !important;">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:20px;">
+                                <p align="center">
+
+                                    This Petty Cash transaction has been Saved with transaction #[
+                                    <span id="spnTransactionNo"></span>]
+
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" style="padding:0px !important;">
+                        <input type="button" class="Yes floatRight" id="hrfSuccessOK" onclick="javascript: funSuccessOk();" value="OK" />
+                        @*<a class="Yes floatRight" id="hrfSuccessOK" onclick="javascript: funSuccessOk();">OK</a>*@
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div id="SaveInvoiceSuccess" class="newhidden" style="display: none; margin-top:10%">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+            <div class="heading2" style="padding: 5px 10px;">
+                <h5>
+                    This Envelope has been saved with the following:
+
+                </h5>
+            </div>
+            <div class="WhtBg">
+                <div class="col-md-12" style="text-align: center;">
+                    <div style="height: 190px;overflow-y: auto;float: left;width: 100%;">
+                        <table style="width: 100%;">
+                            <tbody id="tblResult"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <input type="button" onclick="javascript: G_LedgerCollection.CloseDIVorRunReport();" id="btnSaveOK" class="btn btn-success floatLeft" style="display: inline;" value="OK">
+                <input type="button" onclick="javascript: G_LedgerCollection.CloseDIVorRunReport(true);" id="btnRunPostingReport" class="btn btn-success floatRight" style="display: inline;" value="Run Posting Report">
+            </div>
+        </div>
+    </div>
+    <div id="fade" class="black_overlay"></div>
+}
+
+
+@section Javascript{
+
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+
+
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+
+    <link href="~/Content/AtlasUtility.css" rel="stylesheet" />
+    <script src="~/Scripts/AccountsPayable/PCEnvelope.js"></script>
+    <script src="~/Scripts/Reports/ReportEngine.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+
+
+    </script>
+    <style>
+        .width40 {
+            width: 45px;
+            border: 1px solid #ccc;
+        }
+
+        .width48 {
+            width: 48px !important;
+        }
+
+        .width68 {
+            width: 68% !important;
+        }
+
+        .width40 input {
+            width: 100%;
+        }
+
+        .width100 {
+            width: 120px;
+            border: 1px solid #ccc;
+        }
+
+            .width100 input {
+                width: 100%;
+            }
+
+        .width90 {
+            width: 90% !important;
+        }
+
+        .blueColor {
+            background-color: #72afd2 !important;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 1%;
+            width: 100% !important;
+        }
+    </style>
+    <script>
+        // Change the selector if needed
+        var $table = $('table.scroll'),
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
+
+        // Adjust the width of thead cells when window resizes
+        $(window).resize(function () {
+            // Get the tbody columns width array
+            colWidth = $bodyCells.map(function () {
+                return $(this).width();
+            }).get();
+
+            // Set the width of thead columns
+            $table.find('thead tr').children().each(function (i, v) {
+                $(v).width(colWidth[i]);
+            });
+        }).resize(); // Trigger resize handler
+    </script>
+}
+

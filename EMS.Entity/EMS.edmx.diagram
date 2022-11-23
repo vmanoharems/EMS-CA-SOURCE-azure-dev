@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4d3b0ecc849b4ab9863d5516506fa0bf" Name="Diagram1" ZoomLevel="55" DisplayType="true">
+        <EntityTypeShape EntityType="EMS_14Model.AccountClearing" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.AccountType" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.BankReconcilation" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.BatchNumber" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.Budget" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.BudgetAccount" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.BudgetCategory" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.BudgetDetail" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.BudgetFile" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.CAUser" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.CheckSetting" Width="1.5" PointX="10.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.ClosePeriod" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.COA" Width="1.5" PointX="12.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.Company" Width="1.5" PointX="6.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.CompanyGroup" Width="1.5" PointX="8.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.CompanySetting" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.Country" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.CountryState" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.Custodian" Width="1.5" PointX="10.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.GroupCompanyAccess" Width="1.5" PointX="14.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.GroupPermission" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.JournalEntry" Width="1.5" PointX="14.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.JournalEntryDetail" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.LedgerAccount" Width="1.5" PointX="16.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.Module" Width="1.5" PointX="16.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.Mydefault" Width="1.5" PointX="16.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.Payment" Width="1.5" PointX="18.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PaymentLine" Width="1.5" PointX="18.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PayrollBankSetup" Width="1.5" PointX="18.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PayrollFreeField" Width="1.5" PointX="18.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PayrollFringeAddon" Width="1.5" PointX="4.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PayrollFringeHeader" Width="1.5" PointX="6.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PayrollOffset" Width="1.5" PointX="8.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PayrollUser" Width="1.5" PointX="16.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PCEnvelope" Width="1.5" PointX="18.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PCEnvelopeLine" Width="1.5" PointX="20.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PurchaseOrder" Width="1.5" PointX="20.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PurchaseOrderLine" Width="1.5" PointX="20.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.Recipient" Width="1.5" PointX="20.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.Segment" Width="1.5" PointX="10.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.SegmentLedger" Width="1.5" PointX="22.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.SourceCode" Width="1.5" PointX="22.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.StartingValue" Width="1.5" PointX="22.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.taxinfo" Width="1.5" PointX="12.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.TblAccount" Width="1.5" PointX="22.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.TimeZone" Width="1.5" PointX="0.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.TransactionCode" Width="1.5" PointX="2.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.TransactionValue" Width="1.5" PointX="24.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.UserAccess" Width="1.5" PointX="24.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.UserProfileAP" Width="1.5" PointX="4.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.BankAdjustment" Width="1.5" PointX="6.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.BudgetAccountsFinal" Width="1.5" PointX="24.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.BudgetCategoryFinal" Width="1.5" PointX="24.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.BudgetDetailFinal" Width="1.5" PointX="14.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.CheckRun" Width="1.5" PointX="24.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.CheckRunAddon" Width="1.5" PointX="16.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.CheckRunStatu" Width="1.5" PointX="18.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.CRW" Width="1.5" PointX="24.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.CRWNotesNew" Width="1.5" PointX="26.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.EstimatedCost" Width="1.5" PointX="26.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.EstimatedCostSet" Width="1.5" PointX="26.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.MyConfig" Width="1.5" PointX="26.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PayrollCheck" Width="1.5" PointX="26.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PayrollExpense" Width="1.5" PointX="26.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PayrollExpenseItem" Width="1.5" PointX="0.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PayrollExpensePost" Width="1.5" PointX="8.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.PayrollFile" Width="1.5" PointX="10.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.ReconcilationAddon" Width="1.5" PointX="28.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.tblNumber" Width="1.5" PointX="28.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.Variance" Width="1.5" PointX="28.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.VendorInfo" Width="1.5" PointX="28.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.CRWBudgetAccountsFinal_Fix" Width="1.5" PointX="28.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.CRWDetail" Width="1.5" PointX="16.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.CRWEstimatedCost_Fix" Width="1.5" PointX="18.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.CRWHeader" Width="1.5" PointX="28.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.vUnpaidInvoice" Width="1.5" PointX="28.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.vwPayrollPostAmount" Width="1.5" PointX="24.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EMS_14Model.TaxCodeDetail" Width="1.5" PointX="3.375" PointY="29.75" />
+        <EntityTypeShape EntityType="EMS_14Model.tblVendor" Width="1.5" PointX="21.375" PointY="25.75" />
+        <AssociationConnector Association="EMS_14Model.FK_JournalEntry_ClosePeriod" />
+        <AssociationConnector Association="EMS_14Model.PO_FK_ClosePeriodId" />
+        <AssociationConnector Association="EMS_14Model.FK_JournalEntryDetail_COAId" />
+        <AssociationConnector Association="EMS_14Model.PCC_FK_COAID" />
+        <AssociationConnector Association="EMS_14Model.PCR_FK_Recipient" />
+        <AssociationConnector Association="EMS_14Model.POL_FK_POID" />
+        <AssociationConnector Association="EMS_14Model.FK_JournalEntry_" />
+        <AssociationConnector Association="EMS_14Model.FK_JournalEntryDetail_CompanyID" />
+        <AssociationConnector Association="EMS_14Model.PO_FK_CompanyID" />
+        <AssociationConnector Association="EMS_14Model.FK_JournalEntry_JournalEntryId" />
+        <AssociationConnector Association="EMS_14Model.FK_JournalEntryDetail_VendorId" />
+        <AssociationConnector Association="EMS_14Model.PO_FK_VendorID" />
+        <AssociationConnector Association="EMS_14Model.FK_PCEnvelopeLine_COAID" />
+        <AssociationConnector Association="EMS_14Model.FK_PCEnvelope_CustodianID" />
+        <AssociationConnector Association="EMS_14Model.FK_PCEnvelope_RecipientId" />
+        <AssociationConnector Association="EMS_14Model.FK_PCEnvelopeLine_PCEnvelopeID" />
+        <AssociationConnector Association="EMS_14Model.FK_COA_accountid" />
+        <AssociationConnector Association="EMS_14Model.FK_PayrollExpensePost_PayrollfileID" />
+        <AssociationConnector Association="EMS_14Model.FK_PayrollFile_PayrollfileID" />
+        <AssociationConnector Association="EMS_14Model.FK_PayrollUser_PayrollfileID" />
+        <AssociationConnector Association="EMS_14Model.FK__PCEnvelop__Compa__3A8D6B76" />
+        <AssociationConnector Association="EMS_14Model.FK__CheckRunA__Payme__507CAC95" />
+        <EntityTypeShape EntityType="EMS_14Model.Invoice" Width="1.5" PointX="31.625" PointY="11.25" />
+        <EntityTypeShape EntityType="EMS_14Model.InvoiceLine" Width="1.5" PointX="33.875" PointY="9.5" />
+        <AssociationConnector Association="EMS_14Model.FK_Invoice_ClosePeriodID" />
+        <AssociationConnector Association="EMS_14Model.FK_Invoice_COAID" />
+        <AssociationConnector Association="EMS_14Model.FK_Invoice_CompanyID" />
+        <AssociationConnector Association="EMS_14Model.FK_Invoice_InvoiceID" />
+        <AssociationConnector Association="EMS_14Model.FK_Invoice_VendorID" />
+        <AssociationConnector Association="EMS_14Model.FK_Invoice_Polineid" />
+        <EntityTypeShape EntityType="EMS_14Model.BankInfo" Width="1.5" PointX="0.75" PointY="13.625" />
+        <AssociationConnector Association="EMS_14Model.FK_BankAdjustment_BankID" />
+        <AssociationConnector Association="EMS_14Model.FK_BankReconciliation_BankID" />
+        <AssociationConnector Association="EMS_14Model.FK_Invoice_BankID" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

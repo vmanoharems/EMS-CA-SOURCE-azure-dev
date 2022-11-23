@@ -1,0 +1,75 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
+}
+
+@section Body{
+    <script>
+        AtlasCRWv2.RenderandBind();
+    </script>
+
+    <div class="fontAriel">
+        @*<div class="col-xs-12">*@
+            @*<div class="row">*@
+                @*<div style="margin-top:10px; margin-bottom:0px;" class="xsborNoneNew">*@
+                    <div id="tblResponse">
+                        <div class="fixed-table-container">
+                            <div class="header-background"></div>
+                            <div class="fixed-table-container-inner">
+                                <div id="dvFixed">
+                                    <table cellspacing="0" id="tblCRWv2" class="display hover ">
+                                        <thead>
+                                            <tr>
+                                                <th>Account</th>
+                                                <th>Description</th>
+                                                <th>Period Activity</th>
+                                                <th>Actuals</th>
+                                                <th>POs</th>
+                                                <th>Total Cost</th>
+                                                <th>ETC</th>
+                                                <th>EFC</th>
+                                                <th>Budget</th>
+                                                <th>Variance</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>TOTALS</th>
+                                                <th></th>
+                                                <th>...</th>
+                                                <th>...</th>
+                                                <th>...</th>
+                                                <th>...</th>
+                                                <th>...</th>
+                                                <th>...</th>
+                                                <th>...</th>
+                                                <th>...</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <table cellspacing="0" id="tblCRWv2_FOOTER" style="display:none">
+                                        <thead>
+                                            <tr class="tblCRWv2_FOOTER">
+                                                <td>TOTALS</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="header-background-f" id="tblCrwFooterDiv" style="display:none;"></div>
+                            </div>
+                        </div>
+                        <div id="dvMsgCategory"></div>
+                    </div>
+                @*</div>*@
+            @*</div>*@
+        @*</div>*@
+    </div>
+}

@@ -1,0 +1,39 @@
+﻿    .DistributionRowID_JE {
+        width: 60px!important;
+    }
+    .DistributionSegment_JE {
+        width: 80px !important;
+        border: 1px solid #ccc;
+    }
+    .DistributionSegment_JE input{
+        width: 100%
+    }
+
+.DistributionDetail_JE {
+    width: 100px!important;
+}
+.DistributionDetail_JE input {
+    width: 100%
+}
+
+.DistributionOptional_JE {
+    width: 80px !important;
+}
+.DistributionMemoCode_JE {
+    width: 50px;
+}
+.DistributionAmount_JE {
+    width: 100px;
+}
+.DistributionVendor_JE {
+    width: 150px;
+}
+.DistributionTaxCode_JE {
+    width: 50px;
+}
+.DistributionDescription_JE {
+    width: 300px;
+}
+.DistributionDescription_JE input{
+    width: 100%;
+}

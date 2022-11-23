@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>EMS - @ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/css/AdminLTE.min.css" rel="stylesheet" />
+</head>
+<body class="AdminLogin">
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="/Accounts/AccountsPayable" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini">
+                <!--<b>A</b>LT-->
+                <img src="/Content/images/CAlogo.png">
+            </span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg">
+                <!--<b>Admin</b>LTE-->
+                <img src="/Content/images/CAlogo.png">
+            </span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+
+            </div><!-- /.navbar-collapse -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+
+                    <!-- Control Sidebar Toggle Button -->
+                </ul>
+            </div>
+        </nav>
+    </header>
+    @RenderSection("body", required: false)
+    <script src="~/Content/js/jQuery-2.1.4.min.js"></script>
+    <script src="~/Scripts/Validation/Validation.js"></script>
+    @RenderSection("Javascript", required: false)
+</body>
+</html>

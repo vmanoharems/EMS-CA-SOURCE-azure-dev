@@ -1,0 +1,28 @@
+﻿.drpPasteSegment {
+    width: 55px !important;
+}
+
+.drpPasteDefault {
+    width: 80px !important;
+}
+ 
+.dropdownup {
+    margin-top: 1px;
+    
+    font: 10px;
+    float:right;
+    bottom: 100%; /* added this attribute */
+}
+ .ddlOpenUpwards{
+     margin-top:-68%;
+         margin-left: -13%;
+ }
+
+ #pasteDiv {
+    height: 450px;
+    overflow: overlay;
+ }
+
+ .AtlasPasteHeader {
+     background: #eff1f3
+ }

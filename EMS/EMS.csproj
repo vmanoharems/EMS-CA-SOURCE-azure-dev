@@ -1,0 +1,2026 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E3E67589-A9AA-4A9B-90ED-2D9A0DCC47DF}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EMS</RootNamespace>
+    <AssemblyName>EMS</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>44300</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Antlr3.Runtime.3.5.1\lib\net40-client\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.AspNet.4.3.4.13329\lib\net45-full\DotNetOpenAuth.AspNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.3.4.13329\lib\net45-full\DotNetOpenAuth.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OpenId.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\ICSharpCode.SharpZipLib.dll.0.85.4.369\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.11.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\iTextSharp.5.5.11\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker, Version=5.5.11.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\itextsharp.xmlworker.5.5.11\lib\itextsharp.xmlworker.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.8.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.8.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebHelpers.3.2.3\lib\net45\Microsoft.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebPages.OAuth, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.3.2.3\lib\net45\Microsoft.Web.WebPages.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NGpg, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NGpg.0.2.0.0\lib\net45\NGpg.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="SendGrid, Version=6.3.4.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.6.3.4\lib\SendGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="SendGrid.SmtpApi, Version=1.3.1.0, Culture=neutral, PublicKeyToken=2ae73662c35d80e4, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendGrid.SmtpApi.1.3.1\lib\net40\SendGrid.SmtpApi.dll</HintPath>
+    </Reference>
+    <Reference Include="SendGridMail, Version=6.3.4.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.6.3.4\lib\SendGridMail.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Spatial, Version=5.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.5.7.0\lib\net45\System.Web.Http.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.Data, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.3.2.3\lib\net45\WebMatrix.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.3.2.3\lib\net45\WebMatrix.WebData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API\AccountPayableOpController.cs" />
+    <Compile Include="API\AdminLoginController.cs" />
+    <Compile Include="API\BudgetOperationController.cs" />
+    <Compile Include="API\CheckCyclev2Controller.cs" />
+    <Compile Include="API\CompanySettingsController.cs" />
+    <Compile Include="API\CRWController.cs" />
+    <Compile Include="API\LedgerController.cs" />
+    <Compile Include="API\ModuleTenController.cs" />
+    <Compile Include="API\PayrollController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\POInvoiceController.cs" />
+    <Compile Include="API\ReportAPIController.cs" />
+    <Compile Include="API\ReportP1Controller.cs" />
+    <Compile Include="API\UserProfileController .cs" />
+    <Compile Include="API\UtilityController.cs" />
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountPayableController.cs" />
+    <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\AdminEMSController.cs" />
+    <Compile Include="Controllers\BudgetController.cs" />
+    <Compile Include="Controllers\CRWController.cs" />
+    <Compile Include="Controllers\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Controllers\CustomPrincipal.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\CompanySettingsController.cs" />
+    <Compile Include="Controllers\LedgerController.cs" />
+    <Compile Include="Controllers\PayrollController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\SettingController.cs" />
+    <Compile Include="Controllers\UserProfile.cs" />
+    <Compile Include="Controllers\VendorController.cs" />
+    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\RequireHttpsAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\AdminPanel\AdminToolsTest.html" />
+    <Content Include="Content\AdminPanel\css\Atlas-Admin.css" />
+    <Content Include="Content\AdminPanel\css\datatables.min.css" />
+    <Content Include="Content\AdminPanel\css\font-awesome.css" />
+    <Content Include="Content\AdminPanel\css\font-awesome.min.css" />
+    <Content Include="Content\AdminPanel\css\simple-line-icons.css" />
+    <Content Include="Content\AdminPanel\css\style.css" />
+    <Content Include="Content\AdminPanel\css\tether-theme-arrows-dark.css" />
+    <Content Include="Content\AdminPanel\css\tether-theme-arrows-dark.min.css" />
+    <Content Include="Content\AdminPanel\css\tether-theme-arrows.css" />
+    <Content Include="Content\AdminPanel\css\tether-theme-arrows.min.css" />
+    <Content Include="Content\AdminPanel\css\tether-theme-basic.css" />
+    <Content Include="Content\AdminPanel\css\tether-theme-basic.min.css" />
+    <Content Include="Content\AdminPanel\css\tether.css" />
+    <Content Include="Content\AdminPanel\css\tether.min.css" />
+    <Content Include="Content\AdminPanel\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\AdminPanel\fonts\Simple-Line-Icons.svg" />
+    <Content Include="Content\AdminPanel\js\AdminShared.js" />
+    <Content Include="Content\AdminPanel\js\AdminToolsLedgerJournal.js" />
+    <Content Include="Content\AdminPanel\js\app.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\dist\css\bootstrap-grid.css" />
+    <Content Include="Content\AdminPanel\js\bootstrap\dist\css\bootstrap-grid.min.css" />
+    <Content Include="Content\AdminPanel\js\bootstrap\dist\css\bootstrap-reboot.css" />
+    <Content Include="Content\AdminPanel\js\bootstrap\dist\css\bootstrap-reboot.min.css" />
+    <Content Include="Content\AdminPanel\js\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="Content\AdminPanel\js\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="Content\AdminPanel\js\bootstrap\dist\js\bootstrap.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\alert.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\button.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\carousel.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\collapse.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\dropdown.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\modal.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\popover.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\scrollspy.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\tab.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\tooltip.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\util.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\src\alert.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\src\button.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\src\carousel.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\src\collapse.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\src\dropdown.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\src\modal.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\src\popover.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\src\scrollspy.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\src\tab.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\src\tooltip.js" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\src\util.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\dist\Chart.bundle.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\dist\Chart.bundle.min.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\dist\Chart.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\dist\Chart.min.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\chart.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\charts\Chart.Bar.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\charts\Chart.Bubble.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\charts\Chart.Doughnut.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\charts\Chart.Line.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\charts\Chart.PolarArea.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\charts\Chart.Radar.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\charts\Chart.Scatter.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\controllers\controller.bar.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\controllers\controller.bubble.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\controllers\controller.doughnut.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\controllers\controller.line.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\controllers\controller.polarArea.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\controllers\controller.radar.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.animation.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.canvasHelpers.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.controller.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.datasetController.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.element.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.helpers.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.interaction.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.layoutService.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.legend.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.plugin.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.scale.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.scaleService.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.ticks.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.title.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\core\core.tooltip.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\elements\element.arc.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\elements\element.line.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\elements\element.point.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\elements\element.rectangle.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\platforms\platform.dom.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\platforms\platform.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\scales\scale.category.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\scales\scale.linear.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\scales\scale.linearbase.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\scales\scale.logarithmic.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\scales\scale.radialLinear.js" />
+    <Content Include="Content\AdminPanel\js\chart.js\src\scales\scale.time.js" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\css\dataTables.bootstrap.css" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\css\dataTables.bootstrap.min.css" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\css\dataTables.foundation.css" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\css\dataTables.foundation.min.css" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\css\dataTables.jqueryui.css" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\css\dataTables.jqueryui.min.css" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\css\dataTables.semanticui.css" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\css\dataTables.semanticui.min.css" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\css\jquery.dataTables.css" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\css\jquery.dataTables.min.css" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\images\sort_asc.png" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\images\sort_asc_disabled.png" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\images\sort_both.png" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\images\sort_desc.png" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\images\sort_desc_disabled.png" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\js\dataTables.bootstrap.js" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\js\dataTables.bootstrap.min.js" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\js\dataTables.foundation.js" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\js\dataTables.foundation.min.js" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\js\dataTables.jqueryui.js" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\js\dataTables.jqueryui.min.js" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\js\dataTables.semanticui.js" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\js\dataTables.semanticui.min.js" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\js\jquery.dataTables.js" />
+    <Content Include="Content\AdminPanel\js\DataTables-1.10.15\js\jquery.dataTables.min.js" />
+    <Content Include="Content\AdminPanel\js\datatables.min.js" />
+    <Content Include="Content\AdminPanel\js\jquery.min.js" />
+    <Content Include="Content\AdminPanel\js\KeyTable-2.2.1\css\keyTable.bootstrap.css" />
+    <Content Include="Content\AdminPanel\js\KeyTable-2.2.1\css\keyTable.bootstrap.min.css" />
+    <Content Include="Content\AdminPanel\js\KeyTable-2.2.1\css\keyTable.dataTables.css" />
+    <Content Include="Content\AdminPanel\js\KeyTable-2.2.1\css\keyTable.dataTables.min.css" />
+    <Content Include="Content\AdminPanel\js\KeyTable-2.2.1\css\keyTable.foundation.css" />
+    <Content Include="Content\AdminPanel\js\KeyTable-2.2.1\css\keyTable.foundation.min.css" />
+    <Content Include="Content\AdminPanel\js\KeyTable-2.2.1\css\keyTable.jqueryui.css" />
+    <Content Include="Content\AdminPanel\js\KeyTable-2.2.1\css\keyTable.jqueryui.min.css" />
+    <Content Include="Content\AdminPanel\js\KeyTable-2.2.1\css\keyTable.semanticui.css" />
+    <Content Include="Content\AdminPanel\js\KeyTable-2.2.1\css\keyTable.semanticui.min.css" />
+    <Content Include="Content\AdminPanel\js\KeyTable-2.2.1\js\dataTables.keyTable.js" />
+    <Content Include="Content\AdminPanel\js\KeyTable-2.2.1\js\dataTables.keyTable.min.js" />
+    <Content Include="Content\AdminPanel\js\numeral.min.js" />
+    <Content Include="Content\AdminPanel\js\pace\pace.js" />
+    <Content Include="Content\AdminPanel\js\pace\pace.min.js" />
+    <Content Include="Content\AdminPanel\js\pace\themes\black\pace-theme-barber-shop.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\black\pace-theme-big-counter.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\black\pace-theme-bounce.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\black\pace-theme-center-atom.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\black\pace-theme-center-circle.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\black\pace-theme-center-radar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\black\pace-theme-center-simple.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\black\pace-theme-corner-indicator.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\black\pace-theme-fill-left.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\black\pace-theme-flash.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\black\pace-theme-flat-top.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\black\pace-theme-loading-bar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\black\pace-theme-mac-osx.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\black\pace-theme-minimal.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\blue\pace-theme-barber-shop.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\blue\pace-theme-big-counter.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\blue\pace-theme-bounce.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\blue\pace-theme-center-atom.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\blue\pace-theme-center-circle.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\blue\pace-theme-center-radar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\blue\pace-theme-center-simple.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\blue\pace-theme-corner-indicator.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\blue\pace-theme-fill-left.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\blue\pace-theme-flash.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\blue\pace-theme-flat-top.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\blue\pace-theme-loading-bar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\blue\pace-theme-mac-osx.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\blue\pace-theme-minimal.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\green\pace-theme-barber-shop.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\green\pace-theme-big-counter.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\green\pace-theme-bounce.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\green\pace-theme-center-atom.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\green\pace-theme-center-circle.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\green\pace-theme-center-radar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\green\pace-theme-center-simple.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\green\pace-theme-corner-indicator.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\green\pace-theme-fill-left.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\green\pace-theme-flash.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\green\pace-theme-flat-top.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\green\pace-theme-loading-bar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\green\pace-theme-mac-osx.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\green\pace-theme-minimal.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\orange\pace-theme-barber-shop.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\orange\pace-theme-big-counter.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\orange\pace-theme-bounce.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\orange\pace-theme-center-atom.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\orange\pace-theme-center-circle.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\orange\pace-theme-center-radar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\orange\pace-theme-center-simple.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\orange\pace-theme-corner-indicator.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\orange\pace-theme-fill-left.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\orange\pace-theme-flash.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\orange\pace-theme-flat-top.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\orange\pace-theme-loading-bar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\orange\pace-theme-mac-osx.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\orange\pace-theme-minimal.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\pink\pace-theme-barber-shop.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\pink\pace-theme-big-counter.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\pink\pace-theme-bounce.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\pink\pace-theme-center-atom.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\pink\pace-theme-center-circle.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\pink\pace-theme-center-radar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\pink\pace-theme-center-simple.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\pink\pace-theme-corner-indicator.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\pink\pace-theme-fill-left.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\pink\pace-theme-flash.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\pink\pace-theme-flat-top.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\pink\pace-theme-loading-bar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\pink\pace-theme-mac-osx.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\pink\pace-theme-minimal.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\purple\pace-theme-barber-shop.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\purple\pace-theme-big-counter.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\purple\pace-theme-bounce.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\purple\pace-theme-center-atom.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\purple\pace-theme-center-circle.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\purple\pace-theme-center-radar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\purple\pace-theme-center-simple.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\purple\pace-theme-corner-indicator.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\purple\pace-theme-fill-left.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\purple\pace-theme-flash.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\purple\pace-theme-flat-top.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\purple\pace-theme-loading-bar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\purple\pace-theme-mac-osx.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\purple\pace-theme-minimal.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\red\pace-theme-barber-shop.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\red\pace-theme-big-counter.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\red\pace-theme-bounce.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\red\pace-theme-center-atom.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\red\pace-theme-center-circle.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\red\pace-theme-center-radar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\red\pace-theme-center-simple.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\red\pace-theme-corner-indicator.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\red\pace-theme-fill-left.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\red\pace-theme-flash.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\red\pace-theme-flat-top.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\red\pace-theme-loading-bar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\red\pace-theme-mac-osx.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\red\pace-theme-minimal.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\silver\pace-theme-barber-shop.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\silver\pace-theme-big-counter.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\silver\pace-theme-bounce.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\silver\pace-theme-center-atom.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\silver\pace-theme-center-circle.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\silver\pace-theme-center-radar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\silver\pace-theme-center-simple.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\silver\pace-theme-corner-indicator.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\silver\pace-theme-fill-left.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\silver\pace-theme-flash.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\silver\pace-theme-flat-top.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\silver\pace-theme-loading-bar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\silver\pace-theme-mac-osx.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\silver\pace-theme-minimal.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\white\pace-theme-barber-shop.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\white\pace-theme-big-counter.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\white\pace-theme-bounce.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\white\pace-theme-center-atom.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\white\pace-theme-center-circle.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\white\pace-theme-center-radar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\white\pace-theme-center-simple.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\white\pace-theme-corner-indicator.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\white\pace-theme-fill-left.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\white\pace-theme-flash.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\white\pace-theme-flat-top.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\white\pace-theme-loading-bar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\white\pace-theme-mac-osx.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\white\pace-theme-minimal.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\yellow\pace-theme-barber-shop.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\yellow\pace-theme-big-counter.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\yellow\pace-theme-bounce.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\yellow\pace-theme-center-atom.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\yellow\pace-theme-center-circle.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\yellow\pace-theme-center-radar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\yellow\pace-theme-center-simple.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\yellow\pace-theme-corner-indicator.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\yellow\pace-theme-fill-left.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\yellow\pace-theme-flash.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\yellow\pace-theme-flat-top.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\yellow\pace-theme-loading-bar.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\yellow\pace-theme-mac-osx.css" />
+    <Content Include="Content\AdminPanel\js\pace\themes\yellow\pace-theme-minimal.css" />
+    <Content Include="Content\AdminPanel\js\sizzle.min.js" />
+    <Content Include="Content\AdminPanel\js\tether.min.js" />
+    <Content Include="Content\AdminPanel\js\views\charts.js" />
+    <Content Include="Content\AdminPanel\js\views\main.js" />
+    <Content Include="Content\AdminPanel\js\views\widgets.js" />
+    <Content Include="Content\AdminPanel\views\blank.html" />
+    <Content Include="Content\AdminPanel\views\charts.html" />
+    <Content Include="Content\AdminPanel\views\components\buttons.html" />
+    <Content Include="Content\AdminPanel\views\components\cards.html" />
+    <Content Include="Content\AdminPanel\views\components\forms.html" />
+    <Content Include="Content\AdminPanel\views\components\modals.html" />
+    <Content Include="Content\AdminPanel\views\components\social-buttons.html" />
+    <Content Include="Content\AdminPanel\views\components\switches.html" />
+    <Content Include="Content\AdminPanel\views\components\tables.html" />
+    <Content Include="Content\AdminPanel\views\components\tabs.html" />
+    <Content Include="Content\AdminPanel\views\icons\font-awesome.html" />
+    <Content Include="Content\AdminPanel\views\icons\simple-line-icons.html" />
+    <Content Include="Content\AdminPanel\views\main.html" />
+    <Content Include="Content\AdminPanel\views\pages\404.html" />
+    <Content Include="Content\AdminPanel\views\pages\500.html" />
+    <Content Include="Content\AdminPanel\views\pages\login.html" />
+    <Content Include="Content\AdminPanel\views\pages\register.html" />
+    <Content Include="Content\AdminPanel\views\widgets.html" />
+    <Content Include="Content\assets\demo.css" />
+    <Content Include="Content\assets\dialog-alert.css" />
+    <Content Include="Content\assets\dialog-confirm.css" />
+    <Content Include="Content\assets\dialog-prompt.css" />
+    <Content Include="Content\AtlasUtility.css" />
+    <Content Include="Content\css\AdminLTE.Atlas.css" />
+    <Content Include="Content\css\AdminLTE.min.css" />
+    <Content Include="Content\css\AdminLTE.source.css" />
+    <Content Include="Content\css\AtlasConfig.css" />
+    <Content Include="Content\css\AtlasLTE.css" />
+    <Content Include="Content\css\AtlasPaste.css" />
+    <Content Include="Content\css\bootstrap.Atlas-badedits.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\bootstrap.source.css" />
+    <Content Include="Content\css\CRWv2.css" />
+    <Content Include="Content\css\font-awesome.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\images\timeout-icon.png" />
+    <Content Include="Content\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\css\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\css\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\css\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\css\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\css\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\css\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\css\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\css\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\css\jquery-ui.css" />
+    <Content Include="Content\css\Ledger.css" />
+    <Content Include="Content\css\PRPortal.css" />
+    <Content Include="Content\css\skins\skin-blue.css" />
+    <Content Include="Content\css\timeout-dialog.css" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\css\autoFill.bootstrap.css" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\css\autoFill.bootstrap.min.css" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\css\autoFill.bootstrap4.css" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\css\autoFill.bootstrap4.min.css" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\css\autoFill.dataTables.css" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\css\autoFill.dataTables.min.css" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\css\autoFill.foundation.css" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\css\autoFill.foundation.min.css" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\css\autoFill.jqueryui.css" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\css\autoFill.jqueryui.min.css" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\css\autoFill.semanticui.css" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\css\autoFill.semanticui.min.css" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\js\autoFill.bootstrap.js" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\js\autoFill.bootstrap.min.js" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\js\autoFill.bootstrap4.js" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\js\autoFill.bootstrap4.min.js" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\js\autoFill.foundation.js" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\js\autoFill.foundation.min.js" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\js\autoFill.jqueryui.js" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\js\autoFill.jqueryui.min.js" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\js\autoFill.semanticui.js" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\js\autoFill.semanticui.min.js" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\js\dataTables.autoFill.js" />
+    <Content Include="Content\dataTables\AutoFill-2.3.2\js\dataTables.autoFill.min.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\css\buttons.bootstrap.css" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\css\buttons.bootstrap.min.css" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\css\buttons.bootstrap4.css" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\css\buttons.bootstrap4.min.css" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\css\buttons.dataTables.css" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\css\buttons.dataTables.min.css" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\css\buttons.foundation.css" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\css\buttons.foundation.min.css" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\css\buttons.jqueryui.css" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\css\buttons.jqueryui.min.css" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\css\buttons.semanticui.css" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\css\buttons.semanticui.min.css" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.bootstrap.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.bootstrap.min.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.bootstrap4.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.bootstrap4.min.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.colVis.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.colVis.min.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.flash.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.flash.min.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.foundation.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.foundation.min.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.html5.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.html5.min.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.jqueryui.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.jqueryui.min.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.print.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.print.min.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.semanticui.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\buttons.semanticui.min.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\dataTables.buttons.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\js\dataTables.buttons.min.js" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\swf\flashExport.swf" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\css\dataTables.bootstrap.css" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\css\dataTables.bootstrap.min.css" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\css\dataTables.bootstrap4.css" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\css\dataTables.foundation.css" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\css\dataTables.foundation.min.css" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\css\dataTables.jqueryui.css" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\css\dataTables.jqueryui.min.css" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\css\dataTables.semanticui.css" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\css\dataTables.semanticui.min.css" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\css\jquery.dataTables.css" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\css\jquery.dataTables.min.css" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\images\sort_asc.png" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\images\sort_asc_disabled.png" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\images\sort_both.png" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\images\sort_desc.png" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\images\sort_desc_disabled.png" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\js\dataTables.bootstrap.js" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\js\dataTables.bootstrap.min.js" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\js\dataTables.bootstrap4.js" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\js\dataTables.bootstrap4.min.js" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\js\dataTables.foundation.js" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\js\dataTables.foundation.min.js" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\js\dataTables.jqueryui.js" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\js\dataTables.jqueryui.min.js" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\js\dataTables.semanticui.js" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\js\dataTables.semanticui.min.js" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\js\jquery.dataTables.js" />
+    <Content Include="Content\dataTables\DataTables-1.10.18\js\jquery.dataTables.min.js" />
+    <Content Include="Content\dataTables\datatables.css" />
+    <Content Include="Content\dataTables\datatables.js" />
+    <Content Include="Content\dataTables\datatables.min.css" />
+    <Content Include="Content\dataTables\datatables.min.js" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\css\fixedHeader.bootstrap.css" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\css\fixedHeader.bootstrap.min.css" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\css\fixedHeader.bootstrap4.css" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\css\fixedHeader.bootstrap4.min.css" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\css\fixedHeader.dataTables.css" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\css\fixedHeader.dataTables.min.css" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\css\fixedHeader.foundation.css" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\css\fixedHeader.foundation.min.css" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\css\fixedHeader.jqueryui.css" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\css\fixedHeader.jqueryui.min.css" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\css\fixedHeader.semanticui.css" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\css\fixedHeader.semanticui.min.css" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\js\dataTables.fixedHeader.js" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\js\dataTables.fixedHeader.min.js" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\js\fixedHeader.bootstrap.js" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\js\fixedHeader.bootstrap.min.js" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\js\fixedHeader.bootstrap4.js" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\js\fixedHeader.bootstrap4.min.js" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\js\fixedHeader.dataTables.js" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\js\fixedHeader.foundation.js" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\js\fixedHeader.foundation.min.js" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\js\fixedHeader.jqueryui.js" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\js\fixedHeader.jqueryui.min.js" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\js\fixedHeader.semanicui.js" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\js\fixedHeader.semanticui.js" />
+    <Content Include="Content\dataTables\FixedHeader-3.1.4\js\fixedHeader.semanticui.min.js" />
+    <Content Include="Content\dataTables\JSZip-2.5.0\jszip.js" />
+    <Content Include="Content\dataTables\JSZip-2.5.0\jszip.min.js" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\css\keyTable.bootstrap.css" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\css\keyTable.bootstrap.min.css" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\css\keyTable.bootstrap4.css" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\css\keyTable.bootstrap4.min.css" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\css\keyTable.dataTables.css" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\css\keyTable.dataTables.min.css" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\css\keyTable.foundation.css" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\css\keyTable.foundation.min.css" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\css\keyTable.jqueryui.css" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\css\keyTable.jqueryui.min.css" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\css\keyTable.semanticui.css" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\css\keyTable.semanticui.min.css" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\js\dataTables.keyTable.js" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\js\dataTables.keyTable.min.js" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\js\keyTable.bootstrap.js" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\js\keyTable.bootstrap.min.js" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\js\keyTable.bootstrap4.js" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\js\keyTable.bootstrap4.min.js" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\js\keyTable.dataTables.js" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\js\keyTable.foundation.js" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\js\keyTable.foundation.min.js" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\js\keyTable.jqueryui.js" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\js\keyTable.jqueryui.min.js" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\js\keyTable.semanicui.js" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\js\keyTable.semanticui.js" />
+    <Content Include="Content\dataTables\KeyTable-2.5.0\js\keyTable.semanticui.min.js" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\css\rowReorder.bootstrap.css" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\css\rowReorder.bootstrap.min.css" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\css\rowReorder.bootstrap4.css" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\css\rowReorder.bootstrap4.min.css" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\css\rowReorder.dataTables.css" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\css\rowReorder.dataTables.min.css" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\css\rowReorder.foundation.css" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\css\rowReorder.foundation.min.css" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\css\rowReorder.jqueryui.css" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\css\rowReorder.jqueryui.min.css" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\css\rowReorder.semanticui.css" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\css\rowReorder.semanticui.min.css" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\js\dataTables.rowReorder.js" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\js\dataTables.rowReorder.min.js" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\js\rowReorder.bootstrap.js" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\js\rowReorder.bootstrap.min.js" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\js\rowReorder.bootstrap4.js" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\js\rowReorder.bootstrap4.min.js" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\js\rowReorder.dataTables.js" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\js\rowReorder.foundation.js" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\js\rowReorder.foundation.min.js" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\js\rowReorder.jqueryui.js" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\js\rowReorder.jqueryui.min.js" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\js\rowReorder.semanticui.js" />
+    <Content Include="Content\dataTables\RowReorder-1.2.4\js\rowReorder.semanticui.min.js" />
+    <Content Include="Content\dataTables\Select-1.2.6\css\select.bootstrap.css" />
+    <Content Include="Content\dataTables\Select-1.2.6\css\select.bootstrap.min.css" />
+    <Content Include="Content\dataTables\Select-1.2.6\css\select.bootstrap4.css" />
+    <Content Include="Content\dataTables\Select-1.2.6\css\select.bootstrap4.min.css" />
+    <Content Include="Content\dataTables\Select-1.2.6\css\select.dataTables.css" />
+    <Content Include="Content\dataTables\Select-1.2.6\css\select.dataTables.min.css" />
+    <Content Include="Content\dataTables\Select-1.2.6\css\select.foundation.css" />
+    <Content Include="Content\dataTables\Select-1.2.6\css\select.foundation.min.css" />
+    <Content Include="Content\dataTables\Select-1.2.6\css\select.jqueryui.css" />
+    <Content Include="Content\dataTables\Select-1.2.6\css\select.jqueryui.min.css" />
+    <Content Include="Content\dataTables\Select-1.2.6\css\select.semanticui.css" />
+    <Content Include="Content\dataTables\Select-1.2.6\css\select.semanticui.min.css" />
+    <Content Include="Content\dataTables\Select-1.2.6\js\dataTables.select.js" />
+    <Content Include="Content\dataTables\Select-1.2.6\js\dataTables.select.min.js" />
+    <Content Include="Content\dataTables\Select-1.2.6\js\select.bootstrap.js" />
+    <Content Include="Content\dataTables\Select-1.2.6\js\select.bootstrap.min.js" />
+    <Content Include="Content\dataTables\Select-1.2.6\js\select.bootstrap4.js" />
+    <Content Include="Content\dataTables\Select-1.2.6\js\select.bootstrap4.min.js" />
+    <Content Include="Content\dataTables\Select-1.2.6\js\select.dataTables.js" />
+    <Content Include="Content\dataTables\Select-1.2.6\js\select.foundation.js" />
+    <Content Include="Content\dataTables\Select-1.2.6\js\select.foundation.min.js" />
+    <Content Include="Content\dataTables\Select-1.2.6\js\select.jqueryui.js" />
+    <Content Include="Content\dataTables\Select-1.2.6\js\select.jqueryui.min.js" />
+    <Content Include="Content\dataTables\Select-1.2.6\js\select.semanticui.js" />
+    <Content Include="Content\dataTables\Select-1.2.6\js\select.semanticui.min.js" />
+    <Content Include="Content\DataTable\dataTables.bootstrap.css" />
+    <Content Include="Content\DataTable\dataTables.bootstrap.js" />
+    <Content Include="Content\DataTable\dataTables.colVis.css" />
+    <Content Include="Content\DataTable\dataTables.colVis.js" />
+    <Content Include="Content\DataTable\dataTables.jqueryui.css" />
+    <Content Include="Content\DataTable\dataTables.jqueryui.js" />
+    <Content Include="Content\DataTable\dataTables.min.css" />
+    <Content Include="Content\DataTable\dataTables.min.js" />
+    <Content Include="Content\DataTable\dataTables.responsive.css" />
+    <Content Include="Content\DataTable\dataTables.responsive.js" />
+    <Content Include="Content\DataTable\dataTables.tableTools.min.css" />
+    <Content Include="Content\DataTable\dataTables.tableTools.min.js" />
+    <Content Include="Content\DataTable\images\sort_asc.png" />
+    <Content Include="Content\DataTable\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTable\images\sort_both.png" />
+    <Content Include="Content\DataTable\images\sort_desc.png" />
+    <Content Include="Content\DataTable\images\sort_desc_disabled.png" />
+    <Content Include="Content\DataTable\jquery.dataTables.listnav.2.js" />
+    <Content Include="Content\DataTable\jquery.dtListNav.dt1.10.js" />
+    <Content Include="Content\DataTable\swf\copy_csv_xls.swf" />
+    <Content Include="Content\DataTable\swf\copy_csv_xls_pdf.swf" />
+    <Content Include="Content\DataTable\TableTools.min.js" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\images\CAlogo.png" />
+    <Content Include="Content\images\checkImg01.png" />
+    <Content Include="Content\images\concrete-texture-9.jpg" />
+    <Content Include="Content\images\loginLogo.png" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\logoMini.png" />
+    <Content Include="Content\images\rightCorner.png" />
+    <Content Include="Content\images\rightCorner01.png" />
+    <Content Include="Content\images\sort_asc.png" />
+    <Content Include="Content\images\sort_both.png" />
+    <Content Include="Content\images\sort_desc.png" />
+    <Content Include="Content\js\app.min.js" />
+    <Content Include="Content\js\bootstrap.min.js" />
+    <Content Include="Content\js\images\ui-bg_glass_40_0078a3_1x400.PNG" />
+    <Content Include="Content\js\images\ui-bg_inset-soft_25_000000_1x100.PNG" />
+    <Content Include="Content\js\jQuery-2.1.4.min.js" />
+    <Content Include="Content\js\jquery-2.2.0.min.js" />
+    <Content Include="Content\js\jquery-ui.js" />
+    <Content Include="Content\js\jquery-ui.min.js" />
+    <Content Include="Content\js\jquery-ui.structure.css" />
+    <Content Include="Content\js\jquery-ui.structure.min.css" />
+    <Content Include="Content\js\jquery-ui.theme.min.css" />
+    <Content Include="Content\js\jquery.slimscroll.min.js" />
+    <Content Include="Content\js\moment.js" />
+    <Content Include="Content\libs\bootstrap-multiselect.css" />
+    <Content Include="Content\libs\bootstrap-multiselect.js" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\css\autoFill.bootstrap.css" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\css\autoFill.bootstrap.min.css" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\css\autoFill.dataTables.css" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\css\autoFill.dataTables.min.css" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\css\autoFill.foundation.css" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\css\autoFill.foundation.min.css" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\css\autoFill.jqueryui.css" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\css\autoFill.jqueryui.min.css" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\css\autoFill.semanticui.css" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\css\autoFill.semanticui.min.css" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\js\autoFill.bootstrap.js" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\js\autoFill.bootstrap.min.js" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\js\autoFill.foundation.js" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\js\autoFill.foundation.min.js" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\js\autoFill.jqueryui.js" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\js\autoFill.jqueryui.min.js" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\js\autoFill.semanticui.js" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\js\autoFill.semanticui.min.js" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\js\dataTables.autoFill.js" />
+    <Content Include="Content\libs\DataTables\AutoFill-2.2.0\js\dataTables.autoFill.min.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\css\buttons.bootstrap.css" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\css\buttons.bootstrap.min.css" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\css\buttons.dataTables.css" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\css\buttons.dataTables.min.css" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\css\buttons.foundation.css" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\css\buttons.foundation.min.css" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\css\buttons.jqueryui.css" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\css\buttons.jqueryui.min.css" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\css\buttons.semanticui.css" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\css\buttons.semanticui.min.css" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.bootstrap.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.bootstrap.min.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.colVis.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.colVis.min.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.flash.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.flash.min.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.foundation.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.foundation.min.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.html5.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.html5.min.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.jqueryui.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.jqueryui.min.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.print.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.print.min.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.semanticui.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\buttons.semanticui.min.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\dataTables.buttons.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\js\dataTables.buttons.min.js" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\swf\flashExport.swf" />
+    <Content Include="Content\libs\DataTables\ColReorder-1.3.3\css\colReorder.bootstrap.css" />
+    <Content Include="Content\libs\DataTables\ColReorder-1.3.3\css\colReorder.bootstrap.min.css" />
+    <Content Include="Content\libs\DataTables\ColReorder-1.3.3\css\colReorder.dataTables.css" />
+    <Content Include="Content\libs\DataTables\ColReorder-1.3.3\css\colReorder.dataTables.min.css" />
+    <Content Include="Content\libs\DataTables\ColReorder-1.3.3\css\colReorder.foundation.css" />
+    <Content Include="Content\libs\DataTables\ColReorder-1.3.3\css\colReorder.foundation.min.css" />
+    <Content Include="Content\libs\DataTables\ColReorder-1.3.3\css\colReorder.jqueryui.css" />
+    <Content Include="Content\libs\DataTables\ColReorder-1.3.3\css\colReorder.jqueryui.min.css" />
+    <Content Include="Content\libs\DataTables\ColReorder-1.3.3\js\dataTables.colReorder.js" />
+    <Content Include="Content\libs\DataTables\ColReorder-1.3.3\js\dataTables.colReorder.min.js" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\css\dataTables.bootstrap.css" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\css\dataTables.bootstrap.min.css" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\css\dataTables.foundation.css" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\css\dataTables.foundation.min.css" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\css\dataTables.jqueryui.css" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\css\dataTables.jqueryui.min.css" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\css\dataTables.semanticui.css" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\css\dataTables.semanticui.min.css" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\css\jquery.dataTables.css" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\css\jquery.dataTables.min.css" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\images\sort_asc.png" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\images\sort_asc_disabled.png" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\images\sort_both.png" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\images\sort_desc.png" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\images\sort_desc_disabled.png" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\js\dataTables.bootstrap.js" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\js\dataTables.bootstrap.min.js" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\js\dataTables.foundation.js" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\js\dataTables.foundation.min.js" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\js\dataTables.jqueryui.js" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\js\dataTables.jqueryui.min.js" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\js\dataTables.semanticui.js" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\js\dataTables.semanticui.min.js" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\js\jquery.dataTables.js" />
+    <Content Include="Content\libs\DataTables\DataTables-1.10.15\js\jquery.dataTables.min.js" />
+    <Content Include="Content\libs\DataTables\datatables.css" />
+    <Content Include="Content\libs\DataTables\datatables.js" />
+    <Content Include="Content\libs\DataTables\datatables.min.css" />
+    <Content Include="Content\libs\DataTables\datatables.min.js" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\dataTables.editor.css" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\editor.bootstrap.css" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\editor.bootstrap.min.css" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\editor.bootstrap4.css" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\editor.bootstrap4.min.css" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\editor.dataTables.css" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\editor.dataTables.min.css" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\editor.foundation.css" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\editor.foundation.min.css" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\editor.jqueryui.css" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\editor.jqueryui.min.css" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\editor.semanticui.css" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\editor.semanticui.min.css" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\js\dataTables.editor.js" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\js\dataTables.editor.min.js" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\js\editor.bootstrap.js" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\js\editor.bootstrap.min.js" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\js\editor.bootstrap4.js" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\js\editor.bootstrap4.min.js" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\js\editor.foundation.js" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\js\editor.foundation.min.js" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\js\editor.jqueryui.js" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\js\editor.jqueryui.min.js" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\js\editor.semanticui.js" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\js\editor.semanticui.min.js" />
+    <Content Include="Content\libs\DataTables\FixedColumns-3.2.2\css\fixedColumns.bootstrap.css" />
+    <Content Include="Content\libs\DataTables\FixedColumns-3.2.2\css\fixedColumns.bootstrap.min.css" />
+    <Content Include="Content\libs\DataTables\FixedColumns-3.2.2\css\fixedColumns.dataTables.css" />
+    <Content Include="Content\libs\DataTables\FixedColumns-3.2.2\css\fixedColumns.dataTables.min.css" />
+    <Content Include="Content\libs\DataTables\FixedColumns-3.2.2\css\fixedColumns.foundation.css" />
+    <Content Include="Content\libs\DataTables\FixedColumns-3.2.2\css\fixedColumns.foundation.min.css" />
+    <Content Include="Content\libs\DataTables\FixedColumns-3.2.2\css\fixedColumns.jqueryui.css" />
+    <Content Include="Content\libs\DataTables\FixedColumns-3.2.2\css\fixedColumns.jqueryui.min.css" />
+    <Content Include="Content\libs\DataTables\FixedColumns-3.2.2\js\dataTables.fixedColumns.js" />
+    <Content Include="Content\libs\DataTables\FixedColumns-3.2.2\js\dataTables.fixedColumns.min.js" />
+    <Content Include="Content\libs\DataTables\FixedHeader-3.1.2\css\fixedHeader.bootstrap.css" />
+    <Content Include="Content\libs\DataTables\FixedHeader-3.1.2\css\fixedHeader.bootstrap.min.css" />
+    <Content Include="Content\libs\DataTables\FixedHeader-3.1.2\css\fixedHeader.dataTables.css" />
+    <Content Include="Content\libs\DataTables\FixedHeader-3.1.2\css\fixedHeader.dataTables.min.css" />
+    <Content Include="Content\libs\DataTables\FixedHeader-3.1.2\css\fixedHeader.foundation.css" />
+    <Content Include="Content\libs\DataTables\FixedHeader-3.1.2\css\fixedHeader.foundation.min.css" />
+    <Content Include="Content\libs\DataTables\FixedHeader-3.1.2\css\fixedHeader.jqueryui.css" />
+    <Content Include="Content\libs\DataTables\FixedHeader-3.1.2\css\fixedHeader.jqueryui.min.css" />
+    <Content Include="Content\libs\DataTables\FixedHeader-3.1.2\js\dataTables.fixedHeader.js" />
+    <Content Include="Content\libs\DataTables\FixedHeader-3.1.2\js\dataTables.fixedHeader.min.js" />
+    <Content Include="Content\libs\DataTables\JSZip-3.1.3\jszip.js" />
+    <Content Include="Content\libs\DataTables\JSZip-3.1.3\jszip.min.js" />
+    <Content Include="Content\libs\DataTables\KeyTable-2.3.0\css\keyTable.bootstrap.css" />
+    <Content Include="Content\libs\DataTables\KeyTable-2.3.0\css\keyTable.bootstrap.min.css" />
+    <Content Include="Content\libs\DataTables\KeyTable-2.3.0\css\keyTable.dataTables.css" />
+    <Content Include="Content\libs\DataTables\KeyTable-2.3.0\css\keyTable.dataTables.min.css" />
+    <Content Include="Content\libs\DataTables\KeyTable-2.3.0\css\keyTable.foundation.css" />
+    <Content Include="Content\libs\DataTables\KeyTable-2.3.0\css\keyTable.foundation.min.css" />
+    <Content Include="Content\libs\DataTables\KeyTable-2.3.0\css\keyTable.jqueryui.css" />
+    <Content Include="Content\libs\DataTables\KeyTable-2.3.0\css\keyTable.jqueryui.min.css" />
+    <Content Include="Content\libs\DataTables\KeyTable-2.3.0\css\keyTable.semanticui.css" />
+    <Content Include="Content\libs\DataTables\KeyTable-2.3.0\css\keyTable.semanticui.min.css" />
+    <Content Include="Content\libs\DataTables\KeyTable-2.3.0\js\dataTables.keyTable.js" />
+    <Content Include="Content\libs\DataTables\KeyTable-2.3.0\js\dataTables.keyTable.min.js" />
+    <Content Include="Content\libs\DataTables\pdfmake-0.1.27\build\pdfmake.js" />
+    <Content Include="Content\libs\DataTables\pdfmake-0.1.27\build\pdfmake.min.js" />
+    <Content Include="Content\libs\DataTables\pdfmake-0.1.27\build\vfs_fonts.js" />
+    <Content Include="Content\libs\DataTables\RowGroup-1.0.0\css\rowGroup.bootstrap.css" />
+    <Content Include="Content\libs\DataTables\RowGroup-1.0.0\css\rowGroup.bootstrap.min.css" />
+    <Content Include="Content\libs\DataTables\RowGroup-1.0.0\css\rowGroup.bootstrap4.css" />
+    <Content Include="Content\libs\DataTables\RowGroup-1.0.0\css\rowGroup.bootstrap4.min.css" />
+    <Content Include="Content\libs\DataTables\RowGroup-1.0.0\css\rowGroup.dataTables.css" />
+    <Content Include="Content\libs\DataTables\RowGroup-1.0.0\css\rowGroup.dataTables.min.css" />
+    <Content Include="Content\libs\DataTables\RowGroup-1.0.0\css\rowGroup.foundation.css" />
+    <Content Include="Content\libs\DataTables\RowGroup-1.0.0\css\rowGroup.foundation.min.css" />
+    <Content Include="Content\libs\DataTables\RowGroup-1.0.0\css\rowGroup.jqueryui.css" />
+    <Content Include="Content\libs\DataTables\RowGroup-1.0.0\css\rowGroup.jqueryui.min.css" />
+    <Content Include="Content\libs\DataTables\RowGroup-1.0.0\css\rowGroup.semanticui.css" />
+    <Content Include="Content\libs\DataTables\RowGroup-1.0.0\css\rowGroup.semanticui.min.css" />
+    <Content Include="Content\libs\DataTables\RowGroup-1.0.0\js\dataTables.rowGroup.js" />
+    <Content Include="Content\libs\DataTables\RowGroup-1.0.0\js\dataTables.rowGroup.min.js" />
+    <Content Include="Content\libs\DataTables\RowReorder-1.2.0\css\rowReorder.bootstrap.css" />
+    <Content Include="Content\libs\DataTables\RowReorder-1.2.0\css\rowReorder.bootstrap.min.css" />
+    <Content Include="Content\libs\DataTables\RowReorder-1.2.0\css\rowReorder.dataTables.css" />
+    <Content Include="Content\libs\DataTables\RowReorder-1.2.0\css\rowReorder.dataTables.min.css" />
+    <Content Include="Content\libs\DataTables\RowReorder-1.2.0\css\rowReorder.foundation.css" />
+    <Content Include="Content\libs\DataTables\RowReorder-1.2.0\css\rowReorder.foundation.min.css" />
+    <Content Include="Content\libs\DataTables\RowReorder-1.2.0\css\rowReorder.jqueryui.css" />
+    <Content Include="Content\libs\DataTables\RowReorder-1.2.0\css\rowReorder.jqueryui.min.css" />
+    <Content Include="Content\libs\DataTables\RowReorder-1.2.0\css\rowReorder.semanticui.css" />
+    <Content Include="Content\libs\DataTables\RowReorder-1.2.0\css\rowReorder.semanticui.min.css" />
+    <Content Include="Content\libs\DataTables\RowReorder-1.2.0\js\dataTables.rowReorder.js" />
+    <Content Include="Content\libs\DataTables\RowReorder-1.2.0\js\dataTables.rowReorder.min.js" />
+    <Content Include="Content\libs\DataTables\Scroller-1.4.2\css\scroller.bootstrap.css" />
+    <Content Include="Content\libs\DataTables\Scroller-1.4.2\css\scroller.bootstrap.min.css" />
+    <Content Include="Content\libs\DataTables\Scroller-1.4.2\css\scroller.dataTables.css" />
+    <Content Include="Content\libs\DataTables\Scroller-1.4.2\css\scroller.dataTables.min.css" />
+    <Content Include="Content\libs\DataTables\Scroller-1.4.2\css\scroller.foundation.css" />
+    <Content Include="Content\libs\DataTables\Scroller-1.4.2\css\scroller.foundation.min.css" />
+    <Content Include="Content\libs\DataTables\Scroller-1.4.2\css\scroller.jqueryui.css" />
+    <Content Include="Content\libs\DataTables\Scroller-1.4.2\css\scroller.jqueryui.min.css" />
+    <Content Include="Content\libs\DataTables\Scroller-1.4.2\js\dataTables.scroller.js" />
+    <Content Include="Content\libs\DataTables\Scroller-1.4.2\js\dataTables.scroller.min.js" />
+    <Content Include="Content\libs\DataTables\Select-1.2.2\css\select.bootstrap.css" />
+    <Content Include="Content\libs\DataTables\Select-1.2.2\css\select.bootstrap.min.css" />
+    <Content Include="Content\libs\DataTables\Select-1.2.2\css\select.dataTables.css" />
+    <Content Include="Content\libs\DataTables\Select-1.2.2\css\select.dataTables.min.css" />
+    <Content Include="Content\libs\DataTables\Select-1.2.2\css\select.foundation.css" />
+    <Content Include="Content\libs\DataTables\Select-1.2.2\css\select.foundation.min.css" />
+    <Content Include="Content\libs\DataTables\Select-1.2.2\css\select.jqueryui.css" />
+    <Content Include="Content\libs\DataTables\Select-1.2.2\css\select.jqueryui.min.css" />
+    <Content Include="Content\libs\DataTables\Select-1.2.2\css\select.semanticui.css" />
+    <Content Include="Content\libs\DataTables\Select-1.2.2\css\select.semanticui.min.css" />
+    <Content Include="Content\libs\DataTables\Select-1.2.2\js\dataTables.select.js" />
+    <Content Include="Content\libs\DataTables\Select-1.2.2\js\dataTables.select.min.js" />
+    <Content Include="Content\libs\inputmask\bindings\inputmask.binding.min.js" />
+    <Content Include="Content\libs\inputmask\dependencyLibs\inputmask.dependencyLib.jqlite.min.js" />
+    <Content Include="Content\libs\inputmask\dependencyLibs\inputmask.dependencyLib.jquery.min.js" />
+    <Content Include="Content\libs\inputmask\dependencyLibs\inputmask.dependencyLib.min.js" />
+    <Content Include="Content\libs\inputmask\global\document.min.js" />
+    <Content Include="Content\libs\inputmask\global\window.min.js" />
+    <Content Include="Content\libs\inputmask\inputmask.date.extensions.min.js" />
+    <Content Include="Content\libs\inputmask\inputmask.extensions.min.js" />
+    <Content Include="Content\libs\inputmask\inputmask.min.js" />
+    <Content Include="Content\libs\inputmask\inputmask.numeric.extensions.min.js" />
+    <Content Include="Content\libs\inputmask\inputmask.phone.extensions.min.js" />
+    <Content Include="Content\libs\inputmask\inputmask.regex.extensions.min.js" />
+    <Content Include="Content\libs\inputmask\jquery.inputmask.min.js" />
+    <Content Include="Content\libs\inputmask\phone-codes\phone-be.min.js" />
+    <Content Include="Content\libs\inputmask\phone-codes\phone-nl.min.js" />
+    <Content Include="Content\libs\inputmask\phone-codes\phone-ru.min.js" />
+    <Content Include="Content\libs\inputmask\phone-codes\phone-uk.min.js" />
+    <Content Include="Content\libs\inputmask\phone-codes\phone.min.js" />
+    <Content Include="Content\libs\jquery-3.2.1.min.js" />
+    <Content Include="Content\libs\jquery.inputmask.bundle.min.js" />
+    <Content Include="Content\libs\jqueryui\dialogextend\dialogextend.js" />
+    <Content Include="Content\libs\jqueryui\jquery-ui.css" />
+    <Content Include="Content\libs\jqueryui\jquery-ui.js" />
+    <Content Include="Content\libs\jqueryui\jquery-ui.min.css" />
+    <Content Include="Content\libs\jqueryui\jquery-ui.min.js" />
+    <Content Include="Content\libs\jqueryui\jquery-ui.structure.css" />
+    <Content Include="Content\libs\jqueryui\jquery-ui.structure.min.css" />
+    <Content Include="Content\libs\numeral.min.js" />
+    <Content Include="Content\libs\PDFViewer\build\pdf.js" />
+    <Content Include="Content\libs\PDFViewer\build\pdf.worker.js" />
+    <Content Include="Content\libs\PDFViewer\web\debugger.js" />
+    <Content Include="Content\libs\PDFViewer\web\images\annotation-check.svg" />
+    <Content Include="Content\libs\PDFViewer\web\images\annotation-comment.svg" />
+    <Content Include="Content\libs\PDFViewer\web\images\annotation-help.svg" />
+    <Content Include="Content\libs\PDFViewer\web\images\annotation-insert.svg" />
+    <Content Include="Content\libs\PDFViewer\web\images\annotation-key.svg" />
+    <Content Include="Content\libs\PDFViewer\web\images\annotation-newparagraph.svg" />
+    <Content Include="Content\libs\PDFViewer\web\images\annotation-noicon.svg" />
+    <Content Include="Content\libs\PDFViewer\web\images\annotation-note.svg" />
+    <Content Include="Content\libs\PDFViewer\web\images\annotation-paragraph.svg" />
+    <Content Include="Content\libs\PDFViewer\web\images\findbarButton-next%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\findbarButton-next-rtl%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\findbarButton-next-rtl.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\findbarButton-next.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\findbarButton-previous%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\findbarButton-previous-rtl%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\findbarButton-previous-rtl.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\findbarButton-previous.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\grab.cur" />
+    <Content Include="Content\libs\PDFViewer\web\images\grabbing.cur" />
+    <Content Include="Content\libs\PDFViewer\web\images\loading-icon.gif" />
+    <Content Include="Content\libs\PDFViewer\web\images\loading-small%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\loading-small.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\secondaryToolbarButton-documentProperties%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\secondaryToolbarButton-documentProperties.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\secondaryToolbarButton-firstPage%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\secondaryToolbarButton-firstPage.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\secondaryToolbarButton-handTool%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\secondaryToolbarButton-handTool.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\secondaryToolbarButton-lastPage%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\secondaryToolbarButton-lastPage.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\secondaryToolbarButton-rotateCcw%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\secondaryToolbarButton-rotateCcw.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\secondaryToolbarButton-rotateCw%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\secondaryToolbarButton-rotateCw.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\secondaryToolbarButton-selectTool%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\secondaryToolbarButton-selectTool.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\shadow.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\texture.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-bookmark%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-bookmark.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-download%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-download.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-menuArrows%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-menuArrows.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-openFile%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-openFile.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-pageDown%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-pageDown-rtl%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-pageDown-rtl.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-pageDown.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-pageUp%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-pageUp-rtl%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-pageUp-rtl.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-pageUp.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-presentationMode%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-presentationMode.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-print%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-print.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-search%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-search.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-secondaryToolbarToggle%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-secondaryToolbarToggle-rtl%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-secondaryToolbarToggle-rtl.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-secondaryToolbarToggle.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-sidebarToggle%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-sidebarToggle-rtl%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-sidebarToggle-rtl.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-sidebarToggle.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-viewAttachments%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-viewAttachments.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-viewOutline%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-viewOutline-rtl%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-viewOutline-rtl.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-viewOutline.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-viewThumbnail%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-viewThumbnail.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-zoomIn%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-zoomIn.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-zoomOut%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\toolbarButton-zoomOut.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\treeitem-collapsed%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\treeitem-collapsed-rtl%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\treeitem-collapsed-rtl.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\treeitem-collapsed.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\treeitem-expanded%402x.png" />
+    <Content Include="Content\libs\PDFViewer\web\images\treeitem-expanded.png" />
+    <Content Include="Content\libs\PDFViewer\web\viewer.css" />
+    <Content Include="Content\libs\PDFViewer\web\viewer.html" />
+    <Content Include="Content\libs\PDFViewer\web\viewer.js" />
+    <Content Include="Content\media\css\dataTables.bootstrap.css" />
+    <Content Include="Content\media\css\dataTables.bootstrap.min.css" />
+    <Content Include="Content\media\css\dataTables.foundation.css" />
+    <Content Include="Content\media\css\dataTables.foundation.min.css" />
+    <Content Include="Content\media\css\dataTables.jqueryui.css" />
+    <Content Include="Content\media\css\dataTables.jqueryui.min.css" />
+    <Content Include="Content\media\css\jquery.dataTables.css" />
+    <Content Include="Content\media\css\jquery.dataTables.min.css" />
+    <Content Include="Content\media\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\media\css\responsive.dataTables.css" />
+    <Content Include="Content\media\css\responsive.dataTables.min.css" />
+    <Content Include="Content\media\images\favicon.ico" />
+    <Content Include="Content\media\images\sort_asc.png" />
+    <Content Include="Content\media\images\sort_asc_disabled.png" />
+    <Content Include="Content\media\images\sort_both.png" />
+    <Content Include="Content\media\images\sort_desc.png" />
+    <Content Include="Content\media\images\sort_desc_disabled.png" />
+    <Content Include="Content\media\js\dataTables.bootstrap.js" />
+    <Content Include="Content\media\js\dataTables.bootstrap.min.js" />
+    <Content Include="Content\media\js\dataTables.foundation.js" />
+    <Content Include="Content\media\js\dataTables.foundation.min.js" />
+    <Content Include="Content\media\js\dataTables.jqueryui.js" />
+    <Content Include="Content\media\js\dataTables.jqueryui.min.js" />
+    <Content Include="Content\media\js\dataTables.responsive.js" />
+    <Content Include="Content\media\js\dataTables.responsive.min.js" />
+    <Content Include="Content\media\js\jquery.dataTables.editable.js" />
+    <Content Include="Content\media\js\jquery.dataTables.js" />
+    <Content Include="Content\media\js\jquery.dataTables.min.js" />
+    <Content Include="Content\media\js\jquery.jeditable.js" />
+    <Content Include="Content\media\js\jquery.js" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\w2ui-1.5.rc1.css" />
+    <Content Include="Content\w2ui-1.5.rc1.js" />
+    <Content Include="Content\w2ui-1.5.rc1.min.css" />
+    <Content Include="Content\w2ui-1.5.rc1.min.js" />
+    <Content Include="Content\w2ui-fields-1.0.css" />
+    <Content Include="Content\w2ui-fields-1.0.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\media\images\Sorting icons.psd" />
+    <Content Include="Images\ajax_loader.gif" />
+    <Content Include="Images\checkPrint.PNG" />
+    <Content Include="Images\icons.png" />
+    <Content Include="Images\InternetSlowdown_Day.gif" />
+    <Content Include="Images\loader.gif" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Images\loader_funnel.svg" />
+    <Content Include="Images\ui-icons_444444_256x240.png" />
+    <Content Include="Images\ui-icons_555555_256x240.png" />
+    <Content Include="Images\ui-icons_777620_256x240.png" />
+    <Content Include="Images\ui-icons_777777_256x240.png" />
+    <Content Include="Images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Libgpgme\Libgpgme.xml" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\css\common.scss" />
+    <Content Include="Content\libs\DataTables\Buttons-1.4.0\css\mixins.scss" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\scss\bubble.scss" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\scss\datatable.scss" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\scss\datetime.scss" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\scss\envelope.scss" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\scss\fields.scss" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\scss\inline.scss" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\scss\lightbox.scss" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\scss\main.scss" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\scss\mixins.scss" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\scss\processing.scss" />
+    <Content Include="Content\libs\DataTables\Editor-1.6.4\css\scss\upload.scss" />
+    <Content Include="Content\AdminPanel\css\font-awesome.css.map" />
+    <Content Include="Content\AdminPanel\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\AdminPanel\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\AdminPanel\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\AdminPanel\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\AdminPanel\fonts\FontAwesome.otf" />
+    <Content Include="Content\AdminPanel\fonts\Simple-Line-Icons.eot" />
+    <Content Include="Content\AdminPanel\fonts\Simple-Line-Icons.ttf" />
+    <Content Include="Content\AdminPanel\fonts\Simple-Line-Icons.woff" />
+    <Content Include="Content\AdminPanel\fonts\Simple-Line-Icons.woff2" />
+    <Content Include="Content\AdminPanel\js\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\dist\css\bootstrap.css.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\dist\css\bootstrap.min.css.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\.babelrc" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\.eslintrc.json" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\alert.js.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\button.js.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\carousel.js.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\collapse.js.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\dropdown.js.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\modal.js.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\popover.js.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\scrollspy.js.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\tab.js.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\tooltip.js.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\js\dist\util.js.map" />
+    <Content Include="Content\AdminPanel\js\bootstrap\LICENSE" />
+    <Content Include="Content\AdminPanel\js\pace\pace.coffee" />
+    <Content Include="Content\libs\PDFViewer\build\pdf.js.map" />
+    <Content Include="Content\libs\PDFViewer\build\pdf.worker.js.map" />
+    <Content Include="Content\libs\PDFViewer\LICENSE" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\78-EUC-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\78-EUC-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\78-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\78-RKSJ-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\78-RKSJ-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\78-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\78ms-RKSJ-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\78ms-RKSJ-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\83pv-RKSJ-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\90ms-RKSJ-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\90ms-RKSJ-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\90msp-RKSJ-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\90msp-RKSJ-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\90pv-RKSJ-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\90pv-RKSJ-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Add-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Add-RKSJ-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Add-RKSJ-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Add-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-CNS1-0.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-CNS1-1.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-CNS1-2.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-CNS1-3.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-CNS1-4.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-CNS1-5.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-CNS1-6.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-CNS1-UCS2.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-GB1-0.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-GB1-1.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-GB1-2.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-GB1-3.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-GB1-4.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-GB1-5.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-GB1-UCS2.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-Japan1-0.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-Japan1-1.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-Japan1-2.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-Japan1-3.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-Japan1-4.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-Japan1-5.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-Japan1-6.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-Japan1-UCS2.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-Korea1-0.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-Korea1-1.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-Korea1-2.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Adobe-Korea1-UCS2.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\B5-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\B5-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\B5pc-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\B5pc-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\CNS-EUC-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\CNS-EUC-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\CNS1-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\CNS1-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\CNS2-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\CNS2-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\ETen-B5-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\ETen-B5-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\ETenms-B5-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\ETenms-B5-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\ETHK-B5-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\ETHK-B5-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\EUC-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\EUC-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Ext-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Ext-RKSJ-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Ext-RKSJ-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Ext-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GB-EUC-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GB-EUC-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GB-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GB-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GBK-EUC-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GBK-EUC-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GBK2K-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GBK2K-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GBKp-EUC-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GBKp-EUC-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GBpc-EUC-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GBpc-EUC-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GBT-EUC-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GBT-EUC-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GBT-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GBT-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GBTpc-EUC-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\GBTpc-EUC-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Hankaku.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Hiragana.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\HKdla-B5-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\HKdla-B5-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\HKdlb-B5-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\HKdlb-B5-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\HKgccs-B5-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\HKgccs-B5-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\HKm314-B5-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\HKm314-B5-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\HKm471-B5-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\HKm471-B5-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\HKscs-B5-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\HKscs-B5-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Katakana.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\KSC-EUC-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\KSC-EUC-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\KSC-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\KSC-Johab-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\KSC-Johab-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\KSC-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\KSCms-UHC-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\KSCms-UHC-HW-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\KSCms-UHC-HW-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\KSCms-UHC-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\KSCpc-EUC-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\KSCpc-EUC-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\LICENSE" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\NWP-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\NWP-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\RKSJ-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\RKSJ-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\Roman.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniCNS-UCS2-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniCNS-UCS2-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniCNS-UTF16-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniCNS-UTF16-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniCNS-UTF32-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniCNS-UTF32-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniCNS-UTF8-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniCNS-UTF8-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniGB-UCS2-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniGB-UCS2-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniGB-UTF16-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniGB-UTF16-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniGB-UTF32-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniGB-UTF32-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniGB-UTF8-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniGB-UTF8-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS-UCS2-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS-UCS2-HW-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS-UCS2-HW-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS-UCS2-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS-UTF16-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS-UTF16-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS-UTF32-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS-UTF32-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS-UTF8-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS-UTF8-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS2004-UTF16-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS2004-UTF16-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS2004-UTF32-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS2004-UTF32-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS2004-UTF8-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJIS2004-UTF8-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJISPro-UCS2-HW-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJISPro-UCS2-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJISPro-UTF8-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJISX0213-UTF32-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJISX0213-UTF32-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJISX02132004-UTF32-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniJISX02132004-UTF32-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniKS-UCS2-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniKS-UCS2-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniKS-UTF16-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniKS-UTF16-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniKS-UTF32-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniKS-UTF32-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniKS-UTF8-H.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\UniKS-UTF8-V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\V.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\cmaps\WP-Symbol.bcmap" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ach\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\af\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ak\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\an\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ar\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ast\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\as\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\az\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\be\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\bg\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\bn-BD\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\bn-IN\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\br\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\bs\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ca\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\csb\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\cs\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\cy\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\da\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\de\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\el\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\en-GB\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\en-US\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\en-ZA\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\eo\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\es-AR\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\es-CL\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\es-ES\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\es-MX\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\et\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\eu\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\fa\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ff\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\fi\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\fr\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\fy-NL\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ga-IE\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\gd\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\gl\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\gu-IN\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\he\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\hi-IN\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\hr\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\hu\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\hy-AM\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\id\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\is\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\it\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ja\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ka\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\kk\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\km\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\kn\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ko\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ku\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\lg\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\lij\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\locale.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\lt\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\lv\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\mai\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\mk\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ml\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\mn\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\mr\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ms\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\my\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\nb-NO\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\nl\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\nn-NO\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\nso\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\oc\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\or\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\pa-IN\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\pl\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\pt-BR\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\pt-PT\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\rm\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ro\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ru\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\rw\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\sah\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\si\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\sk\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\sl\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\son\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\sq\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\sr\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\sv-SE\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\sw\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ta-LK\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ta\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\te\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\th\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\tl\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\tn\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\tr\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\uk\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\ur\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\vi\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\wo\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\xh\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\zh-CN\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\zh-TW\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\locale\zu\viewer.properties" />
+    <Content Include="Content\libs\PDFViewer\web\viewer.js.map" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\css\common.scss" />
+    <Content Include="Content\dataTables\Buttons-1.5.4\css\mixins.scss" />
+    <None Include="Properties\PublishProfiles\EMS_Atlas_17042021_1.pubxml" />
+    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\AccountsPayable\1099TaxYear.js" />
+    <Content Include="Scripts\AccountsPayable\1099Worksheet.js" />
+    <Content Include="Scripts\AccountsPayable\AddInvoice.js" />
+    <Content Include="Scripts\AccountsPayable\AddPO.js" />
+    <Content Include="Scripts\AccountsPayable\Banking\BankRec.js" />
+    <Content Include="Scripts\AccountsPayable\Banking\POSPay-lib.js" />
+    <Content Include="Scripts\AccountsPayable\CheckCycle.js" />
+    <Content Include="Scripts\AccountsPayable\Custodians.js" />
+    <Content Include="Scripts\AccountsPayable\EditInvoice.js" />
+    <Content Include="Scripts\AccountsPayable\EditPO.js" />
+    <Content Include="Scripts\AccountsPayable\EnvelopeAudit.js" />
+    <Content Include="Scripts\AccountsPayable\DEL_EnvelopesEdit.js" />
+    <Content Include="Scripts\AccountsPayable\Invoices\AtlasInvoice.js" />
+    <Content Include="Scripts\AccountsPayable\PCEnvelope.js" />
+    <Content Include="Scripts\AccountsPayable\APInvoicesUnpaidInvoices.js" />
+    <Content Include="Scripts\AccountsPayable\Banking\POSPay.js" />
+    <Content Include="Scripts\AccountsPayable\PurchaseOrders\AtlasPurchaseOrders.js" />
+    <Content Include="Scripts\AccountsPayable\Recipient.js" />
+    <Content Include="Scripts\AccountsPayable\Reconcilation.js" />
+    <Content Include="Scripts\AccountsPayable\Void.js" />
+    <Content Include="Scripts\AccountsPayable\PaymentFilter.js" />
+    <Content Include="Scripts\AccountsPayable\Payment.js" />
+    <Content Include="Scripts\AccountsPayable\PaymentHistory.js" />
+    <Content Include="Scripts\AccountsPayable\PendingInvoice.js" />
+    <Content Include="Scripts\AccountsPayable\DEL_PettyCash.js" />
+    <Content Include="Scripts\AccountsPayable\PostInvoice.js" />
+    <Content Include="Scripts\AccountsPayable\printCheck.js" />
+    <Content Include="Scripts\AccountsPayable\PurchaseOrder.js" />
+    <Content Include="Scripts\AccountsPayable\Vendors.js" />
+    <Content Include="Scripts\AccountsPayable\VoidUnissued.js" />
+    <Content Include="Scripts\AdminLogin\AdminAddUsers.js" />
+    <Content Include="Scripts\AdminLogin\AdminGroups.js" />
+    <Content Include="Scripts\AdminLogin\AdminLogin.js" />
+    <Content Include="Scripts\AdminLogin\AdminUsers.js" />
+    <Content Include="Scripts\AdminLogin\CheckSetting.js" />
+    <Content Include="Scripts\AdminLogin\SegmentSetup.js" />
+    <Content Include="Scripts\AdminLogin\SetupProduction.js" />
+    <Content Include="Scripts\AdminLogin\TimeZone.js" />
+    <Content Include="Scripts\AtlasUtilities\AtlasBatchManagement.js" />
+    <Content Include="Scripts\AtlasUtilities\AtlasConfig.js" />
+    <Content Include="Scripts\AtlasUtilities.js" />
+    <Content Include="Scripts\AtlasUtilities\aes-js.js" />
+    <Content Include="Scripts\AtlasUtilities\AtlasDocument.js" />
+    <Content Include="Scripts\AtlasUtilities\AtlasPaste.js" />
+    <Content Include="Scripts\AtlasUtilities\countrylist.js" />
+    <Content Include="Scripts\AtlasUtilities\FormControls.js" />
+    <Content Include="Scripts\AtlasUtilities\global.js" />
+    <Content Include="Scripts\Budget\BudgetImport.js" />
+    <Content Include="Scripts\Budget\jquery.min.js" />
+    <Content Include="Scripts\Budget\v2\Budgetv2.js" />
+    <Content Include="Scripts\CheckCycle\CheckCyclev2.js" />
+    <Content Include="Scripts\CompanySettings\AddBank.js" />
+    <Content Include="Scripts\CompanySettings\AllAccountType.js" />
+    <Content Include="Scripts\CompanySettings\AllSourceCode.js" />
+    <Content Include="Scripts\CompanySettings\AllTransactionCode.js" />
+    <Content Include="Scripts\CompanySettings\CompanyCreation.js" />
+    <Content Include="Scripts\CompanySettings\AddUsers.js" />
+    <Content Include="Scripts\CompanySettings\ForgetPassword.js" />
+    <Content Include="Scripts\CompanySettings\Groups.js" />
+    <Content Include="Scripts\CompanySettings\NewPassword.js" />
+    <Content Include="Scripts\CompanySettings\TransactionCodeValue.js" />
+    <Content Include="Scripts\CompanySettings\Users.js" />
+    <Content Include="Scripts\CRW\CRWList.js" />
+    <Content Include="Scripts\CRW\CRWv2.js" />
+    <Content Include="Scripts\CRW\screenfull.js" />
+    <Content Include="Scripts\jquery-1.8.2.js" />
+    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery.mask.min.js" />
+    <Content Include="Scripts\jquery.mobile-1.2.0.js" />
+    <Content Include="Scripts\jquery.mobile-1.2.0.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-2.2.0.debug.js" />
+    <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\kpdragsort.js" />
+    <Content Include="Scripts\Ledger\Adjustment.js" />
+    <Content Include="Scripts\Ledger\Audit.js" />
+    <Content Include="Scripts\Ledger\ClosePeriod.js" />
+    <Content Include="Scripts\Ledger\COA.js" />
+    <Content Include="Scripts\Ledger\COAWizard.js" />
+    <Content Include="Scripts\Ledger\DistributionChange.js" />
+    <Content Include="Scripts\Ledger\GLBudget.js" />
+    <Content Include="Scripts\Ledger\GLSetup.js" />
+    <Content Include="Scripts\Ledger\JE\AtlasJE.js" />
+    <Content Include="Scripts\Ledger\DEL_JournalEntry.js" />
+    <Content Include="Scripts\Ledger\ManualEntry.js" />
+    <Content Include="Scripts\Ledger\PostingHistory.js" />
+    <Content Include="Scripts\Ledger\Segments.js" />
+    <Content Include="Scripts\Ledger\TrailBalance.js" />
+    <Content Include="Scripts\Login\ForgotPassword.js" />
+    <Content Include="Scripts\Login\Login.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\MultiSelectDropDown\jquery.multiselect.css" />
+    <Content Include="Scripts\MultiSelectDropDown\jquery.multiselect.js" />
+    <Content Include="Scripts\notify.js" />
+    <Content Include="Scripts\papaparse.min.js" />
+    <Content Include="Scripts\Payroll\LoadPayroll.js" />
+    <Content Include="Scripts\Payroll\PayrollAudit.js" />
+    <Content Include="Scripts\Payroll\PayrollEdit.js" />
+    <Content Include="Scripts\Payroll\PayrollHistory.js" />
+    <Content Include="Scripts\Payroll\PayrollLoadClient.js" />
+    <Content Include="Scripts\Payroll\PayrollLogin.js" />
+    <Content Include="Scripts\Payroll\PayrollPreview.js" />
+    <Content Include="Scripts\Payroll\PayrollRCP.js" />
+    <Content Include="Scripts\Payroll\PayrollSession.js" />
+    <Content Include="Scripts\Payroll\Payrollsetup.js" />
+    <Content Include="Scripts\Payroll\Portal\PayrollPortal.js" />
+    <Content Include="Scripts\Payroll\RcpPrint.js" />
+    <Content Include="Scripts\Reports\DEL_APEditInvoiceReport.js" />
+    <Content Include="Scripts\Reports\BankRecReport.js" />
+    <Content Include="Scripts\Reports\CheckSummary.js" />
+    <Content Include="Scripts\Reports\POReports.js" />
+    <Content Include="Scripts\Reports\Reconciliation.js" />
+    <Content Include="Scripts\Reports\CheckRegister.js" />
+    <Content Include="Scripts\Reports\ReportEngine.js" />
+    <Content Include="Scripts\Reports\ReportsBatch.js" />
+    <Content Include="Scripts\Reports\ReportSetUp.js" />
+    <Content Include="Scripts\Reports\Variance.js" />
+    <Content Include="Scripts\Reports\CostReport.js" />
+    <Content Include="Scripts\Reports\PayrollPostReport.js" />
+    <Content Include="Scripts\Reports\PayrollEditReport.js" />
+    <Content Include="Scripts\Reports\CheckPrint.js" />
+    <Content Include="Scripts\Reports\COAListing.js" />
+    <Content Include="Scripts\Reports\EditInvoiceReport.js" />
+    <Content Include="Scripts\Reports\DEL_InvoiceReportlist.js" />
+    <Content Include="Scripts\Reports\JEAuditReport.js" />
+    <Content Include="Scripts\Reports\LedgerListReport.js" />
+    <Content Include="Scripts\Reports\PettyCashReport.js" />
+    <Content Include="Scripts\Reports\DEL_POListing.js" />
+    <Content Include="Scripts\Reports\ReportList.js" />
+    <Content Include="Scripts\Reports\DEL_ReportPostInvoice.js" />
+    <Content Include="Scripts\Reports\Reports.js" />
+    <Content Include="Scripts\Reports\ReportsCRWList.js" />
+    <Content Include="Scripts\Reports\ReportTrialBalance.js" />
+    <Content Include="Scripts\Reports\VendorMailings.js" />
+    <Content Include="Scripts\Reports\VendorReports.js" />
+    <Content Include="Scripts\timeout-dialog.js" />
+    <Content Include="Scripts\UserProfile\AP.js" />
+    <Content Include="Scripts\UserProfile\Budget.js" />
+    <Content Include="Scripts\UserProfile\Ledger.js" />
+    <Content Include="Scripts\UserProfile\MyDefaults.js" />
+    <Content Include="Scripts\UserProfile\Reports.js" />
+    <Content Include="Scripts\utility.js" />
+    <Content Include="Scripts\utilityAdmin.js" />
+    <Content Include="Scripts\Validation\APValidation.js" />
+    <Content Include="Scripts\Validation\jquery.mask.min.js" />
+    <Content Include="Scripts\Validation\Validation.js" />
+    <Content Include="Views\HtmlPage1.html" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Images\accent.png" />
+    <Content Include="Images\bullet.png" />
+    <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\orderedList0.png" />
+    <Content Include="Images\orderedList1.png" />
+    <Content Include="Images\orderedList2.png" />
+    <Content Include="Images\orderedList3.png" />
+    <Content Include="Images\orderedList4.png" />
+    <Content Include="Images\orderedList5.png" />
+    <Content Include="Images\orderedList6.png" />
+    <Content Include="Images\orderedList7.png" />
+    <Content Include="Images\orderedList8.png" />
+    <Content Include="Images\orderedList9.png" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Home\LogIn.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\Setting\Company.cshtml" />
+    <Content Include="Views\Setting\ManageUsers.cshtml" />
+    <Content Include="Views\Setting\Groups.cshtml" />
+    <Content Include="Views\Setting\Users.cshtml" />
+    <Content Include="Views\Home\ForgotPassword.cshtml" />
+    <Content Include="Views\Budget\DEL_Import.cshtml" />
+    <Content Include="Views\Setting\AddBanks.cshtml" />
+    <Content Include="Views\Setting\Banks.cshtml" />
+    <Content Include="Views\Setting\codes.cshtml" />
+    <Content Include="Views\Setting\ManageUser.cshtml" />
+    <Content Include="Views\Setting\ManageUsers - Copy.cshtml" />
+    <Content Include="Views\AdminEMS\Login.cshtml" />
+    <Content Include="Views\AdminEMS\SegmentSetup.cshtml" />
+    <Content Include="Views\AdminEMS\SetupProduction.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\AdminEMS\AdminPayroll.cshtml" />
+    <Content Include="Views\Payroll\LoadPayroll.cshtml" />
+    <Content Include="Views\Payroll\PayrollAudit.cshtml" />
+    <Content Include="Views\Payroll\PayrollRCP.cshtml" />
+    <Content Include="Views\Payroll\PayrollSetup.cshtml" />
+    <Content Include="Views\Payroll\PayrollHistory.cshtml" />
+    <Content Include="Views\Payroll\PayrollEdit.cshtml" />
+    <Content Include="Views\Payroll\RcpPrint.cshtml" />
+    <Content Include="Views\AdminEMS\AddUsers.cshtml" />
+    <Content Include="Views\AdminEMS\AddGroup.cshtml" />
+    <Content Include="Views\AdminEMS\Users.cshtml" />
+    <Content Include="Views\Ledger\Adjustments.cshtml" />
+    <Content Include="Views\Ledger\ClosePeriod.cshtml" />
+    <Content Include="Views\Ledger\COA.cshtml" />
+    <Content Include="Views\Ledger\GLSetup.cshtml" />
+    <Content Include="Views\Ledger\DEL_JournalEntries.cshtml" />
+    <Content Include="Views\Ledger\LedgerList.cshtml" />
+    <Content Include="Views\Ledger\Segments.cshtml" />
+    <Content Include="Views\Ledger\TrailBalance.cshtml" />
+    <Content Include="Views\Payroll\PayrollLogin.cshtml" />
+    <Content Include="Views\CRW\CRWList.cshtml" />
+    <Content Include="Views\AccountPayable\AccountPayable.cshtml" />
+    <Content Include="Views\AccountPayable\AddInvoice.cshtml" />
+    <Content Include="Views\AccountPayable\AddPurchaseOrder.cshtml" />
+    <Content Include="Views\AccountPayable\CheckCycle.cshtml" />
+    <Content Include="Views\AccountPayable\EditPO.cshtml" />
+    <Content Include="Views\AccountPayable\PendingInvoice.cshtml" />
+    <Content Include="Views\AccountPayable\PostInvoice.cshtml" />
+    <Content Include="Views\AccountPayable\PurchaseOrder.cshtml" />
+    <Content Include="Views\AccountPayable\Vendors.cshtml" />
+    <Content Include="Views\Reports\COAListing.cshtml" />
+    <Content Include="Views\Reports\DEL_CostReport.cshtml" />
+    <Content Include="Views\Reports\DEL_CRWListReport.cshtml" />
+    <Content Include="Views\Reports\DEL_Reports.cshtml" />
+    <Content Include="Views\UserProfile\AP.cshtml" />
+    <Content Include="Views\UserProfile\BUDGET.cshtml" />
+    <Content Include="Views\UserProfile\MyDefaults.cshtml" />
+    <Content Include="Views\UserProfile\MYLeddger.cshtml" />
+    <Content Include="Views\UserProfile\REPORTS.cshtml" />
+    <Content Include="Views\Payroll\PayrollPreview.cshtml" />
+    <Content Include="Views\AccountPayable\EditInvoice.cshtml" />
+    <Content Include="Views\AccountPayable\PaymentHistory.cshtml" />
+    <Content Include="Views\AccountPayable\DEL_PettyCash.cshtml" />
+    <Content Include="Views\AccountPayable\CheckResult.cshtml" />
+    <Content Include="Views\AccountPayable\PrintCheck.cshtml" />
+    <Content Include="Views\AccountPayable\CheckRegister.cshtml" />
+    <Content Include="Views\AccountPayable\PaymentFilter.cshtml" />
+    <Content Include="Views\Shared\_PayrollLoginLayout .cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\AccountPayable\Void.cshtml" />
+    <Content Include="Views\AccountPayable\Reconciliation.cshtml" />
+    <Content Include="Views\Reports\DEL_APInvioceEdit.cshtml" />
+    <Content Include="Views\Reports\APInvoiceReports.cshtml" />
+    <Content Include="Views\Reports\DEL_EditInvoiceReport.cshtml" />
+    <Content Include="Views\Reports\JEAuditReport.cshtml" />
+    <Content Include="Views\Reports\DEL_POListing.cshtml" />
+    <Content Include="Views\Reports\PettyCash.cshtml" />
+    <Content Include="Views\Reports\DEL_ReportAPInvoice.cshtml" />
+    <Content Include="Views\Reports\DEL_ReportLedgrList.cshtml" />
+    <Content Include="Views\Reports\DEL_ReportList.cshtml" />
+    <Content Include="Views\Reports\Reportsledgers.cshtml" />
+    <Content Include="Views\Reports\ReportTrailBalance.cshtml" />
+    <Content Include="Views\Reports\CheckPrint.cshtml" />
+    <Content Include="Views\Reports\PayEditReport.cshtml" />
+    <Content Include="Views\Reports\CostReportSheet.cshtml" />
+    <Content Include="Views\Reports\CheckRegister.cshtml" />
+    <Content Include="Views\Reports\PayPostReport.cshtml" />
+    <Content Include="Views\Reports\VarianceReport.cshtml" />
+    <Content Include="Views\Reports\POReports.cshtml" />
+    <Content Include="Views\Reports\SetUp.cshtml" />
+    <Content Include="Views\Reports\VendorReports.cshtml" />
+    <Content Include="Views\Reports\BankRecon.cshtml" />
+    <Content Include="Views\AccountPayable\Custodians.cshtml" />
+    <Content Include="Views\AccountPayable\EnvelopeAudit.cshtml" />
+    <Content Include="Views\AccountPayable\DEL_EnvelopesEdit.cshtml" />
+    <Content Include="Views\AccountPayable\PCEnvelopes.cshtml" />
+    <Content Include="Views\AccountPayable\Recipients.cshtml" />
+    <Content Include="Views\AdminEMS\CheckSetting.cshtml" />
+    <Content Include="Views\Ledger\JEAudit.cshtml" />
+    <Content Include="Views\Ledger\JEDistributionChange.cshtml" />
+    <Content Include="Views\Ledger\JEManualEntry.cshtml" />
+    <Content Include="Views\Ledger\JEPostingHistory.cshtml" />
+    <Content Include="Views\Setting\ForGetPassword.cshtml" />
+    <Content Include="Views\Setting\NewPassword.cshtml" />
+    <Content Include="Views\Shared\_LayoutLoginAdmin.cshtml" />
+    <Content Include="Views\Reports\CheckRegisterSummary.cshtml" />
+    <Content Include="Views\Reports\BankReconciliation .cshtml" />
+    <Content Include="Views\Reports\CustomBible.cshtml" />
+    <Content Include="Views\AdminEMS\TimeZone.cshtml" />
+    <Content Include="Views\Reports\Reconciliation.cshtml" />
+    <Content Include="Views\AccountPayable\PostedUnpaidInvoices.cshtml" />
+    <Content Include="Views\Budget\Budgetv2.cshtml" />
+    <Content Include="Views\Budget\DEL_UploadBudget.cshtml" />
+    <Content Include="Views\CRW\CRWv2.cshtml" />
+    <Content Include="Views\Shared\_LayoutBlank.cshtml" />
+    <Content Include="Views\AccountPayable\VoidUnissued.cshtml" />
+    <Content Include="Views\AdminEMS\ComingSoon.cshtml" />
+    <Content Include="Views\AdminEMS\AdminToolsLedgerJournal.cshtml" />
+    <Content Include="Views\Shared\_LayoutCoreUIAdminBlank.cshtml" />
+    <Content Include="Views\Shared\_LayoutCoreUIAdmin.cshtml" />
+    <Content Include="Views\Shared\_LayoutComingSoon.cshtml" />
+    <Content Include="Views\Shared\_LayoutCoreUIAdminLogin.cshtml" />
+    <Content Include="Views\Vendor\TaxYear.cshtml" />
+    <Content Include="Views\Vendor\Worksheet.cshtml" />
+    <Content Include="Views\Shared\_LayoutReports.cshtml" />
+    <Content Include="Views\Reports\BankReconciliationReport.cshtml" />
+    <Content Include="Views\AccountPayable\POSPay.cshtml" />
+    <Content Include="Views\AccountPayable\CheckCyclev2.cshtml" />
+    <Content Include="Views\AccountPayable\POSPay.cshtml" />
+    <Content Include="Views\Shared\_LayoutEmpty.cshtml" />
+    <Content Include="Views\CRW\CRWv2Main.cshtml" />
+    <Content Include="Views\AccountPayable\AtlasInvoice.cshtml" />
+    <Content Include="Views\Shared\_LayoutLTE.cshtml" />
+    <Content Include="Views\Reports\ReportsBatch.cshtml" />
+    <Content Include="Views\Payroll\PayrollPortal.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="BankingPDF\BankingPDF\" />
+    <Folder Include="bin\" />
+    <Folder Include="CheckPDF\BankingPDF\" />
+    <Folder Include="CheckPDF\CheckPDF\" />
+    <Folder Include="CheckRegisterPDF\CheckRegisterPDF\" />
+    <Folder Include="Content\libs\DataTables\plug-ins\" />
+    <Folder Include="CostPDF\CostPDF\" />
+    <Folder Include="CostPDF\PayrollPDF\" />
+    <Folder Include="Documents\" />
+    <Folder Include="PayrollPDF\PayrollPDF\" />
+    <Folder Include="Payroll\" />
+    <Folder Include="Reports\BankingPDF\BankingPDF\" />
+    <Folder Include="Reports\CheckRegisterPDF\CheckRegisterPDF\" />
+    <Folder Include="Reports\COA\COA\" />
+    <Folder Include="Reports\CostPDF\COA\" />
+    <Folder Include="Reports\CostPDF\CostPDF\" />
+    <Folder Include="Reports\InvoiceReports\" />
+    <Folder Include="Reports\JournalEntryReport\" />
+    <Folder Include="Reports\LedgerBible\" />
+    <Folder Include="Reports\PayrollPDF\PayrollPDF\" />
+    <Folder Include="Reports\PettyCashReport\" />
+    <Folder Include="Reports\POListing\" />
+    <Folder Include="Reports\Reconciliation\BankingPDF\" />
+    <Folder Include="Reports\TrialBalance\" />
+    <Folder Include="Reports\Variance\CostPDF\" />
+    <Folder Include="Reports\VendorListing\VendorListing\" />
+    <Folder Include="Reports\Vendor\Vendor\" />
+    <Folder Include="Views\AccountPayable\Banking\" />
+    <Folder Include="Views\Accounts\" />
+    <Folder Include="Views\Account\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EMS.Business\EMS.Business.csproj">
+      <Project>{52254356-254c-4848-bfa0-2fa0b723cf37}</Project>
+      <Name>EMS.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EMS.Data\EMS.Data.csproj">
+      <Project>{68fde3fc-647c-4ea7-9735-a906782591c2}</Project>
+      <Name>EMS.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EMS.Entity\EMS.Entity.csproj">
+      <Project>{6b7a6190-54d0-4fb0-bc72-eb262455df21}</Project>
+      <Name>EMS.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3042</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44300/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

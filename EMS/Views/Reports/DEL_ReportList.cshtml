@@ -1,0 +1,232 @@
+﻿@*@{
+        ViewBag.Title = "Ledger>>JournalEntries";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }*@
+
+@section BreadCrumb{
+    <section class="content-header">
+        <div class="form-group">
+
+            <label>Report Group</label>
+            <select id="txtReportGroupList" onchange="javascript:OnChangeReport();" class="form-control  pull-left" style="margin-left:13px !important;">
+                <option>Ledger Inquiry </option>
+                <option>Bible</option>
+                <option>Check Print Report</option>
+                <option>PO Listing</option>
+                <option>JE Audit</option>
+                <option>AP Invoice Edit/Audit</option>
+                <option>Check Register</option>
+                <option>Petty Cash Audit</option>
+                <option>Payroll Edit</option>
+                <option>Cost Report</option>
+                <option>Trial Balance</option>
+            </select>
+            @*<label style="margin-left: 10px;">Report</label>
+            <input type="text" id="txtReportSubList" class="form-control  pull-left">*@
+        </div><!-- /.form-group -->
+
+
+        @*<div style="width: 25% !important;float: left;">
+            <ol class="breadcrumb floatLeft">
+                <li>Select a Report</li>
+            </ol>
+
+        </div>*@
+        <div class="midMenu">
+            <ul></ul>
+        </div>
+
+
+        @*<a href="#" class="btn btn-default floatRight  pull-right marginLeft10" onclick="javascript: ShowhideFilter();" id="btnApply">Print Report</a>*@
+        <a href="#" class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" onclick="javascript: ShowhideFilter();" id="btnApply">Preview</a>
+        @*        funAuditTabSave('Saved');*@
+        <div class="clearfix"></div>
+        @*<div class="form-group">
+
+            <label>Report Group</label>
+            <select id="txtReportGroupList" onchange="javascript:OnChangeReport();" class="form-control  pull-left" style="margin-left:13px !important;" >
+                <option>Ledger Inquiry </option><option>Bible</option><option>Check Print Report</option><option>PO Listing</option><option>JE Audit</option>
+                <option>AP Invoice Edit/Audit</option><option>Check Register</option><option>Petty Cash Audit</option><option>Payroll Edit</option><option>Cost Report</option><option>Trial Balance</option>
+                </select>
+                @*<label style="margin-left: 10px;">Report</label>
+                <input type="text" id="txtReportSubList" class="form-control  pull-left">*@
+</div>*@<!-- /.form-group -->
+    </section>
+}
+ 
+@section Body{
+    <form>
+        <section class="content">
+            <div class="row fontAriel">
+                <section class="content">
+                    <div class="row fontAriel">
+                        <div class="col-md-12">
+                           
+                                <div id="JEAuditdiv" style="display:none;">
+                                    <div style="width: 25% !important;float: left;">
+                                        <ol class="breadcrumb floatLeft">
+                                            <li>Report Criteria</li>
+                                        </ol>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Report Date</label>
+                                        <input type="text" id="txtApInvsDate" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Projects(s)</label>
+                                        <input type="text" id="txtApInvsProject" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Currency Code(s)</label>
+                                        <input type="text" id="txtApInvsCurrncy" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;"> Project Status</label>
+                                        <input type="text" id="txtApInvsProjStatus" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Created Date From</label>
+                                        <input type="text" id="txtApInvsCreatedFrom" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Created Date To</label>
+                                        <input type="text" id="txtApInvsCreatedTo" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Transaction No. From</label>
+                                        <input type="text" id="txtInvoiceTransFrom" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Transaction No. To</label>
+                                        <input type="text" id="txtInvoiceTransTo" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Batch</label>
+                                        <input type="text" id="txtInvoiceBatch" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">User Name</label>
+                                        <input type="text" id="txtInvoiceUserName" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Start Screen</label>
+                                        <input type="text" id="txtModuleMyDefName" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Include Location Sub-Total</label>
+                                        <input type="checkbox" id="txtModuleMyDefName" class="pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Include Episode Sub-Total</label>
+                                        <input type="checkbox" id="txtModuleMyDefName" class="pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                </div>
+
+                                @**@
+                                <div id="APInvoiceEditdiv" style="display:none;">
+                                    <div style="width: 25% !important;float: left;">
+                                        <ol class="breadcrumb floatLeft">
+                                            <li>Report Criteria</li>
+                                        </ol>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Report Date</label>
+                                        <input type="text" id="txtApInvsDate" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Projects(s)</label>
+                                        <input type="text" id="txtApInvsProject" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Currency Code(s)</label>
+                                        <input type="text" id="txtApInvsCurrncy" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;"> Project Status</label>
+                                        <input type="text" id="txtApInvsProjStatus" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Created Date From</label>
+                                        <input type="text" id="txtApInvsCreatedFrom" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Created Date To</label>
+                                        <input type="text" id="txtApInvsCreatedTo" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Transaction No. From</label>
+                                        <input type="text" id="txtInvoiceTransFrom" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Transaction No. To</label>
+                                        <input type="text" id="txtInvoiceTransTo" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Batch</label>
+                                        <input type="text" id="txtInvoiceBatch" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">User Name</label>
+                                        <input type="text" id="txtInvoiceUserName" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Start Screen</label>
+                                        <input type="text" id="txtModuleMyDefName" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Include Location Sub-Total</label>
+                                        <input type="checkbox" id="txtModuleMyDefName" class="pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Include Episode Sub-Total</label>
+                                        <input type="checkbox" id="txtModuleMyDefName" class="pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+
+                    </div>
+                </section>
+
+            </div>
+        </section>
+    </form>
+
+}
+@section Javascript{
+<script src="~/Scripts/Reports/ReportList.js"></script>
+}

@@ -1,0 +1,26 @@
+﻿CREATE TABLE [dbo].[BudgetDetailFinal] (
+  [BudgetDetailID] [int] IDENTITY,
+  [AccountID] [nvarchar](50) NULL,
+  [AggPercent] [nvarchar](200) NULL,
+  [DLocation] [nvarchar](200) NULL,
+  [DetailSet] [nvarchar](200) NULL,
+  [Description] [nvarchar](500) NULL,
+  [Amount] [nvarchar](200) NULL,
+  [Unit] [nvarchar](200) NULL,
+  [X] [nvarchar](200) NULL,
+  [Unit2] [nvarchar](200) NULL,
+  [Currency] [nvarchar](200) NULL,
+  [Rate] [nvarchar](200) NULL,
+  [Unit3] [nvarchar](200) NULL,
+  [Unit4] [nvarchar](200) NULL,
+  [SubTotal] [nvarchar](200) NULL,
+  [HiddenDfourthMlt] [nvarchar](200) NULL,
+  [BudgetFileID] [int] NULL,
+  [BudgetID] [int] NULL,
+  [Createddate] [datetime] NULL,
+  [ModifiedDate] [datetime] NULL,
+  [CreatedBy] [int] NULL,
+  [ModifiedBy] [int] NULL,
+  [DetailNumber] [int] NULL
+)
+GO

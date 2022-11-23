@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "LogIn";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+@section Javascript
+{
+<link rel="stylesheet" href="~/Content/AtlasUtility.css" />
+<link rel="stylesheet" href="~/Content/css/font-awesome.min.css" />
+<script src="~/Scripts/Login/Login.js"></script>
+<script src="~/Scripts/AtlasUtilities.js"></script>
+<script src="~/Scripts/AccountsPayable/PurchaseOrders/AtlasPurchaseOrders.js"></script>
+}
+
+@section body
+{
+    <div id="login">
+    <div class="container">
+        <div class="wrapper">
+            <h1>
+                <a href="#" class="appbrand"><img src="~/Content/images/logo.png" alt="logo" style="width:60%;"></a><span class=""> <i></i></span><br>
+                <span class="displayBlock">Sign Into Your Account</span>
+            </h1>
+            <!-- Box -->
+            <div class="widget widget-heading-simple widget-body-gray">
+
+                <div class="widget-body paddingTop20">
+
+                    <!-- Form -->
+                    <div id="loginForm">
+                        <input type="text" name="Email" id="fake_txtEmail" class="hidden" autocomplete="off" style="display: none;">
+                        <input type="text" name="Email" id="txtEmail" class="inputLogin" placeholder="Email address" autocomplete="off" @*onkeydown="return disableCtrlKeyCombination(event);*@">
+                        <input type="password" name="password" id="password_fake" class="hidden" autocomplete="off" style="display: none;">
+                        <input type="password" name="password" id="txtPassword" class="inputLogin" placeholder="Your Password">
+                        <a class="blueText pull-left" href="/Home/ForgotPassword">forgot your password?</a>
+                        <div class="clearfix"></div>
+                        <input type="checkbox" id="chkRemember" /> Remember Me
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="loginForm-ddl">
+                        <select id="ddlProductionList" class="form-control width145 SearchProductionList" style=" margin-top:5px; display:none;"><option selected value="0">Select</option></select>
+                        <div class="" style="padding:20px 0px;">
+                            <div class="center" id="DvLoginUSer">
+                                <a class="btn btn-success displayBlock" id="btnLogin">
+                                    <i class="fa fa-circle-o-notch fa-spin hidden " id="btnLogin-loading"></i>
+                                <b>SIGN IN</b></a>
+                            </div>
+                        </div>
+                        <div id="DvProductionList" style="display:none; padding:10px;">
+                            <a class="btn btn-success displayBlock " id="btnGo">
+                                <i class="fa fa-circle-o-notch fa-spin hidden " id="btnGo-loading"></i>
+                            <b>Go</b>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="dvBrowser" style="display:none;">
+                        <p>
+                            This system requires the use of Chrome and has features optimized for the Chrome browser. Please come back to this URL in a Chrome browser in order to login.
+                        </p>
+                    </div>
+                    <!-- // Form END -->
+
+                </div>
+               
+            </div>
+
+            <!-- // Box END -->
+        </div>
+    </div>
+
+</div>
+
+
+}

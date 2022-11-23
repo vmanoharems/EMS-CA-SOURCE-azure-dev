@@ -1,0 +1,444 @@
+﻿@{
+    ViewBag.Title = "Setting>>Company";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#">Setting <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#">Company <i class="fa fa-caret-right"></i></a></li>
+            <li class="active"><span id="spanBreadCum"></span> </li>
+        </ol>
+        @*<div class="midMenu">
+                <ul id="ulCompanyTab"></ul>
+                <ul>
+                    <li id="liAddCompany" class="marginRight10 liComDet"><a href="javascript:AddCompany();">+ Add New</a></li>
+                </ul>
+            </div>*@
+        <div id="DvMasking" class="pull-left">
+            <label style="width:auto !important; margin-left:7px;" id="lblMask"> CodeMasking :</label>
+            <span id="spnMaskingType"></span>
+        </div>
+        <div  class="floatRight paddingNone white_space col-lg-5 col-md-7 col-sm-12 col-xs-12">
+            <div class="midMenu">
+              
+                <ul>
+                    <li id="liAddCompany" class="marginRight10 liComDet"><a href="javascript:AddCompany();" style="color:#fff !important;">+ Add New</a></li>
+                </ul>
+            </div>
+            <div id="dvCompany">
+                <select class="form-control width135 floatLeft marginRight10" onchange="javascript: GetCompanyDetailbyID();" id="ddlCompany"></select>
+            </div>
+             <div class="col-xs-5 col-lg-4 pull-right">
+                <a class="btn btn-success " id="btnSaveCompany" href="#">Save</a>
+                <a class="btn btn-primary  marginRight10" href="javascript:Cancel();">Cancel</a>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+
+@section Body{
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <form>
+        <section class="content" id="dvCompanySection" hidden>
+            <div class="row fontAriel">
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Company Code</label>
+                        <input id="txtCompanyCode" maxlength="5" type="text" class="clsCode form-control input-required" onblur="javascript: checkMaking();"
+                               onkeypress="javascript: checkMaking();">
+                    </div>
+                    <div class="form-group">
+                        <label>Production Title</label>
+                        <input type="text" id="txtProTitle" maxlength="50" class="form-control input-required">
+                    </div>
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <input type="text" id="txtCompanyName" maxlength="50" class="form-control input-required">
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        @*<select id="ddlCountry" class="form-control ddl-required">
+                                <option selected="selected" value="0">Select Country</option>
+                                <option value="United States">United States</option>
+                            </select>*@
+                        <input type="text" id="txtCompanyCountry" autocomplete="off" class="form-control input-required CompanyCountryAutoFill">
+
+                        <input type="hidden" id="hdCompanyCountry" />
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" id="txtAddress1" maxlength="50" class="form-control input-required">
+                    </div>
+                    <div class="form-group">
+                        <label></label>
+                        <input type="text" id="txtAddress2" maxlength="50" class="form-control requirednot">
+                    </div>
+                    <div class="form-group">
+                        <label></label>
+                        <input type="text" id="txtAddress3" maxlength="50" class="form-control requirednot">
+                    </div>
+                    <div class="form-group">
+                        <label style="padding-top:0px;">City <br /><input type="text" id="txtCity" placeholder="City" maxlength="50" class="form-control width123 input-required"></label>
+                        <label style="padding-top: 0px; width:95px;" class="marginRight11">
+                            State <br /><input type="text" id="txtCompanyState" class="form-control width95 floatLeft input-required CompanyStateAutoFill marginRight10" onfocus="javascript: G_CountryStates($('#txtCompanyCountry'), $('#txtCompanyState'));">
+
+                            <input type="hidden" id="hdCompanyState" />
+                        </label><label style="padding-top: 0px; width:95px; ">
+                            Zip<br /> <input type="text" id="txtZip" maxlength="5" class="form-control width95 input-required zipCode">
+                        </label>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" id="txtPhone" class="form-control phone_us input-required">
+                    </div>
+                    <div class="form-group">
+                        <label>Attention</label>
+                        <input type="text" id="txtContactName" maxlength="50" class="form-control input-required">
+                    </div>
+
+
+                </div>
+                <!-- /.col -->
+                <div class="col-md-7">
+                    <fieldset>
+                        <legend>Precision (Decimals)</legend>
+                        <div class="col-md-5 paddingNone">
+                            <div class="form-group">
+                                <label>Entry</label>
+                                <input type="number" disabled="disabled" id="txtEntry" name="quantity" min="1" value="2" max="5" class="form-control select2 width90">
+                            </div><!-- /.form-group -->
+                            <div class="form-group">
+                                <label>Cost</label>
+                                <input type="number" disabled="disabled" id="txtCost" name="quantity" min="1" max="5" value="0" class="form-control select2 width90">
+                            </div><!-- /.form-group -->
+                        </div>
+                        <div class="col-md-7  paddingNone">
+                            <div class="form-group">
+                                <label>Format</label>
+                                <input type="text" id="txtFormat" class="form-control" disabled="disabled" value="$#, ###.##">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Currency</legend>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-md-6 paddingLeftNone">
+                                    <label>Accounting Currency</label>
+                                    <select id="ddlCurrency" class="form-control select2 width90">
+                                    </select>
+                                </div>
+                                @*<div class="col-md-6"><input type="checkbox" disabled="disabled" id="chkRealTime"> real-time Currency Conversion</div>*@
+                            </div><!-- /.form-group -->
+                        </div>
+                        <div class="col-md-12" style="visibility:hidden;"><p class=""><a href="javascript:ExRate();" class="blueText underLine">Manually Set Exchange rates</a></p></div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Report Label</label>
+                                <input type="text" id="txtLabel" value="'US Dollar'" class="form-control">
+                            </div><!-- /.form-group -->
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Payroll Clearing Accounts </legend>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-md-12 paddingLeftNone">
+                                    <label>Fringe</label>
+                                    <input type="text" id="txtFringe"  disabled="disabled" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12 paddingLeftNone">
+                                        <label>Labor	</label>
+                                        <input type="text" id="txtLabor"  disabled="disabled" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12 paddingLeftNone">
+                                            <label>Suspense</label>
+                                            <input type="text" id="txtSuspense"  disabled="disabled" class="form-control">
+                                        </div>
+
+                                    </div><!-- /.form-group -->
+                                </div>
+
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 col-lg-2">
+                    <p class="text-center"><a href="javascript:showDiv('default');" class="blueText underLine">Tax Related Information</a></p>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-6 col-lg-3">
+                    <div class="form-group hidden">
+                        <label class="width119">Fiscal Start Date</label>
+                        <!--<input type="text" class="form-control" >-->
+                        <div class="input-group">
+                            <!--id="datepicker" placeholder="DD/MM/YYYY"-->
+                            <input type="text" id="txtFiscalStart" class="form-control pull-right datepicker" placeholder="MM/DD/YYYY">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 col-lg-3">
+                    <div class="form-group">
+                        @*<label class="width119">Period Start</label>*@
+                        <select id="ddlPeriod" disabled class="width119 form-control marginRight10">
+                            <option selected value="Period Start">Period Start</option>
+                            @*<option value="Period End" selected="selected">Period End</option>*@
+                        </select>
+                        <!--<input type="text" class="form-control" >-->
+                        <div class="input-group">
+
+                            <!--id="datepicker" placeholder="DD/MM/YYYY"-->
+                            <input type="text" class="form-control pull-right datepicker" disabled id="txtPeriodStart" placeholder="MM/DD/YYYY">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-sm-5 col-xs-6 col-lg-2">
+                    <div class="form-group">
+                        <label class="width60 hidden">Period</label>
+                        <select class="form-control width95 hidden" id="ddlDefault">
+                            <option selected value="Weekly">Weekly</option>
+                            <option value="Biweekly">Biweekly</option>
+                            @*<option value="Monthly">Monthly</option>*@
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-sm-4 col-xs-6 col-lg-2" style="display:none;">
+                    <p><a href="javascript:GetStartingVal();" class="blueText underLine">Starting Values</a></p>
+                </div>
+                <!-- /.col -->
+            </div>
+        </section>
+        <!-- /.content -->
+        <div id="default" class="newhidden">
+            <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+                <div class="deleteNewIcon"><a href="javascript:hideDiv('default');">X</a></div>
+                <div class="heading2"><h4>Tax Setting For <span id="spanTaxInfoHead"></span></h4></div>
+                <div class="WhtBg">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Federal Tax Agency </label>
+                            <input type="text" id="txtFederalTaxAgency" class="form-control input-required TaxAgencyAutoFill" disabled value="IRS">
+                            <input type="hidden" id="hdFederalTaxAgency" />
+                        </div>
+                        <div class="form-group">
+                            <label>Federal Tax Form</label>
+                            <input type="text" id="txtFederal" class="form-control input-required TaxFormAutoFill" disabled value="1099">
+                            <input type="hidden" id="hdFederal" />
+                        </div>
+                        <div class="form-group">
+                            <label>Federal EIN</label>
+                            <input type="text" id="txtEIN" class="form-control input-required">
+                        </div>
+                        <div class="form-group" style="display:none;">
+                            <label>Company TCC #</label>
+                            <input type="text" disabled="disabled" value="1000" id="txtTCC" class="form-control requirednot">
+                        </div>
+                        <div class="form-group">
+                            <label>State Of Incorporation</label>
+
+                            <input type="text" id="txtIncorporation" class="form-control input-required StateAutoFill">
+                            <input type="hidden" id="hdState" />
+
+                            @*<select class="form-control ddl-required" id="ddlIncorporation">
+                                    <option value="0" selected="selected">Select State</option>
+                                    <option value="Alabama">Alabama</option>
+                                    <option value="Alaska">Alaska</option>
+                                    <option value="Arizona">Arizona</option>
+                                    <option value="Arkansas">Arkansas</option>
+                                    <option value="California">California</option>
+                                    <option value="Colorado">Colorado</option>
+                                    <option value="Connecticut">Connecticut</option>
+                                    <option value="Delaware">Delaware</option>
+                                    <option value="District of Columbia">District of Columbia</option>
+                                    <option value="Florida">Florida</option>
+                                    <option value="Georgia">Georgia</option>
+                                    <option value="Hawaii">Hawaii</option>
+                                    <option value="Idaho">Idaho</option>
+                                    <option value="Illinois">Illinois</option>
+                                    <option value="Indiana">Indiana</option>
+                                    <option value="Iowa">Iowa</option>
+                                    <option value="Kansas">Kansas</option>
+                                    <option value="Kentucky">Kentucky</option>
+                                    <option value="Louisiana">Louisiana</option>
+                                    <option value="Maine">Maine</option>
+                                    <option value="Maryland">Maryland</option>
+                                    <option value="Massachusetts">Massachusetts</option>
+                                    <option value="Michigan">Michigan</option>
+                                    <option value="Minnesota">Minnesota</option>
+                                    <option value="Mississippi">Mississippi</option>
+                                    <option value="Missouri">Missouri</option>
+                                    <option value="Montana">Montana</option>
+                                    <option value="Nebraska">Nebraska</option>
+                                    <option value="Nevada">Nevada</option>
+                                    <option value="New Hampshire">New Hampshire</option>
+                                    <option value="New Jersey">New Jersey</option>
+                                    <option value="New Mexico">New Mexico</option>
+                                    <option value="New York">New York</option>
+                                    <option value="North Carolina">North Carolina</option>
+                                    <option value="North Dakota">North Dakota</option>
+                                    <option value="Ohio">Ohio</option>
+                                    <option value="Oklahoma">Oklahoma</option>
+                                    <option value="Oregon">Oregon</option>
+                                    <option value="Pennsylvania">Pennsylvania</option>
+                                    <option value="Rhode Island">Rhode Island</option>
+                                    <option value="South Carolina">South Carolina</option>
+                                    <option value="South Dakota">South Dakota</option>
+                                    <option value="Tennessee">Tennessee</option>
+                                    <option value="Texas">Texas</option>
+                                    <option value="Utah">Utah</option>
+                                    <option value="Vermont">Vermont</option>
+                                    <option value="Virginia">Virginia</option>
+                                    <option value="Washington">Washington</option>
+                                    <option value="West Virginia">West Virginia</option>
+                                    <option value="Wisconsin">Wisconsin</option>
+                                    <option value="Wyoming">Wyoming</option>
+
+                                </select>*@
+                        </div>
+                        <div class="form-group">
+                            <label>State Tax Id</label>
+                            <input type="text" id="txtTaxID" class="form-control input-required">
+                        </div>
+                    </div>
+                    <!-- // Tabs END -->
+                </div>
+                <div class="darkGreyNew col-lg-12">
+                    <a href="javascript:ShowDiv('default');" id="btnSaveTaxInfo" class="btn btn-success floatLeft">Save</a>
+
+
+                    <a href="javascript:hideDiv('default');" id="btnCloseTaxInfo" class="btn btn-primary floatRight">Cancel</a>
+                </div>
+            </div>
+        </div>
+        <!--retailer Detail popup Start-->
+        <div id="addnew" class="newhidden">
+            <div class="popup col-md-6 col-lg-6 col-sm-6 col-xs-12 floatNone">
+                <div class="deleteNewIcon"><a href="javascript:hideDiv('addnew');">X</a></div>
+                <div class="heading2"><h4>Exchange Rates For <span id="spanExchangeRateHead"></span> (Native Currency USD)</h4></div>
+                <div class="WhtBg">
+
+                    <div class="col-md-12">
+                        @*<p><a href="#" class="blueText floatLeft">+ Add New Foreign Currency</a> <a href="#" class="btn btn-default floatRight margin-bottom">Download Current Rate</a></p>*@
+                        <div class="col-md-12">
+                            <table class="myTable">
+                                <thead>
+                                    <tr>
+                                        <th>Currency</th>
+                                        <th>Budget Exchang Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style='width: 25%;'><input id="txtCurrency" type="text" class="width90 form-control input-required"></td>
+                                        <td><input id="txtExchangeRate" type="text" class="form-control input-required two-decimal"> </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <table id="tblExcRange" class="myTable">
+                                @*<tr>
+                                        <td>CAD</td>
+                                        <td>0.75</td>
+                                    </tr>*@
+                            </table>
+                        </div>
+                    </div>
+                    <!-- // Tabs END -->
+                </div>
+                <div class="darkGreyNew col-lg-12">
+                    <a href="#" id="btnExchangeRate" class=" btn btn-success floatleft">Save</a>
+
+
+                    <a href="javascript:hideDiv('addnew');" class="btn btn-primary floatRight">Cancel</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="startValues" class="newhidden">
+            <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+                <div class="deleteNewIcon"><a href="javascript:hideDiv('startValues');">X</a></div>
+                <div class="heading2"><h4>Starting Values for <span id="spanStartingValueHead"></span></h4></div>
+                <div class="WhtBg">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>AP Transaction #</label>
+                                <input type="text" id="txtAP" class="form-control input-required NumberOnly">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+
+                            <div class="form-group">
+                                <label>PO #</label>
+                                <input type="text" id="txtPO" class="form-control input-required NumberOnly">
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="display:none;">
+
+                            <div class="form-group">
+                                <label>Invoice #</label>
+                                <input type="text" id="txtInvoice" class="form-control input-required">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // Tabs END -->
+                </div>
+                <div class="darkGreyNew col-lg-12">
+                    <a href="#" id="btnStartingValue" class="btn btn-success floatLeft">Save</a>
+
+
+                    <a href="javascript:hideDiv('startValues');" id="btnCloseStartingValue" class="btn btn-primary floatRight">Cancel</a>
+                </div>
+            </div>
+        </div>     
+
+        <div id="fade" class="black_overlay"></div>
+    </form>
+}
+
+@section Javascript{
+
+    <script src="~/Scripts/CompanySettings/CompanyCreation.js"></script>
+
+    <script src="~/Scripts/Validation/Validation.js"></script>
+    <script src="~/Scripts/Validation/jquery.mask.min.js"></script>
+
+    @*<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>*@
+<link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+    <style>
+
+        .RedColor {
+            color: red;
+        }
+
+        .BlueColor {
+            color: #2A7BC1;
+        }
+
+    </style>
+}

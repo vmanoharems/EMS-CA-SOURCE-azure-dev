@@ -1,0 +1,144 @@
+﻿@{
+    ViewBag.Title = "Payroll>>RCP Print";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Payroll <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#"> Remote check printing <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Load # 2</li>
+        </ol>
+        <div style="width:70%;" class="pull-right paddingNone white_space col-lg-7 col-md-9 col-sm-12 col-xs-12">
+            <div style="float:left; width:35%;"> Comapny : <span id="spanCompany"></span> </div>
+            <div style="float:left;">
+                Payroll for :
+                <select class="form-control width190  marginRight10 marginLeft10 marginBottomNone" style="float:right;" onchange="javascript: FillCheckInfo();" id="ddlClient"></select>
+            </div>
+        </div>
+        <!--<a  href="#" class="btn btn-default floatRight">Config</a>-->
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+@section Body{
+    <section class="content">
+
+        <div class="row fontAriel">
+            <div class="col-xs-12">
+                <div class="pull-right"><a href="#" class="paddingRight8"><i class="fa fa-search fontSize18"></i></a> <a href="#" class="paddingRight8"><i class="fa fa-print fontSize18"></i></a> <a href="#" class="paddingRight8"><i class="fa fa-download  fontSize18"></i></a></div>
+                <div class="clearfix"></div>
+                <!--<table class="table table-hover table-responsive">-->
+                <div class="a4Div zoom">
+                    <div class="firstDiv">
+                        <div class="greyBg text-center">Remote Check Printing @*Load # 2, ref # 006, 14 Checks*@</div>
+                        <div>
+                            <div class="padl10 fontSize12 "><b>Name:</b> <span id="spanClientName"></span></div>
+                            <div class="padl10 fontSize12"><b>Check #:</b> <span id="spanCheckNo"></span></div>
+                       
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-responsive fontsize21">
+                                <thead>
+                                    <tr>
+                                        <th>Account</th>
+                                        <th>Description</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblCheck"></tbody>
+                            </table>
+                            <table style="width:100%;">
+                                <tr>
+                                    <td colspan="2" style="border-right: medium none;float:left;"><b>Gross Pay: <span id="spanGross"></span></b></td>
+                                    <td style="float:right;"><b>Net Pay: <span id="spanNet"></span></b></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!--frist div-->
+                        <div class="dashBoder"></div>
+                    </div>
+                    <div class="secondDiv">
+                        <div class="greyLightBg">
+                            <div class="checkText width500">
+                                <div class="checkImg">
+                                    <div class="pull-left">
+                                        <p>Your Name</p>
+                                        <p>Address: 404 South Tukoganj</p>
+                                    </div>
+                                    <div class="pull-right">
+                                        <p>1020</p>
+                                        <div class="pull-right"><span class="pull-left width30">Date:</span> <input type="text" class="form-control boderNoneCheck pull-left width119"></div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <label class="pull-left width60">Pay</label> <input type="text" class="form-control boderNoneCheck pull-left">
+                                    <div class="pull-right"><span class="pull-left width30">$</span> <input type="text" class="form-control pull-left width119"></div>
+                                    <div class="clearfix"></div>
+                                    <input type="text" class="form-control boderNoneCheck pull-left width100"><div class="clearfix"></div>
+                                    <div class="pull-left">
+                                        <span class="pull-left width119">
+                                            Bank Name
+                                            <br>bank Of India
+                                        </span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="boderTop">
+                                        <div class="pull-left SpecialElite">|:123456789|:</div> <div class="pull-left SpecialElite">|:000000000|:</div> <div class="pull-left SpecialElite">1020</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="dashBoder"></div>
+                    </div>
+                    <div class="thirdDiv">
+                        <div class="greyLightBg">
+                            <div class="checkText width500">
+                                <div class="">
+                                    <div class="pull-left">
+                                        <p>Your Name</p>
+                                        <p>Address: 404 South Tukoganj</p>
+                                    </div>
+                                    <div class="pull-right">
+                                        <p>1020</p>
+                                        <div class="pull-right"><span class="pull-left width30">Date:</span> <input type="text" class="form-control boderNoneCheck pull-left width119"></div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <label class="pull-left width60">Pay</label> <input type="text" class="form-control boderNoneCheck pull-left">
+                                    <div class="pull-right"><span class="pull-left width30">$</span> <input type="text" class="form-control pull-left width119"></div>
+                                    <div class="clearfix"></div>
+                                    <input type="text" class="form-control boderNoneCheck pull-left width100"><div class="clearfix"></div>
+                                    <div class="pull-left">
+                                        <span class="pull-left width119">
+                                            Bank Name
+                                            <br>bank Of India
+                                        </span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="boderTop">
+                                        <div class="pull-left SpecialElite">|:123456789|:</div> <div class="pull-left SpecialElite">|:000000000|:</div> <div class="pull-left SpecialElite">1020</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+             
+            </div>
+
+        </div>
+    </section>
+}
+
+@section Javascript{
+<script src="~/Scripts/Payroll/PayrollSession.js"></script>
+    <script src="~/Scripts/Payroll/RcpPrint.js"></script>
+}
+
+

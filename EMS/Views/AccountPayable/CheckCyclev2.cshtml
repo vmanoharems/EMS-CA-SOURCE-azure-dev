@@ -1,0 +1,392 @@
+﻿
+@{
+    ViewBag.Title = "AccountsPayable>>Check Cycle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#"> Banking <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Check Cycle </li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+                <li class="active"><a href="javascript:void(0);" onclick="AtlasNavigation.toModule('Check Cycle'); return false;">Print Checks</a></li>
+                <li class=""><a href="Void">VOID</a></li>
+                <li class="hidden"><a href="VoidUnissued">VOID Unissued</a></li>
+                <li class=""><a href="Reconciliation">Bank Reconciliation</a></li>
+            </ul>
+        </div>
+
+        <button tabindex="8" id="btnSearch" class="btn btn-default floatRight marginBottom5 btn-margin-bottom" onclick="AtlasCheckCycle.CheckCycleSearch();" disabled>Start </button>
+
+        <div id="divPaymentFilter" class="atlas-hide">
+        
+
+          
+
+
+            <div class="btn-group  floatRight margin-right">
+                <button type="button" class="btn toggle-button " onclick="AtlasCheckCycle.ValidateChcekCyclePrint();" id="btnOperation">Print Checks</button>
+                <button type="button" data-toggle="dropdown" id="ddlOption" class="btn btn-primary dropdown-toggle toggle-button-item"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#" onclick="AtlasCheckCycle.GetCheckCycle('save');">Save</a></li>
+                    <li><a href="#" onclick="AtlasCheckCycle.ReportPaymentPreview();">Run Preview Report</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" onclick="AtlasCheckCycle.ValidateChcekCyclePrint();">Print Checks</a></li>
+                    <li><a href="#" onclick="AtlasCheckCycle.ShowClose();">Close</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" onclick="AtlasCheckCycle.ConfirmCancel();">Cancel Check Run</a></li>
+                    
+                </ul>
+            </div>
+
+
+            <select id="ddlType" class="form-control margin-right floatRight marb0">
+                <option value="Check">Check</option>
+                <option value="Manual Check">Manual Check</option>
+                <option value="Wire Check">Wire Check</option>
+                <option value="ACH">ACH</option>
+            </select>
+
+
+
+            <input type="text" id="txtPaymentDate" placeholder="MM/DD/YYYY" tabindex="0" class="floatRight margin-right datepicker form-control" style="width:70px;"/>
+            <input type="text" id="txtInitialCheck" placeholder="Check Number" tabindex="0" class="floatRight margin-right form-control" style="width:85px;" onchange="AtlasCheckCycle.CheckNumberRange()"/>
+            <span id="tabToolbar" class="btn btn-default floatRight btn-margin-bottom margin-right">Filter</span>
+            <div class="col-md-12" id="divTool">
+                <div class="col-xs-12">
+                    <br />
+                    <div class="col-md-2">
+                        <span>Invoice Amount From</span>
+                        <input type="text" id="txtInvAmntFrom" tabindex="1" class="form-control" />
+                    </div>
+                    <div class="col-md-2">
+                        <span>Invoice Date From</span>
+                        <input type="text" id="txtInvoiceDateFrom" tabindex="3" class="datepicker form-control" />
+                    </div>
+                    <div class="col-md-2">
+                        <span>Vendor</span>
+                        <input type="text" id="txtVendorFilter" tabindex="5" class="detectTab form-control VendorCode" />
+
+                    </div>
+                    <div class="col-md-1">
+                        <span>Period</span><br />
+                        <select style="width: 160px" tabindex="6" multiple="multiple" class="form-control marb0" id="ddlPeriodFilter">
+                            <option value="Current">Current Period</option>
+                            <option value="Future">Future Period</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="display:none;">
+                        <span>Company</span><br />
+                        <select style="width: 160px !important;margin-left: 12px;" id="ddlCompany" multiple="multiple" class="FilterCompany"></select>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group FilterLocationGroup" id="LocationGroup">
+                            <span id="LocationLabel">Locaton(s)</span><br />
+                            <div style="width: 160px !important; float: left;  margin-bottom:5px;">
+                                <select id="ddlLocation" multiple="multiple" style="display:none;" class="FilterLocation"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group FilterSetGroup" id="SetGroup" style="display:none;">
+                            <span id="SetLabel" class="FilterSetLabel">Set(s)</span><br />
+                            <div style="width: 160px !important; float: left; margin-bottom:5px;">
+                                <select id="ddlSet" multiple="multiple" style="display:none;" class="FilterSet"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group FilterEpisodeGroup" id="EpisodeGroup" style="display:none;">
+                            <span id="EpisodeLabel" class="FilterEpisodeLabel">Episode(s)</span><br />
+                            <div style="width: 160px !important; float: left;  margin-bottom:5px;">
+                                <select id="ddlEpisode" multiple="multiple" style="display:none;" class="FilterEpisode"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div><br />
+                    <div class="col-md-2">
+                        <span>Invoice Amount To</span>
+                        <input type="text" id="txtInvAmntTo" tabindex="2" class="form-control" />
+                    </div>
+                    <div class="col-md-2">
+                        <span>Invoice Date To</span>
+                        <input type="text" id="txtInvoiceDateTo" tabindex="4" class="datepicker form-control" />
+                    </div>
+
+                    <div class="clearfix"></div><br />
+                    <div class="col-md-2 floatRight">
+                        <span id="btnClear" class="btn btn-default floatRight btn-margin-bottom">Reset</span>
+                        <span id="btnApply" class="btn btn-default floatRight btn-margin-bottom margin-right">Apply</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+<form>
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="col-md-12" id="divFilters">
+                <!-- Tab content -->
+                <div class="table-responsive">
+                    <div class="clearfix"></div><br />
+                    <div class="form-group" style="display:none;">
+                        <label style="width:200px!important;">Company</label>
+                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:5px;">
+                            <select style="width: 160px !important;margin-left: 12px;" id="FilterCompany" multiple="multiple" class="FilterCompany"></select>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group" id="FilterBank">
+                        <label style="width:200px!important;">Bank  </label>
+                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                            <input type="text" tabindex="2" id="txtBankName" class="SearchBank form-control marb0" />
+                            <input type="hidden" id="hdnBank" />
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group FilterLocationGroup" id="FilterLocationGroup">
+                        <label id="FilterLocationLabel"  style="width:200px!important;">Locaton(s)</label>
+                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:5px;">
+                            <select id="FilterLocation" multiple="multiple" style="display:none;" class="FilterLocation"></select>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group FilterEpisodeGroup" id="FilterEpisodeGroup" style="display:none;">
+                        <label  id="FilterEpisodeLabel" style="width:200px!important;" class="FilterEpisodeLabel">Episode(s)</label>
+                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:5px;">
+                            <select id="FilterEpisode" multiple="multiple" style="display:none;" class="FilterEpisode"></select>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group FilterSetGroup" id="FilterSetGroup" style="display:none;">
+                        <label id="FilterSetLabel" class="FilterSetLabel"  style="width:200px!important;">Set(s)</label>
+                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:5px;">
+                            <select id="FilterSet" multiple="multiple" class="FilterSet" style="display:none;"></select>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>                 
+                    <div class="form-group" id="FilterBank">
+                        <label style="width:200px!important;">Vendor  </label>
+                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                            <input type="text" tabindex="3" id="txtVendor" class="form-control marb0 VendorCode">
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group" id="FilterBank">
+                        <label style="width:200px!important;">Invoice Date From  </label>
+                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:5px;">
+                            <div style="float: left; border: solid 1px #d2d6de; padding: 0px 4px 0 0;">
+                                <input id="txtInv1" tabindex="4" type="text" class="form-control floatLeft marb0 datepicker" placeholder="MM/DD/YYYY" style="width: 130px; border: none; margin-bottom: 0px;" />
+                                <i class="fa fa-calendar floatLeft padding8" style="font-size:17px;padding-top:5px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group" id="FilterBank">
+                        <label style="width:200px!important;">Invoice Date To  </label>
+                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:5px;">
+                            <div style="float: left; border: solid 1px #d2d6de; padding: 0px 4px 0 0;">
+                                <input id="txtInv2" tabindex="5" type="text" class="form-control floatLeft marb0 datepicker" placeholder="MM/DD/YYYY" style="width: 130px; border: none; margin-bottom: 0px;" />
+                                <i class="fa fa-calendar floatLeft padding8" style="font-size:17px;padding-top:5px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group" id="FilterBank">
+                        <label style="width:200px!important;">Invoice Amount From  </label>
+                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                            <input type="text" tabindex="6" id="txtAmountFrom" class="form-control marb0">
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group" id="FilterBank">
+                        <label style="width:200px!important;">Invoice Amount To  </label>
+                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                            <input type="text" tabindex="7" id="txtAmountTo" class="form-control marb0">
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group" id="FilterBank">
+                        <label style="width:200px!important;">Period  </label>
+                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                            <select style="width: 160px" tabindex="8" multiple="multiple" class="form-control marb0" id="ddlPeriod">
+                                <option value="Current">Current Period</option>
+                                <option value="Future">Future Period</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br /><br /><br /><br />
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <!-- Tab content end -->
+            <!-- /.content -->
+
+            <div class="col-md-12 atlas-hide" id="divInvoiceList">
+                <div style="margin-top:10px; margin-bottom:0px;" class="xsborNoneNew">
+                    <div id="tblResponse">
+                        <div style="height:420px;" class="">
+                            <div id="dvFixed">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="tblFilterList">
+                                        <thead>
+                                            <tr>
+                                                <th>Select</th>                                                
+                                                <th class="width160">Vendor</th>
+                                                <th>Check Number</th>
+                                                <th>Invoice #</th>
+                                                <th>Group</th>
+                                                <th>Invoice Date</th>
+                                                <th>Check Date</th>
+                                                <th>Invoice Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblFilterListTBody">
+                                          
+                                        </tbody> 
+                                        <tfoot>
+                                            <tr>
+                                                <td class="merged-cell" colspan="8" style="color:black !important;">
+                                                    <b># of Checks: <spna id="lblCheck" class="margin-right checksprint">0</spna></b>  
+                                                    <b>Vendors Paid: <spna id="lblVendorsPaid" class="margin-right vendorspaid">0</spna></b>
+                                                    <b># of Invoices Paid: <spna id="lblInvoicesPaid" class="margin-right">0</spna></b>
+                                                    <b>Total UNPAID: $ <spna id="lblTotalNotPaid" class="margin-right">0</spna></b>
+                                                    <b># of Invoices UNPAID: <spna id="lblInvoicesNotPaid" class="margin-right" >0</spna></b>
+                                                    <b>Total Paid: $ <spna id="lblTotalPaid" class="margin-right">0</spna></b>
+                                                </td>                                                
+                                            </tr>
+                                        </tfoot>                                    
+                                    </table>
+                                </div>
+                            </div>
+                            @*<b># of Vendors Paid: <spna id="lblVendorsPaidBot" class="margin-right vendorspaid">0</spna></b>
+                            <b># of Checks to Print: <spna id="lblCheckBot" class="margin-right checksprint">0</spna></b>  
+                            <b>Amount of Checks: $ <spna id="lblTotalPaidBot" class="margin-right totalpaid">0</spna></b>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+    </section>
+
+    <div id="dvCancelCR" title="Check Run will be deleted" style="display: none;">
+        <h5><b>Check Run<span class="clscheckcycle">[checkcycle]</span> will be deleted</b></h5>
+        <p>
+            Are you sure you want to cancel this Check Run?
+            <br />
+        </p>
+    </div>
+
+    <div id="dvNotify" title="Check Number Already Exist" style="display: none;">
+        <h5><b>Change Check Number</b></h5>
+        <p>
+            This check number is already exist. A check number must never repeat within the same check cycle.
+            <br />
+        </p>
+    </div>
+
+    <div id="dvWireACH" title="Undefined IDs" style="display: none;">
+        <h5><b>Undefined IDs</b></h5>
+        <p>
+            You have undefined Wire/ACH identification numbers. You cannot print until you have provided these values.
+            <br />
+        </p>
+    </div>
+
+    <div id="dvClose" title="Unsaved changes" style="display: none;">
+        <h5><b>Unsaved changes</b></h5>
+        <p>
+            You have unsaved changes on this check cycle. Are you sure you want to close without saving? Your changes will be lost.
+            <br />
+        </p>
+    </div>
+
+    <div id="dvWireACH" title="Undefined IDs" style="display: none;">
+        <h5><b>Undefined IDs</b></h5>
+        <p>
+             You have undefined Wire/ACH identification numbers. You cannot print until you have provided these values.
+            <br />
+        </p>
+    </div>
+
+    <div id="dvExistingCCBlocked" title="Check Cycle In Progress" style="display: none;">
+        <h5><b><span class="clsBankName">[BankName]</span> Check Cycle already in progress!</b></h5>
+        <p>
+            <b><span class="clsUserName">[UserName]</span></b> already has a Check Cycle in progress. You cannot run a Check Cycle for <b><span class="clsBankName">[BankName]</span></b> until <b><span class="clsUserName">[UserName]</span></b> has completed the existing Check Cycle.
+            <br />
+        </p>
+    </div>
+
+    <div id="dvCheckInvalid" title="Invalid Check Number" style="display: none;">
+        <p>
+            This Check Number is not in range.
+            <br />
+        </p>
+    </div>
+
+    <div id="dvExistingCCReturn" title="Check Cycle Already in Progress" style="display: none;">
+        <h5><b><span class="clsBankName">[BankName]</span> Check Cycle already in progress</b></h5>
+        <p>
+            Your last Check Cycle has not been completed. You will be returned to your previous location within the Check Cycle.
+            <br />
+        </p>
+    </div>
+   
+    <div id="dvNotifyError" title="Check Cycle has Error" style="display: none;">
+        <p>
+            There was an error with completing your Check Cycle. Please contact EMS Support.
+            <br />
+        </p>
+    </div>
+
+    <div id="dvNotifyDuplicate" title="Print Check Copies" style="display: none;">
+        <p>
+            If you would like to print Copies of your checks, please load [# of pages needed for checks] non-check sheets of paper into your printer.
+            <br />
+        </p>
+    </div>
+</form>
+}
+
+@section Javascript{
+
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <script src="~/Content/libs/bootstrap-multiselect.js"></script>
+    <script src="~/Scripts/Reports/ReportEngine.js"></script>
+    <script src="~/Scripts/CheckCycle/CheckCyclev2.js"></script>
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/libs/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/papaparse.min.js"></script>
+    <style>
+
+            .ui-dialog .ui-dialog-titlebar-close span {
+             display: block;
+             margin: -8px !important;
+        }
+
+            .ui-widget-header {
+                border: 1px solid #5c8fbe;
+                background: #337ab7 !important;
+                color: #ffffff;
+                font-weight: bold;
+            }
+    </style>
+ 
+}
+
+
+
+

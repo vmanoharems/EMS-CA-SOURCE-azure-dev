@@ -1,0 +1,421 @@
+﻿@{
+    ViewBag.Title = "Reports>>Vendors";
+        Layout = "~/Views/Shared/_LayoutReports.cshtml";
+    }
+
+@section BreadCrumb{
+   <section class="content-header">
+    <div class="form-group">
+        <label>Select a Report</label>
+        <div class="midMenu pull-left">
+            <ul>
+                <li class="active"><a href="#tabEditAudit" data-toggle="tab" aria-expanded="true" onclick="javascript: ShowHide('VendorList');"> Vendor Listing</a></li>
+                <li class=""><a class="" href="#tabPosting" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('VendorInquiry');"> Vendor Inquiry</a></li>
+                <li class=""><a class="" href="#tabPosting" id="TabTrialBal" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('VendorMailing');">Vendor Mailing Labels</a></li>
+                <li class=""><a class="" href="#tabPosting" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('VendorLabel');"> Vendor Folder Labels</a></li>
+                <li class=""><a class="" href="#tabPosting" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('VendorDetails');"> Vendor Details</a></li>
+                <li class="" style="display:none;"><a class="" href="#tabPosting" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('Was');">Was/is</a></li>
+            </ul>
+        </div>
+    </div>
+
+       <div id="DvVendrList"  class="clsFilter">
+           <a href="#" class="btn btn-default floatRight  pull-right marginRight10" tabindex="14" style="display:inline;" onclick="javascript: VendorListing();" id="btnVendorList">Preview</a>
+       </div>
+       <div id="DvVendrInquiryheader" class="clsFilter" style="display:none;">
+            <a href="#" class="btn btn-default floatRight pull-right marginRight10 " onclick="javascript: funVendorinquiry(true);" style="display:inline;" id="btn" title="Export to CSV/Excel File">Export</a>
+           <a href="#" class="btn btn-default floatRight  pull-right marginRight10" onclick="javascript: funVendorinquiry();" id="btn">Preview</a>
+       </div>
+       <div id="DvVendrFolder" class="clsFilter" style="display:none;">
+          <a href="#" class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" onclick="javascript: FunVendorFolder();" id="btn">Preview</a>
+           </div>
+       <div id="DvVendorMailing" style="display:none;" class="clsFilter" >
+           <a href="#" class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" onclick="javascript: FunVendorMailing();" id="btn">Preview</a>
+       </div>
+       <div id="DvVendorDetails" style="display:none;" class="clsFilter">
+           <a href="#" class="btn btn-default floatRight pull-right marginRight10 " onclick="javascript: FunVendorDetails(true);" style="display:inline;" id="btn" title="Export to CSV/Excel File">Export</a>
+           <a href="#" class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" onclick="javascript: FunVendorDetails();" id="btn">Preview</a>
+       </div>
+    <div class="clearfix"></div>
+</section>
+    
+}
+ 
+@section Body{
+    <form>
+        <section class="content" id="dvMainDv">
+            <div class="row fontAriel" id="dvFilterDv">
+                <section class="content">
+                    <div class="row fontAriel">
+                        <div class="col-md-12">
+
+                            @* VendorListing *@
+                            <div id="DvVendorListFilter" class="form-group mar0 clsHide clsdivFilter" style="display:none;">
+
+                                <div class="report-column-left">
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Report Date</label>
+                                        <input type="text" id="txtVendorListPeportDate" tabindex="1" placeholder="MM/DD/YYYY" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">VendorName From:</label>
+                                        <input type="text" id="txtVendorNameFrom" tabindex="2" class="form-control  pull-left  " style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">VendorName To:</label>
+                                        <input type="text" id="txtVendorNameTo" tabindex="3" class="form-control  pull-left " style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Company</label>
+                                        @*<select id="txtVendorCompany" tabindex="4" class="form-control  pull-left" style="margin-left:13px !important;"><option></option></select>*@
+                                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                            <select id="txtVendorCompany" multiple="multiple" style="display:none;"></select>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group" id="VLFilterLocationGroup" style="display:none;">
+                                        <label style="width:200px!important;" id="VLFilterLocationLabel">Locaton</label>
+                                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                            <select id="VLFilterLocation" multiple="multiple" style="display:none;"></select>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group" id="VLFilterEpisodeGroup" style="display:none;">
+                                        <label style="width:200px!important;" id="VLFilterEpisodeLabel">Episode</label>
+                                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                            <select id="VLFilterEpisode" multiple="multiple" style="display:none;"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group" id="VLFilterSetGroup" style="display:none;">
+                                        <label style="width:200px!important;" id="VLFilterSetLabel">Set(s)</label>
+                                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                            <select id="VLFilterFilterSet" multiple="multiple" style="display:none;"></select>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Created Date From</label>
+                                        <input type="text" id="txtVendorCreatedFrom" placeholder="MM/DD/YYYY" tabindex="5" class="form-control  pull-left datepicker  " style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Created Date To</label>
+                                        <input type="text" id="txtVendorCreatedTo" placeholder="MM/DD/YYYY" tabindex="6" class="form-control  pull-left datepicker " style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group" style="display:none;">
+                                        <label style="width:200px!important;">Modified Date From</label>
+                                        <input type="text" id="txtVendorTrnsFrom" placeholder="MM/DD/YYYY" tabindex="7" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group" style="display:none;">
+                                        <label style="width:200px!important;">Modified Date To</label>
+                                        <input type="text" id="txtVendorModDateTo" placeholder="MM/DD/YYYY" tabindex="8" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Vendor Types</label>
+                                        <div style=" width: 18.3% !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                            <select id="txtVendorTypes" tabindex="9" multiple class="form-control  pull-left " style="margin-left:13px !important;">
+                                                <option value="C-Corp">C-Corp</option>
+                                                <option value="Crew Member">Crew Member</option>
+                                                <option value="Foreign">Foreign</option>
+                                                <option value="Individual/Sole Proprietor (no EIN)">Individual/Sole Proprietor (no EIN)</option>
+                                                <option value="LLC">LLC</option>
+                                                <option value="LLC Except">LLC Except</option>
+                                                <option value="LLC Partnership">LLC Partnership</option>
+                                                <option value="LLC SC">LLC SC</option>
+                                                <option value="Other">Other</option>
+                                                <option value="Other with association">Other with "Association"</option>
+                                                <option value="Partnership">Partnership</option>
+                                                <option value="Petty Cash">Petty Cash</option>
+                                                <option value="Professional LLC">Professional LLC</option>
+                                                <option value="S-Corp">S-Corp</option>
+                                                <option value="SP with ein">SP with ein</option>
+                                                <option value="Studio Billover">Studio Billover</option>
+                                            </select>
+                                        </div>
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Vendor Country</label>
+                                        <input type="text" id="txtVendorCountry" tabindex="10" class="pull-left form-control searchCountry" style="margin-left: 12px!important;" />
+                                        <input type="hidden" id="hdnVendorCountry" />
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Vendor State</label>
+                                        <input type="text" onfocus="javascript: G_CountryStates($('#txtVendorCountry'), $('#txtVendorState'));" id="txtVendorState" tabindex="11" class="form-control  pull-left SearchState" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">W9 on File</label>
+                                        <input type="checkbox" id="txtVendorW9OnFile" tabindex="12" class="pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">W9 not on File</label>
+                                        <input type="checkbox" id="txtVendorNotOnFile" tabindex="13" class="pull-left" style="margin-left:13px !important;">
+                                    </div><!-- /.form-group -->
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="report-column-center">
+                                    <div id="additionalfilters"></div>
+                                </div>
+
+                            </div>
+                            @*End of vendorlisting*@
+
+                            @* VendorInquiry *@
+                            <div id="DvVendorInquiry" class="form-group mar0 clsHide clsdivFilter" style="display:none;">
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Report Date</label>
+                                    <input type="text" id="txtVendorInqPeportDate" tabindex="1" placeholder="MM/DD/YYYY" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">VendorName From:</label>
+                                    <input type="text" id="txtVendorInqNameFrom" tabindex="2" onfocus="javascript: funVendorName();" class="form-control  pull-left clsVenName " style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">VendorName To:</label>
+                                    <input type="text" id="txtVendorInqNameTo" tabindex="3" onfocus="javascript: funVendorName();" class="form-control  pull-left clsVenName" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Company</label>
+                                    <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="txtVendorInqCompany" multiple="multiple" style="display:none;"></select>
+                                    </div>
+                                     @*<select id="txtVendorInqCompany" tabindex="4" class="form-control  pull-left" style="margin-left:13px !important;"><option></option></select>*@
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group" id="VIFilterLocationGroup" style="display:none;">
+                                    <label style="width:200px!important;" id="VIFilterLocationLabel">Locaton</label>
+                                    <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="VIFilterLocation" multiple="multiple" style="display:none;"></select>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group" id="VIFilterEpisodeGroup" style="display:none;">
+                                    <label style="width:200px!important;" id="VIFilterEpisodeLabel">Episode</label>
+                                    <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="VIFilterEpisode" multiple="multiple" style="display:none;"></select>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <div class="form-group" id="VIFilterSetGroup" style="display:none;">
+                                    <label style="width:200px!important;" id="VIFilterSetLabel">Set(s)</label>
+                                    <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="VIFilterFilterSet" multiple="multiple" style="display:none;"></select>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Created Date From</label>
+                                    <input type="text" id="txtVendorInqCreatedFrom" placeholder="MM/DD/YYYY" tabindex="5" class="form-control  pull-left datepicker  " style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Created Date To</label>
+                                    <input type="text" id="txtVendorInqCreatedTo" placeholder="MM/DD/YYYY" tabindex="6" class="form-control  pull-left datepicker " style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group" style="display:none;">
+                                    <label style="width:200px!important;">Modified Date From</label>
+                                    <input type="text" id="txtVendorTrnsFrom" placeholder="MM/DD/YYYY" tabindex="7" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group" style="display:none;">
+                                    <label style="width:200px!important;">Modified Date To</label>
+                                    <input type="text" id="txtVendorModDateTo" placeholder="MM/DD/YYYY" tabindex="8" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Vendor Types</label>
+                                    <div style="width: 18.3% !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="txtVendorInquiryTypes" tabindex="9" multiple class="form-control  pull-left " style="margin-left:13px !important;">
+                                            <option value="C-Corp">C-Corp</option>
+                                            <option value="Crew Member">Crew Member</option>
+                                            <option value="Foreign">Foreign</option>
+                                            <option value="Individual/Sole Proprietor (no EIN)">Individual/Sole Proprietor (no EIN)</option>
+                                            <option value="LLC">LLC</option>
+                                            <option value="LLC Except">LLC Except</option>
+                                            <option value="LLC Partnership">LLC Partnership</option>
+                                            <option value="LLC SC">LLC SC</option>
+                                            <option value="Other">Other</option>
+                                            <option value="Other with association">Other with "Association"</option>
+                                            <option value="Partnership">Partnership</option>
+                                            <option value="Petty Cash">Petty Cash</option>
+                                            <option value="Professional LLC">Professional LLC</option>
+                                            <option value="S-Corp">S-Corp</option>
+                                            <option value="SP with ein">SP with ein</option>
+                                            <option value="Studio Billover">Studio Billover</option>
+                                        </select>
+                                    </div>
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Vendor Country</label>
+                                    <input type="text" id="txtVendorInqCountry" tabindex="10" class="pull-left form-control searchCountryInq" style="margin-left: 12px!important;" />
+                                    <input type="hidden" id="hdnVendorInqCountry" />
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Vendor State</label>
+                                    <input type="text" onfocus="javascript: G_CountryStates($('#txtVendorInqCountry'), $('#txtVendorInqState'));;" id="txtVendorInqState" tabindex="11" class="form-control  pull-left SearchStateVenInq" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">1099</label>
+                                    <div style=" width: 18.3% !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="ddl1099Multiselect" tabindex="9" multiple class="form-control  pull-left " style="margin-left:13px !important;">
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                            <option value="07">07</option>                                
+                                        </select>
+                                    </div>
+                                </div><!-- /.form-group -->
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">W9 on File</label>
+                                    <input type="checkbox" id="txtVendorInqW9OnFile" tabindex="12" class="pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">W9 not on File</label>
+                                    <input type="checkbox" id="txtVendorInqNotOnFile" tabindex="13" class="pull-left" style="margin-left:13px !important;">
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                            </div>
+                            @*End of VendorInquiry*@
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+
+                    </div>
+                </section>
+
+            </div>
+      
+            <div id="dialog11" style="display: none"> </div>
+        </section>
+        <div id="fade" class="black_overlay"></div>
+        @*<div class="newhidden" id="dvWait" style="display: none;width: 100%;margin: auto 0px;text-align: center;top: 30%;">
+            <img src="~/Images/InternetSlowdown_Day.gif" />
+        </div>*@
+
+    </form>
+
+}
+@section Javascript{
+<script src="~/Content/libs/bootstrap-multiselect.js"></script>
+<script src="~/Scripts/Reports/ReportEngine.js"></script>
+<script src="~/Scripts/Reports/VendorReports.js"></script>
+<link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/libs/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/papaparse.min.js"></script>
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+</script>
+<link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+
+<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+      rel="stylesheet" type="text/css" />
+
+<script>
+
+    // This is an example jQuery snippet that makes the dialogs work
+    $(document).ready(function () {
+
+        // We have two control functions that show or hide dialogs
+        function showDialog(id) {
+
+            // Find the dialog and show it
+
+            var dialog = $('#' + id),
+                    card = dialog.find('.dialog-card');
+
+            dialog.fadeIn();
+
+            // Center it on screen
+
+            card.css({
+                'margin-top': -card.outerHeight() / 2
+            });
+
+        }
+        function hideAllDialogs() {
+            // Hide all visible dialogs
+            $('.dialog-overlay').fadeOut();
+        }
+
+        // Here is how to use these functions
+
+        $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+            hideAllDialogs();
+        });
+
+        $('.dialog-show-button').on('click', function () {
+            var toShow = $(this).data('show-dialog');
+
+            showDialog(toShow);
+        });
+    });
+    $('#txtVendorTypes').multiselect();
+    $('#txtVendorInquiryTypes').multiselect();
+    $('#ddl1099Multiselect').multiselect();
+</script>
+<style type="text/css">
+    .dialog-card {
+        top: 15%;
+    }
+
+    .w30N {
+        width: 30px !important;
+    }
+
+    .ui-button-icon-only .ui-icon {
+        margin: -8px 0 0 -9px !important;
+    }
+
+    .table-hover th {
+        padding: 0px 4px !important;
+    }
+
+    .blueClas {
+        background: #337ab7;
+        color: #fff;
+        padding: 5px !important;
+
+    }
+    .ui-dialog {
+        width: 80% !important;
+        z-index: 999999999;
+    }
+ 
+</style>
+}
+

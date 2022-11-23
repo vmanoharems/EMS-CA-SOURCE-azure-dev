@@ -1,0 +1,81 @@
+﻿.notifyjs-ghostnote-base {
+    opacity: 0.85;
+    width: 700px;
+    background: #F5F5F5;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+    .notifyjs-ghostnote-base .title {
+        float: left;
+        margin: 3px 0 0 3px;
+        text-align: right;
+    }
+
+    .notifyjs-ghostnote-base .buttons {
+        font-size: 9px;
+        padding: 5px;
+        margin: 2px;
+    }
+
+    .notifyjs-ghostnote-base button {
+        font-size: 9px;
+        padding: 5px;
+        margin: 2px;
+        width: 60px;
+    }
+
+    .notifyjs-ghostnote-base .buttons .text {
+        font-size: 9px;
+        padding: 5px;
+        margin: 2px;
+        width: 500px;
+    }
+
+.prcontent {
+    width: 100%;
+    height: 100%;
+    /*background: linear-gradient(70deg, white, azure);*/
+}
+
+.prcontent .prheader {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    background-color: azure;
+}
+.prcontent .prheader input {
+    width:150px;
+    border:none!important;
+}
+
+.prcontent .prcontent-inner {
+        background-color: azure
+}
+
+.edited {
+    border: 1px dashed;
+    border-color: green!important;
+}
+
+input:not(:disabled):not(:valid) {
+    border: 1px solid red!important; /* Red border only if the input is empty */
+}
+
+.input-invalid {
+    border-color: red !important;
+}
+
+.header.documentheader {
+    width:130px;
+    border:none
+}
+
+#tblPRPortalList {
+    width:100%!important;
+}
+
+.inputlinedisabled {
+    border: none!important;
+    background: none!important;
+}

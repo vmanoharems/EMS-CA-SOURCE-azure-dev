@@ -1,0 +1,742 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CAAdminModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">        
+        <EntityType Name="CAUserAdmin">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" />
+          <Property Name="AuthenticationCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="PasswordModiedDate" Type="datetime" />
+          <Property Name="Accountstatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="Createddate" Type="datetime" />
+          <Property Name="modifieddate" Type="datetime" />
+          <Property Name="createdby" Type="int" />
+          <Property Name="modifiedby" Type="int" />
+          <Property Name="AdminFlag" Type="bit" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="DivisionId" />
+          </Key>
+          <Property Name="DivisionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Studioid" Type="int" />
+          <Property Name="DivisionName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="ModuleId" />
+          </Key>
+          <Property Name="ModuleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModuleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="ModuleLevel" Type="int" Nullable="false" />
+          <Property Name="Children" Type="int" />
+        </EntityType>
+        <EntityType Name="Production">
+          <Key>
+            <PropertyRef Name="ProductionId" />
+          </Key>
+          <Property Name="ProductionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudioId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="DivisionId" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ProductionCode" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="ProductionConfig">
+          <Key>
+            <PropertyRef Name="ProductionConfigId" />
+          </Key>
+          <Property Name="ProductionConfigId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductionId" Type="int" />
+          <Property Name="DBName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DBConnectionString" Type="nvarchar(max)" />
+          <Property Name="DBLogin" Type="nvarchar" MaxLength="50" />
+          <Property Name="DBPassword" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Studio">
+          <Key>
+            <PropertyRef Name="StudioId" />
+          </Key>
+          <Property Name="StudioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudioName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserProduction">
+          <Key>
+            <PropertyRef Name="UserproductionId" />
+          </Key>
+          <Property Name="UserproductionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Prodid" Type="int" />
+          <Property Name="Createddate" Type="datetime" />
+          <Property Name="modifieddate" Type="datetime" />
+          <Property Name="createdby" Type="int" />
+          <Property Name="modifiedby" Type="int" />
+          <Property Name="Groupbatchaccess" Type="bit" />
+          <Property Name="Canclose" Type="bit" />
+          <Property Name="Allbatchaccess" Type="bit" />
+        </EntityType>
+        <Association Name="FK__UserProdu__UserI__2D27B809">
+          <End Role="CAUserAdmin" Type="Self.CAUserAdmin" Multiplicity="0..1" />
+          <End Role="UserProduction" Type="Self.UserProduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAUserAdmin">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserProduction">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AdminAPIToolsLedgerJournal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="JSONparameters" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="addproductionaccessforuser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AdminUserid" Type="int" Mode="In" />
+          <Parameter Name="ProdID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CheckAuthenticationCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="AuthenticationCode" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="CheckEmailVaild" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="Admin" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="CheckNewDBName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DBName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="CheckUserexistanceCAAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetAccessByKeyToken" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetDBConfigByProdId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProdId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetProdcutionListByUserId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetUserDetailsAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="Password" Type="nvarchar" Mode="In" />
+          <Parameter Name="Type" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetUserDetailsPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertEMSUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="Password" Type="nvarchar" Mode="In" />
+          <Parameter Name="AuthenticationCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="Accountstatus" Type="nvarchar" Mode="In" />
+          <Parameter Name="Status" Type="bit" Mode="In" />
+          <Parameter Name="createdby" Type="int" Mode="In" />
+          <Parameter Name="AdminFlag" Type="bit" Mode="In" />
+          <Parameter Name="ProdId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertOnlyCausersbyemailID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AdminUserId" Type="int" Mode="In" />
+          <Parameter Name="EmailID" Type="varchar" Mode="In" />
+          <Parameter Name="Prodid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertUpdateAdminUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="password" Type="nvarchar" Mode="In" />
+          <Parameter Name="AuthCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="AccountStatus" Type="nvarchar" Mode="In" />
+          <Parameter Name="Status" Type="bit" Mode="In" />
+          <Parameter Name="CreatedBy" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertupdateUserProduction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProdId" Type="int" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="CreatedBy" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ProductionNewDBCreate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProdName" Type="nvarchar" Mode="In" />
+          <Parameter Name="StudioId" Type="int" Mode="In" />
+          <Parameter Name="DivisionId" Type="int" Mode="In" />
+          <Parameter Name="status" Type="nvarchar" Mode="In" />
+          <Parameter Name="CreatedBy" Type="int" Mode="In" />
+          <Parameter Name="ProductionCode" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateAuthCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="AuthCode" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UpdatePasswordOfUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Password" Type="nvarchar" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateUserStatusAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="Status" Type="bit" Mode="In" />
+        </Function>
+        <EntityContainer Name="CAAdminModelStoreContainer">
+          <EntitySet Name="CAUserAdmin" EntityType="Self.CAUserAdmin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Division" EntityType="Self.Division" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Production" EntityType="Self.Production" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductionConfig" EntityType="Self.ProductionConfig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Studio" EntityType="Self.Studio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProduction" EntityType="Self.UserProduction" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__UserProdu__UserI__2D27B809" Association="Self.FK__UserProdu__UserI__2D27B809">
+            <End Role="CAUserAdmin" EntitySet="CAUserAdmin" />
+            <End Role="UserProduction" EntitySet="UserProduction" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CAAdminModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CAUserAdmin">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AuthenticationCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordModiedDate" Type="DateTime" Precision="3" />
+          <Property Name="Accountstatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="Createddate" Type="DateTime" Precision="3" />
+          <Property Name="modifieddate" Type="DateTime" Precision="3" />
+          <Property Name="createdby" Type="Int32" />
+          <Property Name="modifiedby" Type="Int32" />
+          <Property Name="AdminFlag" Type="Boolean" />
+          <NavigationProperty Name="UserProductions" Relationship="Self.FK__UserProdu__UserI__2D27B809" FromRole="CAUserAdmin" ToRole="UserProduction" />
+        </EntityType>
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="DivisionId" />
+          </Key>
+          <Property Name="DivisionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Studioid" Type="Int32" />
+          <Property Name="DivisionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="ModuleId" />
+          </Key>
+          <Property Name="ModuleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModuleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="ModuleLevel" Type="Int32" Nullable="false" />
+          <Property Name="Children" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Production">
+          <Key>
+            <PropertyRef Name="ProductionId" />
+          </Key>
+          <Property Name="ProductionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudioId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DivisionId" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ProductionCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ProductionConfig">
+          <Key>
+            <PropertyRef Name="ProductionConfigId" />
+          </Key>
+          <Property Name="ProductionConfigId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductionId" Type="Int32" />
+          <Property Name="DBName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DBConnectionString" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DBLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DBPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Studio">
+          <Key>
+            <PropertyRef Name="StudioId" />
+          </Key>
+          <Property Name="StudioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudioName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UserProduction">
+          <Key>
+            <PropertyRef Name="UserproductionId" />
+          </Key>
+          <Property Name="UserproductionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Prodid" Type="Int32" />
+          <Property Name="Createddate" Type="DateTime" Precision="3" />
+          <Property Name="modifieddate" Type="DateTime" Precision="3" />
+          <Property Name="createdby" Type="Int32" />
+          <Property Name="modifiedby" Type="Int32" />
+          <Property Name="Groupbatchaccess" Type="Boolean" />
+          <Property Name="Canclose" Type="Boolean" />
+          <Property Name="Allbatchaccess" Type="Boolean" />
+          <NavigationProperty Name="CAUserAdmin" Relationship="Self.FK__UserProdu__UserI__2D27B809" FromRole="UserProduction" ToRole="CAUserAdmin" />
+        </EntityType>
+        <Association Name="FK__UserProdu__UserI__2D27B809">
+          <End Role="CAUserAdmin" Type="Self.CAUserAdmin" Multiplicity="0..1" />
+          <End Role="UserProduction" Type="Self.UserProduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAUserAdmin">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserProduction">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+
+        <EntityContainer Name="CAAdminEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CAUserAdmins" EntityType="Self.CAUserAdmin" />
+          <EntitySet Name="Divisions" EntityType="Self.Division" />
+          <EntitySet Name="Modules" EntityType="Self.Module" />
+          <EntitySet Name="Productions" EntityType="Self.Production" />
+          <EntitySet Name="ProductionConfigs" EntityType="Self.ProductionConfig" />
+          <EntitySet Name="Studios" EntityType="Self.Studio" />
+          <EntitySet Name="UserProductions" EntityType="Self.UserProduction" />
+          <AssociationSet Name="FK__UserProdu__UserI__2D27B809" Association="Self.FK__UserProdu__UserI__2D27B809">
+            <End Role="CAUserAdmin" EntitySet="CAUserAdmins" />
+            <End Role="UserProduction" EntitySet="UserProductions" />
+          </AssociationSet>
+          <FunctionImport Name="addproductionaccessforuser" ReturnType="Collection(Int32)">
+            <Parameter Name="AdminUserid" Mode="In" Type="Int32" />
+            <Parameter Name="ProdID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CheckAuthenticationCode" ReturnType="Collection(CAAdminModel.CheckAuthenticationCode_Result)">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="AuthenticationCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CheckEmailVaild" ReturnType="Collection(Int32)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Admin" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CheckNewDBName" ReturnType="Collection(Int32)">
+            <Parameter Name="DBName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CheckUserexistanceCAAdmin" ReturnType="Collection(Int32)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAccessByKeyToken" ReturnType="Collection(CAAdminModel.GetAccessByKeyToken_Result)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetDBConfigByProdId" ReturnType="Collection(CAAdminModel.GetDBConfigByProdId_Result)">
+            <Parameter Name="ProdId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetProdcutionListByUserId" ReturnType="Collection(CAAdminModel.GetProdcutionListByUserId_Result)">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetUserDetailsAdmin" ReturnType="Collection(CAAdminModel.GetUserDetailsAdmin_Result)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetUserDetailsPassword" ReturnType="Collection(CAAdminModel.GetUserDetailsPassword_Result)">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertEMSUser" ReturnType="Collection(Int32)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="AuthenticationCode" Mode="In" Type="String" />
+            <Parameter Name="Accountstatus" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="Boolean" />
+            <Parameter Name="createdby" Mode="In" Type="Int32" />
+            <Parameter Name="AdminFlag" Mode="In" Type="Boolean" />
+            <Parameter Name="ProdId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertOnlyCausersbyemailID">
+            <Parameter Name="AdminUserId" Mode="In" Type="Int32" />
+            <Parameter Name="EmailID" Mode="In" Type="String" />
+            <Parameter Name="Prodid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertUpdateAdminUser" ReturnType="Collection(Int32)">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="AuthCode" Mode="In" Type="String" />
+            <Parameter Name="AccountStatus" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="Boolean" />
+            <Parameter Name="CreatedBy" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertupdateUserProduction">
+            <Parameter Name="ProdId" Mode="In" Type="Int32" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="CreatedBy" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ProductionNewDBCreate" ReturnType="Collection(CAAdminModel.ProductionNewDBCreate_Result)">
+            <Parameter Name="ProdName" Mode="In" Type="String" />
+            <Parameter Name="StudioId" Mode="In" Type="Int32" />
+            <Parameter Name="DivisionId" Mode="In" Type="Int32" />
+            <Parameter Name="status" Mode="In" Type="String" />
+            <Parameter Name="CreatedBy" Mode="In" Type="Int32" />
+            <Parameter Name="ProductionCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateAuthCode" ReturnType="Collection(CAAdminModel.UpdateAuthCode_Result)">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="AuthCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdatePasswordOfUser">
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateUserStatusAdmin">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="Status" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="AdminAPIToolsLedgerJournal" ReturnType="Collection(String)">
+            <Parameter Name="JSONparameters" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="CheckAuthenticationCode_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="AuthenticationCode" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="PasswordModiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Accountstatus" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="Status" Nullable="true" />
+          <Property Type="DateTime" Name="Createddate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="modifieddate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="createdby" Nullable="true" />
+          <Property Type="Int32" Name="modifiedby" Nullable="true" />
+          <Property Type="Boolean" Name="AdminFlag" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetAccessByKeyToken_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="AuthenticationCode" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="PasswordModiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Accountstatus" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="Status" Nullable="true" />
+          <Property Type="DateTime" Name="Createddate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="modifieddate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="createdby" Nullable="true" />
+          <Property Type="Int32" Name="modifiedby" Nullable="true" />
+          <Property Type="Boolean" Name="AdminFlag" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetDBConfigByProdId_Result">
+          <Property Type="Int32" Name="ProductionConfigId" Nullable="false" />
+          <Property Type="Int32" Name="ProductionId" Nullable="true" />
+          <Property Type="String" Name="DBName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DBConnectionString" Nullable="true" />
+          <Property Type="String" Name="DBLogin" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DBPassword" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetProdcutionListByUserId_Result">
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ProductionId" Nullable="true" />
+          <Property Type="String" Name="ProductionCode" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="GetUserDetailsAdmin_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="AuthenticationCode" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="PasswordModiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Accountstatus" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="Status" Nullable="true" />
+          <Property Type="DateTime" Name="Createddate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="modifieddate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="createdby" Nullable="true" />
+          <Property Type="Int32" Name="modifiedby" Nullable="true" />
+          <Property Type="Boolean" Name="AdminFlag" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetUserDetailsPassword_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="AuthenticationCode" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="PasswordModiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Accountstatus" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="Status" Nullable="true" />
+          <Property Type="DateTime" Name="Createddate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="modifieddate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="createdby" Nullable="true" />
+          <Property Type="Int32" Name="modifiedby" Nullable="true" />
+          <Property Type="Boolean" Name="AdminFlag" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ProductionNewDBCreate_Result">
+          <Property Type="Int32" Name="prodId" Nullable="true" />
+          <Property Type="String" Name="DBName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="UpdateAuthCode_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="AuthenticationCode" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="PasswordModiedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Accountstatus" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="Status" Nullable="true" />
+          <Property Type="DateTime" Name="Createddate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="modifieddate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="createdby" Nullable="true" />
+          <Property Type="Int32" Name="modifiedby" Nullable="true" />
+          <Property Type="Boolean" Name="AdminFlag" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CAAdminModelStoreContainer" CdmEntityContainer="CAAdminEntities">
+          <EntitySetMapping Name="CAUserAdmins">
+            <EntityTypeMapping TypeName="CAAdminModel.CAUserAdmin">
+              <MappingFragment StoreEntitySet="CAUserAdmin">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="AuthenticationCode" ColumnName="AuthenticationCode" />
+                <ScalarProperty Name="PasswordModiedDate" ColumnName="PasswordModiedDate" />
+                <ScalarProperty Name="Accountstatus" ColumnName="Accountstatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Createddate" ColumnName="Createddate" />
+                <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
+                <ScalarProperty Name="createdby" ColumnName="createdby" />
+                <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
+                <ScalarProperty Name="AdminFlag" ColumnName="AdminFlag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Divisions">
+            <EntityTypeMapping TypeName="CAAdminModel.Division">
+              <MappingFragment StoreEntitySet="Division">
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="Studioid" ColumnName="Studioid" />
+                <ScalarProperty Name="DivisionName" ColumnName="DivisionName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modules">
+            <EntityTypeMapping TypeName="CAAdminModel.Module">
+              <MappingFragment StoreEntitySet="Module">
+                <ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
+                <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ModuleLevel" ColumnName="ModuleLevel" />
+                <ScalarProperty Name="Children" ColumnName="Children" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productions">
+            <EntityTypeMapping TypeName="CAAdminModel.Production">
+              <MappingFragment StoreEntitySet="Production">
+                <ScalarProperty Name="ProductionId" ColumnName="ProductionId" />
+                <ScalarProperty Name="StudioId" ColumnName="StudioId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ProductionCode" ColumnName="ProductionCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductionConfigs">
+            <EntityTypeMapping TypeName="CAAdminModel.ProductionConfig">
+              <MappingFragment StoreEntitySet="ProductionConfig">
+                <ScalarProperty Name="ProductionConfigId" ColumnName="ProductionConfigId" />
+                <ScalarProperty Name="ProductionId" ColumnName="ProductionId" />
+                <ScalarProperty Name="DBName" ColumnName="DBName" />
+                <ScalarProperty Name="DBConnectionString" ColumnName="DBConnectionString" />
+                <ScalarProperty Name="DBLogin" ColumnName="DBLogin" />
+                <ScalarProperty Name="DBPassword" ColumnName="DBPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Studios">
+            <EntityTypeMapping TypeName="CAAdminModel.Studio">
+              <MappingFragment StoreEntitySet="Studio">
+                <ScalarProperty Name="StudioId" ColumnName="StudioId" />
+                <ScalarProperty Name="StudioName" ColumnName="StudioName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProductions">
+            <EntityTypeMapping TypeName="CAAdminModel.UserProduction">
+              <MappingFragment StoreEntitySet="UserProduction">
+                <ScalarProperty Name="UserproductionId" ColumnName="UserproductionId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Prodid" ColumnName="Prodid" />
+                <ScalarProperty Name="Createddate" ColumnName="Createddate" />
+                <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
+                <ScalarProperty Name="createdby" ColumnName="createdby" />
+                <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
+                <ScalarProperty Name="Groupbatchaccess" ColumnName="Groupbatchaccess" />
+                <ScalarProperty Name="Canclose" ColumnName="Canclose" />
+                <ScalarProperty Name="Allbatchaccess" ColumnName="Allbatchaccess" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="addproductionaccessforuser" FunctionName="CAAdminModel.Store.addproductionaccessforuser" />
+          <FunctionImportMapping FunctionImportName="CheckAuthenticationCode" FunctionName="CAAdminModel.Store.CheckAuthenticationCode">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CAAdminModel.CheckAuthenticationCode_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="AuthenticationCode" ColumnName="AuthenticationCode" />
+                <ScalarProperty Name="PasswordModiedDate" ColumnName="PasswordModiedDate" />
+                <ScalarProperty Name="Accountstatus" ColumnName="Accountstatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Createddate" ColumnName="Createddate" />
+                <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
+                <ScalarProperty Name="createdby" ColumnName="createdby" />
+                <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
+                <ScalarProperty Name="AdminFlag" ColumnName="AdminFlag" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CheckEmailVaild" FunctionName="CAAdminModel.Store.CheckEmailVaild" />
+          <FunctionImportMapping FunctionImportName="CheckNewDBName" FunctionName="CAAdminModel.Store.CheckNewDBName" />
+          <FunctionImportMapping FunctionImportName="CheckUserexistanceCAAdmin" FunctionName="CAAdminModel.Store.CheckUserexistanceCAAdmin" />
+          <FunctionImportMapping FunctionImportName="GetAccessByKeyToken" FunctionName="CAAdminModel.Store.GetAccessByKeyToken">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CAAdminModel.GetAccessByKeyToken_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="AuthenticationCode" ColumnName="AuthenticationCode" />
+                <ScalarProperty Name="PasswordModiedDate" ColumnName="PasswordModiedDate" />
+                <ScalarProperty Name="Accountstatus" ColumnName="Accountstatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Createddate" ColumnName="Createddate" />
+                <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
+                <ScalarProperty Name="createdby" ColumnName="createdby" />
+                <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
+                <ScalarProperty Name="AdminFlag" ColumnName="AdminFlag" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetDBConfigByProdId" FunctionName="CAAdminModel.Store.GetDBConfigByProdId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CAAdminModel.GetDBConfigByProdId_Result">
+                <ScalarProperty Name="ProductionConfigId" ColumnName="ProductionConfigId" />
+                <ScalarProperty Name="ProductionId" ColumnName="ProductionId" />
+                <ScalarProperty Name="DBName" ColumnName="DBName" />
+                <ScalarProperty Name="DBConnectionString" ColumnName="DBConnectionString" />
+                <ScalarProperty Name="DBLogin" ColumnName="DBLogin" />
+                <ScalarProperty Name="DBPassword" ColumnName="DBPassword" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProdcutionListByUserId" FunctionName="CAAdminModel.Store.GetProdcutionListByUserId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CAAdminModel.GetProdcutionListByUserId_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductionId" ColumnName="ProductionId" />
+                <ScalarProperty Name="ProductionCode" ColumnName="ProductionCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetUserDetailsAdmin" FunctionName="CAAdminModel.Store.GetUserDetailsAdmin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CAAdminModel.GetUserDetailsAdmin_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="AuthenticationCode" ColumnName="AuthenticationCode" />
+                <ScalarProperty Name="PasswordModiedDate" ColumnName="PasswordModiedDate" />
+                <ScalarProperty Name="Accountstatus" ColumnName="Accountstatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Createddate" ColumnName="Createddate" />
+                <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
+                <ScalarProperty Name="createdby" ColumnName="createdby" />
+                <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
+                <ScalarProperty Name="AdminFlag" ColumnName="AdminFlag" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetUserDetailsPassword" FunctionName="CAAdminModel.Store.GetUserDetailsPassword">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CAAdminModel.GetUserDetailsPassword_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="AuthenticationCode" ColumnName="AuthenticationCode" />
+                <ScalarProperty Name="PasswordModiedDate" ColumnName="PasswordModiedDate" />
+                <ScalarProperty Name="Accountstatus" ColumnName="Accountstatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Createddate" ColumnName="Createddate" />
+                <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
+                <ScalarProperty Name="createdby" ColumnName="createdby" />
+                <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
+                <ScalarProperty Name="AdminFlag" ColumnName="AdminFlag" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertEMSUser" FunctionName="CAAdminModel.Store.InsertEMSUser" />
+          <FunctionImportMapping FunctionImportName="InsertOnlyCausersbyemailID" FunctionName="CAAdminModel.Store.InsertOnlyCausersbyemailID" />
+          <FunctionImportMapping FunctionImportName="InsertUpdateAdminUser" FunctionName="CAAdminModel.Store.InsertUpdateAdminUser" />
+          <FunctionImportMapping FunctionImportName="InsertupdateUserProduction" FunctionName="CAAdminModel.Store.InsertupdateUserProduction" />
+          <FunctionImportMapping FunctionImportName="ProductionNewDBCreate" FunctionName="CAAdminModel.Store.ProductionNewDBCreate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CAAdminModel.ProductionNewDBCreate_Result">
+                <ScalarProperty Name="prodId" ColumnName="prodId" />
+                <ScalarProperty Name="DBName" ColumnName="DBName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateAuthCode" FunctionName="CAAdminModel.Store.UpdateAuthCode">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CAAdminModel.UpdateAuthCode_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="AuthenticationCode" ColumnName="AuthenticationCode" />
+                <ScalarProperty Name="PasswordModiedDate" ColumnName="PasswordModiedDate" />
+                <ScalarProperty Name="Accountstatus" ColumnName="Accountstatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Createddate" ColumnName="Createddate" />
+                <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
+                <ScalarProperty Name="createdby" ColumnName="createdby" />
+                <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
+                <ScalarProperty Name="AdminFlag" ColumnName="AdminFlag" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdatePasswordOfUser" FunctionName="CAAdminModel.Store.UpdatePasswordOfUser" />
+          <FunctionImportMapping FunctionImportName="UpdateUserStatusAdmin" FunctionName="CAAdminModel.Store.UpdateUserStatusAdmin" />
+          <FunctionImportMapping FunctionImportName="AdminAPIToolsLedgerJournal" FunctionName="CAAdminModel.Store.AdminAPIToolsLedgerJournal" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

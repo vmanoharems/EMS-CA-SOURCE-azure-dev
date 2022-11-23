@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "Ledger>>COA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Ledger <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Chart Of Accounts</li>
+        </ol>
+        <div style="margin-left: 18%;float: left;    width: 60%;" id="DvFilter">
+            @*<label style="width:70px !important;"> Company</label>
+                <select id="ddlCompanyCOA" class="form-control floatLeft" onchange="javascript: GetCompanyId();"></select>
+                    </div>
+                <div style="float:left;margin-left:20px;">
+                    <label style="width:70px !important;"> Location</label>
+                    <select id="ddlLocationCOA" class="form-control floatLeft" onchange="javascript: GetCompanyId();"></select>*@
+        </div>
+        @*<a href="#" class="btn btn-default floatRight">Config</a>*@
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+    <section class="content">
+        @*<div class="fontAriel">*@
+            <div class="col-xs-12">
+                <div class="row">
+
+                    <div class="xsborNoneNew" style="margin-top:10px; margin-bottom:0px;">
+                        <div class="tblResponse" id="DvtblCOA">
+                            <div class="fixed-table-container">
+                                <div class="header-background"> </div>
+                                <div class="fixed-table-container-inner" id="DvTB" >
+                                    <div id="dvFixed">
+                                        <table cellspacing="0" id="tblCOA">
+                                            <thead id="tblCOAThead">
+                                               
+                                            </thead>
+                                            <tbody id="TblCOATBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+</section>
+}
+@section Javascript{
+
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.1/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                fixedHeader: {
+                    header: true,
+                    footer: true
+                }
+            });
+        });
+    </script>
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/fixedheader/3.1.1/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+
+    <script>
+        // Change the selector if needed
+        var $table = $('table.scroll'),
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
+
+        // Adjust the width of thead cells when window resizes
+        $(window).resize(function () {
+            // Get the tbody columns width array
+            colWidth = $bodyCells.map(function () {
+                return $(this).width();
+            }).get();
+
+            // Set the width of thead columns
+            $table.find('thead tr').children().each(function (i, v) {
+                $(v).width(colWidth[i]);
+            });
+        }).resize(); // Trigger resize handler
+    </script>
+
+    <script src="~/Scripts/Ledger/COA.js"></script>
+    <style>
+        .table-hover th {
+            padding: 0px 4px !important;
+        }
+    </style>
+
+}

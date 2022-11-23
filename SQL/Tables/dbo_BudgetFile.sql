@@ -1,0 +1,26 @@
+﻿CREATE TABLE [dbo].[BudgetFile] (
+  [BudgetFileID] [int] IDENTITY,
+  [Uploadeddate] [datetime] NOT NULL,
+  [uploadedby] [int] NOT NULL,
+  [Action] [nvarchar](20) NOT NULL,
+  [Status] [nvarchar](20) NOT NULL,
+  [Amounts] [nvarchar](20) NULL,
+  [LeaveexistingCOA] [int] NOT NULL,
+  [CompanCode] [nvarchar](20) NOT NULL,
+  [CompanyID] [int] NOT NULL,
+  [prodid] [int] NOT NULL,
+  [Budgetid] [int] NOT NULL,
+  [UploadedXML] [xml] NULL,
+  [S1] [varchar](50) NULL,
+  [S2] [varchar](50) NULL,
+  [S3] [varchar](50) NULL,
+  [S4] [varchar](50) NULL,
+  [S5] [varchar](50) NULL,
+  [S6] [varchar](50) NULL,
+  [LedgerLebel] [varchar](50) NULL,
+  [SegmentName] [varchar](500) NULL,
+  [SegStr1] [varchar](500) NULL,
+  [SegStr2] [varchar](500) NULL,
+  CONSTRAINT [PK_Budgetfile] PRIMARY KEY CLUSTERED ([BudgetFileID])
+)
+GO

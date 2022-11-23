@@ -1,0 +1,21 @@
+﻿SET QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+CREATE PROCEDURE [dbo].[GetBudgetList]
+(
+@Prodid int
+)
+AS
+BEGIN
+ -- SET NOCOUNT ON added to prevent extra result sets from
+ -- interfering with SELECT statements.
+ SET NOCOUNT ON;
+
+ select BudgetId,BudgetName from budget where Prodid=@Prodid order by BudgetName
+
+END
+
+
+
+
+
+GO

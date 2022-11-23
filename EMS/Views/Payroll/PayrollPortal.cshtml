@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "EMS Payroll Portal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+<section class="content-header paddingBottom0">
+    <ol id="breadcrumb" class="breadcrumb floatLeft">
+        <li><a href="#"> Payroll Portal@*<i class="fa fa-caret-right"></i>*@</a></li>
+@*        <li id="activetab" class="active">Main</li>*@
+    </ol>
+    <div class="pull-right paddingNone white_space ">
+        <select class="form-control width135 floatLeft marginRight10 marginLeft10 marginBottomNone" onchange="javascript: FillPayrollHistory();" id="ddlCompany"></select>
+    </div>
+    <div class="clearfix"></div>
+</section>
+}
+@section Body{
+<section class="content" id="dvMainDv">
+    <form id="formPayrollPortalEdit">
+        <div id="divPayrollPortalMain" class="col-12">
+            <div id="divPayrollPortalPayrollDetail" class="box box-info" style="display:none;">
+                <div id="divPayrollPortalPayrollDetailHeader" class="box-header with-border">
+                    <i id="ghostnoteicon" class="fa fa-file-text-o ghostnoteicon" data-ghostnotekeeper="ghostnoteHeader"></i>
+                    <input type="hidden" id="ghostnoteHeader" name="notes" class="ghostnotekeeper" />
+                    <h3 id="PayrollPortalPayrollDetailHeader" class="box-title"></h3>
+                    <div class="box-tools pull-right">
+                        <div class="float-left inline">
+                            <button type="button" class="btn toggle-button" id="btnPayrollSave" onclick="thisDocument.Save({ action: 'save' });">Save</button>
+                            <button type="button" data-toggle="dropdown" id="ddlOption" class="btn btn-primary dropdown-toggle toggle-button-item"><span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="btnPayrollApprove" onclick="thisDocument.Save({ action: 'approve' });">APPROVE</a></li>
+                                <li><a href="#" id="btnPayrollChangess" onclick="thisDocument.Save({ action: 'changes' });">Submit Changes</a></li>
+                                <li><a href="#" id="btnPayrollCancel" onclick="thisDocument.Cancel();">Cancel</a></li>
+                            </ul>
+                            <button type="button" class="btn toggle-button" id="btnPayrollCancelX" onclick="thisDocument.Cancel();">X</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div id="divPayrollPortalPayrollDetailBody" class="box-body" style="max-height:inherit;overflow:scroll;">
+                    <table id="tblPayrollPortalPayrollDetail"></table>
+                </div>
+                <!-- /.box-body -->
+                @*<div class="box-footer clearfix" style="position:absolute;bottom:0;">
+                        <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">View Previous Edits</a>
+                    </div>*@
+                <!-- /.box-footer -->
+            </div>
+
+            <div id="divPayrollPortalPayrollList" class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Latest Payroll</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        @*                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="tblPRPortalList" class="table no-margin" >
+                            <thead>
+                                <tr>
+                                    <th>Invoice #</th>
+                                    <th>Payroll Ending</th>
+                                    <th>Status</th>
+                                    <th># Checks</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">View Payroll History</a>
+                    <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View Payroll Edits</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
+    </form>
+</section>
+}
+
+@section Javascript{
+<script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+<link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+<link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/css/PRPortal.css" rel="stylesheet" />
+
+<script>
+    // Change the selector if needed
+    var $table = $('table.scroll'),
+        $bodyCells = $table.find('tbody tr:first').children(),
+        colWidth;
+
+    // Adjust the width of thead cells when window resizes
+    $(window).resize(function () {
+        // Get the tbody columns width array
+        colWidth = $bodyCells.map(function () {
+            return $(this).width();
+        }).get();
+
+        // Set the width of thead columns
+        $table.find('thead tr').children().each(function (i, v) {
+            $(v).width(colWidth[i]);
+        });
+    }).resize(); // Trigger resize handler
+</script>
+    @*
+<script src="~/Scripts/Payroll/PayrollSession.js"></script>*@
+<script src="~/Scripts/Payroll/Portal/PayrollPortal.js"></script>
+<script src="~/Scripts/Reports/ReportEngine.js"></script>
+}

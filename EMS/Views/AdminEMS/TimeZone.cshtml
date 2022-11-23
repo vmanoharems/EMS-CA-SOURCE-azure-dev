@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Settings TimeZone";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Users</h2>
+@section BreadCrumb{
+    <section class="content-header paddingBottom0"></section>
+
+}
+
+@section Body{
+
+    <section class="content">
+        <div class="fontAriel">
+            <div id="example_wrapper" class="dataTables_wrapper no-footer">
+                <div style="height:370px;  overflow-y:auto; width:100%;">
+                    <div class="col-md-12 col-sm-5 col-xs-12">
+                        <h3 style="text-align: center;background: #5c8fbe;color: #fff;padding: 5px;margin-bottom: 20px;">
+                            Set Production TimeZone
+                        </h3>
+                        <div class="form-group">
+                            <label> TimeZone</label>
+                            <select class="form-control" id="ddlTimeZone" style="width:251px;">                             
+                                <option value="-08:00">Alaskan Time (AKT)</option>
+                                <option value="-05:00">Central Time (CT)</option>
+                                <option value="-04:00">Eastern Time (ET)</option>
+                                <option value="-09:00">Hawaii-Aleutian Time (HT)</option>
+                                <option value="-06:00">Mountain Time (MT)</option>
+                                <option value="+12:00">New Zealand Time (NZT)</option>
+                                <option value="-07:00">Pacific Time (PT)</option>
+                            </select>
+
+
+                            <div class="clear-fix"></div>
+
+
+                            <div>
+                                <div class="clear-fix"></div>
+                                <input type="button" value="Save" id="btnSave" onclick="javascript: funSaveTimeZone();" class="btn btn-md- btn-success">
+                            </div>
+                            <div class="clear-fix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+}
+
+@section Javascript{
+
+    <script src="~/Scripts/AdminLogin/TimeZone.js"></script>
+}
+
+

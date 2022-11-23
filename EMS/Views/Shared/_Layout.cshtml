@@ -1,0 +1,424 @@
+﻿﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="~/Scripts/MultiSelectDropDown/jquery.multiselect.css" rel="stylesheet" />
+    <link href="~/Content/css/AdminLTE.min.css" rel="stylesheet" />
+    <link href="~/Content/css/AtlasLTE.css" rel="stylesheet" />
+    <link href="~/Content/AtlasUtility.css" rel="stylesheet" />
+    <link href="~/Content/css/AtlasConfig.css" rel="stylesheet" />
+    <link href="~/Content/css/AtlasPaste.css" rel="stylesheet" />
+    <link href="~/Content/css/AtlasConfig.css" rel="stylesheet" />
+</head>
+<script> var Titlejs = '@ViewBag.Title' </script>
+<body class="skin-blue sidebar-mini" id="ToggleNavigationbodyID">
+    <div class="app-body" id="app-body">
+        <div class="wrapper" id="wrapper_main">
+            <header class="main-header">
+                <!-- Logo -->
+                <a href="~/AccountPayable/Vendors" class="logo">
+                    <!-- mini logo for sidebar mini 50x50 pixels -->
+                    <span class="logo-mini"><!--<b>A</b>LT--> <img src="~/Content/images/logoMini.png" alt="logo"></span>
+                    <!-- logo for regular state and mobile devices -->
+                    <span class="logo-lg"><!--<b>Admin</b>LTE--><img src="~/Content/images/logo.png" alt="logo" style="width:87%;"></span>
+                </a>
+                <!-- Header Navbar: style can be found in header.less -->
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <!-- Sidebar toggle button-->
+                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" id="NavigationToggle">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                        <ul class="nav navbar-nav topMenu" id="navMainUL">
+                            <li><a target="apvendors" id="hrefPayable" href="~/AccountPayable/Vendors"><i class="fa fa-money"></i> <span>Accounts Payable</span></a></li>
+                            <li><a target="Payroll" id="hrefPayroll" href="~/Payroll/LoadPayroll"><i class="fa fa-usd user01"></i> <span>Payroll</span></a></li>
+                            <li><a id="hrefCRW" onclick="AtlasNavigation.toModule('CRW'); return false;" href="~/CRW/CRWList"><i class="fa fa-calculator"></i> <span>CRW</span></a></li>
+                            @*<li><a id="hrefLedger" href="~/Ledger/TrailBalance"><i class="fa fa-folder-open user01"></i> <span>Ledger</span></a></li>*@
+                            <li><a target="ledger"id="hrefLedger" href="~/Ledger/JEDistributionChange"><i class="fa fa-folder-open user01"></i> <span>Ledger</span></a></li>
+                            <li><a id="hrefBudget" onclick="AtlasNavigation.toModule('Budget'); return false;" href="~/Budget/Import"><i class="fa fa-suitcase user01"></i> <span>Budget</span></a></li>
+                            <li><a target="reports" id="hrefReports" href="~/Reports/VendorReports"><i class="fa fa-file-text-o user01"></i> <span>Reports</span></a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            @*<li class="userText">EMS Review</li>*@
+                            <li class="dropdown user user-menu" title="Profile" id="user-menu-user">
+                                <a href="~/UserProfile/MyDefaults">
+                                    <i class="fa fa-user user02"></i>
+                                </a>
+                            </li>
+                            <li class="dropdown user user-menu " title="Settings">
+                                <a target="AtlasSettings" href="~/Setting/Company" class="">
+                                    <i id="CompanyIconI" class="fa fa-cog user02 "></i>
+                                </a>
+                            </li>
+                            <li class="dropdown user user-menu" title="Logout">
+                                <a href="#" class="logout">
+                                    <i class="fa fa-power-off user02"></i>
+                                </a>
+                            </li>
+                            <!-- Control Sidebar Toggle Button -->
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="main-sidebar">
+                <!-- sidebar: style can be found in sidebar.less -->
+                <section class="sidebar" style="height: auto;">
+                    <div id="dvProductionname" class="userText01" style="background-color: #0a2463; width: 100%; text-align:center">
+                        <span id="productionname" style=" font-size: 13px; color: #fff; vertical-align: 1%; text-align: center !important;margin-left: 3%; "></span>
+                    </div>
+
+                    @if (Convert.ToString(Request.RawUrl.ToString()).Contains("AccountPayable") || Convert.ToString(Request.RawUrl.ToString()).Contains("Vendor"))
+                    {
+                        <ul class="sidebar-menu" id="UlAccountPayable">
+                            <li class="treeview" id="LiAPVendors">
+                                <a href="~/AccountPayable/Vendors" target="apvendors">
+                                    <i class="fa fa-user"></i>
+                                    <span>Vendors</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiAPPO">
+                                <a href="~/AccountPayable/PurchaseOrder" target="appurchaseorders">
+                                    <i class="fa fa-briefcase"></i>
+                                    <span>Purchase Orders</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiInvoice">
+                                <a href="~/AccountPayable/PendingInvoice" target="apinvoices">
+                                    <i class="fa fa-list-alt"></i>
+                                    <span>Invoices</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiPettyCash">
+                                <a href="~/AccountPayable/PCEnvelopes" target="appettycash">
+                                    <i class=" fa fa-usd"></i>
+                                    <span>Petty cash</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiCheckCycle">
+                                <a  onclick="AtlasNavigation.toModule('Check Cycle'); return false;" href="javascript:void(0);">
+                                    <i class="fa fa-check-square-o"></i>
+                                    <span>Banking</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }                    
+                    else if (Convert.ToString(Request.RawUrl.ToString()).Contains("Payroll"))
+                    {
+                        <ul id="UlPayroll" class="sidebar-menu">
+                            <li id="LiPayrollLoad" class="active">
+                                <a href="~/Payroll/LoadPayroll">
+                                    <i class="fa fa-building-o"></i> <span>Load</span>
+                                </a>
+                            </li>
+                            <li id="LiPayrollAudit" class="treeview">
+                                <a href="~/Payroll/PayrollAudit">
+                                    <i class="fa fa-user"></i>
+                                    <span>Audit</span>
+                                </a>
+                            </li>
+                            <li id="LiPayrollRCP" class=" treeview">
+                                <a href="~/Payroll/PayrollRCP">
+                                    <i class="fa fa-briefcase"></i> <span>RCP</span>
+                                </a>
+                            </li>
+                            <li id="LiPayrollSetup" class="treeview">
+                                <a href="~/Payroll/PayrollSetup">
+                                    <i class="fa fa-list-alt"></i>
+                                    <span>Setup</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    else if (Convert.ToString(Request.RawUrl.ToString()).Contains("CRW"))
+                    {
+                        <ul class="sidebar-menu">
+                            <li class="active treeview">
+                                <a  onclick="AtlasNavigation.toModule('CRW'); return false;" href="~/CRW/CRWList">
+                                    <i class="fa fa-list"></i> <span>CRW List</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    else if (Convert.ToString(Request.RawUrl.ToString()).Contains("Ledger"))
+                    {
+                        <ul class="sidebar-menu" id="UlReports">
+                            <li class="treeview " style="display:none;" id="LiTrialBalance">
+                                <a href="~/Ledger/TrailBalance" class="paddingTop20X20">
+                                    <i class="fa fa-credit-card"></i> <span>Trial Balance</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiJournalEntries">
+                                <a href="~/Ledger/JEDistributionChange">
+                                    <i class="fa fa-list-alt"></i>
+                                    <span>Journal Entries</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiLegerSegments">
+                                <a href="~/Ledger/Segments">
+                                    <i class="fa fa-check-square-o"></i>
+                                    <span>Segments</span>
+                                </a>
+                            </li>
+                            <li class="treeview " id="LiLedgerCOA" style="display:none;">
+                                <a href="~/Ledger/COA">
+                                    <i class="fa fa-line-chart"></i>
+                                    <span>COA</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiGLSetup">
+                                <a href="~/Ledger/GLSetup">
+                                    <i class="fa fa-check-square-o"></i>
+                                    <span>G/L Setup</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="ClosePeriod">
+                                <a href="~/Ledger/ClosePeriod">
+                                    <i class="fa fa-times-circle"></i>
+                                    <span>Period Management</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    else if (Convert.ToString(Request.RawUrl.ToString()).Contains("Budget"))
+                    {
+                        <ul class="sidebar-menu">
+                            <li class="active treeview">
+                                <a  onclick="AtlasNavigation.toModule('Budget'); return false;" href="~/Budget/Import">
+                                    <i class="fa fa-upload"></i> <span>Import</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    else if (Convert.ToString(Request.RawUrl.ToString()).Contains("Reports"))
+                    {
+                        <ul class="sidebar-menu" id="UlListReports">
+                            <li class=" treeview" id="LiVendorsReports">
+                                <a href="~/Reports/VendorReports">
+                                    <i class="fa fa-user"></i>
+                                    <span>Vendors</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiPurchaseReports">
+                                <a href="~/Reports/POReports">
+                                    <i class="fa fa-briefcase"></i>
+                                    <span>Purchase Orders</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiAPInvoiceReports">
+                                <a href="~/Reports/APInvoiceReports">
+                                    <i class="fa fa-money">
+                                    </i> <span>Invoices</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiReportPettyCash">
+                                <a href="~/Reports/PettyCash">
+                                    <i class="fa fa-envelope-o"></i>
+                                    <span>Petty Cash</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiReportBanking">
+                                <a href="~/Reports/CheckPrint">
+                                    <i class="fa fa-bank"></i>
+                                    <span>Banking</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiReportPayroll">
+                                <a href="~/Reports/PayEditReport">
+                                    <i class="fa fa-dollar"></i>
+                                    <span>Payroll</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiCostReport">
+                                <a href="~/Reports/CostReportSheet">
+                                    <i class="fa fa-calculator"></i>
+                                    <span>Cost Report</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiReportsledgers">
+                                <a href="~/Reports/Reportsledgers">
+                                    <i class="fa fa-folder-open"></i>
+                                    <span>Ledger</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiReportsBatches">
+                                <a href="~/Reports/ReportsBatch">
+                                    <i class="fa fa-folder-open"></i>
+                                    <span>Batch</span>
+                                </a>
+                            </li>
+                            <li class="treeview" id="LiSetupReports">
+                                <a href="~/Reports/SetUp">
+                                    <i class="fa fa-gears"></i>
+                                    <span>Setup</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    }
+                    else if (Convert.ToString(Request.RawUrl.ToString()).Contains("Setting"))
+                    {
+                        <ul id="UlSetting" class="sidebar-menu">
+                            <li id="LiCompany" class="active treeview">
+                                <a href="~/Setting/Company">
+                                    <i class="fa fa-building-o"></i> <span>Company</span>
+                                </a>
+                            </li>
+                            <li id="LiUsers" class="treeview">
+                                <a href="~/Setting/Groups">
+                                    <i class="fa fa-user"></i>
+                                    <span>Groups / Users</span>
+                                </a>
+                            </li>
+                            <li id="LiBanks">
+                                <a href="~/Setting/Banks">
+                                    <i class="fa fa-briefcase"></i> <span>Banks</span>
+                                </a>
+                            </li>
+                            <li id="LiCodes" class="treeview">
+                                <a href="~/Setting/Codes">
+                                    <i class="fa fa-list-alt"></i>
+                                    <span>Codes/Fields</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    else if (Convert.ToString(Request.RawUrl.ToString()).Contains("UserProfile"))
+                    {
+                        <ul class="sidebar-menu" id="UlUserProfile">
+                            <li class="active treeview" id="LiMyDefaults">
+                                <a href="~/UserProfile/MyDefaults">
+                                    <i class="fa fa-user"></i> <span>My Defaults</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    <div id="DvMasterBatch" style="margin-left: 1%; text-align:center;">
+                        <div id="G_BatchManagement" style="padding-left: 10px; background-color: white; border: 2px solid #a1a1a1; border-radius: 20px;">
+                            <p >
+                                <span id="spnBatchManagement" style="font-weight:bold;">Batch Management</span>
+                                <br>
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <!-- /.sidebar -->
+            </aside>
+            <!-- Content Wrapper. Contains page content -->
+            <div id="Atlas_Content" class="AtlasAccess content-wrapper" style="min-height: 353px;">
+                <!-- Content Header (Page header) -->
+                @RenderSection("BreadCrumb", required: false)
+                <div id="showMSG" style="display:block;"></div>
+                @RenderSection("Body", required: false)
+                <!-- Main content -->
+                <!-- /.content -->
+            </div>
+            <div id="Atlas_Access" class="AtlasAccess content-wrapper">
+                You do not have permission to access this module. <br />
+                Please contact your System Administrator if you need access to this module.
+            </div>
+        </div>
+        <div id="preload" style="display: none;width: 100%;margin: auto 0px;text-align: center;top: 20%;">
+            <img id="dvLoader" src="~/Images/InternetSlowdown_Day.gif" style="width:480px;" />
+        </div>
+        <!--suppier popup End-->
+        <div id="fade" class="black_overlay"></div>
+
+        <!-- Atlas Paste Preview Overlay and lib -->
+
+        <div id="AtlasPasteHtmlOverlayPopup" class="newhidden" style="display: none; margin-top:0%; margin-left:-7.5%; width: 115%;">
+            <div class="popup col-md-10 col-lg-10 col-sm-10 col-xs-12 floatNone">
+                <div class="deleteNewIcon" style="background-color:red;"><a href="javascript:hideDiv('AtlasPasteHtmlOverlayPopup');">X</a></div>
+                <div class="heading2"><h4>Preview</h4></div>
+                <div class="col-md-12" id="pasteDiv">
+                </div>
+                <!-- // Tabs END -->
+                <div class="darkGreyNew col-lg-12">
+                    <div class="btn-group dropdownup">
+                        <button type="button" class="btn btn-success btn-primary btnApply" id="AtlasClearPaste">Paste & Replace All</button>
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu ddlOpenUpwards" role="menu">
+                            <li><a href="#" id="AtlasPasteAppend">Paste & Append</a></li>
+                        </ul>
+                        @*                    <li><a href="#" id="AtlasPasteInsert">Paste & Insert</a></li>*@
+                        @*                    <li><a href="#" id="AtlasPasteInline">Paste Inline</a></li>*@
+                        @*                    <li><a href="#" id="AtlasPasteReplace">Paste & Replace</a></li>*@
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!---Popup for Report Segment Config--->
+        @*<div id="dialog" title="Report Segment Order" class="AtlasConfig-Dialog" style="display:none;">
+            <div id="divSegments" class="AtlasConfig-Dialog"></div>
+            <input type="button" value="Save" class="btn btn-success pull-right SegmentModel" onclick="AtlasConfig.ConfigSet()" />
+        </div>*@
+        <!-- jQuery 2.1.4 -->
+        <script src="~/Content/js/jquery-2.2.0.min.js"></script>
+        @*<script src="~/Content/js/jQuery-2.1.4.min.js"></script>*@
+        <!-- jQuery UI 1.11.4 -->
+        <script src="~/Content/js/jquery-ui.min.js"></script>
+        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script>
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="~/Content/js/bootstrap.min.js"></script>
+        <!-- Slimscroll -->
+        <script src="~/Content/js/jquery.slimscroll.min.js"></script>
+        <link href="~/Content/w2ui-1.5.rc1.min.css" rel="stylesheet" />
+        <script src="~/Content/w2ui-1.5.rc1.min.js"></script>
+
+        <!-- AdminLTE App -->
+        <script src="~/Content/js/app.min.js"></script>
+        <script src="~/Scripts/papaparse.min.js"></script>
+        <script src="~/Content/js/moment.js"></script>
+        <script src="~/Scripts/AtlasUtilities/countrylist.js"></script>
+        <script src="~/Scripts/utility.js"></script>
+
+        <script src="~/Scripts/AtlasUtilities/global.js"></script>
+        <script src="~/Scripts/AtlasUtilities.js"></script>
+        <script src="~/Scripts/AtlasUtilities/FormControls.js"></script>
+        <script src="~/Scripts/AtlasUtilities/AtlasPaste.js"></script>
+        <script src="~/Scripts/AtlasUtilities/AtlasDocument.js"></script>
+        <script src="~/Scripts/AtlasUtilities/AtlasConfig.js"></script>
+        <script src="~/Scripts/AtlasUtilities/AtlasBatchManagement.js"></script>
+
+
+        <script src="~/Scripts/timeout-dialog.js"></script>
+        <script src="~/Scripts/notify.js"></script>
+
+        <link href="~/Content/js/jquery-ui.structure.css" rel="stylesheet" />
+        <link href="~/Content/js/jquery-ui.structure.min.css" rel="stylesheet" />
+        <link href="~/Content/js/jquery-ui.theme.min.css" rel="stylesheet" />
+        <script src="~/Content/js/jquery-ui.min.js"></script>
+
+        <script src="~/Scripts/MultiSelectDropDown/jquery.multiselect.js"></script>
+        <script src="~/Scripts/Validation/Validation.js"></script>
+        <script src="~/Scripts/jquery.mask.min.js"></script>
+        @RenderSection("Javascript", required: false)
+        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+        <style>
+            .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+                border: 1px solid #999999 !important;
+                background: #dadada url("images/ui-bg_glass_75_dadada_1x400.png") 50% 50% repeat-x !important;
+                font-weight: normal !important;
+                color: #212121 !important;
+            }
+        </style>
+    </div>
+</body>
+</html>

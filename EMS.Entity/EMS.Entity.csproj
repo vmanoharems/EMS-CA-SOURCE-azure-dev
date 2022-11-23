@@ -1,0 +1,1446 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6B7A6190-54D0-4FB0-BC72-EB262455DF21}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EMS.Entity</RootNamespace>
+    <AssemblyName>EMS.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="1099Module.cs" />
+    <Compile Include="AccountClearing.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccountType.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdminUser.cs" />
+    <Compile Include="APAtlasPaymentInformationGet_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APAtlasPaymentMapGet_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APCheckCycleVoidUnissued_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APIAtlasUtilities_Config_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APIAtlasUtilities_Config_Upsert_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APInvoiceGet_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APInvoiceReportbyAccount_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APInvoiceReportbyTransaction_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APInvoicesList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APInvoicesPostedList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APVendorsTaxFilingTransactionDetails_GET_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APVendorsTaxFilingTransactionLines_INIT_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APVendorsTaxFilingTransactions_INIT_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APVendorsTaxFiling_GET_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="APVendorsTaxFiling_INIT_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AtlasPRList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AtlasUtilities_Access_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AtlasUtilities_Navigation_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BankAdjustment.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BankInfo.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BankReconcilatinAction_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BankReconcilation.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BankRegisterHeader_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BatchNumber.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Budget.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BudgetAccount.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BudgetAccountsFinal.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BudgetAccountUpdate.cs" />
+    <Compile Include="BudgetCategory.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BudgetCategoryFinal.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BudgetCategoryUpdate.cs" />
+    <Compile Include="BudgetDetail.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BudgetDetailFinal.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BudgetFile.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BudgetProcessed.cs" />
+    <Compile Include="BudgetRollUpAfterL1_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Budgetv2GetHistory_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Budgetv2List_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Budgetv2Upsert_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CAAdmin.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CAAdmin.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CAAdmin.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CAAdmin.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CAAdmin.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="CAAdminUser.cs" />
+    <Compile Include="BankTransaction.cs" />
+    <Compile Include="CancelCheckRunByUser_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CAUser.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CAUserAdmin.cs">
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckAuthenticationCode_Result.cs">
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckBudgetInFinalBudget_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckBudgetNonZero_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckClearingAccount_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckClosePeriodStatus_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckCycleEntity.cs" />
+    <Compile Include="CheckForOpenRunCheck_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckForSegment_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckForSetSegment_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckLedgerExistance_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckRegisterFilter1_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckRegisterFilter_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckRun.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckRunAddon.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckRunStatu.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckSetting.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckWTNo_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClosePeriod.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="COA.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Company.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CompanyGroup.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CompanySetting.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Country.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CountryState.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRW.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRWBudgetAccountsFinal_Fix.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRWBudgetAmountDistributionAfterL2_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRWBudgetAmountDistribution_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRWBudgetAmountRollUp_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRWDetail.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRWEstimatedCost_Fix.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRWHeader.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRWLockRow_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CRWNotesNew.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Custodian.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteCRWNotes_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Division.cs">
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Adjustment.cs" />
+    <Compile Include="EditCheckNumber_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EMS.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EMS.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EMS.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EMS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EMS.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="EstimatedCost.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EstimatedCostSet.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FederalTaxAgencyAutoFill_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FederalTaxFormAutoFill_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FetchCOAbyCOACode_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAccessByKeyToken_Result.cs">
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAccontType_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAccountDetailByProdId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getaccountdetail_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAccountForCRWFromBudget_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAccountListForRecipient_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAccountNameForBudget_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAccountTypeForGL_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getaccount_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAdminPayrollFile_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllAccountType_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllBatchNumber_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllBudgetById_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllclosedPeriods_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllDetailOfTblAccount_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllPurchaseOrder_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllSegmentByProdId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllTransactionValue_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GEtAllUserInfo_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBankAdjustmentData_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBankBalance_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBankInfoByCompanyId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBankInfoById_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBankInfoDetails_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBankInfoList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBankInfoPayroll_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBanklistReport_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBankReconcilation_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBankSetupByProdID_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBankTransactionDisplayAll_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBankTransaction_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBudgetAccountForGL_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBudgetAccountsNew_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBudgetAccounts_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBudgetByCompanyForCRW_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBudgetCategoryForGL_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBudgetCategory_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBudgetDetailForGL_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBudgetDetails_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBudgetDetail_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetBudgetList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getcat_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCAUserListByPropId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCheckPreview_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCheckPrintFilter_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCheckRunList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCheckSummaryFilter_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCheckSummaryTotal_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetClearingAccount_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCleringAccountById_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetClosePeriodDeomJE_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetClosePeriodFortransaction_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetClosePeriodList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetClosePeriodStatus_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCOAbyProdId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCOABySegmentNumber_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCOABySegmentPosition1_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCOABySegmentPosition_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCoaDetailforCustodian_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCOAForClearingWithCOADiscription_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCOAForClearing_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCOAListByCompany_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCompanyDetailForAccount_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCompanyDetail_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCompanyIdByGroupId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCompanylistReport_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCompanyList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCompanyNameByID_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCompnayCodeByProdId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCrwHeadDataByBudgetID_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCRWHead_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCRWInfo_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCRWListForReport_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCRWNotesNew_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCRWRollUpReport_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCRWRollUpWithBlank_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCRWRollUp_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCustodianCode_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDataForCheckReport1_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDataForCheckReportHeader_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDataForCheckReport_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDBConfigByProdId_Result.cs">
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDedaultCOLO_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDefaultBankInfoByCompanyId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDefaultSegmentValueByUserId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDefaultSettingByUserId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDetailAccountNoParent_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getDetailAccount_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDetailLevelAccountCRW_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDetailPCEnvelopeById_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetEpisodeForCRWFromBudget_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetExchangeRate_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetFreeFieldDetail_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetFringeByProdId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetGroupDetailsBypropId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetInvoiceDetailListCRW_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetInvoiceLineDetailById_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetInvoiceListForPaymentNew_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetInvoiceListForPayment_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetInvoiceListPosted_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetInvoiceNoByCompanyCode_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetJEDetailByJEId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetJEDetailFilter_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetJEDetailForAdjutment_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetJEDetailListCRW_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetJEListForDistribution_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetJEntryByJEId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetJournalEntryDetailByStatus_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetJournalEntryDetailTransValue_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetJournalEntryList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetLastVendorNumByProdId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetLedgerAccounts_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetLedgerDetailByProdId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListForTrailBalanceGroup_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListForTrailBalance_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListForTrialBalance_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListOfCustodian_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListOfInvoiceById_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetLocationForCRWFromBudget_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetModuleDetailsByModuleId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetModulesDetails_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetModuleTreeforgroup_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetMyDefaultsByProdId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetOpenPeriod_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPaymentList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPaymentVoidData1_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollAddRange_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollAuditList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollBankdetailbyProdID_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollDataFileFill_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollDataFileForAudit_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollExpenseByPayrollUser_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollFileAmountDetailPost_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollFileAmountDetail_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollFileinClientSide_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollFileUserListByPayrollID_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollFilterData_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollFreeFieldByCompanyId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollFringeByCompanyID_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollHistoryNew_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollHistory_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollOffsets_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollReportHeader_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPayrollVendor_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPCEnvelopeLineDetailById_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPCEnvelopList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPendingInvoiceList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPeriodForBible_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPODetailListCRW_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPODetailList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPODetail_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPOLinesNotInInvoice_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPOLines_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPONumberForCompany_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPONumber_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetProdcutionListByUserId_Result.cs">
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetRecipientList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetRecipientVendorList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetReconcilationList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetReconcilationReportData_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetReconcilationReportHeader_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetReportVendorFolder_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetReportVendorList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSegmentForPayroll_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSegmentLedger_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSegmentStringFromExpense_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSegmentWithLedgerToday_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSegmentWithLedger_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSeriesForCRW_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSetForCRW_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSourceCodeBySource_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSourceCodeDetails_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetStartEndPeriodByCompanyId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetStartEndRange_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetStartingCheckNumber_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetStartingvalue_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetStateListByCountryId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSuspenseAccountbyProdId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTBByEPnewest_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTBByEP_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTBByLevel1Ep_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTBByLevel1NonEp_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTblAccountDetailsByCategory_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTranasactionCode_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTransactionCodeFill_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTransactionCode_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTransactionDefaultListByUserId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTransactionNumber_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTransactionValueByCodeId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTransactionValueFillByID_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTransCodeForPayrollAudit_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTransCodeForPayroll_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTransCodeFromExpense_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTransCodeValuByProdID_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetUniqueTransCode_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetUserDetailsAdmin_Result.cs">
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetUserDetailsByUserId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetUserDetailsPassword_Result.cs">
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetUserGroupDetails_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetUserProfileInfoByProdid_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetVarianceReportData_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetVendorAddPO_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetVendorAddress_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetVendorDetailByVendorID_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetVendorInfoByVendorId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetVendorListByProdID_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetVendorListForCustodian_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetVendorMailingLabels_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetVerifyCheck_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Get_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GroupCompanyAccess.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GroupPermission.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InsertCheckRunByUser_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InsertUpdateCRWNew_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InsertUpdateCRW_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Invoice.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INVOICEJETHROUGHPAYROLL1_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INVOICEJETHROUGHPAYROLL_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceLine.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceNumberAutoFill_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JEAuditReportFilterByAccount_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JEAuditReportFilter_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JETHROUGHPAYROLL1_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JETHROUGHPAYROLL_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JournalEntry.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JournalEntryDetail.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JSONParameters.cs" />
+    <Compile Include="LedgerAccount.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LedgerBible_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LedgerInQuiryTransaction_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LedgerInQuiry_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LedgerShared_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Module.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MyConfig.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mydefault.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NewProc_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OverWriteAdminPayrollFile_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Payment.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentLine.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentNew.cs" />
+    <Compile Include="PayrollBankSetup.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollCheck.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollCheckPrint_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollExpense.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollExpenseItem.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollExpensePost.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollFile.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollFreeField.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollFringeAddon.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollFringeHeader.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollOffset.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PayrollUser.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PCEnvelope.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PCEnvelopeLine.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PDFCopiesPID_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PDFInvoiceLine_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PDFInvoiceTaxAmount_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PDFVendorDetail_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POListingReports_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POSPaySetting.cs" />
+    <Compile Include="PostCollectionList_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Production.cs">
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductionConfig.cs">
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductionNewDBCreate_Result.cs">
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrder.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PurchaseOrderLine.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Recipient.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReconcilationAddon.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReconcilationListForReport_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Reconciliation_ClearedTransaction_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDetails.cs" />
+    <Compile Include="ReportInvoiceFilter_Result.cs" />
+    <Compile Include="ReportPettyCashTotal_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportPettyCash_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsBankingCheckRegDetailReportJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsBankingCheckRegisterSummaryJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsBankingCheckRunRegisterJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsBankingCheckRunRegReportJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsCostReportJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsInvoiceAccountJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsInvoiceTransactionJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsLedgerBibleJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsLedgerCOAJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsLedgerInQuiryAccountJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsLedgerJEAuditJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsLedgerJEExportJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsLedgerJEPostingJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsLedgerTBJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsPayrollFilterJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsPettyCashFilterJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsPOAuditJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsPOListingExportJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsPOListingReportsJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsVendorDetailReportJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsVendorFolderReportJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsVendorInqReportJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsVendorListingReportJson_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsVendorMailingReportJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SaveBankAdjustment_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SaveCRWNotes_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Segment.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SegmentLedger.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SettingBankAccountsJSON_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SettingBankAccounts_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsTaxCodeGet_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsTaxCodesUpsert_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SourceCode.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SplitCSV_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SplitId_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spTimeZone_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StartingValue.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Studio.cs">
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaxCodeDetail.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="taxinfo.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TblAccount.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblNumber.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblVendor.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TBReportComExpense_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TimeZone.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TransactionCode.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TransactionValue.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateAuthCode_Result.cs">
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateBlankEFC_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateCodeMaskingAccount_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateCodeMaskingCategory_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateCRWBudgetBlank_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateCRWBudget_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateCRWEFC_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateCRWETC_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateCRWSetBudget_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateCRWSetEFC_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateCRWSetETC_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateInvoiceStatus_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateJournalEntryStatusById_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="updatePCEnvelopeStatus_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UpsertInvoiceLine_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserAccess.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserProduction.cs">
+      <DependentUpon>CAAdmin.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserProfileAP.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="v2CRW_Save_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Variance.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VendorDetailsByName_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VendorInfo.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VendorInquiryReport_Result.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VoidPayment.cs" />
+    <Compile Include="CheckVerification.cs" />
+    <Compile Include="CompanyCreation.cs" />
+    <Compile Include="CompanyGroupAccess.cs" />
+    <Compile Include="ConnnectionString.cs" />
+    <Compile Include="CurrencyExchange.cs" />
+    <Compile Include="GenerateCOA.cs" />
+    <Compile Include="JEClass.cs" />
+    <Compile Include="PaymentCheckRun.cs" />
+    <Compile Include="CheckRunJE.cs" />
+    <Compile Include="PayrollTransValue.cs" />
+    <Compile Include="POClass.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="vUnpaidInvoice.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwPayrollPostAmount.cs">
+      <DependentUpon>EMS.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="CAAdmin.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CAAdmin.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="CAAdmin.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CAAdmin.edmx</DependentUpon>
+      <LastGenOutput>CAAdmin.Context.cs</LastGenOutput>
+    </None>
+    <None Include="CAAdmin.edmx.diagram">
+      <DependentUpon>CAAdmin.edmx</DependentUpon>
+    </None>
+    <None Include="CAAdmin.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CAAdmin.edmx</DependentUpon>
+      <LastGenOutput>CAAdmin.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="EMS.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EMS.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="EMS.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EMS.edmx</DependentUpon>
+      <LastGenOutput>EMS.Context.cs</LastGenOutput>
+    </None>
+    <None Include="EMS.edmx.diagram">
+      <DependentUpon>EMS.edmx</DependentUpon>
+    </None>
+    <None Include="EMS.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EMS.edmx</DependentUpon>
+      <LastGenOutput>EMS.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

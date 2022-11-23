@@ -1,0 +1,720 @@
+﻿@{
+    ViewBag.Title = "Ledger>>GLSetup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Ledger <i class="fa fa-caret-right"></i></a></li>
+            <li class="active" id="LiBreadCrumbName">G/L Setup</li>
+        </ol>
+        <div class="midMenu">
+            <ul>
+                <li class="active" id="LiAccountGL"><a href="javascript:funAccounts();">Accounts</a></li>
+                <!--<li><a href="#tabCOA" data-toggle="tab">COA</a></li>-->
+                <li id="LiCOAGL"><a href="javascript:funCOAShow();">COA</a></li>
+            </ul>
+            <div id="DvMasking" class="pull-left">
+                <label style="width:auto !important; margin-left:7px;" id="lblMask"> CodeMasking :</label>
+                <span id="spnMaskingType"></span>
+            </div>
+            <div class="col-lg-6 col-sm-12 pull-right" id="dvAddNewRow">
+                <div style="margin-right: 30px;float: left;">
+                    <ul id="UlSegmentType"></ul>
+                </div>
+                <a style="display:none;" id="aBuildBudget" href="javascript:AddAccountFromBudget();" class="pull-right blueText underLine"><span style="color: #5a8ec0 !important;"> + Build From Budget</span></a>
+                <a href="#" class=" blueText underLine" id="hrefAddParent" onclick="javascript: funAddRowDetailParent();" style="display: none;"><span style="color: #5a8ec0 !important;">+ New Header </span></a>
+                <a href="#" class="blueText underLine" id="hrefNewAccountAdd" onclick="javascript: funAddRow();"><span style="color: #5a8ec0 !important;" id="spnDetail">+ New <span id="spnNewAddSegment"></span> </span> </a>
+
+            </div>
+
+
+        </div>
+
+        <div class="col-xs-5 col-lg-1 pull-right" id="DvSaveCancel">
+            <a class="btn btn-success " id="btnSaveGLsetup" href="#">Save</a>
+            @*<a class="btn btn-primary  marginRight10" id="btnCancelGLsetup" href="#">Cancel</a>*@
+        </div>
+
+        <div class="col-xs-5 col-lg-7 " id="DvCOAFilter" style="display:none;">
+
+        </div>
+        <div class="pull-right positionRelative marginBottom5">
+            <button aria-expanded="false" data-toggle="dropdown" class="btn dropdown-toggle btn-default pull-right" onclick="javascript: funOpenEpisodeWizard();" id="btnCOACreate" style="display:none;">
+                COA Wizard
+                <span class="caret"></span>
+            </button>
+            <a href="#" class="btn btn-default pull-left marginRight11" onclick="javascript: AddNewRowCOA();" id="btnCOAManual" style="display:none;">+ Add New</a>
+        </div>
+        <div class="clearfix"></div>
+
+
+    </section>
+}
+
+@section Body{
+    <section class="content">
+        <div class="fontAriel">
+            <div class="" id="tabAccounts">
+                <div class="tab-content">
+                    <div class="midMenu">
+                        <ul id="UlSegmentType">
+                            @*<li class="active"><a href="#tabCO" data-toggle="tab">CO</a></li>
+                                <li><a href="#tabGL" data-toggle="tab">G/L</a></li>
+                                <li><a href="#tabEpi" data-toggle="tab">Epi</a></li>
+                                <li><a href="#tabDetail" data-toggle="tab">Detail</a></li>
+                                <li><a href="#tabSet" data-toggle="tab">Set</a></li>*@
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div id="tabCO" class="tab-pane active widget-body-regular">
+                        @*<a href="#" class="pull-right blueText underLine" id="hrefNewAccountAdd" onclick="javascript: funAddRow();">+ New <span id="spnNewAddSegment"></span> Account</a>
+                            <a href="#" class="pull-right blueText underLine" id="hrefAddParent" onclick="javascript: funAddRowDetailParent();" style="display: none; margin-right: 40px;">+ New Parent Account</a>*@
+                        <div class="clearfix"></div>
+
+                        <div class="xsborNoneNew" style="margin-top:10px; margin-bottom:0px;">
+                            <div class="tblResponse" id="DvtblCOA">
+                                <div class="fixed-table-container">
+                                    <div class="header-background"> </div>
+                                    <div class="fixed-table-container-inner" id="DvTB">
+                                        <div id="dvFixed">
+                                            <table class="table table-hover" id="tblGLSetup">
+                                                <thead id="tblGLSetupThead"></thead>
+                                                <tbody id="tblGLsetupTbody"></tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*  *@
+                        <div id="DivTBLAccount">
+                            <div class="table-responsive xsborNone" style="overflow:auto;">
+                                @*<table class="table table-hover" id="tblGLSetup">
+                                        <thead id="tblGLSetupThead"></thead>
+                                        <tbody id="tblGLsetupTbody"></tbody>
+                                    </table>*@
+                            </div>
+                        </div>
+                    </div>
+                    <!--end here-->
+                    <!--tabAccounts End here-->
+                </div>
+            </div>
+            <!-- </div>-->
+            <!--</div>-->
+            <div id="tabCOA" style="display:none;">
+                <div class="tab-content">
+                    <div class="pull-right positionRelative marginBottom5">
+                        @*<button aria-expanded="false" data-toggle="dropdown" class="btn dropdown-toggle btn-default pull-right" onclick="javascript: funOpenEpisodeWizard();">
+                                COA Wizard
+                                <span class="caret"></span>
+                            </button>
+                            <a href="#" class="btn btn-default pull-left marginRight11" onclick="javascript: AddNewRowCOA();">+ Add New</a>*@
+                    </div>
+                    @*<div class="table-responsive xsborNone">
+
+                        <!--<a href="#" class="btn  btn-default pull-right marb15">+ Add New</a>-->
+                        <div class="pull-right positionRelative marginBottom5">
+                            <button aria-expanded="false" data-toggle="dropdown" class="btn dropdown-toggle btn-default pull-right" onclick="javascript: funOpenEpisodeWizard();">
+                                COA Wizard
+                                <span class="caret"></span>
+                            </button>
+                            <a href="#" class="btn btn-default pull-left marginRight11" onclick="javascript: AddNewRowCOA();">+ Add New</a>
+                            @*<ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">COA Wizard</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:funOpenEpisodeWizard();">Episode Wizard</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Load from Budget File</a>
+                                    </li>
+                                </ul>*@
+                </div>
+                <div class="clearfix"></div>
+
+
+
+                <div class="xsborNoneNew" style="margin-top:10px; margin-bottom:0px;">
+                    <div class="tblResponse" id="DvtblCOA">
+                        <div class="fixed-table-container">
+                            <div class="header-background"> </div>
+                            <div class="fixed-table-container-inner" id="DvTBB">
+                                <div id="dvFixed">
+                                    <table id="tblCOA" class="table table-hover">
+                                        <thead id="tblCOAThead">
+
+                                        </thead>
+                                        <tbody id="tblCOATBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+             
+           
+
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <!-- /.box -->
+    </section>
+    <div id="setting" class="newhidden" style="display: none;">
+        <img id="dvLoader" src="~/Images/loader.gif" />
+        <div class="popup col-md-10 col-lg-8 col-sm-12 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('setting');">X</a></div>
+            <div class="heading2"><h4>Loding Budget File</h4></div>
+            <div class="relativeWrap">
+                <div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
+                    <!-- Tabs Heading -->
+                    <div class="midMenu midMenuGrey  marginTop10 widget-head paddingAll">
+                        <ul class="borderBottom1">
+
+                            @*<li id="liSetting" class="active BudgetTopCls"><a href="#">Settings</a></li>*@
+                            <li id="liLoadAccount" class="active BudgetTopCls"><a href="#">Load Accounts</a></li>
+                            @*<li id="liCOA" class="BudgetTopCls"><a href="#">Build COA</a></li>*@
+                            <li id="liResult" class="BudgetTopCls"><a href="#">Results</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- // Tabs Heading END -->
+                    <div class="widget-body">
+                        <div class="tab-content">
+                            <!-- Tab content -->
+                            <div id="tabSettings" class="tab-pane widget-body-regular active tabCls">
+                                <div class="WhtBg height300">
+                                    @*<div class="col-md-12 paddingNone">
+                                            <div class="form-group">
+                                                <input id="chlLoadAc" checked="checked" disabled="disabled" type="checkbox">  Load Accounts
+                                            </div>
+                                        </div>*@
+                                    @*<div class="col-md-12 paddingNone">
+                                            <div class="form-group">
+                                                <input id="chkCOA" type="checkbox">  Build COA
+                                            </div>
+                                        </div>*@
+                                    <div class="col-md-12 paddingAll10">
+                                        <div class="form-group">
+                                            <input type="file" id="fileXML" accept="text/xml">
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <!-- // Tabs END -->
+                                </div>
+                                <div class="darkGreyNew col-lg-12">
+                                    <a href="javascript:hideDiv('setting');" class="btn btn-primary floatLeft">Cancel</a>
+                                    <a href="javascript:UploadXML();" id="btn1" class="btn btn-success floatRight">Next</a>
+                                    @*<a href="#tabLoadAccounts" data-toggle="tab" class="btn btn-success floatRight" aria-expanded="false">Next</a>*@
+                                </div>
+                            </div>
+                            <!-- // Tab content END -->
+                            <div id="tabLoadAccounts" style="display:none;" class="tab-pane widget-body-regular tabCls">
+                                <div class="table-responsive height300">
+                                    <div id="dvBudgetTop">
+                                        <div class="col-md-5 col-sm-5 col-xs-12 col-lg-5 height300 overflowAuto" style="border: 1px solid #eff1f3; padding: 10px;">
+                                            <div class="form-group blueBg overflowAuto paddingAll10">
+                                                <div class="width101 padl10"><b>XML File</b></div>
+                                                <div class="width119"><b>Segment to map to</b></div>
+                                            </div>
+                                            <div id="dvCategoryddl" class="form-group col-xs-12" style="margin-bottom: 4px;">
+                                                @*<label class="width101" id="btnBudCategory1">Categories</label>*@
+                                                <a class="BudLedgerCls" style="display:block;" id="btnBudCategory2" href="javascript:LoadCategoryPrevious1();">Categories</a>
+
+                                                <select disabled="disabled" id="ddlCategory" class="form-control width101"></select>
+
+                                            </div>
+                                            <div id="dvAccountddl" class="form-group col-xs-12" style="margin-bottom: 4px;">
+                                                @*<label class="width101" id="btnBudAccount1">Accounts</label>*@
+                                                <a class="BudLedgerCls" style="display:block;" id="btnBudAccount2" href="javascript:SaveCategoryGLPrevious1();">Accounts</a>
+
+                                                <select disabled="disabled" id="ddlAccounts" class="form-control width101"></select>
+
+                                            </div>
+                                            <div id="dvDetailddl" class="form-group col-xs-12" style="margin-bottom: 4px;">
+                                                @*<label class="width101" id="btnBudDetail1">Details</label>*@
+                                                <a class="BudLedgerCls" style="display:block;" id="btnBudDetail2" href="javascript:SaveDetailGLPrevious1();">Details</a>
+
+
+                                                <select disabled="disabled" id="ddlDetails" class="form-control width101"></select>
+                                            </div>
+                                            @*<div class="form-group col-xs-12" style="margin-bottom: 4px;">
+                                                    <label class="width101">dSet</label>
+
+                                                    <select disabled class="form-control width101">
+                                                        <option>dSet</option>
+                                                    </select>
+
+                                                </div>
+                                                <div class="form-group col-xs-12" style="margin-bottom: 4px;">
+                                                    <label class="width101">dLocation</label>
+
+                                                    <select disabled class="form-control width101">
+                                                        <option>dLocation</option>
+                                                    </select>
+
+                                                </div>
+                                                <div class="form-group col-xs-12" style="margin-bottom: 4px;">
+                                                    <label class="width101">Unit 1</label>
+
+                                                    <select disabled class="form-control width101">
+                                                        <option>unit 1</option>
+                                                    </select>
+
+                                                </div>
+                                                <div class="form-group col-xs-12" style="margin-bottom: 4px;">
+                                                    <label class="width101">Unit 1</label>
+
+                                                    <select disabled class="form-control width101">
+                                                        <option>unit 1</option>
+                                                    </select>
+
+                                                </div>
+                                                <div class="form-group col-xs-12" style="margin-bottom: 4px;">
+                                                    <label class="width101">Unit 2</label>
+
+                                                    <select disabled class="form-control width101">
+                                                        <option>unit 1</option>
+                                                    </select>
+
+                                                </div>
+                                                <div class="form-group col-xs-12" style="margin-bottom: 4px;">
+                                                    <label class="width101">Unit 3</label>
+
+                                                    <select disabled class="form-control width101">
+                                                        <option>unit 1</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-xs-12" style="margin-bottom: 4px;">
+                                                    <label class="width101">Unit 4</label>
+
+                                                    <select disabled class="form-control width101">
+                                                        <option>unit 1</option>
+                                                    </select>
+
+                                                </div>*@
+                                        </div>
+
+                                        <div class="height300 overflowAuto">
+                                            <div class="col-lg-12 col-sm-7 col-md-7 BudgetLedgerClsNew" id="dvBudgetCategoryDivision">
+                                                <table class="myTable BudgetLedgerClsNew" id="tblBudgetCategory" style="display:none;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><input type="checkbox" id="chkCheckAll" onchange="javascript: CheckAllBudgetLedger();" /> </th>
+                                                            <th>Code</th>
+                                                            <th>Description</th>
+                                                            <th>Account Type</th>
+                                                            <th>Balance Sheet</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tbodyBudgetCategory"></tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="col-lg-12 col-sm-7 col-md-7 BudgetLedgerClsNew" style="display:none;" id="dvBudgetAccountsDivision">
+                                                <table class="myTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><input type="checkbox" id="chkCheckAllAccount" onchange="javascript: CheckAllBudgetAccountLedger();" /> </th>
+                                                            <th>Category</th>
+                                                            <th>Code</th>
+                                                            <th>Description</th>
+                                                            <th>Posting</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tbodyBudgetAccount"></tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="col-lg-12 col-sm-7 col-md-7 BudgetLedgerClsNew" style="display:none;" id="dvBudgetDetailsDivision">
+                                                <table class="myTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><input type="checkbox" id="chkCheckAllDetail" onchange="javascript: chkCheckAllDetail();" /> </th>
+                                                            <th>Parent</th>
+                                                            <th>Code</th>
+                                                            <th>Description</th>
+                                                            <th>Posting</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tbodyBudgetDetail"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="darkGreyNew col-lg-12">
+                                    <a href="javascript:hideDiv('setting');" class="btn btn-primary floatLeft">Cancel</a>
+                                    <a href="javascript:LoadCategory();" id="btnLoadAccount" class="btn btn-success floatRight BudgetLedgerClsNew">Next</a>
+                                    <a href="javascript:SaveCategoryGL();" id="btnLoadCategory" style="display:none;" class="btn btn-success floatRight BudgetLedgerClsNew">Next</a>
+                                    <a href="javascript:SaveAccountsGL();" id="btnLoadAccounts" style="display:none;" class="btn btn-success floatRight BudgetLedgerClsNew">Next</a>
+                                    <a href="javascript:SaveDetailsGL();" id="btnLoadDetails" style="display:none;" class="btn btn-success floatRight BudgetLedgerClsNew">Next</a>
+                                </div>
+                            </div>
+                            <!-- Tab content -->
+                            <div id="tabBuildCOA" style="display:none;" class="tab-pane widget-body-regular tabCls">
+                                <div class="table-responsive height300">
+                                    <div class="col-md-2 col-sm-3 col-xs-4 col-lg-2" style="border: 1px solid #eff1f3; padding: 10px;">
+                                        <p><b>Select Companies</b></p>
+                                        <p><i class="fa fa-chevron-circle-right fontSize17"></i> <input type="checkbox"> 01</p>
+                                        <p><i class="fa fa-chevron-circle-right fontSize17"></i> <input type="checkbox"> 02</p>
+                                        <p><i class="fa fa-chevron-circle-right fontSize17"></i> <input type="checkbox"> 03</p>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-8 col-lg-4" style="border: 1px solid #eff1f3; padding: 10px;">
+                                        <p><b>Select Episodes</b> <a href="#" class="btn btn-default pull-right">Fatch Accounts</a></p>
+                                        <p><i class="fa fa-chevron-circle-right fontSize17"></i> <input type="checkbox"> All Episodes</p>
+                                        <p><i class="fa fa-chevron-circle-right fontSize17"></i> <input type="checkbox"> 101:pilot</p>
+                                        <p><i class="fa fa-chevron-circle-right fontSize17"></i> <input type="checkbox"> 101:pilot</p>
+                                        <p><i class="fa fa-chevron-circle-right fontSize17"></i> <input type="checkbox"> 101:pilot</p>
+                                        <p><i class="fa fa-chevron-circle-right fontSize17"></i> <input type="checkbox"> 101:pilot</p>
+                                        <p><i class="fa fa-chevron-circle-right fontSize17"></i> <input type="checkbox"> 101:pilot</p>
+                                        <p><i class="fa fa-chevron-circle-right fontSize17"></i> <input type="checkbox"> 101:pilot</p>
+                                        <p><i class="fa fa-chevron-circle-right fontSize17"></i> <input type="checkbox"> 101:pilot</p>
+                                        <p><i class="fa fa-chevron-circle-right fontSize17"></i> <input type="checkbox"> 101:pilot</p>
+                                    </div>
+                                    <div class="col-md-6 col-sm-5 col-xs-12 col-lg-6">
+                                        <!--Load Pattern <select><option></option></select>-->
+                                        <input type="text" value="FL Pattern" class="pull-right width119 form-control">
+                                        <span class="pull-right marginRight11"><input type="checkbox"> Save As</span>
+                                        <table class="myTable">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th><input type="checkbox"> Code</th>
+                                                    <th>Description</th>
+                                                    <th><input type="checkbox"> Subs</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="">
+                                                    <td><i class="fa fa-chevron-circle-right fontSize17"></i></td>
+                                                    <td><input type="checkbox"> 600</td>
+                                                    <td>Producers</td>
+                                                    <td><input type="checkbox"></td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td><i class="fa fa-chevron-circle-right fontSize17"></i></td>
+                                                    <td><input type="checkbox"> 600</td>
+                                                    <td>Producers</td>
+                                                    <td><input type="checkbox"></td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td><i class="fa fa-chevron-circle-right fontSize17"></i></td>
+                                                    <td><input type="checkbox"> 600</td>
+                                                    <td>Producers</td>
+                                                    <td><input type="checkbox"></td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td><i class="fa fa-chevron-circle-right fontSize17"></i></td>
+                                                    <td><input type="checkbox"> 600</td>
+                                                    <td>Producers</td>
+                                                    <td><input type="checkbox"></td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td><i class="fa fa-chevron-circle-right fontSize17"></i></td>
+                                                    <td><input type="checkbox"> 600</td>
+                                                    <td>Producers</td>
+                                                    <td><input type="checkbox"></td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td><i class="fa fa-chevron-circle-right fontSize17"></i></td>
+                                                    <td><input type="checkbox"> 600</td>
+                                                    <td>Producers</td>
+                                                    <td><input type="checkbox"></td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td><i class="fa fa-chevron-circle-right fontSize17"></i></td>
+                                                    <td><input type="checkbox"> 600</td>
+                                                    <td>Producers</td>
+                                                    <td><input type="checkbox"></td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td><i class="fa fa-chevron-circle-right fontSize17"></i></td>
+                                                    <td><input type="checkbox"> 600</td>
+                                                    <td>Producers</td>
+                                                    <td><input type="checkbox"></td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td><i class="fa fa-chevron-circle-right fontSize17"></i></td>
+                                                    <td><input type="checkbox"> 600</td>
+                                                    <td>Producers</td>
+                                                    <td><input type="checkbox"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="darkGreyNew col-lg-12">
+                                    <a href="javascript:hideDiv('setting');" class="btn btn-primary floatLeft">Cancel</a>
+                                    <a href="#tabResults" data-toggle="tab" class="btn btn-success floatRight">Next</a>
+                                </div>
+                            </div>
+                            <!-- // Tab content END -->
+                            <!-- Tab content -->
+                            <div id="tabResults" style="display:none;" class="tab-pane widget-body-regular tabCls">
+                                <div class="height300">
+                                    <div class="table-responsive height300">
+                                        <p class="fontSize17"><b>Results</b></p>
+                                        <p>Ledger Account - <span id="spanResultLedger"></span></p>
+                                        <p>Detail Account - <span id="spanResultDetail"></span></p>
+                                        <p>Detail Subaccount - <span id="spanResultDetailChild"></span></p>
+                                    </div>
+
+                                </div>
+                                <div class="darkGreyNew col-lg-12">
+                                    <a href="javascript:hideDiv('setting');" class="btn btn-success floatLeft">Build COA</a>
+                                    <a href="javascript:hideDiv('setting');" class="btn btn-primary floatRight">Close</a>
+                                </div>
+                            </div>
+                            <!-- // Tab content END -->
+                            <!-- Tab content -->
+                            <!-- // Tab content END -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="episodeWizard" class="newhidden" style="display: none;">
+        <div class="popup col-md-10 col-lg-8 col-sm-12 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:CloseWizardPopup();">X</a></div>
+            <div class="heading2"><h4 style="display:inline-block;">COA Wizard</h4><p style="display:inline-block;"> </p></div>
+            <div class="clearfix"></div>
+            <div class="col-md-12">
+                <div class="table-responsive height300">
+                    <div class="col-md-5 col-sm-5 col-xs-12 col-lg-5 overflowAuto height300 " style="overflow-x:auto;">
+                        <div class="width2000" id="DvAccounts">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-7 col-xs-12 col-lg-6" style="display:none; height: 275px;overflow: auto;" id="DvLedgerDetail">
+                        @*<span class="pull-left">Load Pattern</span> <span class="pull-left"><select class="form-control  width101"><option></option></select></span>
+                            <input type="text" value="FL Pattern" class="pull-right width119 form-control">
+                            <span class="pull-right marginRight11"><input type="checkbox"> Save As</span>*@
+                        <table class="myTable" id="tblLedgerDetail">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th><input type="checkbox" id="chkAllCode" onchange="funCheckAll('Code');"> Code</th>
+                                    <th>Description</th>
+                                    <th><input type="checkbox" id="ChkAllSubs" onchange="funCheckAll('Subs');"> Subs</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblLedgerDetailTBody"></tbody>
+                        </table>
+
+                    </div>
+                    <div id="DvSuccess" style="display:none;"><span style="color: Red;margin: 15%;">No Sub Account.</span></div>
+
+                </div>
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a href="javascript:hideDiv('episodeWizard');" class="btn btn-primary floatLeft">Cancel</a>
+                <a href="javascript:funNextSegment();" class="btn btn-success floatRight" id="btnNext">Next</a>
+                <a href="javascript:funGenrateCOA();" class="btn btn-success " style="margin-left: 40%;"> Build COA</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="COAManual" class="newhidden" style="display: none;">
+        <div class="popup col-md-10 col-lg-5 col-sm-12 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:CloseCOAPopup();">X</a></div>
+            <div class="heading2">
+                <h4 style="display:inline-block;  text-transform: inherit !important;">COA Add Accounts to</h4>
+                <label id="lblAccountsCOA" style=" float: left;margin-left: 35% !important; width: 65% !important;"></label><p style="display:inline-block;"> </p>
+                <div class="clearfix"></div>
+                <div class="col-md-12">
+                    <div class="table-responsive height300">
+
+                        <div class="col-md-6 col-sm-7 col-xs-12 col-lg-6" style="display:inline;    width: 95% !important;; height: 275px;overflow: auto;" id="DvLedgerDetail">
+
+                            <table class="myTable" id="tblLedgerDetailCOAManual">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th><input type="checkbox" id="chkAllCode" onchange="funCheckAll('Code');"> Code</th>
+                                        <th>Description</th>
+                                        <th><input type="checkbox" id="ChkAllSubs" onchange="funCheckAll('Subs');"> Subs</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblLedgerDetailCOAManualTBody"></tbody>
+                            </table>
+
+                        </div>
+                        <div id="DvSuccess" style="display:none;"><span style="color: Red;margin: 15%;">No Sub Account.</span></div>
+
+                    </div>
+                </div>
+                <div class="darkGreyNew col-lg-12">
+                    <a href="javascript:hideDiv('episodeWizard');" class="btn btn-primary floatLeft">Cancel</a>
+
+                    <a href="javascript:SaveCOAManual();" class="btn btn-success  floatRight" style="margin-left: 40%;"> ADD </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Javascript{
+
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.1/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                fixedHeader: {
+                    header: true,
+                    footer: true
+                }
+            });
+        });
+    </script>
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/fixedheader/3.1.1/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script>
+        // Change the selector if needed
+        var $table = $('table.scroll'),
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
+
+        // Adjust the width of thead cells when window resizes
+        $(window).resize(function () {
+            // Get the tbody columns width array
+            colWidth = $bodyCells.map(function () {
+                return $(this).width();
+            }).get();
+
+            // Set the width of thead columns
+            $table.find('thead tr').children().each(function (i, v) {
+                $(v).width(colWidth[i]);
+            });
+        }).resize(); // Trigger resize handler
+    </script>
+
+
+
+
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+    <script src="~/Scripts/Ledger/GLSetup.js"></script>
+    <script src="~/Scripts/Ledger/GLBudget.js"></script>
+    <script src="~/Scripts/Ledger/COAWizard.js"></script>
+    <style>
+        .Width20 {
+            width: 30%;
+        }
+
+        .RedBorder {
+            border: solid 1px red !important;
+        }
+
+        .VisiblityHidden {
+            visibility: hidden;
+        }
+
+        .List-style {
+            list-style: none;
+        }
+
+        .TrDisplayNone {
+            display: none;
+        }
+
+        .TrColor {
+            background-color: #5c8fbe !important;
+        }
+
+        .height300 {
+            height: 300px;
+        }
+
+        .Indent {
+            margin: 8px;
+        }
+
+        .Indent-Indent {
+            margin: 16px;
+        }
+
+        .Indent-Indent-Indent {
+            margin: 24px;
+        }
+
+        .Indent-Indent-Indent-Indent {
+            margin: 32px;
+        }
+
+        .Indent-Indent-Indent-Indent-Indent {
+            margin: 40px;
+        }
+
+        .Indent-Indent-Indent-Indent-Indent-Indent {
+            margin: 48px;
+        }
+
+        .Indent-Indent-Indent-Indent-Indent-Indent-Indent {
+            margin: 56px;
+        }
+
+        .RedColor {
+            color: red;
+        }
+
+        .BlueColor {
+            color: #2A7BC1;
+        }
+
+        .GreenColor {
+            color: #4cbf63;
+        }
+
+        .RightIcon {
+            position: relative;
+        }
+
+            .RightIcon:before {
+                content: "\f138";
+                font-family: FontAwesome;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: inherit;
+                font-size: 16px;
+                padding-right: 0.5em;
+            }
+
+        .DownIcon {
+            position: relative;
+        }
+
+            .DownIcon:before {
+                content: "\f13a";
+                font-family: FontAwesome;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: inherit;
+                font-size: 16px;
+                padding-right: 0.5em;
+            }
+
+        .table-hover th {
+            padding: 0px 4px !important;
+        }
+        .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+            border: 1px solid #999999 !important;
+            background: #dadada url("images/ui-bg_glass_75_dadada_1x400.png") 50% 50% repeat-x !important;
+            font-weight: normal !important;
+            color: #212121 !important;
+        }
+    </style>
+}

@@ -1,0 +1,614 @@
+﻿@{
+    ViewBag.Title = "AccountsPayable>>Payments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#"> Banking <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Print Checks</li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+                <li class="active"><a href="#">Print Checks</a></li>
+                <li class=""><a href="Void">VOID</a></li>
+                <li class="hidden"><a href="voidunissued">VOID Unissued</a></li>
+                <li class=""><a href="Reconciliation">Bank Reconciliation</a></li> 
+            </ul>
+        </div>       
+        <div class="floatRight" style="width:550px;">
+            <input id="txtPaymentDate" type="text" class="form-control floatLeft marb0 datepicker" placeholder="MM/DD/YYYY" style="width:83px!important; border: none; margin-bottom: 0px;" disabled />
+            <select id="ddlPaymentType" onchange="javascript: CheckTypeStatus();" class="form-control floatLeft marb0 datepicker" disabled></select>
+            @*<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paddingNone" id="dvDate">
+                <label class="col-lg-3 col-md-3 col-sm-5 col-xs-3">Date</label>
+                <div class="col-lg-8 col-md-8 col-sm-7 col-xs-9 pad0" style="border:1px solid #eee;">
+                    <i class="fa fa-calendar floatLeft padding8" style="font-size:17px;padding-top:5px;"></i>
+                </div>
+            </div>*@
+
+
+            <div id="dv1">
+                <a class="btn btn-primary floatLeft displayNone" onclick="javascript: ConfirmCancel();" id="btnCancelCheckRun">Cancel Check Run</a>
+                <a class="btn btn-info floatLeft" id="btnEditCriteria" href="CheckCycle">Edit Criteria</a>
+                <a class="btn btn-default floatLeft margin-r-5 PrintCheck1" style="display:none;" id="btnPreview" href="javascript: PreviewTabNew();">Preview</a>
+                <a class="btn btn-default floatRight margin-r-5 PrintCheck1" id="btnPrintDirect" href="javascript: PreviewTab1();">Print Checks</a>
+                <a class="btn btn-default floatRight margin-r-5 PrintCheck1" id="btnPrint" href="javascript: PrintCheck();">Print Checks</a>
+                <a class="btn btn-default floatLeft margin-r-5 PrintCheck1" style="display:none;" id="btnPrintCopies" href="#">Print Copies</a>
+            </div>
+            <div id="dv2" class="displayNone">
+                <a class="btn btn-default floatLeft margin-r-5 PrintCheck1" href="javascript: PreviewTabNew();">Preview</a>
+                <a class="btn btn-default floatLeft margin-r-5 PrintCheck1" href="javascript: PrintCheckAgain();">Print Checks</a>
+                <a class="btn btn-default floatLeft margin-r-5 PrintCheck1" style="display:none;" href="#">Print Copies</a>
+            </div>
+            <a class="btn btn-default floatRight margin-r-5 PrintCheck2 displayNone" href="javascript:CheckVerification();">Process</a>
+        </div>
+        <div class="clearfix"></div>
+        <div id="dvCheckNo" class="col-xs-5 paddingNone">
+@*            <div id="divBankName" class="col-lg-9">*@
+                <p style="margin:0px;width:300px;float:left;">Bank: <b><span id="SpnBankName"></span></b></p>
+            @*</div>*@
+            <div id="dvCheckNo_CheckDetails">
+                <label><span id="spanCTitle" style="">Check #:</span></label>
+                <span id="SpnCheckNumberStart" ondblclick="javascript: ChangeStartingCheck();"></span>
+                <input type="text" id="txtCheckNumberStart" onfocusout="javascript: UpdateStartCheckNo();" class="width60 NumberOnly" style="display:none;" /><span id="SpnTo"></span>
+                <span id="SpnCheckNumberEnd"></span>
+            </div>
+        </div>
+        <p id="liCheckRun" style="float:right;font-weight: bold;display:none;"><span> Check Run :</span><span id="spanCheckRun"></span></p>
+    </section>
+}
+
+@section Body{
+
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="row fontAriel">
+
+            <div class="tab-content">
+                <!-- Tab content -->
+                <div id="tabPayInvoices" class="tab-pane widget-body-regular active">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+                        @*Bank <input type="text" id="txtBankName" class="SearchBank" onblur="funBankCheck();"/>
+                            <input type="hidden" id="hdnBank" />*@
+                        <br>
+                        <!--<select><option>Preview</option></select>-->
+                        <div class="input-group-btn" style="margin-top:10px; display:none;">
+                            <button data-toggle="dropdown" class="btn dropdown-toggle previewBtn">
+                                Preview
+                                <span class="caret" style="position: absolute;right: 6px;top: 10px;"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Preview</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" style="display:none;">
+                        <span class="width50">Current Balance:</span> <span class="width119"><a href="#" class="blueText">$54,03949 USD</a></span>
+                        <span class="width50">Paying:</span>
+                        <span class="width119"><a href="#" class="greenText paddingLeft30">$54,03949 USD</a></span>
+                        <span class="width50">Ending Balance:</span>
+                        <span class="width119"><a href="#" class="blueText">$54,03949 USD</a></span>
+                    </div>
+                    <div class="col-lg-12 col-md-4 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paddingNone" style="display:none;">
+                            Type: <a href="#" class="blueText">Check</a>
+                        </div>
+                        @*<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 paddingNone" id="dvCheckType">
+                            <label class="col-lg-3 col-md-3 col-sm-6 col-xs-3">Type</label>
+                            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-9 pad0">
+                            </div>
+                        </div>*@
+                    </div>
+                    <div class="col-xs-12">
+                        <div id="dvFilter" style="margin-top:10px; margin-bottom:0px;" class="xsborNoneNew">
+                            <div id="tblResponse">
+                                <div style="height:420px;" class="">
+                                    <div id="dvFixed">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="tblInvList" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="color: #337ab7; padding: 5px !important; ">
+                                                            <input type="checkbox" id="chkInvoiceList" onclick="funCheckAll();">Select All
+                                                        </th>
+                                                        <th style="color: #337ab7; padding: 5px !important;">Vendor</th>
+                                                        <th style="color: #337ab7; padding: 5px !important;" class="CheckChangeType" id="tblthCheckNumber">Check Number</th>
+                                                        <th style="color: #337ab7; padding: 5px !important;">Invoice #</th>
+                                                        <th style="color: #337ab7; width: 70px; padding: 5px !important;">Group</th>
+                                                        <th style="color: #337ab7; padding: 5px !important;">Invoice Date</th>
+                                                        <th style="color: #337ab7; padding: 5px !important;">Check Date</th>
+                                                        <th style="color: #337ab7; padding: 5px !important;">Invoice Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblInvoiceListTBody"></tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th style="padding:4px !important;"></th>
+                                                        <th style="padding:4px !important;"></th>
+                                                        <th style="padding:4px !important;" class="displayNone CheckChangeType" id="tdFooter"></th>
+                                                        <th style="padding:4px !important;"></th>
+                                                        <th style="padding:4px !important;"></th>
+                                                        <th style="padding:4px !important;"></th>
+                                                        <th style="padding:4px !important;"></th>
+                                                        <th style="padding:4px !important;"></th>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="dvPreview" style="margin-top:10px; margin-bottom:0px;" class="xsborNoneNew displayNone">
+                            <div id="tblResponse">
+                                <div class="fixed-table-container">
+                                    <div class="header-background"> </div>
+                                    <div class="fixed-table-container-inner">
+                                        <div id="dvFixed">
+                                            <table class="table table-hover table-responsive" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th><div class="th-inner"><input type="checkbox" id="chkPreviewHead" onchange="javascript:chkAllPreview();" /></div> </th>
+                                                        <th><div class="th-inner">Check#</div> </th>
+                                                        <th><div class="th-inner">Check Date</div> </th>
+                                                        <th><div class="th-inner">Vendor</div></th>
+                                                        <th><div class="th-inner">Line Items</div></th>
+                                                        <th><div class="th-inner">Amount Paid</div></th>
+                                                        @*<th>Status</th>*@
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblPreviewTBody"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="dvVerify" style="margin-top:10px; margin-bottom:0px;" class="xsborNoneNew displayNone">
+                            <div id="tblResponse">
+                                <div class="fixed-table-container">
+                                    <div class="header-background"> </div>
+                                    <div class="fixed-table-container-inner">
+                                        <div id="dvFixed">
+                                            <table class="table table-hover table-responsive" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            <div class="th-inner">
+                                                                <span style="float: left; margin: 5px; margin-left: 15px">A</span>
+                                                                <span style="float: left; margin: 5px; margin-left: 9px">C</span>
+                                                                <span style="float: left; margin: 5px; margin-left: 9px">R</span>
+                                                            </div>
+                                                        </th>
+                                                        <th><div class="th-inner">Status</div></th>
+                                                        <th><div class="th-inner">Check #</div></th>
+                                                        <th><div class="th-inner">Transaction #</div></th>
+                                                        <th><div class="th-inner">Check Date</div></th>
+                                                        <th><div class="th-inner">Vendor</div></th>
+                                                        <th><div class="th-inner">Amount paid</div></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblVerifyTBody"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="dvVerifiedPreview" style="margin-top:10px; margin-bottom:0px;" class="xsborNoneNew displayNone">
+                            <div id="tblResponse">
+
+                                <div class="fixed-table-container">
+                                    <div class="header-background"> </div>
+                                    <div class="fixed-table-container-inner">
+                                        <div id="dvFixed">
+
+                                            <table class="table table-hover table-responsive" cellspacing="0">
+
+                                                <thead>
+                                                    <tr>
+                                                        <th><div class="th-inner"></div></th>
+                                                        <th><div class="th-inner">Status</div></th>
+                                                        <th><div class="th-inner">Check #</div></th>
+                                                        <th><div class="th-inner">Transaction #</div></th>
+                                                        <th><div class="th-inner">Check Date</div></th>
+                                                        <th><div class="th-inner">Vendor</div></th>
+                                                        <th><div class="th-inner">Amount paid</div></th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody id="tblVerifiedPreviewTBody"></tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="clearfix"></div>
+                        <div style="margin-top:4%;">
+
+                            <a class="btn btn-success floatRight margin-r-5 displayNone" href="#" onclick="funPostChecks();">Post Checks</a>
+                        </div>
+                        <!-- /.box -->
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+            <!-- /.content -->
+        </div>
+
+
+    </section>
+
+
+
+
+
+    <div class="newhidden" id="dvWait" style="display: none;width: 100%;margin: auto 0px;text-align: center;top: 30%;">
+
+        <img src="~/Images/InternetSlowdown_Day.gif" />
+
+    </div>
+
+
+    <!-- /.content -->
+
+    <div class="newhidden" id="cancelChecks" style="display: none;">
+        <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone top15">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv02('cancelChecks');">X</a></div>
+            <div class="heading2"><h4>Cancel Checks?</h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    <p>Are you sure you want to cancel these checks?</p>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a class="btn btn-primary floatRight" href="javascript:hideDiv02('cancelChecks');">No</a>
+                <a class="btn btn-success floatLeft" href="javascript:hideDiv02('cancelChecks');">Yes</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="newhidden" id="reissueChecks" style="display: none;">
+        <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone top15">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv02('reissueChecks');">X</a></div>
+            <div class="heading2"><h4>Reissue Checks?</h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    <p>Are you sure you want to reissue these checks?</p>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a class="btn btn-primary floatRight" href="javascript:hideDiv02('reissueChecks');">No</a>
+                <a class="btn btn-success floatLeft" href="javascript:hideDiv02('reissueChecks');">Yes</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="newhidden" id="voidChecks" style="display: none;">
+        <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone top15">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv02('voidChecks');">X</a></div>
+            <div class="heading2"><h4>Void Checks?</h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    <p>Are you sure you want to Void these checks?</p>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a class="btn btn-primary floatRight" href="javascript:hideDiv02('voidChecks');">No</a>
+                <a class="btn btn-success floatLeft" href="javascript:hideDiv02('voidChecks');">Yes</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="newhidden" id="cancelCheckError" style="display: none;">
+        <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone top15">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv02('cancelCheckError');">X</a></div>
+            <div class="heading2"><h4>Cancel Check Error</h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    <p>You canot Cancel a cleared check</p>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a class="btn btn-success floatLeft" href="javascript:hideDiv02('cancelCheckError');">Ok</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="newhidden" id="dvPrint" style="display: none;">
+        <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone top15">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('dvPrint');">X</a></div>
+
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    <p>
+                        <img style="width:100%;" src="~/Images/checkPrint.PNG" />
+                    </p>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a class="btn btn-primary floatRight" style="width:49%;" href="javascript:hideDiv('dvPrint');">CANCEL</a>
+                <a class="btn btn-success floatLeft" style="width:49%;" href="javascript:VerifyCheck();">PRINT</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dvVerifyCheck" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Verify Check Printing</h5>
+                <p>
+                    Please verify that your Checks Printed as expected.
+                    <br />
+
+                    Did everything print correctly?
+                    <br />
+                </p>
+                @*<a href="javascript:CompleteCheckRun();" class="dialog-confirm-button">YES</a>*@
+                <a href="javascript:CheckRunJE();" class="dialog-confirm-button">YES</a>
+                <a href="javascript:GetVerifyCheck();" class="dialog-reject-button">NO</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="dialog-previous-check-run" style="display:none;">
+        This bank has an open Check Run! We now return you to you Check Run that is already in progress.
+    </div>
+
+    <div id="dvPrintingChecksCopies" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Printing Check Copies</h5>
+                <p>
+                    @*You are printing <span class="spanCheckCnt"></span> checks. Based upon your Bank setting , you will need to place <span class="spanCheckCnt"></span> pages of plain paper stock
+                        into your printer.  Please make sure you have removed all pre-printed check stock from your printer
+                        <br /><br />
+                        When you have placed the <span class="spanCheckCnt"></span> pages of plain paper in your printer and are ready to print, please select print*@
+
+
+
+                    You have printed <span class="spanCheckCnt"></span> of <span class="spanCheckCnt"></span> checks. Based on your bank settings, you will be printing
+                    <span class="spanCheckCnt"></span> of <span class="spanCheckCnt"></span> copies. <br /><br />
+                    Please place check copies into your printer and select Print Copies or Cancel to not print Check Copies at this
+                    time.
+
+                    <br /><br />
+                    The check print run is <span class="spanCheckRunCopies"></span>
+                    <br />
+                </p>
+                <a href="javascript:PrintCheckPDFCopies();" class="dialog-confirm-button">PRINT COPIES</a>
+                <a href="javascript:CompleteCheckRun();" class="dialog-reject-button">CANCEL</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dvPrintExit" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Exiting Check Cycle</h5>
+                <p>
+
+                    Check Run <span class="spanCheckRunCopies"></span> is complete. You will now exit the Check Run.
+
+                    <br />
+                </p>
+                <a href="#" class="dialog-confirm-button" onclick="FinalizeCheckRun();">OK</a>
+                @*<a href="javascript:hideDiv('dvPrintExit');" class="dialog-reject-button">NO</a>*@
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dvEditCheck" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+
+                <p>
+                    This check number - <span id="spanEditCheckList"></span>  has already been used before.
+
+                    <br />
+                </p>
+
+                <a href="javascript:RsassignAgain();" class="dialog-reject-button">OK</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="dvCancelCR" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Cancel Check Run?</h5>
+                <p>
+                    Are you sure want to Cancel this Check Run ?
+                    <br />
+                </p>
+                <a href="javascript:CancelCheckRun();" class="dialog-confirm-button">YES</a>
+                <a href="javascript:hideDiv('dvCancelCR');" class="dialog-reject-button">NO</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="CheckRunWorking" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Check Run </h5>
+                <p>
+                    Check Run is in Progress by User <span id="spanCheckRunUser"></span>
+                </p>
+                <br />
+                <a href="CheckCycle" class="dialog-confirm-button">OK</a>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dvError" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Check Number  </h5>
+                <p>
+                    <span id="spanErrorMsg"></span>
+                </p>
+                <br />
+                <a class="dialog-confirm-button" href="javascript:hideDiv02('dvError');">Ok</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="dvNotification" class="newhidden" style="display: none; margin-top:10%">
+        <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone">
+            <div class="heading2">
+                <h5>
+                    <span id="spnMsg" style="margin: 11% 0% 1% 15%;display: block;"></span>
+                </h5>
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a id="NotificationOK" href="#" onclick="javascript: $('#dvNotification').hide(); $('#fade').hide();" class="btn btn-success floatRight" style="display: inline;">OK</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="dialog" style="display: none">
+    </div>
+
+    <div id="fade" class="black_overlay"></div>
+}
+
+@section Javascript{
+
+
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/AccountsPayable/PaymentFilter.js?v1.1.004"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+
+
+
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+
+    <script>
+
+        // This is an example jQuery snippet that makes the dialogs work
+        $(document).ready(function () {
+
+            // We have two control functions that show or hide dialogs
+            function showDialog(id) {
+
+                // Find the dialog and show it
+
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+
+                // Center it on screen
+
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+
+            }
+            function hideAllDialogs() {
+                // Hide all visible dialogs
+                $('.dialog-overlay').fadeOut();
+            }
+
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+
+                showDialog(toShow);
+            });
+        });
+
+    </script>
+    <style type="text/css">
+        .dialog-card {
+            top: 15%;
+        }
+
+        #SpnTo {
+            padding: 0 5px 0 5px;
+        }
+
+        .w30N {
+            width: 30px !important;
+        }
+
+        .ui-button-icon-only .ui-icon {
+            margin: -8px 0 0 -9px !important;
+        }
+
+        .table-hover th {
+            padding: 0px 4px !important;
+        }
+
+        .blueClas {
+            background: #337ab7;
+            color: #fff;
+            padding: 5px !important;
+        }
+
+        #btnEditCriteria {
+            margin-right: 5px;
+        }
+        .no-close .ui-dialog-titlebar-close {
+            display: none;
+        }
+
+    </style>
+}

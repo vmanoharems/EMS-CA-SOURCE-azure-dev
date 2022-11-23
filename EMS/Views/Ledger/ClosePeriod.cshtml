@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "Ledger>>Period Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section BreadCrumb{
+<section class="content-header">
+    <ol class="breadcrumb floatLeft">
+        <li><a href="#"> Ledger <i class="fa fa-caret-right"></i></a></li>
+        <li><a href="#"> Period Management <i class="fa fa-caret-right"></i></a></li>
+        <li class="active">Select Company</li>
+    </ol>
+    <div style="margin-left: 5%;float: left;width: 68%;" >
+        <select id="ClsperiodDropdownId" class="form-control  pull-left marginRight10" onchange="javascript:GetStartEndPeriod();"></select>
+        <span id="SpanFreezeperiod">
+            <select id="StartEndPDropdownId" class="form-control pull-left" onchange="javascript:funCheckStatus();" style="width:auto;" disabled="true" ;>
+                <option>Select</option>
+            </select>
+        </span>
+        <input type="text" id="txtDate" class="form-control width90 datepicker floatLeft input-required" placeholder="MM/DD/YYYY">
+        <a id="BtnFreeze" href="#" class="btn  btn-success pull-right marginLeft10" style="display:inline">Freeze</a>
+        <a id="BtnUnFreeze" href="#" class="btn  btn-success pull-right marginLeft10" style=" display:none">UnFreeze</a>
+        <a id="BtnClose" class="text-center btn btn-primary pull-right marginRight10" style="display:inline;">Close</a>
+    </div>
+    <div class="clearfix"></div>
+</section>
+}
+
+@section Body{
+<section class="content">
+    <div class="fontAriel">
+        <div class="table-responsive" style="margin-top:10px; margin-bottom:0px;">
+            <div class="table-responsive">
+                <table class="table table-hover table-responsive dataTable" id="tblSegment">
+                    <tr>
+                        <th>Period ID</th>
+                        <th>Period Status</th>
+                        <th>Start Period</th>
+                        <th>End Period</th>
+                    </tr>
+                    <tbody id="tblPeriodTBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>  
+ <div id="PopFreezeperiod" class="newhidden" style="display:none;">
+    <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+        @*<div class="deleteNewIcon"><a href="javascript:hideDiv('PopFreezeperiod');">X</a></div>*@
+        <div class="heading2" align="center"><h5 style="margin-top: 5%;">Freeze Period?</h5></div>
+        <div class="WhtBg">
+            <div class="col-md-12">
+                <div class="form-group" style="text-align:center">
+                    <p align="center">This will prevent all entry of data into Company Period: <span id="SpanFreezId"></span></p>
+                    <p align="center"> Are you sure you'd like to Continue? </p>
+                </div>
+            </div>
+            <!-- // Tabs END -->
+        </div>
+        <div class="darkGreyNew col-lg-12">
+            <a href="javascript: hideDiv('PopFreezeperiod');" class="btn btn-primary floatLeft">No</a>
+            <a href="javascript: InsertFreezePeriod('Freeze');" class="btn btn-success floatRight">Yes</a>
+        </div>
+    </div>
+</div>
+
+
+<div id="PopUnFreezeperiod" class="newhidden" style="display:none;">
+
+    <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+       
+        <div class="heading2" align="center"><h5 style="margin-top: 5%;">Unfreeze Period?</h5></div>
+        <div class="WhtBg">
+            <div class="col-md-12">
+                <div class="form-group" style="text-align:center">
+                    <p align="center"> This will Open the Frozen Period</p>
+                    <span id="SpanFreezId"></span>
+                    <p align="center"> Are you sure you'd like to Continue? </p>
+                </div>
+            </div>
+            <!-- // Tabs END -->
+        </div>
+        <div class="darkGreyNew col-lg-12">
+            <a href="javascript: hideDiv('PopFreezeperiod');" class="btn btn-primary floatLeft">No</a>
+            <a href="javascript: InsertFreezePeriod('Open');" class="btn btn-success floatRight">Yes</a>
+        </div>
+    </div>
+</div>
+
+
+<div id="PopCloseperiod" class="newhidden" style="display:none;">
+    <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+        <div class="deleteNewIcon"><a href="javascript:hideDiv('PopCloseperiod');">X</a></div>
+        <div class="heading2" align="center"><h4>Close Period?</h4></div>
+        <div class="WhtBg">
+            <div class="col-md-12">
+                <div class="form-group" style="text-align:center">
+                    <p>You CANNOT close a period unless all prior periods have been closed.<br /> Please review prior periods before trying to close Period Ending.</p>
+                    <span id="spanClsPerid"></span>
+                </div>
+            </div>
+            <!-- // Tabs END -->
+        </div>
+        <div class="darkGreyNew col-lg-12">
+          
+            <a href="javascript:hideDiv('PopCloseperiod');" class="btn btn-primary" style="display:block; ">Ok</a>
+        </div>
+    </div>
+</div>
+
+<div id="PopNewClosePeriod" class="newhidden" style="display:none;">
+    <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+       @* <div class="deleteNewIcon"><a href="javascript:hideDiv('PopNewClosePeriod');">X</a></div>*@
+        <div class="heading2" align="center" style="background-color:#ff0000;"><h4 style="color: #fff; margin-top: -4px;">Close Period? </h4></div>
+        <div class="WhtBg">
+            <div class="col-md-12" style="text-align:center">
+                <p align="center"> This will close  <b><span id="spnClosePeriod"></span> </b></p>
+               
+                <p> No Changes Will be able to made once this Period is Closed.<br /> Are you sure you want to close this Period?</p>
+                <br />
+
+                <div class="form-group">
+                    <label style="color:#ff0000; Width:50%" class="floatLeft">You must type YES here:</label>
+                   @* <input id="txtClosePeriod" type="text" class="width95 form-control input-required">*@
+                    <input id="txtClosePeriod" type="text" class="width95 form-control input-required">
+                </div>
+            </div>
+            <!-- // Tabs END -->
+        </div>
+        <div class="darkGreyNew col-lg-12">
+            <a href="javascript:hideDiv('PopNewClosePeriod');" class="btn btn-primary floatLeft ">No</a>
+            <a href="javascript:InsertClosePeriod();" class="btn btn-success floatRight ">Yes</a>
+        </div>
+    </div>
+</div>
+    <div id="fade" class="black_overlay" style="display:none;"></div>  
+ 
+}
+@section Javascript{
+
+<link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui.js"></script>
+
+<script src="~/Scripts/Ledger/ClosePeriod.js"></script>
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+
+    </script>
+  
+
+
+
+}

@@ -1,0 +1,166 @@
+﻿@{
+    ViewBag.Title = "MyDefaults";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>MyDefaults</h2>
+@section BreadCrumb{
+    <section class="content-header setting">
+    <div>
+        <ol class="breadcrumb floatLeft padding10">
+            <li><a href="#">Config <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">My Defaults</li>
+        </ol>
+    </div>
+    <div>
+        <!--<div class="midMenu">
+                    <ul>
+                    <li  class="active mobileHidden"><a href="#">Default (01)</a></li>
+                    <li class="mobileHidden"><a href="#">location XYZ (02)</a></li>
+                   <li class="addNew marginRight10"><a href="#">+ Add New</a></li>
+                    </ul>
+                    </div>-->
+    </div>
+    <div>
+        <!--<select class="form-control width90 width63  floatLeft">
+                     <option>01</option>
+                     </select>-->
+        @*<a class="btn btn-default floatRight" id="BtnInsertMydefaults" href="#">Config</a>*@
+       <a class="btn btn-default floatRight" id="BtnInsertMydefaults" href="#">Save</a>
+        @*<a class="btn btn-default floatRight" id="ffffffff">SAVE</a>*@
+
+        <!--<a class="btn btn-primary floatRight marginRight10" href="#">Cancel</a>-->
+    </div>
+    <!--<a  href="#" class="btn btn-default floatRight">Config</a>-->
+    <div class="clearfix"></div>
+
+</section>
+}
+
+@section Body{
+<form>
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="col-md-12">
+                <fieldset>
+                    <legend>System Defaults</legend>
+                    <div class="clearfix"></div>
+                    <div class="col-md-8 paddingNone">
+                        <div class="form-group">
+                            <label>Start Screen</label>
+                            <input type="text" id="txtModuleMyDefName" class="form-control SearchModuleMyDefName width94 pull-left" style="width: 111px !important;margin-left:13px !important;"/>
+                            <input type="hidden" id="hdnModuleMyDefName" />
+                            <input type="text" id="txtSubModuledefName" class="form-control SearchSubModuleMyDefName width94 pull-left" style="width: 111px !important;margin-left:13px !important;"/>
+                            <input type="hidden" id="hdnSubModuledefName" />
+                            <input type="text" id="txtPendingInvoices" class="form-control SearchSubSubModuleMyDefName width94 pull-left" style="width: 130px !important;margin-left:13px !important;"/>
+                            <input type="hidden" id="hdnPendingInvoices" />
+                       
+                        </div><!-- /.form-group -->
+                        <div class="clearfix"></div>
+                        <div class="col-md-4 col-sm-4 col-xs-6 col-lg-3">
+                            <div class="form-group">
+                                <label class="">Company</label>
+                                <input type="text" id="txtCompanyMyDef" class="form-control SearchCompnayCode width94">
+                                <input type="hidden" id="hdnCompanyMyDef"/>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-6 col-lg-3">
+                            <div class="form-group">
+                                <label class="width100">Currency</label>
+                                <input type="text" id="" value="USD" disabled="disabled" class="form-control  width94">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-6 col-lg-4">
+                            <div class="form-group" style="display:none;">
+                                <label class="">Bank</label>
+                                <input type="text" id="txtBankMyDefaults" style="display:none;" class="form-control SearchBankDefault">
+                                <input type="hidden" style="display:none;" id="hdnBankMyDefaults" />
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-4 col-sm-4 col-xs-6 col-lg-4">
+                            <div class="form-group" style="display:none;">
+                                <label class="">Episode</label>
+                                <input type="text" id="txtEpisode" class="form-control SearchEpisode">
+                                <input type="hidden" id="hdnEpisode" />
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    @*<div class="col-md-5" style="overflow:auto;">
+                        @* height:255px;   remove this *@
+                   @*<div class="table-responsive" style="margin-bottom:0px;">
+                     <h6 class="blueText"><b>Codes</b></h6>
+                <table id="TblTransactionCode" class="table table-hover table-responsive">
+                    <tbody id="TblTransactionCodeByProdIdTbody"></tbody>
+                </table>
+                <div class="clearfix"></div>*@
+
+            </div>
+       @* </div>*@
+                    @*<div class="col-md-4  paddingNone">
+                        @*<div class="form-group">
+                            <label class="width101">Codes</label>
+                            <div class="table-responsive">
+                                <table id="TblTransactionCode" class="table table-hover table-responsive">
+                                    <tbody>
+                                        <tr>
+                                            <td>Set</td>
+                                            <td><input type="text" class="form-control width123 marb0"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>IN</td>
+                                            <td><input type="text" class="form-control width123 marb0"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>FR</td>
+                                            <td><input type="text" class="form-control width123 marb0"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>FF</td>
+                                            <td><input type="text" class="form-control width123 marb0"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>T1</td>
+                                            <td><input type="text" class="form-control width123 marb0"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>T2</td>
+                                            <td><input type="text" class="form-control width123 marb0"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>*@
+                </fieldset>
+            </div>
+            <div class="col-md-12">
+                @*<div class="table-responsive" id="divAllTextBox">
+                    <table class="table table-hover table-responsive" id="tblModuleList">
+                        <thead>
+
+                            <tr>
+                                <td>Module</td>
+                                <td>Sub Module</td>
+                                <td>Start Screen</td>
+                            </tr>
+                        </thead>
+                        <tbody id="TblModuleTBodyMyDefault"></tbody>
+                    </table>
+                </div>*@
+            </div>
+        </div>
+    </section>
+    </form>
+}
+
+@section Javascript{
+
+  
+<script src="~/Scripts/UserProfile/MyDefaults.js"></script>
+}
+
+

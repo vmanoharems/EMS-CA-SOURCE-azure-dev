@@ -1,0 +1,330 @@
+﻿@{
+    ViewBag.Title = "Payroll>>LoadPayroll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Payroll <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#">Load <i class="fa fa-caret-right"></i></a></li>
+            <li id="PayrollInvoiceNumber" class="active">Form File</li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+
+                <li class="active"><a data-toggle="tab" href="#" aria-expanded="false">Load Payroll File</a></li>
+                <li><a href="~/Payroll/PayrollHistory">History</a></li>
+            </ul>
+            <div style="float: left;">
+                <div style="float: left; margin-right: 20px;margin-left:10px;">
+                    <label style="float: left; width: 50px;">Period</label>
+                    <select class="form-control marb0 VendorCode" id="ddlClosePeriod" style="float: left;width:120px;"></select>
+                    @*<input type="hidden" id="ddlCompany"/>*@
+                </div>
+                @*<div style="float: left; margin-right: 20px;">
+                    Batch #: <input type="text" style="width:85px;" id="txtPayrollBatch" />
+                </div>*@
+                <div style="float: left; margin-right: 20px;">Bank: <span id="spanBank"></span></div>
+            </div>
+        </div>
+        <div class="pull-right paddingNone white_space col-lg-3 col-md-9 col-sm-12 col-xs-12" style="margin-left:6px;width:209px;">
+
+            <a id="btnLoadSave" style="display:none;" class="btn btn-default pull-right marginBottom5" href="#" onclick="javascript: funLoadData();">Load &amp; Save</a>
+            @*<a id="btnLoadPost" style="display:none;" class="btn btn-default pull-right margin-r-5" href="#" onclick="javascript: funPostData();"> Load &amp; Post</a>*@
+        </div>
+        <!--<a  href="#" class="btn btn-default floatRight">Config</a>-->
+        <div class="clearfix"></div>
+
+    </section>
+
+
+}
+
+@section Body{
+
+    <div class="borderBot">
+        <div class="col-lg-12 table-responsive pad0 marb10" style="margin:2%;">
+            <table id="tblSegment" class="table table-hover table-responsive hidden" style="width: 24%;"></table>
+            <table id="tblCompany" class="table table-hover table-responsive" style="width: 24%;">
+                <tr>
+                    <td>
+                        <select class="form-control marb0 VendorCode" id="ddlCompany" style="float: left;width:120px;" onchange="javascript: SelectCompany();"></select>
+                    </td>
+                    <td>
+                        <a class="btn btn-default" href="javascript: FillPayrollFile();">Choose Payroll File</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="dvMainLoad" style="display:none;">
+            <section class="content">
+                <div class="row fontAriel">
+
+                    <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6">Expected payroll: <span id="spanExpected"></span> </div>
+                    <div class="col-lg-2 col-sm-3 col-md-3 col-xs-6">Actual Payroll: <span id="spanActual"></span> </div>
+                    <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6">Period Ending: <span id="spanPeriodEnding"></span></div>
+
+                    @*<div class="col-lg-4 col-sm-3 col-md-3 col-xs-6">
+                            <div class="form-group">
+                                <label class="width140">Set Transaction Date:</label>
+                                <!--<input type="text" class="form-control" >-->
+                                <div class="input-group">
+
+                                    <!--id="datepicker" placeholder="DD/MM/YYYY"-->
+                                    <input type="text" id="txtFiscalStart" class="form-control pull-right datepicker" placeholder="MM/DD/YYYY" style="border-color:#d2d6de;">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+
+                    @*<div class="col-lg-3 col-sm-3 col-md-3 col-xs-6">Set Transaction Date: <input type="text" id="txtFiscalStart" class="form-control pull-right datepicker" placeholder="MM/DD/YYYY"></div>*@
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12">
+                        <div class="greyBg">
+                            <div class="col-lg-4 col-sm-5 col-md-4 col-xs-6">Labor Clearing: <span id="spanPR"></span></div>
+                            <div class="col-lg-4 col-sm-5 col-md-4 col-xs-6">Fringe Clearing: <span id="spanFringe"></span></div>
+                            <div class="col-lg-4 col-sm-2 col-md-4 col-xs-6">Suspense: <span id="spanSuspense"></span></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="table-responsive overflowAuto borderTop borderBot" id="dvPayrollContainer">
+                            <table id="tblPayrollLoad" class="table table-hover table-responsive"></table>
+
+                        </div>
+                        <!-- /.box -->
+
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+    <div class="col-lg-12">
+
+    </div>
+
+    <div id="default" class="newhidden">
+        <div class="popup col-md-6 col-lg-6 col-sm-6 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('default');">X</a></div>
+            <div class="heading2"><h4>Payroll File</h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    <table id="example" class="myTable">
+                        <thead>
+                            <tr>
+                                <th>Invoice No.</th>
+                                <th>File Date</th>
+                                <th>Period Ending</th>
+                                <th>#Records</th>
+                                <th>Load Number</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                        </thead>
+                        <tbody id="tBodyPayrollFill"></tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dvInvoice" class="newhidden">
+        <div class="popup col-md-6 col-lg-3 col-sm-6 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('dvInvoice');">X</a></div>
+            <div class="heading2"><h4>Auto Generated Invoice</h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    <p class="fontSize16">Would you like to Automatically generate an invoice ?</p>
+                </div>
+
+                <div class="col-md-12">
+                    <label>Vendor Name</label>
+                    <input type="text" id="txtVendor" class="form-control width180 VendorCode">
+                    <input type="hidden" id="hdnVendorID" />
+                </div>
+
+                <a class="btn btn-default01 pull-left marginBottom5" href="#" onclick="javascript: CheckFreezePeriodInvoice();">YES</a>
+                <a class="btn btn-default01 pull-right margin-r-5" href="#" onclick="javascript: CheckFreezePeriodJE();"> NO</a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="newhidden" id="dvWait" style="display: none;width: 100%;margin: auto 0px;text-align: center;top: 10%;">
+
+        <img src="~/Images/ajax_loader.gif" />
+
+    </div>
+
+    <div id="fade" class="black_overlay"></div>
+
+
+
+    <div id="dvJE" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-success-sign"><i class="fa fa-check"></i></div>
+            <div class="dialog-info">
+                <h5>Payroll Posted Successfully</h5>
+                <p>
+                    You have posted this Payroll transaction with the following Transaction # <span id="spanJETransNo"></span>
+                </p>
+
+                <a href="javascript:JERedirect();" class="dialog-confirm-button">OK</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dvInv" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-success-sign"><i class="fa fa-check"></i></div>
+            <div class="dialog-info">
+                <h5> Invoice Created Successfully</h5>
+                <p>
+                    You have created an Invoice for this Payroll with the following Invoice # <span id="spanInvNo"></span><br />
+                    and Transaction # <span id="spanJETransNo1"></span>
+
+
+                </p>
+
+                <a href="javascript:InvRedirect();" class="dialog-confirm-button">OK</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="newhidden" id="dvWait1" style="display: none;width: 100%;margin: auto 0px;text-align: center;top: 30%;">
+
+        <img src="~/Images/InternetSlowdown_Day.gif" />
+
+    </div>
+}
+
+@section Javascript{
+
+    <script src="~/Scripts/Payroll/PayrollSession.js"></script>
+    <script src="~/Scripts/Payroll/PayrollLoadClient.js"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+
+    <style>
+        .table-hover td {
+            padding: 3px 0px 3px 10px !important;
+        }
+
+
+
+        .green-color span, .green-color label {
+            color: green;
+        }
+
+        .red-color span, .red-color label {
+            color: red;
+        }
+
+        .width40 {
+            width: 45px;
+            border: 1px solid #ccc;
+        }
+
+            .width40 input {
+                width: 100%;
+            }
+
+        .width100 {
+            width: 150px !important;
+            border: 1px solid #ccc;
+        }
+
+            .width100 input {
+                width: 100%;
+            }
+
+        .width75 {
+            width: 75px;
+            border: 1px solid #ccc;
+        }
+
+            .width75 input {
+                width: 100%;
+            }
+
+        .width95 {
+            width: 95px;
+            border: 1px solid #ccc;
+        }
+
+            .width95 input {
+                width: 100%;
+            }
+
+        .table-hover td {
+            padding: 0px !important;
+        }
+
+        .RedBGG {
+            background: #EAA5A5;
+        }
+    </style>
+
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+    <link href="~/Content/assets/dialog-alert.css" rel="stylesheet" />
+
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+
+    <script>
+
+        // This is an example jQuery snippet that makes the dialogs work
+        $(document).ready(function () {
+
+            // We have two control functions that show or hide dialogs
+            function showDialog(id) {
+
+                // Find the dialog and show it
+
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+
+                // Center it on screen
+
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+
+            }
+            function hideAllDialogs() {
+                // Hide all visible dialogs
+                $('.dialog-overlay').fadeOut();
+            }
+
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+
+                showDialog(toShow);
+            });
+        });
+
+    </script>
+}

@@ -1,0 +1,204 @@
+﻿@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Users</h2>
+@section BreadCrumb{
+    <section class="content-header">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Setting <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Users <i class="fa fa-caret-right"></i></li>
+            <li id="LiNewUsers" class="">Add New </li>
+        </ol>
+        <div class="pull-right paddingNone white_space col-lg-6 col-md-9 col-sm-12 col-xs-12">
+            <a href="#" class="btn btn-default pull-left marginRight11" style="background-color: #4CBF63;" id="btnAddUser">+ Add User</a>
+            <select class="form-control width135 floatLeft marginRight10 marginLeft10 marginBottomNone" style="visibility:hidden;"></select>
+            <div class="midMenu pull-left">
+                <ul>
+                    <li class="active"><a href="~/AdminEMS/Users">Users</a></li>
+                    <li><a href="~/AdminEMS/AddGroup">Groups</a></li>
+                </ul>
+            </div>
+            <a href="~/AdminEMS/Users" class="btn btn-primary pull-right ">Cancel</a>
+            <a id="btnUserSave" class="btn btn-success pull-right marginRight10" href="#">Save</a>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <input id="ChkActive" type="checkbox"> Active
+
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control input-required" id="txtUserName">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" class="form-control valid-email input-required" id="txtUserEmail">
+                </div>
+                <div class="form-group" style=" display:none;">
+                    Account: <b>Not Confirmed</b> <a href="#" class="blueText underLine">Resend Activation Email</a>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label>Group(s)</label>
+                    @*<div class="col-lg-5 col-md-8 col-sm-6 col-xs-12 pad0 marbot15">*@
+                    <div id="DvMultipleDDL">
+                        <input type="text" style=" width: 100% !important;" class="form-control width100" disabled id="txtGroupDropDown" placeholder="Select Group" />
+                        <div id="DvGroup" style="display: none;" class="GroupUl width100">
+                            <ul id="UlGroup" style="list-style: none;" class="paddingNone"></ul>
+
+                        </div>
+                        <span class="GroupPosition" onclick="javascript: DvOpenClose();"><i class="fa fa-caret-down"></i></span>
+                    </div>
+                    @*</div>*@
+                </div>
+                <div class="form-group">
+                    <label style="width:90px !important;">Title</label>
+                    <input type="text" id="txtUserTitle" class="form-control input-required">
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="ChkGroupBatchAccess"> Group Batch Access <input type="checkbox" id="ChkAllBatchAccess"> All Batch Access
+
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="ChkCanClosePeriod"> Can Close Period
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-12">
+                <fieldset>
+                    <legend>Defaults</legend>
+
+
+                    <div class="col-md-5 paddingNone">
+                        <div class="form-group">
+                            <label class="width100Label">Start Screen</label>
+                            <input type="text" id="txtModuleName" class="form-control SearchModuleName width94 pull-left" placeholder="Module Name" />
+                            <input type="hidden" id="hdnModuleId" />
+                            @*<select class="form-control floatLeft marginRight25"><option>Payments</option></select>*@
+                            @*<select class="form-control"><option>Pay Invoices</option></select>*@
+                            <input type="text" id="txtSubModuleName" class="form-control SearchSubModuleName width94 pull-left" placeholder="Sub Module" style="margin-left:3%;" />
+                            <input type="hidden" id="hdnSubModuleId" />
+                        </div>
+                        <div class="clearfix"></div>
+                        <!-- /.form-group -->
+                        @*<div class="form-group">
+                            <label class="">Company</label>
+                            <input type="text" id="txtCompnayCode" class="SearchCompnayCode form-control" />
+                            <input type="hidden" id="hdnCompnayCode" />
+                        </div>*@
+                        <div class="form-group">
+                            <label class="">Currency</label>
+                            <input type="text" id="txtCurrency" class="SearchCurrency form-control" />
+                            <input type="hidden" id="hdnCurrency" />
+                            @*<select class="form-control"><option>Wells F</option></select>*@
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group" style="display:none;">
+                            <label class="">Source</label>
+                            @*<input type="text" class="form-control" placeholder="">*@
+                            <input type="text" id="txtSource" class="SearchSource form-control" />
+                            <input type="hidden" id="hdnSource" />
+                        </div>
+                        <div class="form-group">
+                            <label class="">Bank</label>
+                            <input type="text" id="txtBank" class="SearchBank form-control " />
+                            <input type="hidden" id="hdnBank" />
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div style="width:20%">
+
+                            <h6 class="blueText" style="width: 219px;float: left;">
+                                <b>Default Accounts </b>
+                            </h6>
+                            <table id="tblDefaultSet" class="table table-hover">
+                            
+                                <tbody id="tblDefaultSetTBody"></tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="col-md-5" style="overflow:auto;height:255px;">
+                        <div class="table-responsive" style="margin-bottom:0px;">
+                            <h6 class="blueText"><b>Codes</b></h6>
+                            <table id="TblTransactionCode" class="table table-hover table-responsive">
+                                <tbody id="TblTransactionCodeTbody"></tbody>
+                            </table>
+                            <div class="clearfix"></div>
+
+                        </div>
+                    </div>
+                </fieldset>
+                @*<a href="#" id="btnUserSave" class="btn btn-success floatLeft marginTop10">Save</a>
+                    <a href="#" class="btn btn-primary floatRight marginTop10">Close</a>*@
+            </div>
+        </div>
+        <div id="AdminProductionAccess" class="newhidden" style="display: none;">
+            <div class="popup col-md-6 col-lg-5 col-sm-8 col-xs-12 floatNone">
+                <div class="deleteNewIcon"><a href="javascript:hideDiv('AdminProductionAccess');location.reload(true);">X</a></div>
+                <div class="heading2"><h4>Production Access For User</h4></div>
+                <div class="WhtBg">
+                    <p class="paddingAll">
+                        This user already Exists. Do you want this user to get access for this Production.
+                    </p>
+                    <div class="col-md-12">
+                    </div>
+                    <!-- // Tabs END -->
+                </div>
+                <div class="darkGreyNew col-lg-12">
+                    @*<input type="hidden" id="hdnDeleteRowAudit" />*@
+                    <a href="#" onclick="javascript: funAddUserForProduction();" class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+
+
+                    <a href="javascript:hideDiv('AdminProductionAccess');" id="btnCloseStartingValue" class="btn btn-primary floatRight">No</a>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@section Javascript{
+ 
+<script src="~/Scripts/AdminLogin/AdminAddUsers.js"></script>
+<style>
+    .GroupPosition {
+        display: inline;
+        position: absolute;
+        right: 25px;
+        z-index: 9;
+        top: 25px;
+        font-size: 18px;
+    }
+
+    .GroupUl {
+        color: #474747;
+        display: block;
+        left: 15px;
+        padding: 10px;
+        position: absolute;
+        top: 54px;
+        z-index: 9;
+        background-clip: padding-box;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
+        width: 94% !important;
+    }
+</style>
+}
+
+
+
+

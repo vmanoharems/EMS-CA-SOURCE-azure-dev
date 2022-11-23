@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "Ledger>>TrailBalance";
+    Layout = "~/Views/Shared/_LayoutReports.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Ledger <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Trial Balance</li>
+        </ol>
+        <a href="#" class="btn btn-default floatRight" onclick="javascript: GetTBList();">Run</a>
+        <div class="clearfix"></div>
+        <a href="#" class="btn btn-default floatRight" onclick="javascript:ReportTrialBList();">PrintPDF</a>
+        <div class="form-group mar0">
+            <label for="inputEmail" class="control-label col-xs-5 col-sm-2 col-lg-1">Company</label>
+            <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                <select class="form-control width80" id="ddlCompany">
+                    <option>Select</option>
+
+                </select>
+            </div>
+            <label for="inputEmail" class="control-label col-xs-5 col-sm-2 col-lg-1 pad0 width80" style="display:inline;">Summarize</label>
+            <div class="col-xs-6 col-sm-4 col-lg-1 padl0">
+                <select class="form-control width80" style="padding:0px;" id="ddlSegmentName" onclick="javascript:funSelectSegment();">
+                    <option>Segment</option>
+                </select>
+            </div>
+            <label for="inputEmail" class="control-label col-xs-5 col-sm-2 col-lg-1">Period</label>
+            <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                <select class="form-control width100" id="ddlPeriod" onchange="funPeriodchange();">
+                    <option selected value="Select">Select</option>
+                    <option value="YearPeriod">Year Period</option>
+                    <option value="CustomPeriod">Custom Period</option>
+                </select>
+            </div>
+            <div id="DvSelectDate" @*style="visibility:hidden;"*@>
+                <label for="inputEmail" class="control-label col-xs-5 col-sm-2 col-lg-1">Select Period</label>
+                <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                    <select class="form-control width100" id="ddlYearPeriod" onchange="javascript: funFillDate();"></select>
+                </div>
+            </div>
+            <label class="control-label col-xs-5 col-sm-2 col-lg-1 width50">From</label>
+            <div class="form-group col-xs-6 col-sm-4 col-lg-1 pad0">
+                <div class="input-group">
+                    <input type="text" class="form-control pull-right datepicker width90" id="txtFrom" placeholder="MM/DD/YYYY">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                </div>
+            </div>
+
+            <label class="control-label col-xs-5 col-sm-2 col-lg-1 width50" style="margin-left:25px;">To</label>
+            <div class="form-group col-xs-6 col-sm-4 col-lg-1 pad0">
+                <div class="input-group">
+                    <input type="text" class="form-control pull-right datepicker width90" id="txtTo" placeholder="mm/dd/yyyy">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="col-xs-12 col-lg-6 col-sm-10" style="display:none;">
+                <fieldset class="pad0">
+                    <legend>Currency</legend>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="inputEmail" class="control-label col-xs-5 col-sm-4 col-lg-2 padl0">Convert to</label>
+                            <div class="col-xs-6 col-lg-3 pad0">
+                                <select class="form-control width100" id="">
+                                    <option>Base</option>
+                                    <option>Native</option>
+                                </select>
+                            </div>
+                            <label for="inputEmail" class="control-label col-xs-5 col-sm-4 col-lg-3 padl0">Exchange Rate</label>
+                            <div class="col-xs-6 col-lg-3 pad0">
+                                <select class="form-control width100" id="">
+                                    <option>Budget</option>
+                                    <option>Real Time</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-xs-12 col-lg-2 col-sm-2">
+                <div class="input-group-btn" style="margin-top:15px; display:block;">
+                    @*<button data-toggle="dropdown" class="btn dropdown-toggle previewBtn width70">
+                            Export
+                            <span class="caret" style="position: absolute;right: 6px;top: 10px;"></span>
+                        </button>
+                        <ul class="dropdown-menu width70">
+                            <li>
+                                <a href="#" onclick="javascript: CreateCSV('CSV');">CSV</a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="javascript: CreateCSV('XLS');">XLS</a>
+                            </li>
+                        </ul>*@
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@section Body{
+    <section class="content">
+        <div class="row fontAriel">
+            <!--<form class="form-horizontal padl15 padr15">-->
+            <!--</form>-->
+
+            <div class="col-xs-12">
+                <div class="table-responsive" style="margin-top:10px; margin-bottom:0px;" id="DvTB">
+                    <table class="table table-hover table-responsive" id="tblTB">
+                        <thead id="tblTBThead">
+                            <tr>
+                                <th>CO </th>
+                                <th>Type</th>
+                                <th>Header</th>
+                                <th>GL</th>
+                                <th>Detail</th>
+                                <th>Description</th>
+                                <th>Begining Balance </th>
+                                <th>Current Activity</th>
+                                <th>Account Balance</th>
+                                <th>Currency</th>
+                            </tr>
+
+                        </thead>
+                        <tbody id="tblTBTBody"></tbody>
+                    </table>
+                </div>
+
+                <!-- /.box -->
+            </div>
+
+        </div>
+    </section>
+}
+@section Javascript{
+<script src="~/Scripts/Reports/ReportTrialBalance.js"></script>
+ 
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+}

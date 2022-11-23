@@ -1,0 +1,230 @@
+﻿@{
+    ViewBag.Title = "Check Void";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#"> Banking <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Void </li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+                <li class=""><a href="CheckCycle">Print Checks</a></li>
+                <li class="active"><a href="void">VOID</a></li>
+                <li class=""><a href="VoidUnissued">VOID Unissued</a></li>
+                <li class=""><a href="Reconciliation">Bank Reconciliation</a></li>
+                <li><a href="POSPay">POS Pay</a></li>
+            </ul>
+        </div>
+        <div class="midMenu widget-head">
+            <div style="float: right;" id="dvVoid" class="displayNone">
+                Bank :<b><span id="spanBank"></span></b>
+                <a class="btn btn-default floatRight margin-r-5 PrintCheck2" href="javascript:SaveVoid();">Void</a>
+            </div>
+            <div class="floatRight midMenu widget-head" id="DvSearch">
+                <table>
+                    <tr>
+                        <td>Bank:</td>
+                        <td>
+                            <input type="text" id="txtBankName" tabindex="1" class="SearchBank form-control marb0" onblur="funBankCheck();" />
+                            <input type="hidden" id="hdnBank" />
+                        </td>
+                        <td>
+                            <button style="position:relative;margin-left:10px;color: green;" tabindex="2" onclick="javascript:GetVoidData();"><i class="fa fa-sign-out fa-2x"></i></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="tab-content">
+                <div id="tabPendingInvoices" class="tab-pane active widget-body-regular">
+                    <!-- Tab content -->
+                    <div class="col-xs-12">
+                        <div id="dvFilter" style="margin-top:10px; margin-bottom:0px;" class="displayNone">
+                            <div class="table-responsive">
+                                <table id="tblVoid" class="table table-hover table-responsive" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Status</th>
+                                            <th>Reissue Invoice</th>
+                                            <th>Check Date</th>
+                                            <th>Check #</th>
+                                            <th>Transaction #</th>
+                                            <th>Vendor</th>
+                                            <th>Amount</th>
+                                            <th>Reconciliation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblVoidTBody"></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.content -->
+    </section>
+    <!-- /.content -->
+    <div id="dvVoidPopUp" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Void Check</h5>
+                <p>
+                    @*This will also reverse the check transaction(s). If you have chosen to Reissue Invoice(s) you will have to repost those invoices before you can pay them on a check.*@
+
+                    This will void these checks and reverse any invoices attached to these checks to the ledger right away.
+                    If you selected Reissue Invoice then you will find these invoice(s) in Pending Invoices.
+
+                    <br /><br />
+
+                    Are you sure you want to void these checks?
+
+
+                    <br />
+                </p>
+                <a href="javascript:VoidRecord();" class="dialog-confirm-button">YES</a>
+                <a href="javascript:hide(dvVoidPopUp);" class="dialog-reject-button">NO</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="dvVoidPopUpNew" title="Confirm Void Checks" style="display: none;">
+        <div id="dvFixed">
+            <div class="table-responsive">
+                <table class="table table-hover" id="tblVoidList">
+                    <thead>
+                        <tr>
+                            <th style="width: 8%;">Void</th>
+                            <th>Reissue Invoice</th>
+                            <th style="width: 15%;">Check #</th>
+                            <th>Notice</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbvoidlist"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="fade" class="black_overlay"></div>
+}
+
+@section Javascript{
+    <script src="~/Scripts/AccountsPayable/Void.js"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+    <script>
+        $(document).ready(function () {
+            function showDialog(id) {
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+            }
+            function hideAllDialogs() {
+                $('.dialog-overlay').fadeOut();
+            }
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+                showDialog(toShow);
+            });
+        });
+    </script>
+
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .black_overlay, #fade {
+            display: none !important;
+        }
+
+        #tblVoid_paginate {
+            position: fixed;
+            bottom: 4%;
+            float: right !important;
+            right: 2%;
+        }
+
+        #tblVoid_info {
+            position: fixed;
+            bottom: 6%;
+        }
+
+        .dialog-card {
+            top: 15%;
+        }
+
+        .table-hover th {
+            padding: 0px 4px !important;
+        }
+        #tblVoid tr:nth-child(odd) {
+            background: #eff1f3;
+        }
+        table.dataTable thead th, table.dataTable thead td {
+            padding: 10px 18px !important;
+            border-bottom: 1px solid #111;
+        }
+        .table-hover th {
+            padding: 12px 4px !important;
+        }
+         .ui-widget-header {
+            border: 1px solid #337ab7 !important;
+            background: #3c8dbc !important;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .ui-dialog .ui-dialog-titlebar-close span {
+            display: block;
+            margin: -9px !important;
+        }
+    </style>
+}

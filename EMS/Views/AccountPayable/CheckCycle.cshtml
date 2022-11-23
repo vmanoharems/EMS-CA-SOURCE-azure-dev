@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "Check Cycle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#"> Banking <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Check Cycle </li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+                <li class="active"><a href="#">Print Checks</a></li>
+                <li class=""><a href="Void">VOID</a></li>
+                <li class=""><a href="VoidUnissued">VOID Unissued</a></li>
+                <li class="" ><a href="Reconciliation">Bank Reconciliation</a></li>
+                <li ><a href="POSPay">POS Pay</a></li>
+            </ul>
+        </div>
+        <button tabindex="7" onclick="javascript:ApplyFilter();" class="btn btn-default floatRight marginBottom5">Start</button>
+        <div class="clearfix"></div>
+    </section>
+}
+
+
+@section Body{
+
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="tab-content">
+                <!-- Tab content -->
+                <div id="tabPrintChecks" class="tab-pane active widget-body-regular">
+                    <div class="col-xs-12">                   
+                        <div class="table-responsive" id="applyHide">
+                            <div class="clearfix"></div>
+                            <form id="frmCheckCycle">
+                                <table class="table table-hover table-responsive">
+                                    <tbody>
+                                        <tr>
+                                            <td><label id="lblCO"></label> </td>
+                                            <td>
+                                                <div id="tblSegment"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bank</td>
+                                            <td>
+                                                <input type="text" tabindex="2" id="txtBankName" class="SearchBank form-control marb0" onblur="funBankCheck();" />
+                                                <input type="hidden" id="hdnBank" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Vendor</td>
+                                            <td>
+                                                <input type="text" tabindex="3" id="txtVendor" class="form-control marb0 VendorCode">
+                                                <input type="hidden" id="hdnVendorID" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td> Invoice Date</td>
+
+                                            <td>
+                                                <label class="floatLeft width60">From</label>
+                                                <div style="float: left; border: solid 1px gray; padding: 0px 4px 0 0;">
+                                                    <input id="txtInv1" tabindex="4" type="text" class="form-control floatLeft marb0 datepicker" placeholder="MM/DD/YYYY" style="width: 100px; border: none; margin-bottom: 0px;" />
+                                                    <i class="fa fa-calendar floatLeft padding8" style="font-size:17px;padding-top:5px;"></i>
+                                                </div>
+                                                <label class="floatLeft width60">
+                                                    To
+                                                </label>
+                                                <div style="float: left; border: solid 1px gray; padding: 0px 4px 0 0;">
+                                                    <input id="txtInv2" tabindex="5" type="text" class="form-control floatLeft marb0 datepicker" placeholder="MM/DD/YYYY" style="width: 100px; border: none; margin-bottom: 0px;" />
+                                                    <i class="fa fa-calendar floatLeft padding8" style="font-size:17px;padding-top:5px;"></i>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Period</td>
+                                            <td>
+                                                <select tabindex="6" class="form-control marb0 VendorCode" id="ddlPeriod">
+                                                    <option value="Current">Current Period</option>
+                                                    <option value="Future">Future Period</option>
+                                                    <option value="Both">Current & Future</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Payment Type</td>
+                                            <td>
+                                                <select id="ddlPaymentType" class="form-control floatLeft input-required atlas-edit-new atlas-edit-unpaid atlas-edit-pending" style="padding-right:5px" tabindex="30"></select>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>                       
+                    </div>
+                </div>               
+            </div>
+            <!-- Tab content end -->
+            <!-- /.content -->
+        </div>
+    </section>
+
+    <div id="dvPrintingChecks" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Printing Checks?</h5>
+                <p>
+                    You are printing 3 checks. Based upon your Bank setting , you will need to place 3 pages of pre-printed
+                    check stock into your printer.
+                    <br /><br />
+                    When you have placed the 3 pages in your printer and are ready to print, please select print
+                    <br /><br />
+                    The check print run is #0001
+                    <br />
+                </p>
+                <a href="javascript:funSaveDataPost();" class="dialog-confirm-button">PRINT</a>
+                <a href="javascript:hideDiv('dvConfirmPost');" class="dialog-reject-button">CANCEL</a>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Javascript{
+
+
+    <script src="~/Scripts/AccountsPayable/CheckCycle.js"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+
+    <script>
+
+        // This is an example jQuery snippet that makes the dialogs work
+        $(document).ready(function () {
+
+            // We have two control functions that show or hide dialogs
+            function showDialog(id) {
+
+                // Find the dialog and show it
+
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+
+                // Center it on screen
+
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+
+            }
+            function hideAllDialogs() {
+                // Hide all visible dialogs
+                $('.dialog-overlay').fadeOut();
+            }
+
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+
+                showDialog(toShow);
+            });
+        });
+
+    </script>
+    <style type="text/css">
+        .dialog-card {
+            top: 15%;
+        }
+    </style>
+
+}

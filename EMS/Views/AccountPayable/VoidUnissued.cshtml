@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "Check Void UNISSUED";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#"> Banking <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Void Unissued </li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+                <li class=""><a href="CheckCycle">Print Checks</a></li>
+                <li class=""><a href="void">VOID</a></li>
+                <li class="active"><a href="VoidUnissued">VOID Unissued</a></li>
+                <li class=""><a href="Reconciliation">Bank Reconciliation</a></li>
+                <li class=""><a href="POSPay">POS Pay</a></li>
+            </ul>
+        </div>
+        <button tabindex="7" onclick="javascript: SaveVoidUnissued();" class="btn btn-default floatRight marginBottom5">Void</button>
+        <div class="clearfix"></div>
+    </section>
+}
+@section Body{
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="tab-content">
+                <!-- Tab content -->
+                <div class="col-xs-12">
+                    <div class="table-responsive" id="applyHide">
+                        <div class="clearfix"></div>
+                        <div class="clearfix"></div>
+                        <table class="table table-hover table-responsive">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 10%;"><label class="floatLeft width80">Bank</label></td>
+                                    <td style="width: 230px;">
+                                        <div id="tblSegment">
+                                            <input type="text" id="txtBankName" tabindex="1" class="SearchBank form-control marb0" @*onblur="funBankCheck();"*@ />
+                                            <input type="hidden" id="hdnBank" />
+                                        </div>
+                                    </td>
+                                    <td style="width: 10%;"><label class="floatLeft width80">VOID From</label></td>
+                                    <td style="width: 230px;">
+                                        <div id="tblSegment">
+                                            <input id="txtInv1" tabindex="2" type="text" class="form-control floatLeft marb0 " />
+                                        </div>
+                                    </td>
+                                    <td style="width: 10%;"><label class="floatLeft width80">VOID To</label></td>
+                                    <td style="width: 230px;">
+                                        <div id="tblSegment">
+                                            <input id="txtInv2" tabindex="3" type="text" class="form-control floatLeft marb0 " />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div id="dvFilter" style="margin-top:10px; margin-bottom:0px;" class="">
+                        <div class="fixed-table-container">
+                            <div class="header-background"> </div>
+                            <div class="fixed-table-container-inner">
+                                <div id="dvFixed">
+                                    <table id="tblVoid" class="table table-hover table-responsive" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th><div class="th-inner">Status</div></th>
+                                                <th><div class="th-inner">Check Date</div></th>
+                                                <th><div class="th-inner">Check #</div></th>
+                                                <th><div class="th-inner">BatchNumber #</div></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblVoidTBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.content -->
+    </section>
+    <!-- /.content -->
+    <div id="dvVoidUnissuedPopUp" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Void Unissued Check</h5>
+                <p>
+                    <input type="hidden" id="hdnIsChecksIssued" />
+                    <span id="lblMsg"></span>
+                </p>
+                <a id="UnissuedYes" class="dialog-confirm-button">YES</a>
+                <a id="UnissuedOK" href="javascript:hide(dvVoidUnissuedPopUp);" class="dialog-reject-button" style="display:none;">OK</a>
+                <a id="UnissuedNo" href="javascript:hide(dvVoidUnissuedPopUp);" class="dialog-reject-button">NO</a>
+            </div>
+        </div>
+    </div>
+    <div id="fade" class="black_overlay"></div>
+}
+@section Javascript{
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.1/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                fixedHeader: {
+                    header: true,
+                    footer: true
+                }
+            });
+        });
+    </script>
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/fixedheader/3.1.1/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/AccountsPayable/VoidUnissued.js"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+    <script>
+        $(document).ready(function () {
+            function showDialog(id) {
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+            }
+            function hideAllDialogs() {
+                $('.dialog-overlay').fadeOut();
+            }
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+                showDialog(toShow);
+            });
+        });
+    </script>
+    <style type="text/css">
+        .dialog-card {
+            top: 15%;
+        }
+
+        .table-hover th {
+            padding: 0px 4px !important;
+        }
+    </style>
+}

@@ -1,0 +1,142 @@
+﻿@section BreadCrumb{
+    <section class="content-header">
+        <div class="form-group">
+            <label id="lblSelectReport">Select a Report</label>
+            <div class="midMenu pull-left">
+                <ul>
+                    <li class="active"><a href="#tabBatchAudit" data-toggle="tab" aria-expanded="true" @*onclick="javascript: ShowHide('BatchAudit');"*@>Batch</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="dvBacth" class="clsFilter">
+            <a href="#" class="btn btn-default floatRight pull-right marginRight10" onclick="javascript: RunReport(true);" style="display:inline;" id="btn" title="Export to CSV/Excel File" data-isexport="TRUE">Export</a>
+            <a href="#" class="btn btn-default floatRight pull-right marginRight10" onclick="javascript: RunReport();" style="display:inline;" id="btn">Preview</a>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+    <form>
+        <section class="content" id="dvMainDv">
+            <div class="row fontAriel" id="dvFilterDv">
+                <section class="content">
+                    <div class="col-md-12">
+                        @*Start  of Batch Audit Report *@
+                        <div id="dvBatchReportFilter" class="form-group mar0 clsHide active">
+                            <div class="form-group">
+                                <label style="width:200px!important;">Report Format </label>
+                                <input type="radio" name="ReportFormat" value="byAccount" checked tabindex="1" /> Account Distribution
+                                <input type="radio" name="ReportFormat" value="byTransaction" tabindex="1" /> Transaction No.
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="report-column-left">
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Report Date</label>
+                                    <input type="text" id="ReportDate" tabindex="2" class="form-control  pull-left datepicker" style="margin-left:13px !important;">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div id="BatchAsegmentfilters" class="report-filters-segments"></div>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <fieldset id="fieldsetCurrency" class="fieldsetCurrency"></fieldset>
+                                </div>
+                                <div class="clearfix"></div>
+                                <fieldset id="fieldsetPeriod" class="fieldsetPeriod"></fieldset>
+                            </div>
+                            <div class="report-column-center">
+                                <div id="additionalfilters"></div>
+                                <div class="clearfix"></div>
+                                <fieldset id="fieldsetTransactionIDs">
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Transaction No. From:</label>
+                                        <input type="text" id="TransFrom" class="form-control  pull-left" style="margin-left:13px !important;" tabindex="7" />
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Transaction No. To:</label>
+                                        <input type="text" id="TransTo" class="form-control  pull-left" style="margin-left:13px !important;" tabindex="8" />
+                                    </div>
+                                </fieldset>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Batch</label>
+                                    <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select id="ddlBatchNumber" tabindex="9" multiple class="form-control  pull-left"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @* ENd of Batch Audit Report *@
+                    </div>
+                </section>
+            </div>
+        </section>
+    </form>
+}
+@section Javascript{
+    <script src="~/Content/libs/bootstrap-multiselect.js"></script>
+    <script src="~/Scripts/Reports/ReportEngine.js"></script>
+    <script src="~/Scripts/Reports/ReportsBatch.js"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/libs/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/papaparse.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $(".datepicker").datepicker();
+            });
+            $(function () {
+                $('.multiselect-ui').multiselect({
+                    includeSelectAllOption: true
+                });
+            });
+            function showDialog(id) {
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+                dialog.fadeIn();
+
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+
+            }
+
+            function hideAllDialogs() {
+                $('.dialog-overlay').fadeOut();
+            }
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+                showDialog(toShow);
+            });
+        });
+
+    </script>
+    <style type="text/css">
+        .w30N {
+            width: 30px !important;
+        }
+
+        .ui-button-icon-only .ui-icon {
+            margin: -8px 0 0 -9px !important;
+        }
+
+        .table-hover th {
+            padding: 0px 4px !important;
+        }
+
+        .blueClas {
+            background: #337ab7;
+            color: #fff;
+            padding: 5px !important;
+        }
+    </style>
+}

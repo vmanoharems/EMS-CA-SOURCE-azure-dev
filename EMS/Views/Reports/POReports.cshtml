@@ -1,0 +1,164 @@
+﻿@section BreadCrumb{
+    <section class="content-header">
+        <div class="form-group">
+            <label>Select a Report</label>
+            <div class="midMenu pull-left">
+                <ul>
+                    <li class="active" id="liPOListing"><a href="#tabEditAudit" data-toggle="tab" aria-expanded="true" onclick="javascript: ShowHide('Audit');">PO Audit</a></li>
+                    <li class="" id="liPOHistory"><a href="#tabEditAudit" data-toggle="tab" aria-expanded="true">PO History Reports</a></li>
+                </ul>
+            </div>
+        </div>
+        <a class="btn btn-default floatRight pull-right marginRight10 " onclick="javascript: funPreview(true);" style="display:inline;" id="btn" title="Export to CSV/Excel File">Export</a>
+        <a class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" onclick="javascript: funPreview();" id="btnApply">Preview</a>
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+    <section class="content" id="dvMainDv">
+        <div class="row fontAriel" id="dvFilterDv">
+            <div class="tab-content">
+                <div id="tabPendingInvoices" class="tab-pane active widget-body-regular">
+                    <div class="col-xs-12">
+                        <div id="tabEditAudit" class="tab-pane active widget-body-regular">
+                            <div id="POReportdiv">
+                                <div style="width: 25% !important;float: left;">
+                                    <ol class="breadcrumb floatLeft"></ol>
+                                </div>
+                                <div class="report-column-left">
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:214px!important;">Report Date</label>
+                                        <input type="text" class="form-control pull-left smartdate propadate" id="ReportDate" tabindex="1" />
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">PO Status</label>
+                                        <div style="width: 18.3% !important;float: left; margin-left: 13px; margin-bottom: 2px;">
+                                            <select id="ddlPOFilterStatus" tabindex="12" class="form-control  pull-left" style="">
+                                                <option value="">Select</option>
+                                                <option>Closed</option>
+                                                <option>Open</option>
+                                                <option>Partial</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div id="APPOsegmentfilters" class="report-filters-segments"></div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <fieldset id="fieldsetCurrency" class="fieldsetCurrency"></fieldset>
+                                        @*<label style="width:200px!important;">Currency Code(s)</label>
+                                        <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                                            <select style="width: 160px !important;margin-left: 12px;" class="form-control pull-left" id="txtCurrencyCode">
+                                                <option>USD</option>
+                                            </select>
+                                        </div>*@
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <fieldset id="fieldsetPeriod" class="fieldsetPeriod"></fieldset>
+                                </div>
+                                <div class="report-column-center">
+                                    <div id="additionalfilters"></div>
+                                    <div class="clearfix"></div>
+                                    <fieldset id="fieldsetTransactionIDs">
+                                        <div class="clearfix"></div>
+                                        <div class="form-group">
+                                            <label style="width:200px!important;">PO No. From </label>
+                                            <input type="text" id="txtPONoFrom" class="form-control  pull-left " style="margin-left:13px !important;">
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="form-group">
+                                            <label style="width:200px!important;">PO No. To </label>
+                                            <input type="text" id="txtPONoTo" class="form-control  pull-left " style="margin-left:13px !important;">
+                                        </div>
+                                    </fieldset>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Vendor From</label>
+                                        <input type="text" id="txtVendorFrom" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Vendor To</label>
+                                        <input type="text" id="txtVendorTo" class="form-control  pull-left" style="margin-left:13px !important;">
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">1099 code</label>
+                                        <input type="text" id="txtTaxCode" class="form-control  pull-left clsTax" onfocus="javascript: funTaxCode();" style="margin-left:13px !important;">
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group">
+                                        <label style="width:200px!important;">Batch</label>
+                                        <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                            <select id="ddlBatchNumber" multiple class="form-control  pull-left" style="" onfocus="javascript: funLedgerInqBatch();"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="dialog11" style="display: none"> </div>
+    </section>
+    <div id="fade" class="black_overlay"></div>
+}
+
+@section Javascript{
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <script src="~/Content/libs/bootstrap-multiselect.js"></script>
+    <script src="~/Scripts/Reports/ReportEngine.js"></script>
+    <script src="~/Scripts/Reports/POReports.js"></script>
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/libs/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/papaparse.min.js"></script>
+    @*<script>
+            $(function () {
+                $(".datepicker").datepicker();
+            });
+
+
+        </script>*@
+    <script>
+    //$(function () {
+    //    $(".datepicker").datepicker();
+    //});
+
+    $(function () {
+        $(".datepicker").datepicker(
+            {
+                onClose: function () {
+                    $(this).focus();
+                }
+            });
+    });
+    </script>
+
+    <style type="text/css">
+        .black_overlay, #fade {
+            display: none !important;
+        }
+
+        #TblPosted_paginate {
+            position: fixed;
+            bottom: 4%;
+            float: right !important;
+            right: 2%;
+        }
+
+        #TblPosted_info {
+            position: fixed;
+            bottom: 6%;
+        }
+
+        .ui-dialog {
+            width: 80% !important;
+            z-index: 999999999;
+        }
+    </style>
+}

@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.4.0/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.2/css/select.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/keytable/2.2.1/css/keyTable.dataTables.min.css">
+
+    <link rel="stylesheet" type="text/css" href="~/Content/libs/DataTables/Editor-1.6.4/css/editor.dataTables.min.css" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="~/Content/css/AdminLTE.min.css" rel="stylesheet" />
+    <link href="~/Content/AtlasUtility.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Content/w2ui-1.5.rc1.min.css" />
+    <script src="~/Content/libs/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/w2ui-1.5.rc1.min.js"></script>
+</head>
+
+<script> var Titlejs = '@ViewBag.Title' </script>
+<body class="skin-blue sidebar-mini" id="ToggleNavigationbodyID">
+    <div class="wrapper" id="wrapper_main">
+        <!-- Content Wrapper. Contains page content -->
+        <header class="main-header">
+    <!-- Logo -->
+    <a href="~/AccountPayable/Vendors" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><!--<b>A</b>LT--> <img src="~/Content/images/logoMini.png" alt="logo"></span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><!--<b>Admin</b>LTE--><img src="~/Content/images/logo.png" alt="logo" style="width:87%;"></span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" id="NavigationToggle">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+            <ul class="nav navbar-nav topMenu" id="navMainUL">
+                <li><a target="apvendors" id="hrefPayable" href="~/AccountPayable/Vendors"><i class="fa fa-money"></i> <span>Accounts Payable</span></a></li>
+                <li><a target="Payroll" id="hrefPayroll" href="~/Payroll/LoadPayroll"><i class="fa fa-usd user01"></i> <span>Payroll</span></a></li>
+                <li><a target="CRW" id="hrefCRW" href="~/CRW/CRWv2"><i class="fa fa-calculator"></i> <span>CRW</span></a></li>
+                @*<li><a id="hrefLedger" href="~/Ledger/TrailBalance"><i class="fa fa-folder-open user01"></i> <span>Ledger</span></a></li>*@
+                <li><a target="ledger" id="hrefLedger" href="~/Ledger/JEDistributionChange"><i class="fa fa-folder-open user01"></i> <span>Ledger</span></a></li>
+                <li><a target="Budget" id="hrefBudget" href="~/Budget/Budgetv2"><i class="fa fa-suitcase user01"></i> <span>Budget</span></a></li>
+                <li><a target="reports" id="hrefReports" href="~/Reports/VendorReports"><i class="fa fa-file-text-o user01"></i> <span>Reports</span></a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                @*<li class="userText">EMS Review</li>*@
+                <li class="dropdown user user-menu" title="Profile" id="user-menu-user">
+                    <a href="~/UserProfile/MyDefaults">
+                        <i class="fa fa-user user02"></i>
+                    </a>
+                </li>
+                <li class="dropdown user user-menu " title="Settings">
+                    <a href="~/Setting/Company" class="">
+                        <i id="CompanyIconI" class="fa fa-cog user02 "></i>
+                    </a>
+                </li>
+                <li class="dropdown user user-menu" title="Logout">
+                    <a href="#" class="logout">
+                        <i class="fa fa-power-off user02"></i>
+                    </a>
+                </li>
+                <!-- Control Sidebar Toggle Button -->
+            </ul>
+        </div>
+    </nav>
+</header>
+
+        <div id="Atlas_Content" class="AtlasAccess " style="min-height: 353px;">
+            <!-- Content Header (Page header) -->
+            @RenderSection("BreadCrumb", required: false)
+            <div id="showMSG" style="display:block;"></div>
+            @RenderSection("Body", required: false)
+            <!-- Main content -->
+            <!-- /.content -->
+        </div>
+        <div id="Atlas_Access" class="AtlasAccess content-wrapper">
+            You do not have permission to access this module. <br />
+            Please contact your System Administrator if you need access to this module.
+        </div>
+
+    </div>
+
+    <div id="preload" style="display: none;width: 100%;margin: auto 0px;text-align: center;top: 20%;">
+        <img id="dvLoader" src="~/Images/InternetSlowdown_Day.gif" style="width:480px;" />
+    </div>
+
+    <div id="fade" class="black_overlay"></div>
+
+    @RenderSection("Javascript", required: false)
+
+</body>
+</html>

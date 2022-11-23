@@ -1,0 +1,186 @@
+﻿@{
+    ViewBag.Title = "AP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AP</h2>
+@section BreadCrumb{
+    <section class="content-header setting">
+    <div>
+        <ol class="breadcrumb floatLeft padding10">
+            <li><a href="#">Config <i class="fa fa-caret-right"></i></a></li>
+           <li class="active">My AP Defaults</li>
+        </ol>
+    </div>
+    <div>
+    </div>
+    <div>
+        <!--<select class="form-control width90 width63  floatLeft">
+                     <option>01</option>
+                     </select>-->
+        <a class="btn btn-default floatRight" style="display:none" id="btnSaveAP" href="javascript:funInsertUserAP();">Save</a>
+        <a class="btn btn-default floatRight" style="display:none" id="btnSavePaymentH" href="javascript:funInsertPaymentHistory();">Save</a>
+     @*  <a class="btn btn-default floatRight marginRight10" href="#">Save Filter</a>*@
+    </div>
+    <div class="clearfix"></div>
+
+</section>
+}
+
+@section Body{
+<section class="content">
+    <div class="fontAriel">
+        <div class="" id="tabAccounts">
+            <div class="tab-content">
+                <b>Default Filters For <a href="#" class="blueText">Payments</a></b>
+                <div class="midMenu marginTop10">
+                    <ul>
+                        <li class="active" id="LiPayInvoice"><a href="javascript:ShowPayInvoice();">Pay Invoices</a></li>
+                        <li id="LiPaymentHistory"><a href="javascript:ShowPaymentHistory();">Payment History</a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+                <div id="tabPayInvoices" class="tab-pane active widget-body-regular" style="display:none">
+                    <div class="bdrAll paddingAll10 overFlowAutoNew">
+                        <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3">
+                            <div class="form-group">
+                                <label class="">Company</label>
+                                <input type="text" id="txtCompanyPaymtInvc" class="form-control SearchAPCompnayCode">
+                                <input type="hidden" id="hdnCompanyAP" />
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-6 col-lg-2">
+                            <div class="form-group">
+                                <label class="">Currency</label>
+                                <input type="text" id="txtCurrency" value="USD" disabled class="form-control width100">
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-6 col-lg-3">
+                            <div class="form-group">
+                                <label class="">Bank</label>
+                                <input type="text" id="txtBankPymntInvc" class="form-control SearchBankAP">
+                                <input type="hidden" id="hdnBankAP" />
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <h6 class="addCriteria"><span class="roundedBtn floatLeft paddingAll5 marginRight10"> + </span> <span class="floatLeft padt5"> Additional Criteria</span></h6>
+                        <div class="clearfix"></div>
+                        <div class="col-md-4 col-sm-4 col-xs-6 col-lg-4">
+                            <div class="form-group">
+                                <!--<label class="width100">Entery Date</label>-->
+                                <select class="form-control floatLeft margin-r-5" id="txtPaymentType"><option>Entry Date</option><option>Transaction Date</option><option>Due Date</option></select> <input type="text" class="form-control pull-right datepicker width100" id="txtFromdate" placeholder="MM/DD/YYYY">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-6 col-lg-6">
+                            <div class="form-group">
+                                <label class="width119">To</label>
+                                <div class="form-group col-md-4 col-sm-4 col-xs-6 col-lg-4 padding0">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control pull-right datepicker" id="txtToDate" placeholder="MM/DD/YYYY">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-4 col-sm-4 col-xs-6 col-lg-4">
+                            <div class="form-group">
+                                <label class="width100">Vendor</label>
+                                <input type="text" id="txtVendor" class="form-control VendorCodeAP">
+                                <input type="hidden" id="hdnVendor" />
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-4 col-sm-4 col-xs-6 col-lg-4">
+                            <div class="form-group">
+                                <label class="width100">Batch</label>
+                                <select class="form-control floatLeft margin-r-5" id="txtBatchNo"><option>Select</option><option>JJ160507</option></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end here-->
+                <div id="tabPaymentHistory" class="tab-pane widget-body-regular">
+                    <div class="bdrAll paddingAll10 overFlowAutoNew">
+                        <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3">
+                            <div class="form-group">
+                                <label class="">Company</label>
+                                <input type="text" id="txtCompanyAP2" class="form-control SearchAPCompnayCode">
+                                <input type="hidden" id="hdnCompanyAP2" />
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-6 col-lg-2">
+                            <div class="form-group">
+                                <label class="">Currency</label>
+                                <input type="text" id="txtCurrencyPH" value="USD" disabled class="form-control width100">
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-6 col-lg-2">
+                            <div class="form-group">
+                                <label class="">Bank</label>
+                                <input type="text" id="txtCompanyBank2" class="form-control SearchBankAP">
+                                <input type="hidden" id="hdnCompanyBank2" />
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <h6 class="addCriteria"><span class="roundedBtn floatLeft paddingAll5 marginRight10"> + </span> <span class="floatLeft padt5"> Additional Criteria</span></h6>
+                        <div class="clearfix"></div>
+                        <div class="col-md-4 col-sm-4 col-xs-6 col-lg-4">
+                            <div class="form-group">
+
+                                <select class="form-control floatLeft margin-r-5"><option>Entry Date</option><option>Transaction Date</option><option>Due Date</option></select> <input type="text" class="form-control pull-right datepicker width100" id="txtPHFromdate" placeholder="MM/DD/YYYY">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-6 col-lg-4">
+                            <div class="form-group">
+                                <label class="width119">To</label>
+                                <div class="form-group col-md-4 col-sm-4 col-xs-6 col-lg-6 padding0">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control pull-right datepicker" id="txtPHdateTo" placeholder="MM/DD/YYYY">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-4 col-sm-4 col-xs-6 col-lg-4">
+                            <div class="form-group">
+                                <label class="width100">Vendor</label>
+                                <input type="text" id="txtVendorPh" class="form-control VendorCodeAP">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-4 col-sm-4 col-xs-6 col-lg-4">
+                            <div class="form-group">
+                                <label class="width100">Batch</label>
+                                <select class="form-control floatLeft margin-r-5" id="txtBatchNoPHistory"><option>Select</option><option>JJ160507</option></select> 
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+}
+
+@section Javascript{
+  
+<script src="~/Scripts/UserProfile/AP.js"></script>
+<link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+</script>
+
+}
+
+

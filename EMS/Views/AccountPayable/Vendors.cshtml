@@ -1,0 +1,495 @@
+﻿@{
+    ViewBag.Title = "AccountsPayable>>Vendors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li id="Vendors"><a class="" href="javascript: ShowtabVendors(); GetVendoreByProdId('All');">Vendors</a></li>
+            <li class="active"><span id="breadcrumbVendorLi" class="fa fa-caret-right"></span> </li>
+
+        </ol>
+        <div class="midMenu widget-head" id="DvTab">
+            <ul></ul>
+        </div>
+        <div class="midMenu widget-head floatRight" id="DvTab01">
+            <ul>
+                @*<li id="VendorsTabLi"><a class="" href="javascript:ShowtabVendors();">Vendors</a></li>*@
+                <li id="VendorsAddTabLi"><a class="" href="javascript:ShowAddtabVendors();">+ Add Vendor</a></li>
+                <li id="Module"><a class="" href="@Url.Action("TaxYear", "Vendor")">1099 Module</a></li>
+
+            </ul>
+        </div>
+        <span id="btnsavevendor" class="btn btn-default floatRight" style="display:none; margin-top: -4px;">Save Vendor</span>
+        @*<a href="#" id="btnsavevendor" class="btn btn-default floatRight" style="display:none; margin-top: -4px;">Save Vendor</a>*@
+        <a href="javascript:funCancelVendor();" id="btnCancelvendor" class="btn btn-primary floatRight marginRight10" style=" display:none; margin-top:-4px;">Cancel</a>
+        <div class="clearfix"></div>
+
+    </section>
+
+}
+
+@section Body{
+    <form id="frmVendor">
+        <section class="content">
+            <div class="tab-content">
+                <!-- Tab content -->
+                <div id="tabVendors" style=" display:none;" class="widget-body-regular">
+                    <div class="col-xs-12">
+                        <div class="table-responsive" id="DvTB">
+                            <table class="table table-hover table-responsive" id="TableVendor">
+                                <thead>
+                                    <tr>
+                                        @*<th id="thExtra"></th>*@
+                                        <th style="width:20px !important;">Active</th>
+                                        <th style="width:35px !important;">Vendor</th>
+                                        <th style="width:260px !important;">Vendor Name</th>
+                                        <th style="width:40px !important;">Country</th>
+                                        <th style="width:270px !important;">Address </th>
+                                        <th style="width:95px!important;">City</th>
+                                        <th style="width:40px !important;">State</th>
+                                        <th style="width:35px !important;">Currency</th>
+                                        <th style="width:178px !important;">Vendor Type</th>
+                                        <th style="width: 35px !important;">Studio Vendor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="AccountTypeVendorTBody"></tbody>
+                                <tfoot>
+                                    <tr>
+                                        @*<th></th>*@
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div class="botMenu">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--tabVendors end-->
+                <div id="tabAddVendors" style="display:none;" class=" widget-body-regular">
+                    <div class="col-xs-12">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label><input type="checkbox" id="chkAddVendor"> Active</label>
+                                @*  <a  href="#" class="blueText underLine">Type</a>@**@
+                                <label style="display:none">Type</label>
+                                @* <select class="form-control width90" id=""><option>Check</option><option>Cash</option><option>Card</option></select>*@
+                                <input type="text" id="txt" disabled="disabled" value="AP" class="form-control " style="display:none">
+
+                            </div>
+                            <div class="clear"></div>
+                            <div class="form-group">
+                                <label>Vendor #</label>
+                                <input type="text" id="txtAddVendor" onblur="FunVendorsCheckExisting('VendorNumber', $(this).val())" class="form-control input-required ">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Vendor Name</label>
+                                <input type="text" id="txtAddVendorName" onblur="FunVendorsCheckExisting('VendorName', $(this).val())" class="width289 form-control input-required">
+                            </div>
+
+                            <div class="clear"></div>
+                            <div class="form-group">
+
+                                <label style="padding-top:0px;">First <br /><input type="text" id="txtAddFirstName" maxlength="50" class="form-control width123" style="width:100px;"></label>
+                                <label style="padding-top: 0px; width:60px;" class="marginRight11">
+
+                                    Middle <br /><input type="text" style="width:60px; " id="txtAddMiddleName" class=" form-control floatLeft marginRight10">
+                                    <input type="hidden" id="" />
+
+                                </label><label style="padding-top: 0px;" class="">
+                                    Last<br /> <input type="text" style="margin-right: -19px;" id="txtAddLastName" onblur="javascript:FunPrintOnCheck();" class="form-control  width123">
+                                </label><input type="checkbox" style="margin: 21px!important; display:none" class="floatLeft marginRight10" id="ChkPrintOnCheck" onclick="javascript:FunPrintOnCheck();" />
+                            </div>
+                            <div class="clear"></div>
+                            <div class="form-group">
+                                <label>Print on check</label>
+                                <input type="text" id="txtPrntCheck" class="width289 form-control">
+                            </div>
+                            <div class="form-group marginBottom10 overflowAuto ">
+                                <a id="RemitAddressbtnId" class="btn-vendorAddress01 pull-left width123" style="display: inline; margin-right: 10px;" href="javascript:showdivRemidAddrss();" tabindex="101">Remit Address</a>
+                                <a id="W9AddressbtnId" class="btn-vendorAddress pull-left width123 " style="display: inline; display: inline; margin-right: 10px;" href="javascript:showdivW9Addrss();" tabindex="102">W9 Address</a>
+                                <a id="chkAddressw" class="pull-left width123" style="display:inline; display: none; margin-right: 10px; Font-size: 12px;" href="#"><input type="checkbox" id="chkAddstoW" tabindex="103" onclick="javascript:FunUseRemit();" checked>Use Remit Address</a>
+
+                            </div>
+                            <div class="clear"></div>
+
+                            <div id="W9AddressdivID" style="display:none;">
+
+                                <label>Country</label>
+                                <input type="text" id="txtW9Country" class="VendorCountryAutoFill form-control select2 input-required">
+                                <input type="hidden" id="hdnW9Country" />
+                                <label>Address 1</label>
+                                <input type="text" id="txtW9Address1" class="form-control select2 input-required ">
+
+                                <label>Address 2</label>
+                                <input type="text" id="txtW9Address2" class="form-control select2 ">
+
+                                <label>Address 3</label>
+                                <input type="text" id="txtW9Address3" class="form-control select2 ">
+
+                                <label style="padding-top: 0px; width:100px;">City <br /><input type="text" id="txtW9City" placeholder="City" maxlength="50" style="padding-top: 0px; width: 95px" class="form-control input-required"></label>
+                                <label style="padding-top: 0px; width: 76px;" class="marginRight11">
+                                    State <br /><input type="text" id="txtW9State" style="width:81px" class="SearchVendorState form-control floatLeft marginRight10 input-required">
+                                    <input type="hidden" id="hdnW9State" />
+                                </label><label style="padding-top: 0px; width: 128px;" class="marginRight11">
+                                    Zip<br /> <input type="text" id="txtW9Zip" maxlength="10" class="form-control input-required zipCode">
+                                </label>
+                                <label style="padding-top: 0px; width:80px" class="">
+                                    Currency
+                                    <input type="text" id="txtAddCurrency" value="USD" disabled="disabled" class="form-control " style="width:60px;">
+                                </label>
+                            </div>
+
+                            <div id="RemidAddressdiv" style="display:none;">
+
+                                <label>Country</label>
+                                <input type="text" id="txtRemitCountry" class="VendorCountryAutoFill form-control select2 input-required" onblur="javascript: FunUseRemit();">
+                                <input type="hidden" id="hdnRemitCountry" />
+
+                                <label>Address 1</label>
+                                <input type="text" id="txtRemitAddress1" class="form-control select2 input-required" onblur="javascript: FunUseRemit();">
+
+                                <label>Address 2</label>
+                                <input type="text" id="txtRemitAddress2" class="form-control select2 " onblur="javascript: FunUseRemit();">
+
+                                <label>Address 3</label>
+                                <input type="text" id="txtRemitAddress3" class="form-control select2 " onblur="javascript: FunUseRemit();">
+
+                                <label style="padding-top:0px;width:100px;">City <br /><input type="text" id="txtRemitCity" placeholder="City" maxlength="50" class="form-control input-required" onblur="javascript: FunUseRemit();"></label>
+                                <label style="padding-top: 0px; width:76px;" class="marginRight11">
+
+                                    State <br /><input type="text" id="txtRemitState" class="SearchVendorState form-control floatLeft marginRight10 input-required" onblur="javascript: FunUseRemit();">
+                                    <input type="hidden" id="hdnRemitState" />
+
+                                </label><label style="padding-top: 0px; width: 110px; margin-right: 6px !important;" class="marginRight11">
+                                    Zip<br /> <input type="text" id="txtRemitZip" maxlength="10" class="form-control input-required zipCode">
+                                </label>
+                                <label style="padding-top: 0px; width:80px" class="">
+                                    Currency
+                                    <input type="text" id="txtAddCurrency" value="USD" disabled="disabled" class="form-control input-required" style="width:60px;" onblur="javascript: FunUseRemit();">
+                                </label>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-7">
+                            <fieldset>
+                                <div class="clearfix"></div>
+                                <legend>Tax Information</legend>
+                                <div class="col-md-12 paddingLeftNone">
+                                    <label class="width192">Tax ID</label>
+                                    <input type="text" id="txtAddTaxID" onblur="FunVendorsCheckExisting('TaxID', $(this).val());" class="form-control floatLeft margin-r-5">
+                                </div>
+                                <div class="col-md-12 paddingLeftNone">
+                                    <label class="width192">Vendor Type</label>
+                                    <select class="form-control " id="txtTaxtype"><option selected></option><option>S-Corp</option><option>Crew Member</option><option>Individual/Sole Proprietor (no EIN)</option><option>Other</option><option>Partnership</option><option>Studio Billover</option><option>C-Corp</option><option>LLC SC</option><option>LLC</option><option>LLC Exempt</option><option>Other with "Association"</option><option>Professional LLC</option><option>SP with EIN</option><option>LLC Partnership</option><option>Foreign</option><option>Petty Cash</option></select>
+                                </div>
+                                <div class="col-md-12 paddingLeftNone marginBottom10">
+                                    <input type="checkbox" id="chkTaxOF" onclick="javascript:FunTaxEpiration();">
+                                    W9 on file, Expiration
+                                    <input type="text" class="paddingLeftNone marginRight10" disabled="disabled" id="TaxFormExpiry" placeholder="DD/MM/YYYY">
+                                </div>
+                                <div class="col-md-12 paddingLeftNone">
+                                    <label class="width192">Default Form</label>
+                                    <input type="text" id="txtAddDefltForm" value="1099" disabled="disabled" class="form-control width90 " style="float:left;margin-right: 10px;">
+                                    <input type="text" class="clsTax  number form-control marginRight11" style="width:80px;float: left;" name="txtSelectFval" id="txtSelectFval" placeholder="Tax Code" onfocus="javascript:funTaxCode();" />
+                                    @*<select id="txtSelectFval" class="form-control  marginRight11" style="width:80px;float: left; ">
+                                    <option selected></option>
+                                    <option>01</option>
+                                    <option>02</option>
+                                    <option>03</option>
+                                    <option>07</option>
+                                </select>*@<input type="checkbox" id="ChkRequired" onclick=" javascript: FunRequiredChk();" /> Required <input type="checkbox" id="ChkWarning" onclick="javascript:FunWarnChk();" /> Warning
+                                </div>
+                                <div class="col-md-12 paddingLeftNone">
+                                    <label class="width192">Tax Name</label>
+                                    <input type="text" id="txtTaxName" class="form-control">
+                                </div>
+                                <div class="col-md-12 paddingLeftNone">
+                                    <label class="width192">Foreign Tax ID</label>
+                                    <input type="text" id="txtAddFTaxId" class="form-control">
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Payment Information</legend>
+                                <div class="col-md-12 paddingLeftNone">
+                                    <div class="col-md-4 paddingNone">
+                                        <div class="form-group">
+                                            <label class="widthAuto">Payment Type</label>
+                                            <select class="form-control width90" id="txtpaytype"><option selected>Check</option><option>Credit Card</option><option>Wire</option><option>ACH</option></select>
+
+                                        </div><!-- /.form-group -->
+                                    </div>
+                                    <div class="col-md-4 paddingNone">
+                                        <div class="form-group">
+                                            <label class="widthAuto">Due</label>
+                                            <input type="text" id="txtAddDue" class="form-control marginRight10" style="width: 67px; margin: 0; float: left; "><select id="txttypedaymonth" class="form-control  marginRight11" style="width: 77px; float: left; "><option selected>Days</option><option>Week</option><option>Months</option></select>
+
+                                        </div><!-- /.form-group -->
+                                    </div>
+                                    <div class="col-md-4 paddingNone pull-left">
+                                        <div class="form-group">
+                                            <label class="widthAuto">Net %</label>
+                                            <input type="text" id="txtAddNet" class="form-control width90 Net">
+
+                                        </div><!-- /.form-group -->
+                                    </div>
+                                    <div class="col-md-12 paddingLeftNone">
+                                        <label class="width192">Account #</label>
+                                        <input type="text" id="txtAddAccount" class="form-control" maxlength="30">
+                                    </div>
+
+                                    <div class="col-md-12 paddingLeftNone">
+                                        <label class="width192">Studio Vendor #</label>
+                                        <input type="text" id="txtAddStudioVendr" class="form-control" maxlength="30">
+                                    </div>
+                                    <div class="col-md-12 paddingLeftNone">
+                                        <label><input type="checkbox" id="chkStudioAppd" disabled="disabled"> Studio Approved</label>
+
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+                        <label style="padding-top: 0px;" class="marginRight11 width150 ">
+                            Default Ledger Account
+                        </label>
+
+
+                        <br /> <table class="table table-hover table-responsive" id="tblManualEntry">
+                            <thead id="tblManualEntryThead"></thead>
+                            <tbody id="tblManualEntryTBody"></tbody>
+                        </table>
+
+                        <div class=" col-md-12 ">
+                            <div class="col-md-5">
+
+                                <h6 class="addCriteria"> <span class="floatLeft padt5"> <a href="javascript:showDivOfInfo();" class="floatLeft paddingAll5 marginRight10"> <span class="roundedBtn floatLeft paddingAll5 marginRight10">+</span>Add Contact Information</a></span></h6>
+
+                                <div class="col-md-12 paddingLeftNone" id="DivVendorInfo" style="display:none">
+                                    <select onchange="javascript: funddlChange();" class="form-control width90" id="txtSelectInfo" style="float:left;margin-right: 10px;">
+                                        <option selected>Select</option>
+                                        <option value="Phone">Phone</option>
+                                        <option>Fax</option>
+                                        <option>Email</option>
+                                        <option>Skype</option>
+                                        <option>Name</option>
+                                    </select>
+                                    <input type="text" id="txtAddInfo" class=" marginRight10 floatLeft">
+                                    <span id="" class=" floatLeft" onclick="javascript:funInsertintoTable();" style=" font-size: 20px;">
+                                        <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="col-md-7">
+                                <div class="col-md-12 paddingLeftNone">
+                                    <table id="tblVendoreInfo" class="table table-hover">
+                                        <thead>
+                                            <tr role="row">
+                                                @*<th style="width:10px;"> </th>*@
+                                                <th class="sorting_asc" aria-controls="example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Module: activate to sort column descending" style="width: 376px;">Contact Type</th>
+
+                                                <th class="sorting" aria-controls="example" rowspan="1" colspan="1" aria-label="Access Rights: activate to sort column ascending" style="width: 337px;">Contact Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblVendoreInfoTBody"></tbody>
+
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--tabAddVendors end-->
+                    <!--tabPurchaseOrders end-->
+                    <!--tabAddPO end-->
+                </div>
+                <!-- Tab content end -->
+                <!-- /.content -->
+                @*<div style="position: absolute; left: 50%; top: 50%;">
+                <img id="LoaderVendorId" style="display: none;" src="~/Images/loader.gif" />
+            </div>*@
+
+            </div>
+        </section>
+        <div id="dvVendorNotification" class="newhidden" style="display: none; margin-top:10%">
+            <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone">
+                <div class="heading2">
+                    <h5>
+                        <span id="spnMsg" style="margin: 11% 0% 1% 15%;display: block;"></span>
+                    </h5>
+                </div>
+                <div class="darkGreyNew col-lg-12">
+                    <a id="VendorNotificationOK" href="#" onclick="javascript: CheckVendorResetFocus();" class="btn btn-success floatRight" style="display: inline;">OK</a>
+                </div>
+            </div>
+        </div>
+        <div id="fade" class="black_overlay"></div>
+        <div class="newhidden" id="dvWait" style="display: block;width: 100%;margin: auto 0px;text-align: center;top: 30%;">
+            <img id="LoaderVendorId" class="LoadImgCl" style="display: none;" src="/Images/InternetSlowdown_Day.gif" />
+        </div>
+        <div id="dialog-alert-notsaved" title="!VENDOR NOT SAVED!" style="display: none; height: 500px;">
+            This Vendor was NOT SAVED. Please correct the fields highlighted in red.
+        </div>
+    </form>
+}
+
+
+@section Javascript{
+
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    @*<script src="~/Content/media/js/dataTables.responsive.min.js"></script>*@
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    @*<link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />*@
+    @*<link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />*@
+    @*<script>
+            // Change the selector if needed
+            var $table = $('table.scroll'),
+                $bodyCells = $table.find('tbody tr:first').children(),
+                colWidth;
+
+            // Adjust the width of thead cells when window resizes
+            $(window).resize(function () {
+                // Get the tbody columns width array
+                colWidth = $bodyCells.map(function () {
+                    return $(this).width();
+                }).get();
+
+                // Set the width of thead columns
+                $table.find('thead tr').children().each(function (i, v) {
+                    $(v).width(colWidth[i]);
+                });
+            }).resize(); // Trigger resize handler
+        </script>*@
+
+    <script src="~/Scripts/AccountsPayable/Vendors.js"></script>
+
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+    <style>
+        .LoadImgCl {
+            margin: 0 auto;
+        }
+
+        .fixed-table-container-inner table th.second {
+            min-width: -5px;
+        }
+
+        .table-hover th, table-hover td {
+            padding: 6px 4px !important;
+        }
+
+        .table-hover td {
+            padding: 3px 0px 3px 10px !important;
+        }
+
+
+
+        .green-color span, .green-color label {
+            color: green;
+        }
+
+        .red-color span, .red-color label {
+            color: red;
+        }
+
+        .width40 {
+            width: 45px;
+            border: 1px solid #ccc;
+        }
+
+            .width40 input {
+                width: 100%;
+            }
+
+        .width100 {
+            width: 120px;
+            border: 1px solid #ccc;
+        }
+
+            .width100 input {
+                width: 100%;
+            }
+
+        .width75 {
+            width: 75px;
+            border: 1px solid #ccc;
+        }
+
+            .width75 input {
+                width: 100%;
+            }
+
+        .width95 {
+            width: 95px;
+            border: 1px solid #ccc;
+        }
+
+            .width95 input {
+                width: 100%;
+            }
+
+        .table-hover td {
+            padding: 0px !important;
+        }
+
+        .DownIcon:before {
+            content: "\fa-times";
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: inherit;
+            font-size: 16px;
+            padding-right: 0.5em;
+        }
+
+        #TableVendor_info {
+            float: left;
+            margin-top: -35px;
+        }
+
+        .paginate_button {
+            padding: 0px !important;
+        }
+
+        .positionFixed {
+            float: left !important;
+            width: 82% !important;
+            position: fixed !important;
+            bottom: 41px !important;
+        }
+
+        #TableVendor_paginate {
+            position: fixed;
+            bottom: 5.7%;
+            float: right !important;
+            right: 2%;
+        }
+
+        #TableVendor_info {
+            position: fixed;
+            bottom: 3%;
+        }
+    </style>
+
+}

@@ -1,0 +1,269 @@
+﻿@{
+    ViewBag.Title = "Report>>CheckPrint";
+    Layout = "~/Views/Shared/_LayoutReports.cshtml";
+}
+
+
+@section BreadCrumb{
+
+    <section class="content-header">
+        <div class="form-group">
+            <label>Select a Report</label>
+            <div class="midMenu pull-left">
+                <ul>
+                    <li><a href="CheckPrint">Check Run Register</a></li>
+                    <li><a href="CheckRegister">Check Register Detail</a></li>
+                    <li class="active"><a href="CheckRegisterSummary">Check Register Summary</a></li>
+                    <li><a href="BankReconciliationReport">Bank Reconciliation Report</a></li>
+                   
+                </ul>
+            </div>
+        </div>
+
+        <a href="#" class="btn btn-default floatRight  pull-right marginLeft10"  onclick="javascript: PrintCheckPDF();" id="btnPrint">Preview Report</a>
+
+
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+@section Body{
+
+    <section class="content" id="dvMainDv">
+        <div class="row fontAriel" id="dvFilterDv">
+            <div class="tab-content">
+
+                <div id="tabPendingInvoices" class="tab-pane active widget-body-regular">
+                    <div class="col-xs-12">
+
+                        <div id="tabEditAudit" class="tab-pane active widget-body-regular">
+
+                            <div id="divCRSummary">
+                                <div class="form-group">
+                                    @*<label style="width:200px!important;"><label id="lblCO"></label></label>
+                                    <div id="tblSegment" style="margin-left:13px !important;"></div>*@
+                                    <label style="width:200px!important;">Company</label>
+                                    <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select tabindex="1" style="width: 160px !important;margin-left: 12px; display:none;" id="CRSummaryFilterCompany" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group" id="CRSummaryFilterLocationGroup" style="display:none;">
+                                    <label id="CRSummaryFilterLocationLabel" style="width:200px!important;">Locaton(s)</label>
+                                    <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select tabindex="2" id="CRSummaryFilterLocation" multiple="multiple" style="display:none;"></select>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group" id="CRSummaryFilterSetGroup" style="display:none;">
+                                    <label id="CRSummaryFilterSetLabel" style="width:200px!important;">Set(s)</label>
+                                    <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select tabindex="3" id="CRSummaryFilterSet" multiple="multiple" style="display:none;"></select>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group" id="CRSummaryFilterEpisodeGroup" style="display:none;">
+                                    <label id="CRSummaryFilterEpisodeLabel" style="width:200px!important;">Episode(s)</label>
+                                    <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select tabindex="4" id="CRSummaryFilterEpisode" multiple="multiple" style="display:none;"></select>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Bank :</label>
+                                    <input type="text" tabindex="5" id="txtBankName" style="margin-left:13px !important;" class="SearchBank form-control marb0 pull-left" onblur="funBankCheck();" />
+                                    <input type="hidden" id="hdnBank" />
+
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Print Date From</label>
+                                    <input type="text" id="txtFrom" tabindex="6" class="form-control  pull-left datepicker" style="margin-left:13px !important;" placeholder="MM/DD/YYYY">
+
+
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Print Date To:</label>
+                                    <input type="text" id="txtTo" tabindex="7" class="form-control  pull-left datepicker" style="margin-left:13px !important;" placeholder="MM/DD/YYYY">
+
+                                </div><!-- /.form-group -->
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Check Type:</label>
+                                 
+                                     <select tabindex="8" id="ddlType"  class="form-control  pull-left" style="margin-left:13px;">
+                                         <option value="ALL" selected="selected">ALL</option>
+                                         <option value="Check">Check</option>
+                                         <option value="Manual Check">Manual Check</option>
+                                         <option value="Wire Check">Wire Check</option>
+                                     </select>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:200px!important;">Check Run # :</label>
+                                    <div id="divCheckRun" style="width: 18.3% !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                        <select tabindex="9" id="ddlCheckRun" multiple="multiple" class="form-control  pull-left" onfocus="javascript: funCheckRun();"></select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+      
+        <div id="dialog11" style="display: none">
+        </div>
+
+        <div id="fade" class="black_overlay"></div>
+
+    </section>
+
+
+    <div class="newhidden" id="dvWait" style="display: none;width: 100%;margin: auto 0px;text-align: center;top: 30%;">
+
+        <img src="~/Images/InternetSlowdown_Day.gif" />
+
+    </div>
+
+
+
+}
+
+
+@section Javascript{
+<script src="~/Content/libs/bootstrap-multiselect.js"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+<script src="~/Scripts/Reports/ReportEngine.js"></script>
+<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/libs/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+    <script>
+        //$(function () {
+        //    $(".datepicker").datepicker();
+        //});
+        $(document).ready(function () {
+            setTimeout(function () {
+                $("#divCheckRun .multiselect-container").addClass('clsDdlCheckRun');
+            }, 700)
+        });
+        $(function () {
+            $(".datepicker").datepicker(
+                {
+                    onClose: function () {
+                        $(this).focus();
+                    }
+                });
+        });
+
+    </script>
+
+    <style type="text/css">
+        .black_overlay, #fade {
+            display: none !important;
+        }
+
+        #TblPosted_paginate {
+            position: fixed;
+            bottom: 4%;
+            float: right !important;
+            right: 2%;
+        }
+
+        #TblPosted_info {
+            position: fixed;
+            bottom: 6%;
+        }
+    </style>
+
+    <script src="~/Scripts/Reports/CheckSummary.js"></script>
+
+
+
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+
+    <script>
+
+        // This is an example jQuery snippet that makes the dialogs work
+        $(document).ready(function () {
+
+            // We have two control functions that show or hide dialogs
+            function showDialog(id) {
+
+                // Find the dialog and show it
+
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+
+                // Center it on screen
+
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+
+            }
+            function hideAllDialogs() {
+                // Hide all visible dialogs
+                $('.dialog-overlay').fadeOut();
+            }
+
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+
+                showDialog(toShow);
+            });
+
+        });
+    </script>
+    <style type="text/css">
+        .dialog-card {
+            top: 15%;
+        }
+
+        .w30N {
+            width: 30px !important;
+        }
+
+        .ui-button-icon-only .ui-icon {
+            margin: -8px 0 0 -9px !important;
+        }
+
+        .table-hover th {
+            padding: 0px 4px !important;
+        }
+
+        .blueClas {
+            background: #337ab7;
+            color: #fff;
+            padding: 5px !important;
+        }
+        .clsDdlCheckRun{
+            height: 200px;
+            overflow-y: scroll;
+        }
+    </style>
+}
+
+

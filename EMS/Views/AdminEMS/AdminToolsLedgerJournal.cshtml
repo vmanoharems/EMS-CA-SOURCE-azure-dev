@@ -1,0 +1,180 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutCoreUIAdmin.cshtml";
+}
+
+@section Body{
+    <div class="panel m-b-lg">
+        <div class="card-body">
+            <table id="AdminToolsLedgerJournal" class="table table-hover table-striped table-nowrap dataTable pageResize">
+                <thead>
+                    <tr>
+                        <th>Transaction#</th>
+                        <th>CO</th>
+                        <th>Document #</th>
+                        <th>Document Date</th>
+                        <th>Post Date</th>
+                        <th>Period</th>
+                        <th>Type</th>
+                        <th># Lines</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Transaction#</th>
+                        <th>CO</th>
+                        <th>Document #</th>
+                        <th>Document Date</th>
+                        <th>Post Date</th>
+                        <th>Period</th>
+                        <th>Type</th>
+                        <th># Lines</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+                        <!-- begin modal -->
+                        <div class="modal fade" id="ATLJTransactionModal" tabindex="-1" role="dialog" aria-labelledby="ATLJTransactionModal" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ATLJTransactionModal-title">Transaction #0001</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="ATLJTransactionModal-form" class="">
+                                            <div class="row">
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger">
+                                                    <label for="TransactionNumber" class="form-control-label">Trans #</label>
+                                                    <input type="text" class="form-control" id="TransactionNumber">
+                                                </div>
+
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger  disabled">
+                                                    <label for="Source" class="form-control-label">Source</label>
+                                                    <input type="text" class="form-control disabled" id="Source" disabled>
+                                                </div>
+
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger ">
+                                                    <label for="EntryDate" class="form-control-label">Entry Date</label>
+                                                    <input type="text" class="form-control" id="EntryDate">
+                                                </div>
+
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger ">
+                                                    <label for="PostedDate" class="form-control-label">Posted Date</label>
+                                                    <input type="text" class="form-control" id="PostedDate">
+                                                </div>
+
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger">
+                                                    <label for="PostedDate" class="form-control-label">Ref #</label>
+                                                    <input type="text" class="form-control" id="ReferenceNumber">
+                                                </div>
+
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger">
+                                                    <label for="AuditStatus" class="form-control-label">Status</label>
+                                                    <input type="text" class="form-control" id="AuditStatus">
+                                                </div>
+
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger">
+                                                    <label for="BatchNumber" class="form-control-label">Batch #</label>
+                                                    <input type="text" class="form-control" id="BatchNumber">
+                                                </div>
+
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger form-inline disabled">
+                                                    <label for="Debit" class="form-control-label">Debits</label>
+                                                    <input type="text" class="form-control disabled" id="DebitTotal" disabled>
+                                                </div>
+
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger form-inline disabled">
+                                                    <label for="Credit" class="form-control-label">Credits</label>
+                                                    <input type="text" class="form-control disabled" id="CreditTotal" disabled>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger ">
+                                                    <label for="ClosePeriod" class="form-control-label">Period</label>
+                                                    <input type="text" class="form-control" id="ClosePeriod">
+                                                </div>
+
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger ">
+                                                    <label for="DocumentNo" class="form-control-label">Doc. No.</label>
+                                                    <input type="text" class="form-control" id="DocumentNo">
+                                                </div>
+                                                
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger ">
+                                                    <label for="CreatedDate" class="form-control-label">Created</label>
+                                                    <input type="text" class="form-control" id="CreatedDate">
+                                                </div>
+
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger ">
+                                                    <label for="createdBy" class="form-control-label">By</label>
+                                                    <input type="text" class="form-control" id="createdBy">
+                                                </div>
+
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger ">
+                                                    <label for="modifiedDate" class="form-control-label">Modified</label>
+                                                    <input type="text" class="form-control" id="modifiedDate">
+                                                </div>
+                                                
+                                                <div class="form-group col-lg-1 col-sm-1 has-danger ">
+                                                    <label for="modifiedBy" class="form-control-label">By</label>
+                                                    <input type="text" class="form-control" id="modifiedBy">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <table id="ATLJTransactionModal-JED" class="table table-hover table-striped table-nowrap dataTable pageResize">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>COAId#</th>
+                                                            <th>VendorId</th>
+                                                            <th>VendorName</th>
+                                                            <th>ThirdParty</th>
+                                                            <th>Note</th>
+                                                            <th>TransactionCodeString</th>
+                                                            <th>SetId</th>
+                                                            <th>SeriesId</th>
+                                                            <th>TaxCode</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>COAId#</th>
+                                                            <th>VendorId</th>
+                                                            <th>VendorName</th>
+                                                            <th>ThirdParty</th>
+                                                            <th>Note</th>
+                                                            <th>TransactionCodeString</th>
+                                                            <th>SetId</th>
+                                                            <th>SeriesId</th>
+                                                            <th>TaxCode</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Send message</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end modal -->
+
+}
+
+@section Javascript {
+<script src="~/Content/AdminPanel/js/AdminShared.js"></script>
+<script src="~/Content/AdminPanel/js/AdminToolsLedgerJournal.js"></script>
+}

@@ -1,0 +1,182 @@
+﻿@{
+    ViewBag.Title = "Report>>Variance Report";
+    Layout = "~/Views/Shared/_LayoutReports.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header">
+        <div class="form-group">
+            <label>Select a Report</label>
+            <div class="midMenu pull-left">
+                <ul>
+                    <li><a href="CostReportSheet">Cost Report </a></li>
+                    <li class="active"><a href="#">EFC Changes Report</a></li>
+
+                </ul>
+            </div>
+        </div>
+@*        <a href="#" class="btn btn-default floatRight pull-right marginRight10 " onclick="javascript: PrintCheckPDF(true);" style="display:inline;" title="Export to CSV/Excel File">Export</a>*@
+        <a href="#" class="btn btn-default floatRight  pull-right marginLeft10" onclick="javascript: PrintCheckPDF();" id="btnPrint">Preview Report</a>
+
+
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+@section Body{
+
+    <section class="content" id="dvMainDv">
+        <div class="row fontAriel" id="dvFilterDv">
+            <div class="tab-content">
+                <div id="tabPendingInvoices" class="tab-pane active widget-body-regular">
+                    <div class="col-xs-12">
+                        <div id="tabEditAudit" class="tab-pane active widget-body-regular">
+                            <div id="VarianceReportdiv">
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:213px!important;">Company</label>
+                                    <select onchange="javascript: CO();" id="ddlCompany" class="form-control width110"></select>
+
+                                </div>
+                                @*<div class="clearfix"></div>
+
+                                <div class="form-group" id="dvLo">
+                                    <label style="width:213px!important;">Location</label>
+                                    <select onchange="javascript: LO();" id="ddlLocation" class="form-control width110"></select>
+
+                                </div>*@
+                                <div class="clearfix"></div>
+
+                                <div class="form-group">
+                                    <label style="width:213px!important;">Budget</label>
+                                    <select id="ddlBudget" class="form-control width110"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="dialog11" style="display: none">
+        </div>
+
+        <div id="fade" class="black_overlay"></div>
+
+</section>
+
+    <div class="newhidden" id="dvWait" style="display: none;width: 100%;margin: auto 0px;text-align: center;top: 30%;">
+        <img src="~/Images/InternetSlowdown_Day.gif" />
+    </div>  
+}
+
+
+@section Javascript{
+
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+
+
+    </script>
+
+    <style type="text/css">
+        #txtCO {
+            margin-left: 13px !important;
+        }
+
+        .black_overlay, #fade {
+            display: none !important;
+        }
+
+        #TblPosted_paginate {
+            position: fixed;
+            bottom: 4%;
+            float: right !important;
+            right: 2%;
+        }
+
+        #TblPosted_info {
+            position: fixed;
+            bottom: 6%;
+        }
+    </style>
+
+    <script src="~/Scripts/Reports/Variance.js"></script>
+    <script src="~/Scripts/Reports/ReportEngine.js"></script>
+<script src="~/Scripts/papaparse.min.js"></script>
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+
+    <script>
+
+        // This is an example jQuery snippet that makes the dialogs work
+        $(document).ready(function () {
+
+            // We have two control functions that show or hide dialogs
+            function showDialog(id) {
+
+                // Find the dialog and show it
+
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+
+                // Center it on screen
+
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+
+            }
+            function hideAllDialogs() {
+                // Hide all visible dialogs
+                $('.dialog-overlay').fadeOut();
+            }
+
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+
+                showDialog(toShow);
+            });
+        });
+
+    </script>
+    <style type="text/css">
+        .dialog-card {
+            top: 15%;
+        }
+
+        .w30N {
+            width: 30px !important;
+        }
+
+        .ui-button-icon-only .ui-icon {
+            margin: -8px 0 0 -9px !important;
+        }
+
+        .table-hover th {
+            padding: 0px 4px !important;
+        }
+
+        .blueClas {
+            background: #337ab7;
+            color: #fff;
+            padding: 5px !important;
+        }
+    </style>
+}
+
+

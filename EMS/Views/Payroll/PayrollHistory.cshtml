@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "Payroll>>Payroll History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Users</h2>
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Payroll <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#">Load <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">History</li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+                <li class=""><a href="~/Payroll/LoadPayroll">Load Payroll File</a></li>
+                <li class="active"><a data-toggle="tab" href="#" aria-expanded="true">History</a></li>
+
+            </ul>
+        </div>
+        <div class="pull-right paddingNone white_space col-lg-7 col-md-9 col-sm-12 col-xs-12">
+            <select class="form-control width135 floatLeft marginRight10 marginLeft10 marginBottomNone" onchange="javascript: FillPayrollHistory();" id="ddlCompany"></select>
+            @*<a class="btn btn-default paddingAll10" href="">Show History</a>*@
+           
+
+        </div>
+        <!--<a  href="#" class="btn btn-default floatRight">Config</a>-->
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+@section Body{
+    <div id="dvMainLoad" >
+        <section class="content">
+            <div class="row fontAriel">
+
+              
+                 <div class="clearfix"></div>
+                <div class="col-xs-12">
+                    
+                    <div class="table-responsive overflowAuto borderTop borderBot">
+                        <table id="tblPayrollHistory" class="table table-hover table-responsive hidden">
+                                <thead>
+                                    <tr>
+                                        <th>EMS Invoice #</th>
+                                        <th>Load Date</th>
+                                        <th>Load #</th>
+                                        <th>Period Ending</th>
+                                        <th>Payroll Count</th>
+                                        <th>Total Amount</th>
+                                        <th>Labor Amount</th>
+                                        <th>Fringe Amount</th>
+                                        <th>Company Code</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    <tr id="tblPayrollHistory_filterhead">
+                                        <th class="filterhead">EMS Invoice #</th>
+                                        <th class="filterhead">Load Date</th>
+                                        <th class="filterhead">Load #</th>
+                                        <th class="filterhead">Period Ending</th>
+                                        <th class="filterhead">Payroll Count</th>
+                                        <th class="filterhead">Total Amount</th>
+                                        <th class="filterhead">Labor Amount</th>
+                                        <th class="filterhead">Fringe Amount</th>
+                                        <th class="filterhead">Company Code</th>
+                                        <th class="filterhead">Status</th>
+                                    </tr>                                   
+                                </thead>
+                            <tbody id="bdyPayrollHistory"></tbody>
+                            <tfoot class="footer">
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.box -->
+                    
+                </div>
+            </div>
+        </section>
+    </div>
+    }
+
+@section Javascript{
+<script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+<link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+<link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+<script>
+        // Change the selector if needed
+        var $table = $('table.scroll'),
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
+
+        // Adjust the width of thead cells when window resizes
+        $(window).resize(function () {
+            // Get the tbody columns width array
+            colWidth = $bodyCells.map(function () {
+                return $(this).width();
+            }).get();
+
+            // Set the width of thead columns
+            $table.find('thead tr').children().each(function (i, v) {
+                $(v).width(colWidth[i]);
+            });
+        }).resize(); // Trigger resize handler
+</script>
+<script src="~/Scripts/Payroll/PayrollSession.js"></script>
+<script src="~/Scripts/Payroll/PayrollHistory.js"></script>
+<style type="text/css">
+    .black_overlay, #fade {
+        display: none !important;
+    }
+
+    #tblPayrollHistory_paginate {
+        position: fixed;
+        bottom: 4%;
+        float: right !important;
+        right: 2%;
+    }
+
+    #tblPayrollHistory_info {
+        position: fixed;
+        bottom: 6%;
+    }
+</style>
+}
+

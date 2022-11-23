@@ -1,0 +1,207 @@
+﻿@{
+    ViewBag.Title = "Payroll>>PayrollAudit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+<section class="content-header paddingBottom0">
+    <ol class="breadcrumb floatLeft">
+        <li><a href="#"> Payroll <i class="fa fa-caret-right"></i></a></li>
+        <li class="active">Audit</li>
+    </ol>
+    <div class="pull-right paddingNone white_space col-lg-7 col-md-9 col-sm-12 col-xs-12">
+        <select class="form-control width135 floatLeft marginRight10 marginLeft10 marginBottomNone" onchange="javascript: FillPayrollHistory();" id="ddlCompany"></select>
+        @*<a class="btn btn-default paddingAll10" href="">Show History</a>*@
+
+    </div>
+
+    <!--<a  href="#" class="btn btn-default floatRight">Config</a>-->
+    <div class="clearfix"></div>
+
+</section>
+}
+@section Body{
+<section class="content" id="dvMainDv">
+    <div class="row fontAriel" id="dvFilterDv">
+        <!--<div class="col-lg-3 col-sm-5 col-md-3 col-xs-12"><select class="form-control width123 pull-left margin-r-5"><option>Client</option></select> <b>USA</b></div>
+        <div class="clearfix"></div>-->
+        <!--<a href="javascript:showDiv('uploadBudget');" class="blueText underLine">+ New Bank</a>-->
+        <div class="col-xs-12">
+            <!--<table class="table table-hover table-responsive">-->
+            <div class="table-responsive">
+                <table class="table table-hover table-responsive hidden" id="tblAudit">
+                    <thead>
+                        <tr>
+                            @*<th></th>*@
+                            <th>Edit Invoice</th>
+                            <th>Run Edit Report</th>
+                            <th>Load #</th>
+                            <th>Invoice No.</th>
+                            <th>Load Date</th>
+                            <th>Period Ending</th>
+                            <th>Transaction Date</th>
+                            <th>Payroll Count</th>
+                            <th>Total Amount</th>
+                            <th>Invoiced</th>
+                            <th>Company Code</th>
+                        </tr>
+                        @*<tr>
+                            <td colspan="11" style="text-align:center;">No Record Found !!</td>
+
+                        </tr>*@
+
+                    </thead>
+                    <tbody id="bdyPayrollAudit"></tbody>
+                    <tfoot class="footer">
+                        <tr>
+                            @*<th></th>*@
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="dialog11" style="display:none;">
+     
+    </div>
+</section>
+<div class="newhidden" id="dvWait" style="display: none;width: 100%;margin: auto 0px;text-align: center;top: 30%;">
+    <img src="~/Images/InternetSlowdown_Day.gif" />
+</div>
+@*<div id="dialog" style="display: none">
+</div>*@
+
+<div id="fade" class="black_overlay"></div>
+
+}
+@section Javascript{
+<script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+<script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+<link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+<link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+<script>
+        // Change the selector if needed
+        var $table = $('table.scroll'),
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
+
+        // Adjust the width of thead cells when window resizes
+        $(window).resize(function () {
+            // Get the tbody columns width array
+            colWidth = $bodyCells.map(function () {
+                return $(this).width();
+            }).get();
+
+            // Set the width of thead columns
+            $table.find('thead tr').children().each(function (i, v) {
+                $(v).width(colWidth[i]);
+            });
+        }).resize(); // Trigger resize handler
+</script>
+<script src="~/Scripts/Payroll/PayrollSession.js"></script>
+<script src="~/Scripts/Payroll/PayrollAudit.js"></script>
+<script src="~/Scripts/Reports/ReportEngine.js"></script>
+
+
+
+<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+      rel="stylesheet" type="text/css" />
+
+<script>
+
+    // This is an example jQuery snippet that makes the dialogs work
+    $(document).ready(function () {
+
+        // We have two control functions that show or hide dialogs
+        function showDialog(id) {
+
+            // Find the dialog and show it
+
+            var dialog = $('#' + id),
+                    card = dialog.find('.dialog-card');
+
+            dialog.fadeIn();
+
+            // Center it on screen
+
+            card.css({
+                'margin-top': -card.outerHeight() / 2
+            });
+
+        }
+        function hideAllDialogs() {
+            // Hide all visible dialogs
+            $('.dialog-overlay').fadeOut();
+        }
+
+        // Here is how to use these functions
+
+        $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+            hideAllDialogs();
+        });
+
+        $('.dialog-show-button').on('click', function () {
+            var toShow = $(this).data('show-dialog');
+
+            showDialog(toShow);
+        });
+    });
+
+</script>
+<style type="text/css">
+    .dialog-card {
+        top: 15%;
+    }
+
+    .w30N {
+        width: 30px !important;
+    }
+
+    .ui-button-icon-only .ui-icon {
+        margin: -8px 0 0 -9px !important;
+    }
+
+ 
+
+    .ui-dialog {
+        width: 80% !important;
+        z-index: 999999999;
+    }
+</style>
+<style type="text/css">
+    .black_overlay, #fade {
+        display: none !important;
+    }
+
+    #tblAudit_paginate {
+        position: fixed;
+        bottom: 4%;
+        float: right !important;
+        right: 2%;
+    }
+
+    #tblAudit_info {
+        position: fixed;
+        bottom: 6%;
+    }
+</style>
+
+
+
+
+}
+

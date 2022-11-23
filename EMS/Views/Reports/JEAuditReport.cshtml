@@ -1,0 +1,481 @@
+﻿@*@{
+    ViewBag.Title = "Ledger>>JournalEntries";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+
+@section BreadCrumb{
+    <section class="content-header">
+        <div style="width: 25% !important;float: left;">
+            <ol class="breadcrumb floatLeft">
+                <li><a href="#"> Ledger <i class="fa fa-caret-right"></i></a></li>
+                <li><a href="#"> Journal Entries <i class="fa fa-caret-right"></i></a></li>
+                <li class="active" id="LiBreadCrumb">Audit</li>
+            </ol>
+        </div>
+        <div class="midMenu">
+            <ul>
+                @*<li><a href="JEDistributionChange" onclick="javascript: funDistributionChange();">Distribution Change</a></li>
+                <li> <a href="JEManualEntry" onclick="javascript: funManualEntryTabJEList();">Add JE</a></li>*@
+                @*<li class="active"><a href="JEAudit" onclick="javascript:funAuditTabJEList();"></a></li>*@
+                @*<li ><a href="JEPostingHistory" onclick="javascript: funPostingHistory();">Posting History</a></li>*@
+            </ul>
+        </div>
+        <div class="form-group col-xs-6 col-sm-4 col-lg-1 pad0" id="DvPostDate" style="display:none;">
+
+            <div class="input-group" style="float: left; margin-left: 9px; width: 100%;display:none;">
+                <input type="text" class="form-control pull-right datepicker width90" id="txtPostDate" placeholder="MM/DD/YYYY">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </div>
+            </div>
+        </div>
+        @*<span onclick ="javascript: ShowhideFilter();">7894561230</span>*@
+        <a href="#" style="display:inline;" id="btnFilter"><i style="font-size: 24px;" class="fa fa-filter"></i>Filter</a>
+       
+        <a href="#" onclick="javascript:GetJEAuditPDF();" class="btn btn-default floatRight">Print Report</a>
+
+        @*<a href="#" class="btn btn-default floatLeft" id="btnDelete" style="display:none;margin-right: 5px;margin-left: 88px;" onclick="javascript:funDeleteJE();">Delete</a>
+        <a href="#" class="btn btn-default floatLeft" id="btnCancel" style="display:none; margin-right: 5px;" onclick="javascript:funCancelJE();">cancel</a>
+
+
+        <a href="#" class="btn dropdown-toggle btn-default floatRight" id="btnSaveAudit" style="display:none;margin-right: 5px;">Save & Post</a>
+        <a href="#" class="btn dropdown-toggle btn-default floatLeft" id="btnSaveAuditSave" style="display:none;margin-right: 10px;margin-right: 5px;">Save</a>*@
+        
+        <a href="#" class="btn btn-default floatRight" onclick="javascript: ShowhideFilter();"  id="btnApply">Apply</a>
+        @*        funAuditTabSave('Saved');*@
+        <div class="clearfix"></div>
+    </section>
+}
+
+@section Body{
+    <form>
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
+
+                <div class="col-xs-12">
+                    <div class="widget-body overflowNone">
+                        <div id="DvCriteria" style="display:inline;">
+                            <table cellspacing="0" width="100%" class="table table-hover table-responsive" id="TblEditCriteria" style="position: absolute; width:96%;">
+
+                                <tbody id="TblEditCriteriaTBody">
+                                   
+                                 
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-content" id="DvTab" style="display:none;">
+
+
+                        
+                            @* Audit  *@
+                            <div id="tabAudit" class="tab-pane widget-body-regular active">
+
+                                <div class="table-responsive xsborNone" style="margin-top:10px; margin-bottom:0px;">
+                                    <div class="col-lg-7 col-md-8 col-sm-12 col-xs-12 padl0" id="DvFilter" style="display:none;">
+                                        <form class="form-horizontal">
+                                            <div class="form-group mar0">
+                                                <label for="inputEmail" class="control-label col-xs-3 col-sm-2 col-lg-2">Entry#</label>
+                                                <div class="col-xs-9 col-sm-4 col-lg-2 pad0" id="">
+                                                    <input id="" class="form-control width100" type="text">
+                                                </div>
+                                                <label for="inputEmail" class="control-label col-xs-3 col-sm-2 col-lg-1">To</label>
+                                                <div class="col-xs-9 col-sm-4 col-lg-2 pad0" id="">
+                                                    <input id="" class="form-control width100" type="text">
+                                                </div>
+                                                <div style="margin-bottom: 10px;" class="checkbox col-xs-8 col-sm-6 col-lg-3">
+                                                    <label style="padding: 0px;" class="col-lg-12 col-sm-12 col-xs-12">
+                                                        <input type="checkbox" value="" class="mart0">
+                                                        <span class="marl20">3rd party Vendor</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="clearfix"></div>
+                                                <label for="inputEmail" class="control-label col-xs-3 col-sm-2 col-lg-2">Currency</label>
+                                                <div class="col-xs-9 col-sm-4 col-lg-2 pad0">
+                                                    <select class="form-control width100" id="">
+                                                        <option>USD</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-11 col-sm-7 col-lg-6 ">
+                                                    <input id="" class="form-control width100" type="text" placeholder="Auto Complete Vendor or 3P Vendor">
+                                                </div>
+                                                <div class="col-xs-11 col-lg-2 col-sm-5">
+                                                    <div style="display:block;" class="input-group-btn">
+                                                        <button class="btn dropdown-toggle previewBtn width70" data-toggle="dropdown" aria-expanded="false">
+                                                            Post
+                                                            <span style="position: absolute;right: 6px;top: 10px;" class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu width70">
+                                                            <li>
+                                                                <a href="#">Edit</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Delete</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <!--<div class="col-xs-11 col-sm-5 col-lg-2 pad0xs">
+                                                    <select class="form-control width100" id="">
+                                                        <option>Edit</option>
+                                                        <option>Delete</option>
+                                                    </select>
+                                                </div>-->
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-5 col-md-4 col-sm-12 col-xs-12 table-responsive pad0 marb10" style="display:none;">
+                                        <table class="table table-hover table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th>CO</th>
+                                                    <th>G/L</th>
+                                                    <th>Detail</th>
+                                                    <th>Set</th>
+                                                    <th>EPI</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input placeholder="01" class="width100" type="text"></td>
+                                                    <td><input placeholder="188" class="width100" type="text"></td>
+                                                    <td><input placeholder="" class="width100" type="text"></td>
+                                                    <td><input placeholder="" class="width100" type="text"></td>
+                                                    <td><input placeholder="" class="width100" type="text"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="table-responsive" id="DvAuditList" style="height:450px; ">
+                                        <table class="table table-hover table-responsive" id="tblJEList">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th style="width: 2%;"><input type="checkbox" id="chkAllForPosing" /></th>
+                                                    <th style="width: 5%;">Transaction #</th>
+                                                    <th style="width: 5%;">CO</th>
+                                                    <th style="width: 5%;">Transaction Date</th>
+                                                    <th style="width: 8%;">Type</th>
+
+                                                    <th style="width: 8%;">Debit</th>
+                                                    <th style="width: 10%;">Credit</th>
+                                                    <th style="width: 8%;">Lines</th>
+                                                    @*<th style="width: 10%;">Vendor</th>
+                                                    <th style="width: 15%;">3P</th>*@
+                                                    <th style="width: 8%;">Document #</th>
+                                                    <th style="width: 5%;">Period</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tblJEListTBody"></tbody>
+                                            <tfoot>
+                                                <tr>
+
+                                                    <th></th>
+                                                    <th></th>
+
+                                                    <th></th>
+                                                    <th></th>
+
+                                                    <th></th>
+
+                                                    <th></th>
+
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+
+                                    </div>
+                                    <div class="table-responsive" id="DvAuditListByJEDetail" style="display:none;height:450px;     overflow-x: hidden !important;">
+                                        <form class="form-horizontal">
+                                            <div class="form-group mar0">
+                                                <label for="" class="col-xs-3 col-sm-2 col-lg-2">
+                                                    Trasaction
+                                                    #
+                                                    <span for="" class="" id="spnTrasactionNoAudit"></span>
+                                                </label>
+                                                <input type="hidden" id="hdnJEIdAudit" />
+                                                <label class="col-xs-3 col-sm-2 col-lg-2">
+                                                    <b>Debit</b>
+                                                    $
+                                                    <span for="" class="" id="spnDebitAudit">0.00</span>
+                                                </label>
+
+                                                <label class="col-xs-3 col-sm-2 col-lg-2">
+                                                    <b>credit</b>
+                                                    $
+                                                    <span class="" id="spnCreditAudit">0.00</span>
+                                                </label>
+                                                <div class="green-color" id="DvBalImBalAudit">
+
+                                                    <b><span class="col-lg-1 col-sm-4 col-xs-6" id="spnBalancImBalanceAudit">Balance </span></b>
+                                                    <span>$</span>
+                                                    <span class="text_red" id="txtImBalanceAudit">0.00</span>
+
+                                                </div>
+
+
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </form>
+                                        <div class="table-responsive" id="DvAuditHeader">
+                                            <table class="table table-hover table-responsive" id="tblJEListAuditHeader">
+                                                <thead id="tblJEListAuditTheadHeader">
+                                                    <tr>
+                                                        <th>CO</th>
+                                                        <th>Currency</th>
+                                                        <th>Period</th>
+                                                        <th>Document #</th>
+                                                        <th>Transaction Date</th>
+                                                        <th>Type</th>
+                                                        <th>Description</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblJEListAuditTBodyHeader">
+                                                    <tr>
+                                                        <td><select id="ddlCompanyAudit" class="form-control" onchange="javascript: funGetClosePeriodDetail();" disabled></select></td>
+                                                        <td><select id="ddlCurrencyAudit" class="form-control"><option value="USD">USD</option></select></td>
+                                                          <td><select id="ddlPeriodAudit" class="form-control"></select></td>
+
+                                                        <td style="text-align: center; width:1%;" >
+                                                            <input type="text" class="form-control pull-right width90" disabled id="txtDescription" /> 
+                                                        </td>
+                                                        <td style="width:1%;">
+                                                            <input type="text" class="form-control pull-right datepicker width90" id="txtTransactionDateAudit" placeholder="MM/DD/YYYY">
+                                                            @*<div class="input-group-addon">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </div>*@
+
+                                                        </td>
+                                                        <td><select id="ddlTypeAudit" class="form-control">
+                                                               
+                                                                <option value="JE">JE</option>
+                                                                <option value="AP">AP</option>
+                                                                <option value="WT">WT</option>
+                                                               
+                                                            </select></td>
+                                                        <td class=""><input type="text" id="txtDescriptionAudit" style="width:100% !important" class="form-control" /></td>
+
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <table class="table table-hover table-responsive" id="tblJEListAudit">
+                                            <thead id="tblJEListTheadAudit">
+
+                                            </thead>
+                                            <tbody id="tblJEListTBodyAudit"></tbody>
+                                        </table>
+                                        <span onclick="javascript: funAuditListJEDetailNewRow();" style="color:green;"><i class="fa fa-plus-square"></i>  New Line</span>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <!-- /.box -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+    <div id="DeletePopup" class="newhidden" style="display: none; margin-top:10%">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('DeletePopup');">X</a></div>
+            <div class="heading2"><h4>Are you sure want to delete this record </h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <input type="hidden" id="hdnDeleteRowAudit" />
+                <a href="#" id="btndeleteAudit" onclick="javascript: funDeleteRecordAuditTab();" class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+
+
+                <a href="javascript:hideDiv('DeletePopup');" id="btnCloseStartingValue" class="btn btn-primary floatRight">No</a>
+            </div>
+        </div>
+    </div>
+    <div id="DeleteAuditPopup" class="newhidden" style="display: none; margin-top:10%">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('DeleteAuditPopup');">X</a></div>
+            <div class="heading2"><h4>Delete Journal Entry </h4></div>
+
+            <div class="WhtBg">
+                <div class="col-md-12">
+
+                    <p>This will delete this unposted Journal Entry. Are you sure ?</p>
+
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <input type="hidden" id="hdnDeleteRowAudit" />
+                <a href="#" onclick="javascript: funDeleteJEAudit();" class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+
+
+                <a href="javascript:hideDiv('DeleteAuditPopup');" id="btnCloseStartingValue" class="btn btn-primary floatRight">No</a>
+            </div>
+        </div>
+    </div>
+    <div id="CancelAuditPopup" class="newhidden" style="display: none; margin-top:10%">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+
+            <div class="heading2"><h4>Cancel Journal Entry Edit</h4></div>
+
+            <div class="WhtBg">
+                <div class="col-md-12">
+
+                    <p>This will Cancel your changes to this unposted Journal Entry.</br> Are you Sure ?</p>
+
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <input type="hidden" id="hdnDeleteRowAudit" />
+                <a href="#" id="hrfAuditCancleYes" onclick="javascript: funCancelJEAudit();" class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+                @*<span id="btnAuditCancleYes" onclick="javascript: funCancelJEAudit();" class="btn btn-success floatLeft" style="display: inline;">Yes</span>*@
+               
+                <a href="javascript:hideDiv('CancelAuditPopup');" id="btnCloseStartingValue" class="btn btn-primary floatRight">No</a>
+            </div>
+        </div>
+    </div>
+}
+@section Javascript{
+
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.1/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            fixedHeader: {
+                header: true,
+                footer: true
+            }
+        });
+    });
+    </script>
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/fixedheader/3.1.1/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script>
+    // Change the selector if needed
+    var $table = $('table.scroll'),
+        $bodyCells = $table.find('tbody tr:first').children(),
+        colWidth;
+
+    // Adjust the width of thead cells when window resizes
+    $(window).resize(function () {
+        // Get the tbody columns width array
+        colWidth = $bodyCells.map(function () {
+            return $(this).width();
+        }).get();
+
+        // Set the width of thead columns
+        $table.find('thead tr').children().each(function (i, v) {
+            $(v).width(colWidth[i]);
+        });
+    }).resize(); // Trigger resize handler
+    </script>
+
+
+
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+
+    @*<script src="~/Scripts/Ledger/JournalEntry.js"></script>*@
+<link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui.js"></script>
+    <script src="~/Scripts/Reports/JEAuditReport.js"></script>
+    <script type="text/javascript">
+  
+
+        function myFunction() {
+            $('#filterDiv').show();
+        }
+
+    </script>
+    <style>
+        .table-hover td {
+            padding: 3px 0px 3px 10px !important;
+        }
+
+
+
+        .green-color span, .green-color label {
+            color: green;
+        }
+
+        .red-color span, .red-color label {
+            color: red;
+        }
+
+        .width40 {
+            width: 45px;
+            border: 1px solid #ccc;
+        }
+
+            .width40 input {
+                width: 100%;
+            }
+
+        .width100 {
+            width: 120px;
+            border: 1px solid #ccc;
+        }
+
+            .width100 input {
+                width: 100%;
+            }
+
+        .width75 {
+            width: 75px;
+            border: 1px solid #ccc;
+        }
+
+            .width75 input {
+                width: 100%;
+            }
+
+        .width95 {
+            width: 95px;
+            border: 1px solid #ccc;
+        }
+
+            .width95 input {
+                width: 100%;
+            }
+
+        .width35 {
+            width: 100px;
+            border: 1px solid #ccc;
+        }
+
+            .width35 input {
+                width: 35%;
+            }
+
+        .table-hover td {
+            padding: 0px !important;
+        }
+    </style>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+}

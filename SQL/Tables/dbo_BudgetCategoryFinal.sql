@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[BudgetCategoryFinal] (
+  [BudgetCategoryID] [int] IDENTITY,
+  [cid] [int] NULL,
+  [CategoryNumber] [nvarchar](50) NULL,
+  [CategoryDescription] [nvarchar](50) NULL,
+  [CategoryFringe] [nvarchar](20) NULL,
+  [CategoryOriginal] [nvarchar](20) NULL,
+  [CategoryTotal] [nvarchar](20) NULL,
+  [CategoryVariance] [nvarchar](20) NULL,
+  [Budgetfileid] [int] NULL,
+  [Createddate] [datetime] NULL,
+  [modifieddate] [datetime] NULL,
+  [createdby] [int] NULL,
+  [modifiedby] [int] NULL,
+  [BudgetID] [int] NULL,
+  [S1] [varchar](50) NULL,
+  [S2] [varchar](50) NULL,
+  [S3] [varchar](50) NULL,
+  [S4] [varchar](50) NULL,
+  [S5] [varchar](50) NULL,
+  [S6] [varchar](50) NULL,
+  [S7] [varchar](50) NULL,
+  [S8] [varchar](50) NULL,
+  [COAID] [int] NULL,
+  [COACODE] [varchar](100) NULL
+)
+GO

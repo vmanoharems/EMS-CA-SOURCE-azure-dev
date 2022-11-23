@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Settings > Checks";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Users</h2>
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+      
+
+    </section>
+
+   
+}
+
+@section Body{
+
+    <section class="content">
+        <div class="fontAriel">
+            @*<a class="btn btn-success pull-right marginLeft10" href="#">Save Segments</a>
+                <a class="btn btn-default pull-right marginBottom5" href="#">+ New Segment</a>*@
+            <!--display dataTable fixedHeader-floating-->
+            <div id="example_wrapper" class="dataTables_wrapper no-footer">
+               
+               
+                <div style="height:370px;  overflow-y:auto; width:100%;">
+                    <div class="col-md-4 col-sm-5 col-xs-4">
+                        <h3 style="text-align: center;background: #5c8fbe;color: #fff;padding: 5px;margin-bottom: 20px;">
+                            Check Setting
+                        </h3>
+                        <div class="form-group">
+                            <label> Bank</label>
+                            <select class="form-control" id="ddlBank" onchange="javascript: funBankDetail();"><option select="0">Select</option><option value="1">Ashish ACS</option><option value="2">SBI</option><option value="3">456</option><option value="4">789</option><option value="5">456</option><option value="6">raj</option><option value="7">456</option><option value="8">n</option><option value="9">Union</option></select>
+
+
+                            <div class="clear-fix"></div>
+
+                            <label> Starting Number</label>
+                            <input type="text" id="txtStartingNumber" class="form-control" onkeypress="return isNumber(event)">
+                            <div class="clear-fix"></div>
+
+                            <label> End Number</label>
+                            <input type="text" id="txtEndNumber" class="form-control" onkeypress="return isNumber(event)">
+                            <div class="clear-fix"></div>
+
+                            <div>
+                                <div class="clear-fix"></div>
+                                <input type="button" value="Save" id="btnSave" onclick="javascript: funSaveBankInfo();" class="btn btn-md- btn-success">
+                            </div>
+                            <div class="clear-fix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+}
+
+@section Javascript{
+   
+<script src="~/Scripts/AdminLogin/CheckSetting.js"></script>
+}
+
+

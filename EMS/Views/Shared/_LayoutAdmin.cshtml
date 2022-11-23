@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>EMS - @ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">*@
+    <link href="~/Scripts/MultiSelectDropDown/jquery.multiselect.css" rel="stylesheet" />
+    <link href="~/Content/css/AdminLTE.min.css" rel="stylesheet" />
+    <link href="~/Content/AtlasUtility.css" rel="stylesheet" />
+
+</head>
+<body class="skin-blue sidebar-mini">
+    <div class="">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="#" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><!--<b>A</b>LT-->
+                    <img src="~/Content/images/CAlogo.png" /> @*<img src="~/Content/images/logoMini.png" alt="logo">*@</span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><!--<b>Admin</b>LTE-->@*<img src="~/Content/images/logo.png" alt="logo">*@
+                    <img src="~/Content/images/CAlogo.png" /> </span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+              
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                    
+                </div><!-- /.navbar-collapse -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                       
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="logoutAdmin">
+                                <i class="fa fa-power-off user02"></i>
+                            </a>
+                        </li>
+                        <!-- Control Sidebar Toggle Button -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+       
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar" style="height: auto;" id="SectionLeftMenu">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <!--<div class="pull-left image">
+                  <img alt="User Image" class="img-circle" src="dist/img/user2-160x160.jpg">
+                </div>-->
+                    @* info pull-left-LeftMenu ////----------------------------- class remove here  *@
+                    <div class="">
+                        <p ><span id="spnProdName" class="SwitchProdName">Switching ...</span></p>
+                        <a href="#" class="underLine" onclick="javascript: ShowDivSwitch();" style="color:#0A2463 !important;"><i class="fa fa-dot-circle-o text-success whiteText"></i> Switch</a>
+                       
+                    </div>
+                </div>
+
+                <!-- /.search form -->
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul id="ULAdminNav" class="sidebar-menu">
+
+                    <li id="LiGLSetup" class="active treeview">
+                        <a href="~/AdminEMS/SegmentSetup" class="">
+                            <i class="fa fa-server"></i> <span>G/L Setup</span>
+                        </a>
+                    </li>
+                    <li id="LiJournalEntries" class="treeview">
+                        <a href="#" class="">
+                            <i class="fa fa-file-text"></i> <span>Journal Entries</span>
+                        </a>
+                    </li>
+                    <li id="LiAdjustments" class="treeview">
+                        <a href="#" class="">
+                            <i class="fa fa-adjust"></i> <span>Adjustments</span>
+                        </a>
+                    </li>
+                    <li id="LiPayroll" class="treeview">
+
+                        <a href="~/AdminEMS/AdminPayroll" class="">
+                            <i class="fa fa-check-square"></i> <span>Payroll</span>
+                        </a>
+                    </li>
+                    <li id="LiSetAdmin" class="treeview">
+                        <a href="#" class="" onclick="javascript:ShowDivAdminSet();">
+                            <i class="fa fa-cog"></i> <span>Set Admin</span>
+                        </a>
+                    </li>
+                    <li id="LiPermissions" class="treeview">
+                        <a href="~/AdminEMS/Users" class="">
+                            <i class="fa fa-check-square-o"></i> <span>Permissions</span>
+                        </a>
+                    </li>
+                    <li id="LiPermissions" class="treeview">
+                        <a href="~/AdminEMS/CheckSetting" class="">
+                            <i class="fa fa-cog"></i> <span>CheckSetting</span>
+                        </a>
+                    </li>
+                    <li id="LiTimeZone" class="treeview">
+                        <a href="~/AdminEMS/TimeZone" class="">
+                            <i class="fa fa-cog"></i> <span>Set TimeZone</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="min-height: 353px;">
+            <!-- Content Header (Page header) -->
+            @RenderSection("BreadCrumb", required: false)
+            <div id="showMSG" style="display:block;"></div>
+            @RenderSection("Body", required: false)
+            <!-- Main content -->
+            <!-- /.content -->
+        </div>
+    </div>
+
+    @* ////////////////////////////// *@
+    <div id="setAdmin" class="newhidden" style="display: none;">
+        <div class="popup col-md-6 col-lg-5 col-sm-8 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('setAdmin');location.reload(true);">X</a></div>
+            <div class="heading2"><h4>Set Admin</h4></div>
+            <div class="WhtBg">
+                <p class="paddingAll">
+                    This will set the Administrator for this Account.<br> <br>
+                    This User will have the ability to control all aspects of the
+                    Account, including adding users, setting permisson, and setting up the COA.
+                </p>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="text" class="form-control valid-email " placeholder="" id="txtAdminEmail">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Email Address</label>
+                        <input type="text" class="form-control pull-left margin-r-5  valid-email  " placeholder="" id="txtAdminConfirmEmail">
+                        <div>
+                         <a href="#" class="btn btn-default pull-left" onclick="javascript: SetAdminButton();" style="display:inline!important;">Set Admin</a>
+                            </div>
+                                <div class="clearfix"></div>
+                            </div>
+                    <div class="form-group" id="DvSetAdminAuthCode" style="display:none;">
+                        <label>authentication code</label>
+                        <input type="text" class="form-control input-required" placeholder="" id="txtAdminAUthCode">
+                        <a href="javascript:funInsertAdmin();" class="btn btn-success floatLeft">confirm</a>
+
+                    </div>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+          
+        </div>
+    </div>
+    @* ///////////////////////////// *@
+    <div id="DvLayoutSwtich" style="display: none;" class="arrowPopup">
+        <div><i class="fa fa-caret-left" style="color: #fff;font-size: 29px; left: -10px; position: absolute; top:5px;"></i></div>
+        <div class="deleteNewIcon "><a href="javascript:hideDiv('DvLayoutSwtich');location.reload(true);">X</a></div>
+        <div class="heading2"><h4>Choose Account</h4></div>
+        <div class="input-group" style="text-align: center;margin: auto;">
+            <select id="ddlLayoutChooseAccount" class="form-control width145 SearchProductionList" style="margin: 5px 0;">
+                <option selected="" value="0">Select</option>
+            </select>
+            <div class="clearfix"></div>
+            <a class="btn btn-default pull-left " href="javascript:funSwitchOpen();" id="AbtnAddGroup" style="margin: 5px 0; background-color:#5c8fbe;">Switch</a>
+            <div class="clearfix"></div>
+            <div id="DvLayoutACode" style="display:none;margin: 5px 0;">
+                <input type="text" id="txtAuthenticationCodeLayout" placeholder=" Authentication Code" class="input-required" style="height:35px;">
+                <span style="position:relative; top:5px;" onclick="javascript: CheckAuthenticationCodeLayout();"><i class="fa fa-sign-out fa-2x"></i></span>
+
+
+            </div>
+        </div>
+    </div>
+    @* ////////////////////////////// *@
+
+    <!--suppier popup End-->
+    <div id="fade" class="black_overlay"></div>
+    <!-- jQuery 2.1.4 -->
+    <script src="~/Content/js/jquery-2.2.0.min.js"></script>
+    <script src="~/Content/js/jQuery-2.1.4.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="~/Content/js/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <!-- Slimscroll -->
+    <script src="~/Content/js/jquery.slimscroll.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Content/js/app.min.js"></script>
+    
+    @*<script src="~/Scripts/utility.js"></script>*@
+    <script src="~/Scripts/utilityAdmin.js"></script>
+    @*<script src="~/Scripts/AtlasUtilities.js"></script>*@
+    <script src="~/Scripts/timeout-dialog.js"></script>
+    <script src="~/Scripts/notify.js"></script>
+
+    @*<script src="~/Content/js/jquery-ui.min.js"></script>*@
+
+    <link href="~/Content/js/jquery-ui.structure.css" rel="stylesheet" />
+    <link href="~/Content/js/jquery-ui.structure.min.css" rel="stylesheet" />
+    <link href="~/Content/js/jquery-ui.theme.min.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.min.js"></script>
+    @*<link href="~/Content/DataTable/dataTables.responsive.css" rel="stylesheet" />
+        <script src="~/Content/DataTable/dataTables.responsive.js"></script>*@
+    <script src="~/Scripts/MultiSelectDropDown/jquery.multiselect.js"></script>
+    <script src="~/Scripts/Validation/Validation.js"></script>
+    <script src="~/Scripts/jquery.mask.min.js"></script>
+    @RenderSection("Javascript", required: false)
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+</body>
+</html>

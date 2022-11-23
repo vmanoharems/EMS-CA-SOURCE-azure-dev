@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "REPORTS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>REPORTS</h2>
+@section BreadCrumb{
+    <section class="content-header setting">
+    <div>
+        <ol class="breadcrumb floatLeft padding10">
+            <li><a href="#">Config <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">My Report Defaults</li>
+        </ol>
+    </div>
+    <div>
+    </div>
+    <div>
+        <!--<select class="form-control width90 width63  floatLeft">
+                     <option>01</option>
+                     </select>-->
+        <a class="btn btn-default floatRight" href="#">Config</a>
+        <!--<a class="btn btn-primary floatRight marginRight10" href="#">Cancel</a>-->
+    </div>
+    <!--<a  href="#" class="btn btn-default floatRight">Config</a>-->
+    <div class="clearfix"></div>
+
+</section>
+}
+
+@section Body{
+<section class="content">
+    <div class="row fontAriel">
+        <div class="col-md-12">
+            <div class="col-md-4 col-sm-4 col-xs-12 col-lg-4 no-padding">
+                <div class="form-group">
+                    <label class="">Default Filters For</label>
+                    <select class="form-control"><option>Cost Report</option></select>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div style="margin-top:10px; margin-bottom:0px;" class="table-responsive">
+                <table class="table table-hover table-responsive">
+                    <tbody>
+                        <tr>
+                            <td>Company</td>
+                            <td><a href="#" class="underLine blueText">01</a></td>
+
+                        </tr>
+                        <tr>
+                            <td>Currency</td>
+                            <td>USD</td>
+
+                        </tr>
+                        <tr>
+                            <td>Period</td>
+                            <td><a href="#" class="underLine blueText">April 4, 2016</a></td>
+
+                        </tr>
+                        <tr>
+                            <td>Episode</td>
+                            <td><a href="#" class="underLine blueText">All</a></td>
+
+                        </tr>
+                        <tr>
+                            <td>Location</td>
+                            <td><a href="#" class="underLine blueText">All</a></td>
+
+                        </tr>
+                        <tr>
+                            <td>Ledger</td>
+                            <td><a href="#" class="underLine blueText">All</a></td>
+
+                        </tr>
+                        <tr>
+                            <td>Accounts</td>
+                            <td><a href="#" class="underLine blueText">All</a></td>
+
+                        </tr>
+                        <tr>
+                            <td>Set</td>
+                            <td><a href="#" class="underLine blueText">All</a></td>
+
+                        </tr>
+                        <tr>
+                            <td>Transaction Codes</td>
+                            <td><a href="#" class="underLine blueText">All</a></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</section>
+}
+
+@section Javascript{
+  
+}
+
+

@@ -1,0 +1,280 @@
+﻿@{
+    ViewBag.Title = "Reports>>CostReport";
+    Layout = "~/Views/Shared/_LayoutReports.cshtml";
+}
+
+<h2>Cost Reports</h2>
+
+@section BreadCrumb{
+<section class="content-header">
+    <ol class="breadcrumb floatLeft">
+        <li><a href="#"> Report <i class="fa fa-caret-right"></i></a></li>
+        <li class="active">Cost Report</li>
+    </ol>
+    <!--<div class="col-lg-4">
+    <select id="" class="form-control floatLeft" style="margin-bottom:0px; margin-right:10px;">
+                  <option>Reports-Unposted Columns</option>
+                  <option>Reports-Bank Reconciliation </option>
+                  <option>Reports-Ledger Listing</option>
+                  <option>Reports-Trial Balance</option>
+                  <option>Reports-Variance</option>
+                  <option>Reports-Cost Report Worksheet</option>
+                  <option>Reports-Payroll Posting </option>
+                  <option>Reports-Payroll Edit</option>
+                  <option>Reports-Ledger Enquiry</option>
+                  <option>Reports-Vendor Enquiry</option>
+                  <option>Reports-Vendor Listing</option>
+                  <option>Reports-Check Register history</option>
+                  <option>Reports-Check Print</option>
+                  <option>Reports-A/P Invoice Posting </option>
+                  <option>Reports-A/P Invoice Edit </option>
+                  <option>Reports-PO Listing and PO History</option>
+                  <option>Reports-Setup </option>
+              </select>
+              <a href="#" onclick="myFunction()" class="floatLeft"><i style="font-size: 24px;" class="fa fa-filter"></i>Filter</a>
+              </div>-->
+
+    <a href="#divCompanySelected" class="btn btn-default floatRight" onclick="myFunction()">Apply Filter</a>
+    <div class="clearfix"></div>
+</section>
+
+
+}
+
+@section Body{
+<section class="content">
+    <div class="fontAriel">
+        <div id="divCompany"  style="margin-top:10px; margin-bottom:0px;" class="table-responsive xsborNone">
+            <div id="filterDiv01">
+                <div class="form-group mar0">
+                    <label class="control-label col-xs-5 col-sm-2 col-lg-1" for="inputEmail">Accounts</label>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0 margin-r-5">
+                        <input type="text" class="form-control width100" placeholder="From">
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0">  <input type="text" class="form-control width100" placeholder="To"> </div>
+                    <label id="txtcompany" class="control-label col-xs-5 col-sm-2 col-lg-1" for="inputEmail">Company</label>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                        <select id="" class="form-control width100">
+                            <option>All</option>
+                            <option>1</option>
+                            <option>2</option>
+                        </select>
+                    </div>
+                    <label class="control-label col-xs-5 col-sm-2 col-lg-1" for="inputEmail">Location</label>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                        <input type="text" class="form-control width100">
+                    </div>
+                    <label class="control-label col-xs-5 col-sm-2 col-lg-1" for="inputEmail">Budget</label>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                        <select id="" class="form-control width100">
+                            <option>101</option>
+                        </select>
+                    </div>
+                    <label class="control-label col-xs-5 col-sm-2 col-lg-1" for="inputEmail">Episode</label>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                        <select id="" class="form-control width100">
+                            <option>101</option>
+                        </select>
+                    </div>
+                    <label class="control-label col-xs-5 col-sm-2 col-lg-1" for="inputEmail">Accounts</label>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0 margin-r-5">
+                        <input type="text" class="form-control width100" placeholder="From">
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0">  <input type="text" class="form-control width100" placeholder="To"> </div>
+                    <label class="control-label col-xs-5 col-sm-2 col-lg-1" for="inputEmail">Sets</label>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                        <select id="" class="form-control width100">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                    <label class="control-label col-xs-5 col-sm-2 col-lg-1" for="inputEmail">Series</label>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                        <select id="" class="form-control width100">
+                            <option>Select</option>
+                        </select>
+                    </div>
+
+                    <label class="control-label col-xs-5 col-sm-2 col-lg-1" for="inputEmail">Transaction Codes</label>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                        <select id="" class="form-control width100">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                    <label class="control-label col-xs-5 col-sm-2 col-lg-1" for="inputEmail">Currency</label>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                        <input type="text" class="form-control width100" placeholder="USD">
+                    </div>
+                    <label class="control-label col-xs-5 col-sm-2 col-lg-1" for="inputEmail">Period</label>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0 margin-r-5">
+                        <select id="" class="form-control width100">
+                            <option>Year Period</option>
+                            <option>Posted</option>
+                            <option>Effective</option>
+                            <option>Entry</option>
+                            <option>Doc Date</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0 margin-r-5">
+                        <select id="" class="form-control width100">
+                            <option>Year Period</option>
+                            <option>Posted</option>
+                            <option>Effective</option>
+                            <option>Entry</option>
+                            <option>Doc Date</option>
+                        </select>
+                    </div>
+
+                    <label class="control-label col-xs-5 col-sm-2 col-lg-1" for="inputEmail">Effective Date</label>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0 margin-r-5">
+                        <select id="" class="form-control width100">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-lg-1 pad0 margin-r-5">
+                        <select id="" class="form-control width100">
+                            <option>Select</option>
+                        </select>
+
+                    </div>
+                    <a href="#" class="btn btn-default floatLeft marginLeft10">Search</a>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <div id="divCompanySelected" style="margin-top:10px; margin-bottom:0px; display:none;" class="table-responsive xsborNone">
+       
+        <div class="col-lg-3 infoDiv">
+            <p>Company: 01</p>
+            <p>Location: All</p>
+            <p>Budget: Main budget</p>
+            <p>Episode: All</p>
+            <p>Period: 23</p>
+        </div>
+        <div class="col-lg-6 infoDiv">
+            <h4>Dexter</h4>
+            <h5>Mark Olson Productions</h5>
+            <h6>Cost Report Period Ending 4/18/2016 </h6>
+        </div>
+        <div class="col-lg-3 infoDiv">
+            <p>Accont: All</p>
+            <p>Set: All</p>
+            <p>Series: All</p>
+            <p>Trasaction Code: All</p>
+            <p>Display Currency: USD</p>
+        </div>
+        <div class="clearfix"></div>
+        <div class="table-responsive">
+            <table class="table table-hover table-responsive">
+                <tbody>
+                    <tr>
+                        <th>Account </th>
+                        <th>Loc</th>
+                        <th>Epi</th>
+                        <th>Description</th>
+                        <th>Period Act</th>
+                        <th>Actuals </th>
+                        <th>POs </th>
+                        <th>Total Cost</th>
+                        <th>ETC</th>
+                        <th>EFC</th>
+                        <th>Budget</th>
+                        <th>Variance</th>
+                    </tr>
+                    <tr>
+                        <td>EA</td>
+                        <td></td>
+                        <td></td>
+                        <td>Above the line expences</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>600</td>
+                        <td>Producers</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>600-01</td>
+                        <td>Executive Producer</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>101</td>
+                        <td>Episode 101</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>70,000</td>
+                        <td>70,000</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>101</td>
+                        <td>Episode 101</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>70,000</td>
+                        <td>70,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @*<section class="content">
+        <div class="fontAriel">
+            
+
+
+
+        </div>
+    </section>*@
+</section>
+
+}
+
+@section Javascript{
+ 
+<script src="~/Scripts/Reports/Reports.js"></script>
+
+}

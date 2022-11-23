@@ -1,0 +1,304 @@
+﻿@section BreadCrumb{
+   
+  <section class="content-header">
+    <div class="form-group">
+        <label>Select a Report</label>
+        <div class="midMenu pull-left">
+            <ul>
+                <li class="active" id="liPCAudit"><a href="#tabEditAudit" data-toggle="tab" aria-expanded="true" onclick="javascript: ShowHide(this);"  data-show="#DivPCA" data-hide="#DivPCP">Petty Cash Audit</a></li>
+                <li class="" id="liPCPosted"><a href="#tabEditAudit" data-toggle="tab" aria-expanded="true" onclick="javascript: ShowHide(this);" data-show="#DivPCP" data-hide="#DivPCA">Petty Cash Posted</a></li>
+            </ul>
+        </div>
+    </div>
+      @*<a href="#" class="btn btn-default floatRight  pull-right marginLeft10" onclick="javascript: ShowhideFilter();" data-printer="download" download="Sanjay_5_32_PM.pdf" id="btnPrint">Print Report</a>*@
+      @*<a href="#" class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" data-printer="preview" target="_blank" id="btnpreview">Search</a>*@
+      <a href="#" class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" onclick="javascript: FilterPettyCash();" id="btnApply">Preview</a>
+    <div class="clearfix"></div>
+</section>
+}
+
+@section Body{
+<section class="content" id="dvMainDv">
+    <div class="row fontAriel" id="dvFilterDv">
+        <div class="tab-content">
+            <div id="tabPendingInvoices" class="tab-pane active widget-body-regular">
+                <div class="col-xs-12">
+                    <div id="DivPCA" style="display:inline;" class="tab-pane active widget-body-regular">
+                        <input type="hidden" id="Status" value="audit" />
+                        @*<div class="form-group">
+                            <label style="width:200px!important;">Report Format </label>
+                            <input type="radio" name="RAFormat" id="RAAccount" checked="checked" /> Account Distribution
+                            <input type="radio" name="RAFormat" id="RATransaction" /> Transaction No.
+                        </div>*@
+                        <div class="report-column-left">
+                            <div class="clearfix"></div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">Report Date</label>
+                                <input type="text" id="txtReportDate" class="form-control  pull-left smartdate propadate" style="margin-left:13px !important;">
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">Custodian(s)</label>
+                                <div style="width: 18.3% !important;float: left; margin-left: 13px; margin-bottom: 2px;">
+                                    <select id="ddlPettyCashCustodian" tabindex="6" multiple class="form-control  pull-left" style=""></select>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">Recipient(s)</label>
+                                <div style="width: 18.3% !important;float: left; margin-left: 13px; margin-bottom: 2px;">
+                                    <select id="ddlPettyCashRecipient" tabindex="7" multiple class="form-control  pull-left" style=""></select>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div id="APPCAsegmentfilters" class="report-filters-segments"></div>
+
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <fieldset id="fieldsetCurrency" class="fieldsetCurrency"></fieldset>
+                                @*<label style="width:200px!important;">Currency Code(s)</label>
+                                <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                                    <select style="width: 160px !important;margin-left: 12px;" class="form-control pull-left" id="txtCurrencyCode">
+                                        <option>USD</option>
+                                    </select>
+                                </div>*@
+                            </div>
+                            <div class="clearfix"></div>
+                            <fieldset id="fieldsetPeriod" class="fieldsetPeriod"></fieldset>
+                        </div>
+                        <div class="report-column-center">
+                            <div id="additionalfilters"></div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">Vendor From</label>
+                                <input type="text" id="txtVendorFrom" class="form-control  pull-left" style="margin-left:13px !important;">
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">Vendor To</label>
+                                <input type="text" id="txtVendorTo" class="form-control  pull-left" style="margin-left:13px !important;">
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">1099 code</label>
+                                <input type="text" id="txtTaxCode" class="form-control  pull-left clsTax" onfocus="javascript:funTaxCode();" style="margin-left:13px !important;">
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">Batch</label>
+                                <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                    <select id="ddlBatchNumber" multiple class="form-control  pull-left" style="" onfocus="javascript: funLedgerInqBatch();"></select>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <fieldset id="fieldsetTransactionIDs">
+                                <div class="form-group">
+                                    <label style="width:190px!important;">Transaction No. From:</label>
+                                    <input type="text" id="txtTransFrom" class="form-control  pull-left " style="margin-left:13px !important;">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:190px!important;">Transaction No. To:</label>
+                                    <input type="text" id="txtTransTo" class="form-control  pull-left " style="margin-left:13px !important;">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:190px!important;">Envelope No. From</label>
+                                    <input type="text" id="txtDocNoFrom" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:190px!important;">Envelope No. To</label>
+                                    <input type="text" id="txtDocNoTo" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div id="DivPCP" style="display:none;" class="tab-pane active widget-body-regular">
+                        <input type="hidden" id="Status" value="posted" />
+                        @*<div class="form-group">
+                            <label style="width:200px!important;">Report Format </label>
+                            <input type="radio" name="RPFormat" id="RPAccount" checked="checked" /> Account Distribution
+                            <input type="radio" name="RPFormat" id="RPTransaction" /> Transaction No.
+                        </div>*@
+                        <div class="report-column-left">
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">Report Date</label>
+                                <input type="text" id="txtReportDate" class="form-control  pull-left smartdate propadate" style="margin-left:13px !important;">
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">Custodian(s)</label>
+                                <div style="width: 18.3% !important;float: left; margin-left: 13px; margin-bottom: 2px;">
+                                    <select id="ddlPettyCashCustodian" tabindex="6" multiple class="form-control  pull-left" style=""></select>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">Recipient(s)</label>
+                                <div style="width: 18.3% !important;float: left; margin-left: 13px; margin-bottom: 2px;">
+                                    <select id="ddlPettyCashRecipient" tabindex="7" multiple class="form-control  pull-left" style=""></select>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div id="APPCPsegmentfilters" class="report-filters-segments"></div>
+
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">Currency Code(s)</label>
+                                <div class="col-xs-6 col-sm-4 col-lg-1 pad0">
+                                    <select style="width: 160px !important;margin-left: 12px;" class="form-control pull-left" id="txtCurrencyCode">
+                                        <option>USD</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <fieldset id="fieldsetPeriod" class="fieldsetPeriod"></fieldset>
+                        </div>
+                        <div class="report-column-center">
+                            <div id="additionalfilters"></div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">Vendor From</label>
+                                <input type="text" id="txtVendorFrom" class="form-control  pull-left" style="margin-left:13px !important;">
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">Vendor To</label>
+                                <input type="text" id="txtVendorTo" class="form-control  pull-left" style="margin-left:13px !important;">
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">1099 code</label>
+                                <input type="text" id="txtTaxCode" class="form-control  pull-left clsTax" onfocus="javascript:funTaxCode();" style="margin-left:13px !important;">
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <label style="width:200px!important;">Batch</label>
+                                <div style="width: 160px !important; float: left; margin-left: 13px; margin-bottom:2px;">
+                                    <select id="ddlBatchNumber" multiple class="form-control  pull-left" style="" onfocus="javascript: funLedgerInqBatch();"></select>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <fieldset id="fieldsetTransactionIDs">
+                                <div class="form-group">
+                                    <label style="width:190px!important;">Transaction No. From:</label>
+                                    <input type="text" id="txtTransFrom" class="form-control  pull-left " style="margin-left:13px !important;">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:190px!important;">Transaction No. To:</label>
+                                    <input type="text" id="txtTransTo" class="form-control  pull-left " style="margin-left:13px !important;">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:190px!important;">Envelope No. From</label>
+                                    <input type="text" id="txtDocNoFrom" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group">
+                                    <label style="width:190px!important;">Envelope No. To</label>
+                                    <input type="text" id="txtDocNoTo" class="form-control  pull-left" style="margin-left:13px !important;">
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="dialog11" style="display: none"> </div>
+</section>
+
+<div id="fade" class="black_overlay"></div>
+}
+
+
+@section Javascript{
+<script src="~/Content/libs/bootstrap-multiselect.js"></script>
+<script src="~/Scripts/Reports/ReportEngine.js"></script>
+<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+      rel="stylesheet" type="text/css" />
+<link href="~/Content/libs/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+
+<script>
+
+    // This is an example jQuery snippet that makes the dialogs work
+    $(document).ready(function () {
+
+        // We have two control functions that show or hide dialogs
+        function showDialog(id) {
+
+            // Find the dialog and show it
+
+            var dialog = $('#' + id),
+                    card = dialog.find('.dialog-card');
+
+            dialog.fadeIn();
+
+            // Center it on screen
+
+            card.css({
+                'margin-top': -card.outerHeight() / 2
+            });
+
+        }
+        function hideAllDialogs() {
+            // Hide all visible dialogs
+            $('.dialog-overlay').fadeOut();
+        }
+
+        // Here is how to use these functions
+
+        $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+            hideAllDialogs();
+        });
+
+        $('.dialog-show-button').on('click', function () {
+            var toShow = $(this).data('show-dialog');
+
+            showDialog(toShow);
+        });
+    });
+
+</script>
+
+<link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui.js"></script>
+<script>
+    //$(function () {
+    //    $(".datepicker").datepicker();
+    //});
+
+
+</script>
+
+<style type="text/css">
+    .black_overlay, #fade {
+        display: none !important;
+    }
+
+    #TblPosted_paginate {
+        position: fixed;
+        bottom: 4%;
+        float: right !important;
+        right: 2%;
+    }
+
+    #TblPosted_info {
+        position: fixed;
+        bottom: 6%;
+    }
+    .ui-dialog {
+        width: 80% !important;
+        z-index: 999999999;
+    }
+</style>
+
+<script src="~/Scripts/Reports/PettyCashReport.js"></script>
+
+}
+
+

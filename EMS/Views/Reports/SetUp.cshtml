@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "Reports>>SetUp";
+    Layout = "~/Views/Shared/_LayoutReports.cshtml";
+}
+
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+     
+        <div class="form-group" style="float:left;">
+
+            <div class="midMenu pull-left">
+                <ul>
+                    <li class="active"><a href="#tabSetUp" data-toggle="tab" aria-expanded="true" class="newPadding" onclick="javascript: ShowHide('Company');"> Company Listing</a></li>
+                    <li class=""><a class="newPadding" href="#tabSetUp" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('Bank');">Bank Listing</a></li>
+                    <li class="" style="display:none;"><a class="newPadding" href="#tabSetUp" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('PettyCash');">Petty Cash Custodian Listing</a></li>
+                    <li class="" id="FilterLocationGroup" style="display:none;"><a class="newPadding" href="#tabSetUp" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('Locations');">Locations Listing</a></li>
+                    <li class="" id="FilterEpisodeGroup" style="display:none;"><a class="newPadding" href="#tabSetUp" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('Episode');">Episode Listing</a></li>
+
+                    <li class=""id="FilterSetGroup" style="display:none;"><a class="newPadding" href="#tabSetUp" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('SetList');">Sets Listing</a></li>
+                    <li class=""><a class="newPadding" href="#tabSetUp" id="TabTrialBal" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('SourceCode');">JE Source Code Listing</a></li>
+                    <li class=""><a class="newPadding" href="#tabSetUp" data-toggle="tab" aria-expanded="false" onclick="javascript: ShowHide('Transaction');">Transaction Codes Listing</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="DvCompanyList" class="clsFilter">
+            <a href="#" class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" onclick="javascript: funComapnyList();" id="btn">Preview</a>
+        </div>
+        <div id="DvBankList" class="clsFilter" style="display:none;">
+            <a href="#" class="btn btn-default floatRight  pull-right marginRight10" onclick="javascript:funGetBankList();" id="btn">Preview</a>
+        </div>
+        <div id="DvSourceCode" class="clsFilter" style="display:none;">
+            <a href="#" class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" onclick="javascript: funGetJESoueceList();" id="btn">Preview</a>
+        </div>
+        <div id="DvTransactions" style="display:none;" class="clsFilter">
+            <a href="#" class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" onclick="javascript: funGetTransactionList();" id="btn">Preview</a>
+        </div>
+        <div id="DvCustodian" style="display:none;" class="clsFilter">
+            <a href="#" class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" onclick="javascript: funGetCustodianList();" id="btn">Preview</a>
+        </div>
+        <div id="DvSetList" style="display:none;" class="clsFilter">
+            <a href="#" class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" onclick="javascript:funGetSetList();" id="btn">Preview</a>
+        </div>
+        <div id="DvLocationList" style="display:none;" class="clsFilter">
+            <a href="#" class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" onclick="javascript: funGetLocation();" id="btn">Preview</a>
+        </div>
+        <div id="DvEpisodeList" style="display:none;" class="clsFilter">
+            <a href="#" class="btn btn-default floatRight  pull-right marginRight10" style="display:inline;" onclick="javascript: funGetEpisode();" id="btn">Preview</a>
+        </div>
+        </section>
+}
+
+@section Body{
+    <section >
+       
+        <div class="clearfix"></div>
+        <div id="dialog11" style="display: none"> </div>
+    </section>
+<div class="newhidden" id="dvWait" style="display: none;width: 100%;margin: auto 0px;text-align: center;top: 30%;">
+    <img src="~/Images/InternetSlowdown_Day.gif" />
+</div>
+
+}
+
+
+@section Javascript{
+    <script src="~/Content/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/media/js/dataTables.responsive.min.js"></script>
+    <link href="~/Content/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/media/css/responsive.dataTables.min.css" rel="stylesheet" />
+
+
+    <style type="text/css">
+        .black_overlay, #fade {
+            display: none !important;
+        }
+
+        #TblPosted_paginate {
+            position: fixed;
+            bottom: 4%;
+            float: right !important;
+            right: 2%;
+        }
+
+        #TblPosted_info {
+            position: fixed;
+            bottom: 6%;
+        }
+        .newPadding {
+            padding: 0px 6px !important;
+        }
+    </style>
+    <script src="~/Scripts/Reports/ReportEngine.js"></script>
+    <script src="~/Scripts/Reports/ReportSetUp.js"></script>
+
+}
+
+

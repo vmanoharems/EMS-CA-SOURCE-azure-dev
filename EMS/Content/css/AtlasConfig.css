@@ -1,0 +1,15 @@
+﻿ .AtlasConfig-Dialog{
+    width: 100% !important;
+}
+
+#AtlasConfig_Segments { list-style-type: none; margin: 0; padding: 0; }
+      #AtlasConfig_Segments li { margin: 0 3px 3px 3px; padding: 0.2em; padding-left: 2.23em; height: 40px; list-style:none; }
+      #AtlasConfig_Segments li span { position: absolute; margin-left: -1.3em; }
+     .dialog-card {
+       top: 15%;
+ }
+.AtlasConfig-gear-icon {
+    cursor:pointer;
+    width:18%;
+    float:right;
+}

@@ -1,0 +1,310 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section BreadCrumb{
+    <section class="content-header">
+        <div class="floatLeft">
+            <ol class="breadcrumb">
+                <li><a href="/AccountPayable"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+                <li><a href="/AccountPayable/PendingInvoice"> Invoice <i class="fa fa-caret-right"></i></a></li>
+                <li id="AtlasInvoiceNavigation" class="active">
+                    @*<a href="#" id="prev" class="btn-prenext">&laquo; Prev</a>*@
+                    <span id="breadcrumbEditInvoice"></span>
+                    @*<a href="#" id="next" class="btn-prenext">Next &raquo;</a>*@
+                </li>
+            </ol>
+        </div>
+        <div class="midMenu widget-tabs">
+            <ul>
+                <li id="liAPInvoicesUnpostedTab"><a href="PendingInvoice">Unposted</a></li>
+                <li id="liAPInvoicesPostedUnpaidTab"><a href="PostedUnpaidInvoices">Posted Unpaid</a></li>
+                <li id="liAPInvoicesPaidTab"><a href="PostInvoice">Paid</a></li>
+                <li id="liAPInvoicesAddInvoiceTab"><a href="AtlasInvoice" id="hrefInvoices">Add Invoice</a></li>
+            </ul>
+        </div>
+
+        <div class="floatRight btn-group" id="DvTab01">
+            <label for="ddlCompany" style="width:30px;">CO</label>
+            <select id="ddlCompany" class="form-control floatLeft input-required atlas-edit-new" onchange="javascript: thisDocument.ChangeCompany(this);" style="padding-right:5px" tabindex="1" disabled></select>
+
+            <label for="ddlClosePeriod" style="padding-left:5px; width:50px;">Period</label>
+            <select id="ddlClosePeriod" class="form-control floatLeft" onchange="javascript: thisDocument.ChangePeriod(this);" disabled tabindex="1"></select>
+
+            <div class="float-right inline">
+                <button type="button" class="btn toggle-button" id="btnSavePostedInvoice" onclick="thisDocument.Save({});">Save</button>
+                <button type="button" data-toggle="dropdown" id="ddlOption" class="btn btn-primary dropdown-toggle toggle-button-item"><span class="caret"></span></button>
+                <ul class="dropdown-menu" style="left: 245px!important">
+                    <li><a href="#" id="btnInvoiceAddNew" onclick="AtlasInvoice.NewDocument(0);">Add New</a></li>
+                    <li><a href="#" id="btnInvoiceClone" onclick="thisDocument.Save({ isClone: true });">Clone</a></li>
+                    @*<li class="divider"></li>*@
+                    <li><a href="#" id="btnInvoiceDelete" onclick="thisDocument.Delete();">Delete</a></li>
+                    @*<li class="divider"></li>*@
+                    <li><a href="#" id="btnReverse" onclick="thisDocument.Reverse();">Reverse</a></li>
+                    @*<li class="divider"></li>*@
+                    <li><a href="#" id="btncancelinvoice" onclick="thisDocument.Cancel();">Cancel</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+}
+
+@section Body{
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="tab-content">
+                <div id="divInvoicePaymentDetails" class="col-xs-12" style="background-color:#4cbf63 !important; color:white; visibility:hidden; margin-left:10px;">
+                    <span id="spnPaymentNumber">Payment #:</span> <b><span id="spnPaymentNumberValue"></span></b> •
+                    <span id="spnPaymentDate">Payment Date:</span> <b><span id="spnPaymentDateValue"></span></b> •
+                    <span id="spnPaymentStatus">Payment Status:</span> <b><span id="spnPaymentStatusValue"></span></b> •
+                    <span id="spnPayBy">Paid By:</span> <b><span id="spnPayByValue"></span></b>
+                </div>
+                <form id="frmAtlasDocument">
+                    <div id="AtlasDocument" class="tab-pane">
+                        <div class="col-xs-12" >
+                            <div id="AtlasDocumentHeader">
+                                <div class="col-lg-3">
+                                    <div class="form-group col-lg-12">
+                                        <label>Vendor Name</label>
+                                        <input type="text" id="txtVendor" class="form-control width180 input-required atlas-edit-new" tabindex="1" data-colloquial="Vendor" disabled>
+                                        @*<a href="" id="aVendorPO" style="display:inline">POs</a>*@
+                                        <div id="DvVendorTax" style="display:none;">
+                                            <label id="lblOverrideTax" style="width:100%"> Override Tax Form Code  <input class="atlas-edit-new atlas-edit-pending" type="checkbox" id="TaxOverride" disabled/> </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-12">
+                                        <label for="txtBank">Bank</label>
+                                        <a href="#" class="blueText underLine" id="CurrencyDocument" title="Currency defined by Bank">Currency</a>
+                                        <input type="text" id="txtBank" class="input-required form-control SearchBank floatLeft atlas-edit-new atlas-edit-pending"  tabindex="30" data-colloquial="Bank" disabled/>
+                                    </div>
+                                    @*<div class="form-group">
+                                        <label><input type="checkbox" id="chkThirdParty" onchange="javascript:ThirdParty();" class="atlas-edit-0"> Ref Vendor</label>
+                                        <input type="text" id="txtThirdParty" onfocus="javascript:FillRefVendor();" class="RefVendor form-control width180 atlas-edit-0">
+                                        <input type="hidden" id="hdnRefVendorID" />
+                                    </div>*@
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group col-lg-12">
+                                        <label for="txtDocumentNumber">Invoice #</label>
+                                        <input type="text" class="input-required form-control atlas-edit-new atlas-edit-pending" id="txtDocumentNumber" tabindex="1" data-colloquial="Invoice #" disabled/>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="ddlPaymentType">Payment Type</label>
+                                        <div class="col-lg-12">
+                                            <select id="ddlPaymentType" class="form-control floatLeft input-required atlas-edit-new atlas-edit-unpaid atlas-edit-pending" onchange="javascript: thisDocument.ChangePaymentType(this.value);" style="padding-right:5px" tabindex="30" disabled></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="txtInvoiceCheckGroupNumber">Group #</label>
+                                        <div class="col-lg-12">
+                                            <input type="text" class="form-control width75 input-required atlas-edit-new atlas-edit-unpaid atlas-edit-pending" id="txtInvoiceCheckGroupNumber" tabindex="30" style="width: 50px;" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group col-lg-12">
+                                        <label for="txtDocumentDate">Invoice Date:</label>
+                                        <input type="text" id="txtDocumentDate" class="form-control width75 datepicker floatLeft input-required atlas-edit-new atlas-edit-pending" placeholder="MM/DD/YYYY" tabindex="1" disabled>
+                                    </div>
+                                    <div id="divCheckNumber" class="form-group col-lg-12 hidden">
+                                        <label for="txtInvoiceCheckNumber">Check #</label>
+                                        <div class="col-lg-12">
+                                            <input type="text" class="form-control width75 atlas-edit-new atlas-edit-unpaid atlas-edit-pending" id="txtInvoiceCheckNumber" tabindex="30" style="width: 100px;" disabled/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group col-lg-12">
+                                        <label for="txtAmount" id="lbltxtAmount" style="width: 100px"><b>Amount</b> $</label> <span id="DocumentAmountTotal" class="float-left"></span>
+                                        <input type="text" class="input-required w2ui-field w2field amount atlas-edit-new atlas-edit-pending" id="txtAmount" tabindex="20" maxlength="15" disabled>
+                                    </div>
+                                    <div class="form-group col-lg-12">
+                                        <label for="txtDocumentDescription">Description</label>
+                                        <input type="text" id="txtDocumentDescription" class="form-control width180 input-required" tabindex="30" data-colloquial="Description" data-shiftfocus="txtInvoiceCheckGroupNumber">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="table-responsive row-seq" id="divAtlasDocumentLines">
+                                <table class="table table-hover table-responsive" id="tblAtlasDocumentLines" style="width: 100%">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <div id="dvPOLines" class="newhidden" style="display: none;">
+        <div class="popup popupCRW col-xs-10 floatNone">
+            <div class="heading2 bgBlue"><h4 class="whiteText">Purchase Order Lines <span class="pull-right"><a href="javascript:hideDiv('dvPOLines','hrfAddJE'); ReturnFocus(this);" class="whiteText">X</a></span></h4></div>
+
+            <div class="darkGreyNew col-lg-12">
+                <table class="table table-hover table-responsive" id="tblManualEntry">
+                    <thead id="tblPOLineThead">
+                    </thead>
+                    <tbody id="tblPOLineTBody"></tbody>
+                </table>
+                <a href="javascript: funAddPOLine();" style="margin-top:10px;" id="btnsavevendor" class="btn btn-default floatLeft btnVendor">Apply</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="DeletePopupInvoice" class="newhidden" style="display: none; margin-top:10%">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('DeletePopupInvoice');">X</a></div>
+            <div class="heading2"></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    <h4 style="color: black;">This will delete Invoice <span id="SpnInvoiceNumber"></span>  and cannot be undone. Are you sure you want to delete this invoice?  </h4>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <input type="hidden" id="hdnInvoiceId" />
+                <a href="#" id="DeletePopupInvoice_YES" onclick="javascript: funDeleteInvoice('Yes');" class="btn btn-success floatLeft" style="display: inline;">Yes</a>
+                <a href="#" onclick="javascript: funDeleteInvoice('No');" id="btnCloseStartingValue" class="btn btn-primary floatRight">No</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="DivDelete" class="newhidden" style="margin-top: 5%; display: none;">
+        <div class="col-md-4 col-lg-5 col-sm-12 col-xs-12 floatNone" style="margin:5% auto;">
+            <div class="popupred left10 col-md-12 col-lg-12 col-sm-12 col-xs-12 floatNone xs_top-80" style="border-radius:3%; padding:0px;">
+                <div class="deleteNewIcon"><a href="javascript:funhideDiv('DivDelete');">X</a></div>
+                <div class="heading2">
+                    <h4>
+                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <h4 align="center">Reverse</h4>
+                        </div>
+                    </h4>
+                </div>
+                <div class="clearfix"></div>
+                <div class="">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:0px !important;">
+                        <div class="WhtBg" style="margin:0px !important;">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:20px;">
+                                <p align="left">
+                                    This will create & post an offsetting Invoice immediately. Are you sure you want to do this?
+                                    <br><br>
+                                    <b>
+                                        If you would like to also create a copy of this invoice as a Pending Invoice, please check this checkbox before clicking Yes.
+                                    </b>
+                                    <input type="checkbox" id="ChkReIssue" style="width: 18px;height: 17px;" />
+                                    <br><br>
+                                    If you'd like to cancel reversing this Invoice, please click No.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:0px !important;">
+                        <a class="No floatLeft" href="javascript:funhideDiv('DivDelete');">No</a>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" style="padding:0px !important;">
+                        <a class="Yes floatRight" href="#" onclick="javascript: InvoiceReversed();">Yes</a>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div id="DivAlert" class="newhidden" style="margin-top: 10%; display: none;">
+        <div class="col-md-3 col-lg-3 col-sm-11 col-xs-12 floatNone" style="margin:5% auto;">
+            <div class="popupred left10 col-md-12 col-lg-12 col-sm-12 col-xs-12 floatNone xs_top-80" style="border-radius:3%; padding:0px;">
+                <div class="">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:0px !important;">
+                        <div style="margin:0px !important;">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="padding:20px;">
+                                <p align="center">
+                                    Payment has been made against this invoice. It can only be reversed using a Check Void.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6 col-lg-12" style="padding:0px !important;">
+                        <a class="Yes floatRight" style="color:white;" href="#" onclick="javascript: funhideAlert();">OK</a>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dialog-confirm-delete-line" title="Delete Invoice Line?" style="display: none;">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>This cannot be reversed. Are you sure you want to delete this line?</p>
+    </div>
+
+    <div id="dialog-confirm-save-success" title="Invoice Saved Successfully!" style="display: none;">
+        <span id="spanAtlasInvoiceTransactionNumber"></span><br />
+        Would you like to stay on this Invoice?<br />
+        Or create a new Invoice?</p>
+    </div>
+    <div id="dialog-polinelist" title="Please select Purchase Order Lines" style="display: none; height: 1000px;">
+    </div>
+    <div id="dialog-confirm-delete-invoice" title="Please confirm deletion" style="display: none; height: 1000px;">
+        You will delete this Invoice, and this action CANNOT be undone!
+    </div>
+    <div id="dialog-confirm-cancel-invoice" title="Please confirm cancel" style="display: none; height: 1000px;">
+        You will cancel your changes. Are you sure you want to do this?
+    </div>
+}
+
+@section Javascript{
+    <link href="~/Content/AtlasUtility.css" rel="stylesheet" />
+    <script src="~/Content/dataTables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/dataTables/DataTables-1.10.18/js/dataTables.jqueryui.min.js"></script>
+    <script src="~/Content/dataTables/RowReorder-1.2.4/js/dataTables.rowReorder.js"></script>
+    <script src="~/Content/dataTables/Select-1.2.6/js/dataTables.select.min.js"></script>
+    <script src="~/Content/dataTables/KeyTable-2.5.0/js/dataTables.keyTable.min.js"></script>
+
+    <link href="~/Content/dataTables/RowReorder-1.2.4/css/rowReorder.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/dataTables/Select-1.2.6/css/select.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/dataTables/KeyTable-2.5.0/css/keyTable.bootstrap.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/AccountsPayable/Invoices/AtlasInvoice.js"></script>
+
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    @*<script src="~/Content/js/jquery-ui.js"></script>*@
+    <style>
+        #tblAtlasDocumentLines td {
+            /*display: none;*/
+            visibility: hidden;
+            font-size: 0px;
+            line-height: 0px;
+            padding: 0px 0px 0px 0px !important;
+            margin: 0px 0px 0px 0px !important;
+            width: 100px;
+        }
+        #tblAtlasDocumentLines td input {
+            visibility: visible;
+            width: 100%;
+        }
+        #tblAtlasDocumentLines td text {
+            visibility: hidden;
+        }
+        #tblAtlasDocumentLines .reorder {
+            visibility: visible;
+            font-size: 10px;
+            line-height: 10px;
+            padding: 3px !important;
+        }
+        #tblAtlasDocumentLines_wrapper { min-height: 300px !important; }
+        #tblAtlasDocumentLines .line-actions {
+            visibility: visible;
+            font-size: 8pt;
+            width: 50px !important;
+        }
+        #tblPOLineList {
+            width: 100%!important;
+        }
+        #tblPOLineList td {
+            padding-top: 5px!important;
+            padding-bottom: 5px!important;
+        }
+    </style>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+
+}
+

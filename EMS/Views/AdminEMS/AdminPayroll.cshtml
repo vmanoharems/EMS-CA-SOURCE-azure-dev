@@ -1,0 +1,181 @@
+﻿@{
+    ViewBag.Title = "AdminPayroll";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@section BreadCrumb{
+
+
+}
+@section Body{
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-default pull-right marginLeft10 marginBottom10" href="javascript:showDiv('default');"><i class="fa fa-upload"></i> Upload New Payroll XML File</a>
+
+                <!--<table class="table table-hover table-responsive">-->
+                <div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="row"><div class="col-sm-6"><div class="dataTables_length" id="example_length"><label>Show <select name="example_length" aria-controls="example" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-6"><div id="example_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="example"></label></div></div></div><div class="row">
+                        <div class="col-sm-12">
+                            @*<table id="example" class="table table-striped table-bordered dt-responsive nowrap marginTop10 dataTable no-footer dtr-inline" cellspacing="0" width="100%" role="grid" aria-describedby="example_info" style="width: 100%;">
+                                    <thead>
+                                        <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Printed: activate to sort column descending" style="width: 49px;">Printed</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Load #: activate to sort column ascending" style="width: 46px;">Load #</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="EMS Invoice #: activate to sort column ascending" style="width: 97px;">EMS Invoice #</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Upload Date: activate to sort column ascending" style="width: 82px;">Upload Date</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Client Load Date: activate to sort column ascending" style="width: 111px;">Client Load Date</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Period Ending: activate to sort column ascending" style="width: 98px;">Period Ending</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Transaction Date: activate to sort column ascending" style="width: 113px;">Transaction Date</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="# Checks: activate to sort column ascending" style="width: 61px;"># Checks</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Total Amount: activate to sort column ascending" style="width: 92px;">Total Amount</th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Invoiced : activate to sort column ascending" style="width: 58px;">Invoiced </th><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Posted: activate to sort column ascending" style="width: 49px;">Posted</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1" tabindex="0">No</td>
+                                            <td>4</td>
+                                            <td></td>
+                                            <td>12/1/2015</td>
+                                            <td>11/24/2015</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>14</td>
+                                            <td>6,759.56</td>
+                                            <td>Yes</td>
+                                            <td>No</td>
+                                        </tr>
+                                    </tbody>
+                                </table>*@
+
+                            <table class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline">
+                                <tbody id="tblPayroll"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="default" class="newhidden" style="display: none;">
+        <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('default');">X</a></div>
+            <div class="heading2"><h4>Upload New Payroll XML File</h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    @*<div class="form-group">
+                            <label>EMS Invoice # </label>
+                            <input id="txtInvoice" type="text" class="form-control input-required">
+                        </div>*@
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input id="txtCO" type="text" class="form-control CompnayCode input-required displayInline">
+                        <input type="hidden" id="hdnCO" />
+                    </div>
+                    <div class="form-group">
+                        <label>Select File</label>
+                        <input type="file" id="fileXML" class="form-control input-required" accept="text/xml" />
+                    </div>
+                    <div class="form-group">
+                        <label>passphrase Key</label>
+                        <input id="txtKey" type="text" class="form-control CompnayCode input-required displayInline">
+                     
+                    </div>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a href="javascript:UploadPayrollFile();" class="btn btn-success floatLeft">Save</a>
+
+                <a href="javascript:hideDiv('default');" class="btn btn-primary floatRight">Cancel</a>
+            </div>
+        </div>
+    </div>
+
+    @*<div id="dvConfirm" class="newhidden" style="display: block;">
+            <div class="popup col-md-4 col-lg-4 col-sm-4 col-xs-12 floatNone">
+                <div class="deleteNewIcon"><a href="javascript:hideDiv('PopNewBudget');">X</a></div>
+
+                <div class="WhtBg">
+                    <h3 class="fontSize15">Invoice - <span id="spanInvoice"></span> has already been loaded for this Company do you want to overwrite this file?</h3>
+                </div>
+                <div class="darkGreyNew col-lg-12">
+                    <a href="javascript:overWriteBudget();" class="btn btn-success floatLeft width190">YES</a>
+                    <a href="javascript:hideDiv('dvConfirm');" class="btn btn-primary floatRight width190">NO</a>
+                </div>
+            </div>
+        </div>*@
+
+
+    <div id="dvConfirm" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Are you sure?</h5>
+                <p>Invoice - <b><span id="spanInvoice"></span></b> has already been loaded for this Company do you want to overwrite this file?</p>
+                <a href="javascript:overWritePayroll();" class="dialog-confirm-button">YES</a>
+                <a href="javascript:hideDiv('dvConfirm');" class="dialog-reject-button">NO</a>
+            </div>
+        </div>
+    </div>
+
+<div id="dvOverWrite" class="dialog-overlay" style="display: none;">
+    <div class="dialog-card">
+        <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+        <div class="dialog-info">
+            @*<h5>Are you sure?</h5>*@
+            <p>Invoice - <b><span id="spanInvoice1"></span></b> has already been posted by the Company and cannot be overwritten.</p>
+          
+            <a href="javascript:hideDiv('dvOverWrite');" class="dialog-reject-button">OK</a>
+        </div>
+    </div>
+</div>
+
+<div class="newhidden" id="dvWait" style="display: none;width: 100%;margin: auto 0px;text-align: center;top: 30%;">
+
+    <img src="~/Images/InternetSlowdown_Day.gif" />
+
+</div>
+
+}
+@section Javascript{
+    <script src="~/Scripts/Payroll/LoadPayroll.js"></script>
+    <script src="~/Scripts/Validation/Validation.js"></script>
+
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+
+    <script>
+
+        // This is an example jQuery snippet that makes the dialogs work
+        $(document).ready(function () {
+
+            // We have two control functions that show or hide dialogs
+            function showDialog(id) {
+
+                // Find the dialog and show it
+
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+
+                // Center it on screen
+
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+
+            }
+            function hideAllDialogs() {
+                // Hide all visible dialogs
+                $('.dialog-overlay').fadeOut();
+            }
+
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+
+                showDialog(toShow);
+            });
+        });
+
+    </script>
+}

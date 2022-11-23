@@ -1,0 +1,248 @@
+﻿
+@{
+    ViewBag.Title = "EMS Atlas Accounting Admin";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <title>EMS - @ViewBag.Title</title>
+    <!-- Icons -->
+    <link href="~/Content/AdminPanel/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/AdminPanel/css/simple-line-icons.css" rel="stylesheet">
+    <!-- Main styles for this application -->
+    <link href="~/Content/AdminPanel/css/style.css" rel="stylesheet">
+    <link href="~/Content/AdminPanel/css/datatables.min.css" rel="stylesheet">
+    <link href="~/Scripts/MultiSelectDropDown/jquery.multiselect.css" rel="stylesheet" />
+    <link href="~/Content/AdminPanel/css/Atlas-Admin.css" rel="stylesheet">
+
+</head>
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+    <header id="nav-header" class="app-header navbar">
+        <div class="container-fluid">
+            <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">☰</button>
+            <a class="navbar-brand" href="#"></a>
+            <ul class="nav navbar-nav d-md-down-none">
+                <li class="nav-item">
+                    <a class="nav-link navbar-toggler sidebar-toggler" href="#">☰</a>
+                </li>
+
+                <li class="nav-item px-3">
+                    <a class="nav-link" href="~/AdminEMS/ComingSoon">Dashboard</a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link" href="~/AdminEMS/ComingSoon">Admin Users</a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link" href="~/AdminEMS/ComingSoon">My Settings</a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item d-md-down-none">
+                    <i class="icon-film"></i>
+                    <span id="AtlasHeaderCurrentProduction"></span>
+                </li>
+                <li class="nav-item d-md-down-none">
+                </li>
+
+                <li class="nav-item d-md-down-none">
+                    <a class="nav-link" href="#"><i class="icon-bell"></i><span class="badge badge-pill badge-danger">5</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="d-md-down-none">admin</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-header text-center">
+                            <strong>Account</strong>
+                        </div>
+                        <a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i> Updates<span class="badge badge-info">42</span></a>
+                        <a class="dropdown-item" href="#"><i class="fa fa-envelope-o"></i> Messages<span class="badge badge-success">42</span></a>
+                        <a class="dropdown-item" href="#"><i class="fa fa-tasks"></i> Tasks<span class="badge badge-danger">42</span></a>
+
+                        <div class="dropdown-header text-center">
+                            <strong>Settings</strong>
+                        </div>
+
+                        <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
+                        <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Settings</a>
+                        <div class="divider"></div>
+                        <a class="dropdown-item" href="#"><i class="fa fa-shield"></i> Lock Account</a>
+                        <a class="dropdown-item logoutAdmin" href="#"><i class="fa fa-lock logoutAdmin"></i> Logout</a>
+                    </div>
+                </li>
+                <li class="nav-item d-md-down-none">
+                    <a class="nav-link navbar-toggler aside-menu-toggler" href="#">☰</a>
+                </li>
+
+            </ul>
+        </div>
+    </header>
+
+    <div class="app-body" id="app-body">
+
+        <div class="sidebar" id="nav-sidebar">
+            @if (IsSectionDefined("sidebar"))
+            {
+                @RenderSection("sidebar", required: false)
+            }
+            else
+            {
+                <nav class="sidebar-nav">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/AdminEMS/SegmentSetup"><i class="icon-speedometer"></i> Segments</a>
+                        </li>
+
+                        <li class="nav-title">
+                            Production Tools
+                        </li>
+                        <li class="nav-item nav-dropdown open">
+                            <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-star"></i> Ledger</a>
+                            <ul class="nav-dropdown-items">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="~/AdminEMS/ComingSoon"><i class="icon-arrow-right"></i> Setup</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/AdminEMS/AdminToolsLedgerJournal"><i class="icon-arrow-right"></i>Journal</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="~/AdminEMS/ComingSoon"><i class="icon-arrow-right"></i> Adjustments</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="~/AdminEMS/ComingSoon"><i class="icon-arrow-right"></i> Period Management</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-dropdown open">
+                            <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-star"></i> AP</a>
+                            <ul class="nav-dropdown-items">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/AdminEMS/ComingSoon"><i class="icon-arrow-right"></i> Vendors</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/AdminEMS/ComingSoon"><i class="icon-arrow-right"></i> Purchase Orders</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/AdminEMS/ComingSoon"><i class="icon-arrow-right"></i> Invoices</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/AdminEMS/ComingSoon"><i class="icon-arrow-right"></i> Payments</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/AdminEMS/AdminPayroll"><i class="icon-calculator"></i> Payroll</a>
+                        </li>
+                        <li class="nav-item nav-dropdown open">
+                            <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-star"></i> Settings</a>
+                            <ul class="nav-dropdown-items">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="~/AdminEMS/CheckSetting" target="_top"><i class="icon-arrow-right"></i> Check Settings</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="~/AdminEMS/TimeZone" target="_top"><i class="icon-arrow-right"></i> Timezone</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="~/AdminEMS/Users" target="_top"><i class="icon-arrow-right"></i> Permissions</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="~/AdminEMS/ComingSoon" target="_top"><i class="icon-arrow-right"></i> Production Settings</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/AdminEMS/SetupProduction"><i class="icon-settings"></i> Switch Production</a>
+                        </li>
+                        <li class="divider"></li>
+
+
+                    </ul>
+                    <footer class="">
+                        <!--<a href="http://emsatlasaccounting.com">EMS Atlas Accounting</a> © 2017 EMS.-->
+                        <span class="float-right">
+                            <a href="http://emspayroll.com">an EMS Solution</a>
+                        </span>
+                    </footer>
+                </nav>
+
+            }
+
+            <!-- Generate the side navbar -->
+        </div>
+        <!-- Main content -->
+        <main class="main">
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb">
+                @RenderSection("breadcrumbtrail", required: false)
+
+                <!-- Breadcrumb Menu-->
+                <!--<li class="breadcrumb-menu d-md-down-none">
+                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <a class="btn btn-secondary" href="#"><i class="icon-speech"></i></a>
+                        <a class="btn btn-secondary" href="./"><i class="icon-graph"></i> &nbsp;Dashboard</a>
+                        <a class="btn btn-secondary" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
+                    </div>
+                </li>-->
+            </ol>
+
+            <div class="container-fluid">
+                <div class="animated fadeIn">
+                    <div class="col-md-12">
+                        @RenderSection("body", required: false)
+                    </div>
+                </div>
+                @RenderSection("BreadCrumb", required: false)
+
+
+            </div>
+            <!-- /.conainer-fluid -->
+            <div id="fixedfooter">
+            </div>
+        </main>
+
+        <aside class="aside-menu" id="nav-aside">
+            @RenderSection("aside", required: false)
+        </aside>
+    </div>
+
+    <!-- Bootstrap and necessary plugins -->
+    <script src="~/Content/AdminPanel/js/jquery.min.js"></script>
+    <script src="~/Content/AdminPanel/js/tether.min.js"></script>
+    <script src="~/Content/AdminPanel/js/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/AdminPanel/js/pace/pace.min.js"></script>
+    <!-- Plugins and scripts required by all views -->
+    <script src="~/Content/AdminPanel/js/chart.js/dist/Chart.min.js"></script>
+    <script src="~/Content/AdminPanel/js/numeral.min.js"></script>
+    <script src="~/Content/AdminPanel/js/sizzle.min.js"></script>
+
+    <!-- GenesisUI main scripts -->
+    <script src="~/Scripts/utilityAdmin.js"></script>
+    <script src="~/Content/AdminPanel/js/app.js"></script>
+
+    <!-- Plugins and scripts required by this views -->
+    <script src="~/Content/AdminPanel/js/datatables.min.js"></script>
+    <script src="~/Content/AdminPanel/js/DataTables-1.10.15/js/datatables.bootstrap.js"></script>
+    <script src="~/Content/AdminPanel/js/KeyTable-2.2.1/js/dataTables.keyTable.min.js"></script>
+
+    <!-- Custom scripts required by this view -->
+    <script src="~/Scripts/Validation/Validation.js"></script>
+
+    <script src="~/Content/js/jquery-ui.min.js"></script>
+    <script src="~/Scripts/MultiSelectDropDown/jquery.multiselect.js"></script>
+    <script src="~/Scripts/Validation/Validation.js"></script>
+    <script src="~/Scripts/jquery.mask.min.js"></script>
+    <script src="~/Scripts/notify.js"></script>
+    @*<script src="~/Scripts/utility.js"></script>*@
+    @RenderSection("Javascript", required: false)
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[Segment] (
+  [SegmentId] [int] IDENTITY,
+  [SegmentCode] [nvarchar](50) NOT NULL,
+  [SegmentName] [nvarchar](50) NOT NULL,
+  [SegmentReportDescription] [nvarchar](50) NOT NULL,
+  [Classification] [nvarchar](50) NULL,
+  [CodeLength] [nvarchar](50) NULL,
+  [SegmentLevel] [int] NOT NULL,
+  [DetailFlag] [bit] NULL,
+  [ProdId] [int] NOT NULL,
+  [CreatedDate] [datetime] NULL,
+  [CreatedBy] [int] NULL,
+  [ModifiedDate] [datetime] NULL,
+  [ModifiedBy] [int] NULL,
+  [SegmentStatus] [nvarchar](50) NULL,
+  [SubAccount1] [nvarchar](50) NULL,
+  [SubAccount2] [nvarchar](50) NULL,
+  [SubAccount3] [nvarchar](50) NULL,
+  [SubAccount4] [nvarchar](50) NULL,
+  [SubAccount5] [nvarchar](50) NULL,
+  [SubAccount6] [nvarchar](50) NULL,
+  CONSTRAINT [PK_Segment_1] PRIMARY KEY CLUSTERED ([SegmentId]),
+  CONSTRAINT [U_SegmentName] UNIQUE ([SegmentName])
+)
+GO

@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "AccountsPayable>>Custodians";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Custodian</li>
+        </ol>
+        <div class="midMenu widget-head">
+            <ul>
+                <li><a href="PCEnvelopes">Envelope</a></li>
+                @*<li><a href="EnvelopeAudit">Envelope Audit</a></li>*@
+                <li><a href="EnvelopeAudit"> Posted</a></li>
+                <li><a href="Recipients">Recipients</a></li>
+                <li class="active"><a href="#">Custodians</a></li>
+            </ul>
+        </div>
+        <a href="#" class="btn btn-default floatRight" style="margin-top: -4px;  margin-left:10px; display:none;" onclick="javascript: Save();">Save</a>
+        <a href="#" class="btn btn-default floatRight" style="margin-top: -4px; margin-left:10px;" onclick="javascript:funAddNew(-1);">Add New</a>
+        <div class="clearfix"></div>
+
+    </section>
+}
+
+
+@section Body{
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="tab-content">
+                <!-- Tab content -->
+                <div id="tabPendingInvoices" class="tab-pane active widget-body-regular">
+                    <div class="col-xs-12">
+                        <!--<table class="table table-hover table-responsive">-->
+
+                        <div class="xsborNoneNew" style="margin-top:10px; margin-bottom:0px;">
+                            <div class="tblResponse" id="DvtblCOA">
+                                <div class="fixed-table-container">
+                                    <div class="header-background"> </div>
+                                    <div class="fixed-table-container-inner" id="DvTB">
+                                        <div id="dvFixed">
+                                            <table class="table table-hover table-responsive" id="tblCustodians">
+                                                <thead id="tblCustodiansThead">
+
+                                                </thead>
+                                                <tbody id="tblCustodiansTBody"></tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div style="" class="col-lg-12">
+
+            </div>
+            <!-- Tab content end -->
+            <!-- /.content -->
+        </div>
+    </section>
+}
+
+
+@section Javascript{
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.1/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                fixedHeader: {
+                    header: true,
+                    footer: true
+                }
+            });
+        });
+    </script>
+    <link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/fixedheader/3.1.1/css/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script>
+        // Change the selector if needed
+        var $table = $('table.scroll'),
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
+
+        // Adjust the width of thead cells when window resizes
+        $(window).resize(function () {
+            // Get the tbody columns width array
+            colWidth = $bodyCells.map(function () {
+                return $(this).width();
+            }).get();
+
+            // Set the width of thead columns
+            $table.find('thead tr').children().each(function (i, v) {
+                $(v).width(colWidth[i]);
+            });
+        }).resize(); // Trigger resize handler
+    </script>
+
+
+
+    <script src="~/Scripts/AccountsPayable/Custodians.js"></script>
+    <style>
+        .width40 {
+            width: 45px;
+            border: 1px solid #ccc;
+        }
+
+            .width40 input {
+                width: 100%;
+            }
+
+        .width100 {
+            width: 120px;
+            border: 1px solid #ccc;
+        }
+
+            .width100 input {
+                width: 100%;
+            }
+
+        .table-hover th {
+            padding: 0px 4px !important;
+        }
+        /*.table > thead > tr > th {
+        padding:0 4px 0 4px !important;
+        }*/
+    </style>
+
+}
+

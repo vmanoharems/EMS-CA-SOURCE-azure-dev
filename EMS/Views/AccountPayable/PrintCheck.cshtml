@@ -1,0 +1,194 @@
+﻿@{
+    ViewBag.Title = "AccountsPayable>>Check Cycle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section BreadCrumb{
+    <section class="content-header paddingBottom0">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="#"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#"> Check Cycle <i class="fa fa-caret-right"></i></a></li>
+            <li class="active">Edit Criteria </li>
+        </ol>
+        <div class="floatRight">
+            <a class="btn btn-success floatLeft margin-r-5" href="PrintCheck">Preview</a>
+            <a class="btn btn-success floatLeft margin-r-5" href="#">Print Checks</a>
+            <a class="btn btn-success floatLeft margin-r-5" href="#">Print Copies</a>
+
+        </div>
+        <div class="clearfix"></div>
+    </section>
+
+}
+
+
+@section Body{
+    <section class="content">
+        <div class="row fontAriel">
+            <div class="tab-content">
+
+                <div id="tabPrintChecks" class="tab-pane active widget-body-regular">
+                    <div class="col-xs-12">
+                        @*<a href="javascript:warning();" class="btn btn-default floatRight marginBottom5">Print Checks</a>*@
+
+                        <div id="tabCheckRegistor">
+
+                            <div class="col-xs-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-responsive">
+                                        <tbody>
+                                            <tr>
+                                                <th>Check Date</th>
+                                                <th>Check #</th>
+                                                <th>Transaction #</th>
+                                                <th>Vendor</th>
+                                                <th>Debit</th>
+                                                <th>Credit</th>
+                                                <th>Balance</th>
+                                            </tr>
+                                            <tr>
+                                                <td>10/1/2015</td>
+                                                <td>JE</td>
+                                                <td>1004</td>
+                                                <td>Gary's Furnishing </td>
+                                                <td>$486.96</td>
+                                                <td>$500,000,00</td>
+                                                <td>$500,000,00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>10/1/2015</td>
+                                                <td>JE</td>
+                                                <td>1004</td>
+                                                <td>Gary's Furnishing </td>
+                                                <td>$486.96</td>
+                                                <td>$500,000,00</td>
+                                                <td>$500,000,00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>10/1/2015</td>
+                                                <td>JE</td>
+                                                <td>1004</td>
+                                                <td>Gary's Furnishing </td>
+                                                <td>$486.96</td>
+                                                <td>$500,000,00</td>
+                                                <td>$500,000,00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>10/1/2015</td>
+                                                <td>JE</td>
+                                                <td>1004</td>
+                                                <td>Gary's Furnishing </td>
+                                                <td>$486.96</td>
+                                                <td>$500,000,00</td>
+                                                <td>$500,000,00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- /.content -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="botMenu floatRight" style="padding-left:15px;">
+                <ul>
+                    <li class="active"><a href="PrintCheck">Print Checks</a></li>
+                    <li class=""><a href="CheckRegister">VOID</a></li>
+                    <li class="" style="display:none;"><a data-toggle="tab" href="#tabBankRecanciliation">Bank Reconciliation</a></li>
+                </ul>
+            </div>
+            <!-- Tab content end -->
+            <!-- /.content -->
+        </div>
+    </section>
+
+    <div id="dvPrintingWarning" class="dialog-overlay" style="display: none;">
+        <div class="dialog-card">
+            <div class="dialog-question-sign"><i class="fa fa-question"></i></div>
+            <div class="dialog-info">
+                <h5>Printing Checks WARNING !!</h5>
+                <p>
+                    One of the checks you selected has already been printed
+                    <br /><br />
+
+                    Are you sure you want to Print this check.
+                    <br />
+                </p>
+                <a href="javascript:funSaveDataPost();" class="dialog-confirm-button">YES</a>
+                <a href="javascript:hideDiv('dvPrintingWarning');" class="dialog-reject-button">NO</a>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Javascript{
+
+
+    @*<script src="~/Scripts/AccountsPayable/CheckCycle.js"></script>*@
+    <script src="~/Scripts/AccountsPayable/printCheck.js"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+
+    <link href="~/Content/assets/dialog-confirm.css" rel="stylesheet" />
+
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+
+    <script>
+
+        // This is an example jQuery snippet that makes the dialogs work
+        $(document).ready(function () {
+
+            // We have two control functions that show or hide dialogs
+            function showDialog(id) {
+
+                // Find the dialog and show it
+
+                var dialog = $('#' + id),
+                        card = dialog.find('.dialog-card');
+
+                dialog.fadeIn();
+
+                // Center it on screen
+
+                card.css({
+                    'margin-top': -card.outerHeight() / 2
+                });
+
+            }
+            function hideAllDialogs() {
+                // Hide all visible dialogs
+                $('.dialog-overlay').fadeOut();
+            }
+
+            // Here is how to use these functions
+
+            $('.dialog-confirm-button, .dialog-reject-button').on('click', function () {
+                hideAllDialogs();
+            });
+
+            $('.dialog-show-button').on('click', function () {
+                var toShow = $(this).data('show-dialog');
+
+                showDialog(toShow);
+            });
+        });
+
+
+    </script>
+    <style type="text/css">
+        .dialog-card {
+            top: 15%;
+        }
+    </style>
+
+}

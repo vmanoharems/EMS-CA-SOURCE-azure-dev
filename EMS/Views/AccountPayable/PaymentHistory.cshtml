@@ -1,0 +1,165 @@
+﻿@{
+    ViewBag.Title = "AccountsPayable>>Payment History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@section BreadCrumb{
+    <section class="content-header">
+        <ol class="breadcrumb floatLeft">
+            <li><a href="AccountPayable"> Accounts Payable <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#"> Payments <i class="fa fa-caret-right"></i></a></li>
+            <li><a href="#"> Pay Invoices <i class="fa fa-caret-right"></i></a></li>
+            <li class="active"><a href="#" onclick="funEditCriteria('Edit');">Edit Criteria</a></li>
+        </ol>
+        @*<a href="#" class="btn btn-default floatRight">Config</a>*@
+        <div class="clearfix"></div>
+    </section>
+}
+
+
+@section Body{
+
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="row fontAriel">
+
+            <div class="tab-content">
+                <!-- Tab content -->
+
+
+                <div id="tabPaymentHistory" class="tab-pane widget-body-regular active">
+                    <div class="col-lg-12" id="DvPaymentHistory">
+                        <a class="btn btn-default floatRight" href="#" onclick="javascript: funPopShow('Void')">Void Checks</a>
+                        <a class="btn btn-default floatRight margin-r-5" href="#" onclick="javascript: funPopShow('Reissue')">Reissue Checks</a>
+                        <a class="btn btn-default floatRight margin-r-5" href="#" onclick="javascript:funPopShow('Cancel')">Cancel Checks</a>
+                        <div class="clearfix"></div>
+                        <div style="margin-top:10px; margin-bottom:0px;" class="" id="DvTable">
+                            <table cellspacing="0" width="100%" class="table table-hover table-responsive" id="TblPaymentHistory">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" id="CheckAll" onclick="funCheckAll();"></th>
+                                        <th>Check #</th>
+                                        @*<th>Transaction #</th>*@
+                                        <th>Check Date</th>
+                                        <th>Vendor</th>
+                                        <th>Invoice/Line Items</th>
+                                        @*<th>Line Item Balance</th>*@
+                                        <th>Amount paid</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="TblPaymentHistoryTBody"></tbody>
+                            </table>
+                        </div>
+                       
+                    </div>
+                    <div class="col-lg-12" id="DvEditCriteria" style="display: none;">
+                        <div style="margin-top:10px; margin-bottom:0px; " class="">
+                            <table cellspacing="0" width="100%" class="table table-hover table-responsive" id="TblEditCriteria">
+                                
+                                <tbody id="TblEditCriteriaTBody">
+                                
+                                </tbody>
+                            </table>
+
+                            <a class="btn btn-success floatRight" href="#" onclick="funEditCriteria('Show');">Apply Filter</a>
+                        </div>
+                        </div>
+                    </div>
+                 
+                <!-- /.content -->
+            </div>
+            <div class="col-lg-12">
+                <div class="botMenu widget-head">
+                    <ul>
+                        <li class=""><a href="AccountPayable" aria-expanded="true">Pay invoices</a></li>
+
+                        <li class="active"><a data-toggle="tab" href="#tabPaymentHistory" aria-expanded="false">Payment History</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- /.content -->
+    <div class="newhidden" id="cancelChecks" style="display: none;">
+        <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone top15">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('cancelChecks');">X</a></div>
+            <div class="heading2"><h4>Cancel Checks?</h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    <p>Are you sure you want to cancel these checks?</p>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a class="btn btn-primary floatRight" href="javascript:hideDiv('cancelChecks');">No</a>
+                <a class="btn btn-success floatLeft" href="#" onclick="javascript:funCancel('Cancel');">Yes</a>
+            </div>
+        </div>
+    </div>
+    <div class="newhidden" id="reissueChecks" style="display: none;">
+        <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone top15">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('reissueChecks');">X</a></div>
+            <div class="heading2"><h4>Reissue Checks?</h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    <p>Are you sure you want to reissue these checks?</p>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a class="btn btn-primary floatRight" href="javascript:hideDiv('reissueChecks');">No</a>
+                <a class="btn btn-success floatLeft" href="#" onclick="javascript:funCancel('Issued');">Yes</a>
+            </div>
+        </div>
+    </div>
+    <div class="newhidden" id="voidChecks" style="display: none;">
+        <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone top15">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('voidChecks');">X</a></div>
+            <div class="heading2"><h4>Void Checks?</h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    <p>Are you sure you want to Void these checks?</p>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a class="btn btn-primary floatRight" href="javascript:hideDiv('voidChecks');">No</a>
+                <a class="btn btn-success floatLeft" href="#" onclick="javascript:funCancel('Voided');">Yes</a>
+            </div>
+        </div>
+    </div>
+    <div class="newhidden" id="cancelCheckError" style="display: none;">
+        <div class="popup col-md-3 col-lg-3 col-sm-3 col-xs-12 floatNone top15">
+            <div class="deleteNewIcon"><a href="javascript:hideDiv('cancelCheckError');">X</a></div>
+            <div class="heading2"><h4>Cancel Check Error</h4></div>
+            <div class="WhtBg">
+                <div class="col-md-12">
+                    <p>You canot Cancel a cleared check</p>
+                </div>
+                <!-- // Tabs END -->
+            </div>
+            <div class="darkGreyNew col-lg-12">
+                <a class="btn btn-success floatLeft" href="javascript:hideDiv('cancelCheckError');">Ok</a>
+            </div>
+        </div>
+    </div>
+    <div id="fade" class="black_overlay"></div>
+}
+
+@section Javascript{
+
+    <script src="~/Scripts/AccountsPayable/PaymentHistory.js"></script>
+
+    <script>
+        $(function () {
+            $(".datepicker").datepicker();
+        });
+    </script>
+}
